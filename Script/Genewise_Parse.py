@@ -51,7 +51,7 @@ if __name__ == '__main__':
     RAW = re.split("//\nBits",open(genewise,'rU').read())
     j=0
     for e_b in RAW:
-
+        
         data_b = e_b.split("\n//\n")
         score_b = data_b[0]
 
@@ -60,8 +60,9 @@ if __name__ == '__main__':
         aln_list = aln_detail.split()
 
         aln_score,alnpro,start,end = aln_list[:4]
-
-        alnlength = int(end)-int(start)
+        start = int(start)
+        end = int(end)
+        alnlength = end-start
         proteinlength = len(proteinseqHash[alnpro])
         
         if alnlength*1.0/proteinlength>=coverage or float(score)>score:
@@ -71,17 +72,27 @@ if __name__ == '__main__':
                 if not line:
                     continue
                 gff_list = line.split("\t")
-                
+                if gff_list[2] !="cds":
+                    continue
                 seq_name = gff_list[0]
                
                 subjname,loc_append = seq_name.rsplit("__",1)
                 loc_append  = int(loc_append)
                 gff_list[0] = subjname
-                gff_list[3] = str(int(gff_list[3]) + loc_append)
-                gff_list[4] = str(int(gff_list[4]) + loc_append)
-                gff_list[-1] = alnpro+'.%s'%(j)
-                if int(gff_list[3]) >int(gff_list[4]):
-                    gff_list[4],gff_list[3] = gff_list[3],gff_list[4]
+                gff_list[3] = int(gff_list[3]) + loc_append
+                gff_list[4] = int(gff_list[4]) + loc_append
+                gff_list[3],gff_list[4] = sorted([ gff_list[3],gff_list[4] ])
+                protein_length = (gff_list[4] - gff_list[3])/3
+                
+                
+                gff_list[3] = str(gff_list[3])
+                gff_list[4] = str(gff_list[4])
+                
+                prot_length = int(gff_list[3])
+                gff_list[-1] = "ID="+alnpro+'.%s'%(j)+';'+"Target=%s"%(alnpro+'.%s'%(j))+' %s %s'%(start,start+proteinlength)
+                start=start+proteinlength+1
+                gff_list[-2]="."
+
                 END.write("\t".join(gff_list)+'\n')
                 
         
