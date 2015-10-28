@@ -8,6 +8,6 @@ import string
 data_f = sys.argv[1:]
 
 for e_f in data_f:
-	RAW = blast_parse(open(e_f),open(e_f.split('.')[0]+'.Bparse','w'))
+	RAW = blast_parse(open(e_f),open(e_f.rsplit('.',1)[0]+'.Bparse','w'))
 	RAW.parse()
 	

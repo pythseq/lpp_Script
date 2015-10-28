@@ -26,14 +26,21 @@ parser.add_option("-o", "--end", action="store",
 BLAST = open(options.input,'rU')
 BLAST.next()
 END = open(options.output,'w')
-END.write("Gene\tSubject\tIdentity\tAlignmentLength\tMismatch\tGap\tQueryStart\tQueryEnd\tSubjStart\tSubjEnd\tE_value\tBitscore\tCOG\tAnnotation\tCat\tCategory Annotation\n")
+END.write("Gene\tSubject\tE_value\tBitscore\tCOG\tAnnotation\tCat\tCategory Annotation\n")
 for line in open(options.input,'rU'):
 	line_l = line.strip().split("\t")
 	subj= line_l[1].split()[0]
 	score = line_l[-1]
 	e_value = line_l[-2]
-	
+	Bit_Score = line_l[-1]
+	Identity = line_l[2]
+	StartQuery = line_l[7]
+	Mismatch = line_l[5]
+	EndSubj = line_l[9]
+	StartSubj = line_l[8]	
+	EndQuery = line_l[8]
 	query = line_l[0].split()[0]
+	line_l[0] = query
 	gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith(options.cog))   )
 	unique = {}
 	for each_gene_nog in gene_nog:
@@ -43,7 +50,7 @@ for line in open(options.input,'rU'):
 		for each_cat in nog_cat:
 			cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
 			for each_anno in cat_anno:
-				END.write(line[:-1]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+'\n')
+				END.write("\t".join(line_l)+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+'\n')
 	
 	
 	
