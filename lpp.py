@@ -140,7 +140,7 @@ class SmithWaterman():
 def check_path( path ):
 	if os.path.exists(path):
 		shutil.rmtree(path)
-	os.mkdir( path )
+	os.makedirs( path )
 def complement( char ):
 	char = re.sub( '\s+','',char  )
 
@@ -685,3 +685,23 @@ def K_Mer( string,length=4  ):
 		k_mer_hash[ k_mer  ] = ''
 		i+=1
 	return all_kmer , k_mer_hash
+
+
+def Redis_trans(data_hash):
+	out_data = ""
+	if type(data_hash)==type(Ddict()):
+
+		for key1 in data_hash:
+
+			for key2,value in data_hash[key1].items():
+				out_data+="""*4\r\n$4\r\nhset\r\n"""
+				out_data+="$%s\r\n"%( len(key1) )
+				out_data+="%s\r\n"%( key1 )
+				out_data+="$%s\r\n"%( len(key2) )
+				out_data+="%s\r\n"%( key2 )
+				out_data+="$%s\r\n"%( len(value) )
+
+				out_data+="%s\r\n\r\n"%( value )
+
+
+	return out_data

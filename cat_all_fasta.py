@@ -58,7 +58,7 @@ for a,b,c in os.walk(os.path.abspath(inputpath)):
 
 i=0
 LOG.write( 'ID\tFROM\n'  )
-for each_seq in seq_all:
+for each_seq in sorted(seq_all, key=lambda x: len(x) ):
 	i+=1
 	length = len( re.sub( '\s+','',each_seq    ) )
 	END.write( '>%s_%s\n'%(name, i )+each_seq+'\n' )
