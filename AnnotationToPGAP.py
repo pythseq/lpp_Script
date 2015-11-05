@@ -7,6 +7,8 @@
 """
 from optparse import OptionParser
 from lpp import *
+from parse_eggNog import *
+
 if __name__=="__main__":
 
     '# you could type [  SCRIPT_NAME  ] -h to see the help log !!!!'
@@ -31,6 +33,7 @@ if __name__=="__main__":
 
 
     (options, args) = parser.parse_args()
+    gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith("COG"))   )
     
     INPUT_DATA= open(options.path,'rU')
     tax_name = os.path.split(options.path)[-1].split(".")[0]
@@ -51,4 +54,6 @@ for gene,detail_hash in data_hash.items():
     if detail_hash["Kind"] == "CDS":
         PEP.write('>'+gene+'\n'+detail_hash["Seq_Protein"]+'\n')
         NUCL.write('>'+gene+'\n'+detail_hash["Seq_Nucleotide"]+'\n')
-        FUNC.write("%s\t%s\t%s\n"%(gene,detail_hash["EggNOG_NOG"],detail_hash["Function"]))
+        need_nog = NOG_des.select(NOG_des.q.Name==detail_hash["EggNOG_NOG"])
+        all_cog_cat = "".join( x.Cat for x in need_nog   )
+        FUNC.write("%s\t%s\t%s\n"%(gene,detail_hash["EggNOG_NOG"]+all_cog_cat,detail_hash["Function"]))
