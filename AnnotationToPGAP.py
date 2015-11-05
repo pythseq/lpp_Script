@@ -33,7 +33,7 @@ if __name__=="__main__":
 
 
     (options, args) = parser.parse_args()
-    gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith("COG"))   )
+    gene_nog = NOG_GENE.select(NOG_GENE.q.NOG.startswith("COG")   )
     
     INPUT_DATA= open(options.path,'rU')
     tax_name = os.path.split(options.path)[-1].split(".")[0]
@@ -52,7 +52,7 @@ NUCL = open(options.output+".nuc",'w')
 FUNC  = open(options.output+".function",'w')
 for gene,detail_hash in data_hash.items():
     if detail_hash["Kind"] == "CDS":
-        PEP.write('>'+gene+'\n'+detail_hash["Seq_Protein"]+'\n')
+        PEP.write('>'+gene+'\n'+re.sub("\W+","",detail_hash["Seq_Protein"])+'\n')
         NUCL.write('>'+gene+'\n'+detail_hash["Seq_Nucleotide"]+'\n')
         need_nog = NOG_des.select(NOG_des.q.Name==detail_hash["EggNOG_NOG"])
         all_cog_cat = "".join( x.Cat for x in need_nog   )
