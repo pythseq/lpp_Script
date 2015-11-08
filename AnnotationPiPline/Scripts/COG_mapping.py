@@ -3,8 +3,6 @@
 # Author:  LPP --<lpp1985@hotmail.com>
 # Purpose: 
 # Created: 2011/5/19
-import os,sys
-sys.path.append(os.path.split(__file__)[0]+'/../Lib/')
 from lpp import *
 from optparse import OptionParser 
 from parse_eggNog import *
@@ -14,14 +12,21 @@ parser.add_option("-i", "--INPUT", action="store",
                   dest="input",
                   default = './', 
                   help="Input File")
+
+parser.add_option("-c", "--COG", action="store", 
+                  dest="cog",
+                  default = 'COG', 
+                  help="COG,NOG or KOG")
+
 parser.add_option("-o", "--end", action="store", 
                   dest="output", 
                   help="OUTPUT Data")
 (options, args) = parser.parse_args() 
+
 BLAST = open(options.input,'rU')
 BLAST.next()
 END = open(options.output,'w')
-END.write("Gene\tSubject\tE_value\tBitscore\tCOG\tAnnotation\tCOG Category\n")
+END.write("Gene\tSubject\tIdentity\tAlignmentLength\tMismatch\tGap\tQueryStart\tQueryEnd\tSubjStart\tSubjEnd\tE_value\tBitscore\tCOG\tAnnotation\tCat\tCategory Annotation\n")
 for line in open(options.input,'rU'):
 	line_l = line.strip().split("\t")
 	subj= line_l[1].split()[0]
@@ -29,7 +34,7 @@ for line in open(options.input,'rU'):
 	e_value = line_l[-2]
 	
 	query = line_l[0].split()[0]
-	gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith("COG"))   )
+	gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith(options.cog))   )
 	unique = {}
 	for each_gene_nog in gene_nog:
 		
@@ -38,4 +43,7 @@ for line in open(options.input,'rU'):
 		for each_cat in nog_cat:
 			cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
 			for each_anno in cat_anno:
-				END.write(query+'\t'+subj+'\t'+e_value+'\t'+score+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_anno.Description+'['+each_cat.Cat+']''\n')
+				END.write(line[:-1]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+'\n')
+	
+	
+	

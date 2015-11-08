@@ -5,14 +5,30 @@
   Purpose: 
   Created: 2014/12/31
 """
-import sys,os
+import sys,os,redis
 from termcolor import colored
 from pyflow import WorkflowRunner
 from ConfigParser import ConfigParser
 from lpp import *
-from sqlalchemy import *
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+
+def Redis_trans(data_hash):
+	out_data = ""
+	if type(data_hash)==type(Ddict()):
+
+		for key1 in data_hash:
+
+			for key2,value in data_hash[key1].items():
+				out_data+="""*4\r\n$4\r\nhset\r\n"""
+				out_data+="$%s\r\n"%( len(key1) )
+				out_data+="%s\r\n"%( key1 )
+				out_data+="$%s\r\n"%( len(key2) )
+				out_data+="%s\r\n"%( key2 )
+				out_data+="$%s\r\n"%( len(value) )
+
+				out_data+="%s\r\n\r\n"%( value )
+
+
+	return out_data
 def Get_Path( path ):
 	if not os.path.exists(path):
 
@@ -37,110 +53,6 @@ general_config = ConfigParser()
 general_config.read(
     os.path.join( config_path,"general.ini")
 )
-class AnnotationTable(  Base  ):
-	__tablename__='Annotation'
-	Id = Column(   Integer,primary_key=True )
-	Name = Column(  String(20) ,index = True,nullable = False)
-	Source = Column(  String(40) )
-	Start = Column(  String(40))
-	Stop = Column(  String(40) )
-	Frame = Column(  String(40) )
-	NuSeq = Column(  Text)
-	AASeq = Column(  Text)
-	Function = Column(  Text)
-	Nr_Hit=Column(  Text,nullable = True)
-	Nr_Eval = Column(  Text,nullable = True)
-	KEGG_Hit = Column(  Text,nullable = True)
-	KEGG_KO = Column(  Text,nullable = True)
-	KEGG_PATHWAY = Column(  Text,nullable = True)
-	KEGG_Eval = Column(  Text,nullable = True)
-	Swiss_Hit = Column(  Text,nullable = True)
-	Swiss_Eval = Column(  Text,nullable = True)
-	Eggnog_Hit = Column(  Text,nullable = True)
-	COG = Column(  Text,nullable = True)
-	Eggnog_Eval = Column(  Text,nullable = True)
-	BiologicalProcess = Column(  Text,nullable = True)
-	MolecularFunction = Column(  Text,nullable = True)
-	CellularComponent = Column(  Text,nullable = True)
-	__table_args__=(
-		UniqueConstraint(  "Name" ,
-
-		                   ),
-	)
-	def __init__(  self,Name ):
-		self.Name = Name
-	def __repr__( self ):
-		return self.Name
-
-
-
-class AnnotationTable_RPKM(  Base  ):
-	__tablename__='Annotation_RPKM'
-	Id = Column(   Integer,primary_key=True )
-	Name = Column(  String(20) ,index = True,nullable = False)
-	Sequence = Column(  Text )
-	Length = Column(  Text )
-	RPKM1 = Column(  Text,nullable = True)
-	RPKM2 = Column(  Text,nullable = True)
-	Function = Column(  Text)
-	Nr_Hit=Column(  Text,nullable = True)
-	Nr_Eval = Column(  Text,nullable = True)
-	Nr_BitScore = Column(  Text,nullable = True)
-	Nr_Identity = Column(  Text,nullable = True)
-	Nt_Hit = Column(  Text,nullable = True)
-	Nt_Eval = Column(  Text,nullable = True)
-	Nt_BitScore = Column(  Text,nullable = True)
-	Nt_Identity = Column(  Text,nullable = True)
-	KEGG_Hit = Column(  Text,nullable = True)
-	KEGG_KO = Column(  Text,nullable = True)
-	KEGG_PATHWAY = Column(  Text,nullable = True)
-	KEGG_Eval = Column(  Text,nullable = True)
-	KEGG_BitScore = Column(  Text,nullable = True)
-	KEGG_Identity = Column(  Text,nullable = True)
-	Swiss_Hit = Column(  Text,nullable = True)
-	Swiss_Eval = Column(  Text,nullable = True)
-	Swiss_BitScore = Column(  Text,nullable = True)
-	Swiss_Identity = Column(  Text,nullable = True)
-	
-	
-	Eggnog_Hit = Column(  Text,nullable = True)
-	Eggnog_Eval = Column(  Text,nullable = True)
-
-	COG = Column(  Text,nullable = True)
-	BiologicalProcess = Column(  Text,nullable = True)
-	MolecularFunction = Column(  Text,nullable = True)
-	CellularComponent = Column(  Text,nullable = True)
-	__table_args__=(
-		UniqueConstraint(  "Name" ,
-
-		                   ),
-	)
-	def __init__(  self,Name ):
-		self.Name = Name
-	def __repr__( self ):
-		return self.Name
-
-
-
-
-def get_or_create(session, model, **kwargs):
-	''' use it to get or create object from a table '''
-
-	try:
-		instance = session.query(model).filter_by(**kwargs).first()
-	except  Exception,err:
-		print( err )
-		print( kwargs )
-	if instance:
-		return instance
-	else:
-		instance = model(**kwargs)
-		session.add( instance  )
-		session.commit()
-		return instance
-
-
-
 def Check_file(file_name_list):
 	for key,file_name in file_name_list:
 		if not os.popen("which %s"%(file_name) ).read() and not os.path.isfile(file_name):
@@ -157,16 +69,9 @@ def Check_path( name,file_path):
 config_hash = Ddict()
 def Config_Parse(general_config):
 	global config_hash
-	tools_section =general_config.items("Tools")
-	report_section = general_config.items("Report")
 	database_section = general_config.items("Database")
 	util_section = general_config.items("Utils")
-	#for name,each_db in database_section:
-		#Check_path(name,each_db)
-	#Check_file(tools_section)
-	#for key,path in util_section:
-		#Check_path(key,path)
-	#Check_path(general_config.get("Report","Template"))
+
 	for section in general_config.sections():
 		for key in general_config.options(section):
 
@@ -187,28 +92,5 @@ def Get_Addtional_Config(Addtional_File):
 			config_hash[section][key] = addtional_config.get(section,key)	
 
 
-
-def Prokka_Commandline( Contig,Genius,Spieces,Strain,Center,Prefix,OutPut,Plasmid,Evalue ):
-	raw_commandline = config_hash["Tools"]["prokka"]+ '  --rfam  --prefix %(Prefix)s --outdir %(output)s --evalue %(e_value)s  --genus %(Genius)s --strain %(Strain)s  --cpus 64 --compliant --force --quiet --centre %(Centre)s  --prefix %(Prefix)s  --locustag %(Prefix)s'%(
-		{
-	        "Centre":Center,
-			"Prefix":Prefix,
-			"output":OutPut,
-			"e_value":Evalue,
-			"Genius":Genius,
-			"Strain":Strain,
-		}
-	)
-
-	if Plasmid:
-		raw_commandline += " --plasmid %s"%(Plasmid)
-	commandLine = raw_commandline +" %s"%(Contig) 
-	commandLine += """&& sed -i  "s/ACCESSION/ACCESSION   123/g" %(Path)s && sed -i "s/VERSION/VERSION    1/g" %(Path)s"""%(
-	    {
-	        "Path":OutPut+"/"+Prefix+'.gbk'
-	    }
-	)
-	Get_Path( re.sub("[^/+]\/$","",os.path.split(OutPut)[0])  )
-	return commandLine
 
 Config_Parse(general_config)

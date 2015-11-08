@@ -8,15 +8,16 @@
 import os,sys,redis
 sys.path.append(os.path.split(__file__)[0]+'/../Lib/')
 from lpp import *
-from Dependcy import *
+#from Dependcy import *
 
-
-DATA = open(sys.argv[1],'a')
-FASTA = fasta_check(open(sys.argv[2],'rU'))
+db_number = sys.argv[1]
+r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+r.flushall()
+DATA = open(sys.argv[2],'w')
+FASTA = fasta_check(open(sys.argv[3],'rU'))
 data_hash = Ddict()
-data_hash["title"]["Name"]=""
-data_hash["title"]["Sequence"]=""
-data_hash["title"]["Length"] = ""
+
+
 for t,s in FASTA:
 
     t = t[1:].strip()

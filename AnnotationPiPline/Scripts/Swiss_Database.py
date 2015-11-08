@@ -13,18 +13,25 @@ from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 
 
-db_file = os.path.abspath(sys.argv[1])
-Ddatabase_engine = create_engine(  'sqlite:///%s'%(db_file) )
-Ddatabase_engine.connect()
-Base.metadata.create_all( Ddatabase_engine  )
-Session = sessionmaker( bind = Ddatabase_engine  )
-session = Session()
-NR_ANNO_DETAIL = open(sys.argv[2],'rU')
-NR_ANNO_DETAIL.next()
-for line in NR_ANNO_DETAIL:
+DB_FILE = open(os.path.abspath(sys.argv[1]),'a')
+
+Swiss_ANNO_DETAIL = open(sys.argv[2],'rU')
+#Swiss_ANNO_DETAIL.next()
+data_hash = Ddict()
+for line in Swiss_ANNO_DETAIL:
 	line_l = line[:-1].split("\t")
-	go_data = get_or_create(session, AnnotationTable,Name = line_l[0].split()[0])
-	go_data.Swiss_Hit = line_l[1]
-	go_data.Swiss_Eval = line_l[10]
-	session.commit()
+	name = line_l[0]
+	data_hash[name]["Swiss_Hit"] = line_l[1]+" "+line_l[2]
+	data_hash[name]["Swiss_Eval"] = line_l[-2]
+	data_hash[name]["Swiss_Bit_Score"] = line_l[-1]
+	data_hash[name]["Swiss_Identity"] = line_l[2]
+	data_hash[name]["Swiss_StartQuery"] = line_l[6]
+	data_hash[name]["Swiss_EndQuery"] = line_l[7]
+	data_hash[name]["Swiss_Mismatch"] = line_l[5]
+	data_hash[name]["Swiss_EndSubj"] = line_l[9]
+	data_hash[name]["Swiss_StartSubj"] = line_l[8]
+for data in data_hash[name]:
+	data_hash["title"][data] = ""	
+DB_FILE.write(Redis_trans(data_hash))
+
 

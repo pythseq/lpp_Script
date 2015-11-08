@@ -13,18 +13,25 @@ from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 
 
-db_file = os.path.abspath(sys.argv[1])
-Ddatabase_engine = create_engine(  'sqlite:///%s'%(db_file) )
-Ddatabase_engine.connect()
-Base.metadata.create_all( Ddatabase_engine  )
-Session = sessionmaker( bind = Ddatabase_engine  )
-session = Session()
+DB_FILE = open(os.path.abspath(sys.argv[1]),'a')
+
 NR_ANNO_DETAIL = open(sys.argv[2],'rU')
-NR_ANNO_DETAIL.next()
+
+data_hash = Ddict()
 for line in NR_ANNO_DETAIL:
 	line_l = line[:-1].split("\t")
-	go_data = get_or_create(session, AnnotationTable,Name = line_l[0].split()[0])
-	go_data.Nr_Hit = line_l[1]+" "+line_l[2]
-	go_data.Nr_Eval = line_l[-2]
-	session.commit()
+	name = line_l[0]
+	data_hash[name]["Nr_Hit"] = line_l[1]+" "+line_l[2]
+	data_hash[name]["Nr_Eval"] = line_l[-2]
+	data_hash[name]["Nr_Bit_Score"] = line_l[-1]
+	data_hash[name]["Nr_Identity"] = line_l[2]
+	data_hash[name]["Nr_StartQuery"] = line_l[6]
+	data_hash[name]["Nr_EndQuery"] = line_l[7]
+	data_hash[name]["Nr_Mismatch"] = line_l[5]
+	data_hash[name]["Nr_EndSubj"] = line_l[9]
+	data_hash[name]["Nr_StartSubj"] = line_l[8]
+for data in data_hash[name]:
+	data_hash["title"][data] = ""	
+DB_FILE.write(Redis_trans(data_hash))
+
 

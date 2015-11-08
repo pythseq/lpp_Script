@@ -13,87 +13,35 @@
   Purpose: 
   Created: 2015/3/16
 """
-import os,sys
+import os,sys,redis
 sys.path.append(os.path.split(__file__)[0]+'/../Lib/')
 from lpp import *
 from Dependcy import *
-from sqlalchemy import *
-from sqlalchemy.orm import sessionmaker
-
-
-db_file = os.path.abspath(sys.argv[1])
-Ddatabase_engine = create_engine(  'sqlite:///%s'%(db_file) )
-Ddatabase_engine.connect()
-Base.metadata.create_all( Ddatabase_engine  )
-Session = sessionmaker( bind = Ddatabase_engine  )
-session = Session()
-session.query(AnnotationTable).all()
 END = open(sys.argv[2],'w')
-END.write(
-    "\t".join(
-        [
+out_title = ["Name","Sequence","Length"]
+db_number = sys.argv[1]
+r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+for key in sorted(r.hgetall("title")):
+    if key not in out_title:
+        out_title.append(key)
+END.write("\t".join(out_title)+'\n')
+cache_data = ""
+for key in sorted(r.keys()):
+    
+    if key =="title":
+        continue
+    cache_data +=r.hgetall(key)[out_title[0]]
 
-            "Name",
-            "Source",
-            "Start",
-            "Stop",
-            "Frame"
-            "Function",
-            "Nr_Hit",
-            "Nr_Eval",
-            "KEGG_Hit",
-            "KEGG_Eval",
-            "KEGG_KO",
-            "KEGG_PATHWAY",
-            "Swiss_Hit",
-            "Swiss_Eval",
-            "Eggnog_Hit",
-            "Eggnog_Eval",
-            "COG",
-            "BiologicalProcess",
-            "MolecularFunction",
-            "CellularComponent",
-            "Nul Seq",
-            "AA Seq"
-        ]
-    )+"\n"
-)
+    for key2 in out_title[1:]:
+        if key2 in r.hgetall(key):
+            cache_data +="\t"+r.hgetall(key)[key2]
 
-for i in session.query(AnnotationTable).all():
-	data = [
-	    i.Name,
-	    i.Source,
-	    i.Start,
-	    i.Stop,
-	    i.Frame,
-	    i.Function,
-	    i.Nr_Hit,
-	    i.Nr_Eval,
-	    i.KEGG_Hit,
-	    i.KEGG_Eval,
-	    i.KEGG_KO,
-	    i.KEGG_PATHWAY,
-	    i.Swiss_Hit,
-	    i.Swiss_Eval,
-	    i.Eggnog_Hit,
-	    i.Eggnog_Eval,
-	    i.COG ,
-	    i.BiologicalProcess,
-	    i.MolecularFunction,
-	    i.CellularComponent,  
-	    i.NuSeq,
-	    i.AASeq
-	]	
-	out_data = []
-	for e_data in data:
-		if e_data:
-			out_data.append(e_data)
-		else:
-			out_data.append("-")
-	END.write(
-	   "\t".join(
-	      out_data
-	      )
-	+'\n'
-	)
+        else:
+            cache_data +="\t-"
+
+    cache_data+="\n"
+        
+END.write(cache_data)
+        
+    
 	

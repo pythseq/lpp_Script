@@ -14,36 +14,59 @@
   Created: 2015/3/16
 """
 import os,sys
-sys.path.append(os.path.split(__file__)[0]+'/../Lib/')
+from os.path import abspath
+sys.path.append( os.path.split(abspath(__file__))[0]+'/../Lib/' )
 from lpp import *
 from Dependcy import *
-from sqlalchemy import *
+usage = "python2.7 %prog [options]"
+parser = OptionParser(usage =usage )
+parser.add_option("-d", "--Database", action="store",
+                  dest="DB_FILE",
 
-from sqlalchemy.orm import sessionmaker
+                  help="Database File")
 
 
+parser.add_option("-a", "--ANNO", action="store",
+                  dest="ANNO",
+
+                  help="KEGG Ghostz Aligment Result")
 
 
-db_file = os.path.abspath(sys.argv[1])
-Ddatabase_engine = create_engine(  'sqlite:///%s'%(db_file) )
-Ddatabase_engine.connect()
-Base.metadata.create_all( Ddatabase_engine  )
-Session = sessionmaker( bind = Ddatabase_engine  )
-session = Session()
-KEGG_ANNO_Detail = open(sys.argv[2],'rU')
-KEGG_ANNO_Detail.next()
-for line in KEGG_ANNO_Detail:
-	line_l = line[:-1].split("\t")
-	go_data = get_or_create(session, AnnotationTable,Name = line_l[0].split()[0])
-	go_data.KEGG_Hit = line_l[1].split()[0]
-	go_data.KEGG_Eval = line_l[10]
+parser.add_option("-p", "--PATHWAY", action="store",
+                  dest="PATH",
 
-	session.commit()
-PATHWAY_DETAIL = open(sys.argv[3],'rU')
-PATHWAY_DETAIL.next()
-for line in PATHWAY_DETAIL:
-	line_l = line[:-1].split("\t")
-	go_data = get_or_create(session, AnnotationTable,Name = line_l[0])
-	go_data.KEGG_KO = line_l[1]
-	go_data.KEGG_PATHWAY = line_l[2]
-	session.commit()
+                  help="KEGG Pathway Detail")
+
+if __name__ == '__main__':
+	(options, args) = parser.parse_args()
+
+
+	DB_FILE = open(os.path.abspath(options.DB_FILE),'a')
+	
+	KEGG_ANNO_Detail = open(options.ANNO,'rU')
+	
+	data_hash = Ddict()
+	for line in KEGG_ANNO_Detail:
+		line_l = line[:-1].split("\t")
+		name = line_l[0].split()[0]
+		data_hash[name]["KEGG_Hit"] = line_l[1]+" "+line_l[2]
+		data_hash[name]["KEGG_Eval"] = line_l[-2]
+		data_hash[name]["KEGG_Bit_Score"] = line_l[-1]
+		data_hash[name]["KEGG_Identity"] = line_l[2]
+		data_hash[name]["KEGG_QueryStart"] = line_l[6]
+		data_hash[name]["KEGG_QueryEnd"] = line_l[7]
+		data_hash[name]["KEGG_Mismatch"] = line_l[5]
+		data_hash[name]["KEGG_SubjEnd"] = line_l[9]
+		data_hash[name]["KEGG_SubjStart"] = line_l[8]	
+	
+	
+	PATHWAY_DETAIL = open( options.PATH,'rU')
+	PATHWAY_DETAIL.next()
+	for line in PATHWAY_DETAIL:
+		line_l = line[:-1].split("\t")
+		name = line_l[0].split()[0]
+		data_hash[name]["KEGG_KO"] = line_l[1]
+		data_hash[name]["KEGG_PATHWAY"] = line_l[2]
+	for data in data_hash[name]:
+		data_hash["title"][data] = ""
+	DB_FILE.write(Redis_trans(data_hash))
