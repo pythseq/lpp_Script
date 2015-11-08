@@ -45,7 +45,6 @@ parser.add_option("-g", "--Graph", action="store",
 
 
 (options, args) = parser.parse_args()
-input_path = options.input
 
 all_fastq_file = glob.glob(input_path+"/*.pair1")
 data_file_group = {}
