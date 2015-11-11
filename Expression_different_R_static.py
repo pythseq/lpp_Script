@@ -30,7 +30,11 @@ parser.add_option("-i", "--INPUT", action="store",
 
                   help="input path of expression")
 
+parser.add_option("-p", "--PARAMATER", action="store", 
+                  dest="para", 
+                  default="padj",
 
+                  help="the paramater to do consideration!! padj or pval")
 parser.add_option("-t", "--THRESHOLD", action="store", 
                   type='float',
                   dest="threshold", 
@@ -42,6 +46,11 @@ parser.add_option("-t", "--THRESHOLD", action="store",
 threshold = options.threshold
 
 outputpath   = options.outputpath
+
+para = options.para
+if para not in ["padj","pval"]:
+	raise IOError
+
 
 static_path   = os.path.abspath( options.static_path )+os.sep
 
@@ -116,51 +125,69 @@ for each_matrix in glob.glob(  input_path+'*.'+append  ):
 	
 	r_script = '''#!/usr/bin/Rscript
 # functions
-
-exampleFile = "%s"
-countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE ) 
-
-pdf(file="%s_dis.jpeg",width = 20)
-par(mfrow=c(1,2) )
-plot(
- countsTable$%s,
- countsTable$%s,
- xlab='%s',
- ylab='%s',
- main='%s vs %s',
- pch=20, cex=.1, 
-  )
+require(ggplot2)
+require(ggthemes)
+require(grid)
 
 library( DESeq )
-
+exampleFile = "%(matrix_abspath)s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE ) 
+
+pdf(file="%(out_prefix)s_dis.pdf",width = 20)
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+p<- ggplot(countsTable,aes(%(x_name)s,%(y_name)s))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+=ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
+
+
+print(p, vp = vplayout(1,1))
 
 rownames( countsTable ) <- countsTable$gene  
 countsTable <- countsTable[ , -1 ]
 conds <- c( "T", "N" ) 
 cds <- newCountDataSet( countsTable, conds ) 
-libsizes <- c(%s=%s, %s=%s)
+libsizes <- c(%(x_name)s=%(x_coverage)s, %(x_name)s=%(y_coverage)s)
 sizeFactors(cds) <- libsizes  
 cds <- estimateSizeFactors( cds ) 
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   
 res <- nbinomTest( cds, "T", "N" ) 
+res$Condition = cbind(rep("Not DEGs",nrow(res)))
+res$Condition[res$foldChange>1 | res$%(para)s < %(threshold)s   ]<-"Up regulated gene"
+res$Condition[res$foldChange<1 | res$%(para)s < %(threshold)s  ]<-"Down regulated gene"
+p2<- ggplot(res,aes(baseMean,log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")
+print(p2, vp = vplayout(1,2))
+dev.off()
 
-plotDE <- function( res )
- plot(
- res$baseMean,
- res$log2FoldChange,
- xlab = 'baseMean',
- ylab = 'baseMean',
- main = '%s vs %s Diff',
- 
- log="x", pch=20, cex=.1,
- col = ifelse( res$padj < %s, "red", "black" ) )
- 
- plotDE( res )
- dev.off()
- resSig <- res[ res$padj < %s, ]  
 
- write.table(resSig,row.names=FALSE,file='%s.end',quote=FALSE,sep='\t') '''%( matrix_abspath,end_prefix, x_name,y_name ,x_name,y_name ,x_name,y_name ,x_name,x_coverage,y_name,y_coverage ,y_name ,x_name,threshold,threshold, end_prefix )
+resSig <- res[res$%(para)s < %(threshold)s, ]  
+upSig<- resSig[resSig$foldChange<1,]
+downSig<- resSig[resSig$foldChange<1,]
+write.table(resSig,row.names=FALSE,file='%(out_prefix)s.end',quote=FALSE,sep='\t')
+write.table(upSig,row.names=FALSE,file='%(out_prefix)s_up.end',quote=FALSE,sep='\t')
+write.table(downSig,row.names=FALSE,file='%(out_prefix)s_down.end',quote=FALSE,sep='\t')
+
+dev.new()
+pdf(file="%(out_prefix)s_RPKM.pdf")
+
+p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")
+ggplot_build(p3)
+dev.off()
+
+'''%(
+	   {
+	   "matrix_abspath":matrix_abspath,
+	   "out_prefix":end_prefix,
+	   "x_name":x_name,
+	   "y_name":y_name,
+	   "x_coverage":x_coverage,
+	   "y_coverage":y_coverage,
+	   "para":para,
+	   "threshold":threshold
+	   
+	   }
+	   
+	   
+	    )
 	RSCRIPT = open( end_path+'Deseq.R'   ,'w' )
 	RSCRIPT.write( r_script )
 	RSCRIPT.close()
