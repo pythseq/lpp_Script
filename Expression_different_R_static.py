@@ -162,7 +162,8 @@ print(p2, vp = vplayout(1,2))
 dev.off()
 
 
-resSig <- res[res$%(para)s < %(threshold)s, ]  
+resSig <- res[res$%(para)s < %(threshold)s, ]
+resSig <- resSig[!is.na(res$id), ]
 upSig<- resSig[resSig$foldChange<1,]
 downSig<- resSig[resSig$foldChange<1,]
 write.table(resSig,row.names=FALSE,file='%(out_prefix)s.end',quote=FALSE,sep='\t')
