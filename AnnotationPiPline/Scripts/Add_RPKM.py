@@ -20,10 +20,7 @@ if __name__=="__main__":
 		              dest="dbnum",
 		              type='int',
 		              help="input fastq file")
-	parser.add_option("-b", "--Bed", action="store",
-		              dest="bed",
-		              type='string',
-		              help="bed File")
+
 	
 	parser.add_option("-f", "--fasta_file", action="store",
 		              dest="fasta",
@@ -46,7 +43,7 @@ if __name__=="__main__":
 		              dest="output",
 		              type='string',
 	
-		              help="RPKM output")
+		              help="Output prefix")
 	parser.add_option("-g", "--Graph", action="store",
 		              dest="graph",
 		              type='string',
