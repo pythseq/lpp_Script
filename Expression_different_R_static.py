@@ -154,8 +154,8 @@ cds <- estimateSizeFactors( cds )
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   
 res <- nbinomTest( cds, "T", "N" ) 
 res$Condition = cbind(rep("Not DEGs",nrow(res)))
-res$Condition[res$foldChange>1 | res$%(para)s < %(threshold)s   ]<-"Up regulated gene"
-res$Condition[res$foldChange<1 | res$%(para)s < %(threshold)s  ]<-"Down regulated gene"
+res$Condition[res$foldChange>1 & res$%(para)s < %(threshold)s   ]<-"Up regulated gene"
+res$Condition[res$foldChange<1 & res$%(para)s < %(threshold)s  ]<-"Down regulated gene"
 p2<- ggplot(res,aes(baseMean,log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")
 print(p2, vp = vplayout(1,2))
 dev.off()
