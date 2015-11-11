@@ -108,7 +108,7 @@ if __name__=="__main__":
 	COUNT = open(options.count,'rU')
 	END_COUNT = open(options.output+".count",'w')
 	END_COUNT.write(COUNT.next())
-	for line in END_COUNT:
+	for line in COUNT:
 		line_l = line.split("\t")
 		if line_l[0] in all_has:
 			END_COUNT.write(line)
