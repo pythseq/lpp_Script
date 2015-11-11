@@ -138,6 +138,7 @@ grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 2)))
 
 p<- ggplot(countsTable,aes(%(x_name)s,%(y_name)s))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
+
 vplayout <- function(x,y){
   viewport(layout.pos.row = x, layout.pos.col = y)
 }
@@ -156,7 +157,7 @@ res <- nbinomTest( cds, "T", "N" )
 res$Condition = cbind(rep("Not DEGs",nrow(res)))
 res$Condition[res$foldChange>1 & res$%(para)s < %(threshold)s   ]<-"Up regulated gene"
 res$Condition[res$foldChange<1 & res$%(para)s < %(threshold)s  ]<-"Down regulated gene"
-p2<- ggplot(res,aes(baseMean,log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")
+p2<- ggplot(res,aes(log(baseMean),log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")+scale_colour_manual(values=c("green", "blue", "red"))
 print(p2, vp = vplayout(1,2))
 dev.off()
 
@@ -171,7 +172,7 @@ write.table(downSig,row.names=FALSE,file='%(out_prefix)s_down.end',quote=FALSE,s
 dev.new()
 pdf(file="%(out_prefix)s_RPKM.pdf")
 
-p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")
+p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")+scale_colour_manual(values=c("green", "blue", "red"))
 ggplot_build(p3)
 dev.off()
 
