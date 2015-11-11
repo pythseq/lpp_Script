@@ -137,8 +137,10 @@ pdf(file="%(out_prefix)s_dis.pdf",width = 20)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 2)))
 
-p<- ggplot(countsTable,aes(%(x_name)s,%(y_name)s))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+=ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
-
+p<- ggplot(countsTable,aes(%(x_name)s,%(y_name)s))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
+vplayout <- function(x,y){
+  viewport(layout.pos.row = x, layout.pos.col = y)
+}
 
 print(p, vp = vplayout(1,1))
 
