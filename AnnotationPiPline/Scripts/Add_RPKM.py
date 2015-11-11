@@ -60,7 +60,7 @@ if __name__=="__main__":
 	db_number = options.dbnum
 	r = redis.Redis(host='localhost',port=6379,db=db_number)
 	r.flushall()
-	FB_FILE = open(options,output+"redis",'w')
+	FB_FILE = open(options.output+"redis",'w')
 	FASTA = fasta_check(  open(options.fasta,'rU')  )
 	seq_length = {}
 	seq_data = {}
@@ -88,7 +88,7 @@ if __name__=="__main__":
 	all_has = {}
 	END_FASTA = open(options.output+'.fa','w')
 	
-	for line in RPKM:
+	for line in MATRIX:
 		line_l = line[:-1].split("\t")
 		name = line_l[0]
 		rpkm_data = map(lambda x:float(x)  ,line_l[1:])
