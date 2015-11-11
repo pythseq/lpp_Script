@@ -120,7 +120,7 @@ for each_matrix in glob.glob(  input_path+'*.'+append  ):
 exampleFile = "%s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE ) 
 
-jpeg(file="%s_dis.jpeg",width = 1050,height=480)
+pdf(file="%s_dis.jpeg",width = 20)
 par(mfrow=c(1,2) )
 plot(
  countsTable$%s,
@@ -164,7 +164,7 @@ plotDE <- function( res )
 	RSCRIPT = open( end_path+'Deseq.R'   ,'w' )
 	RSCRIPT.write( r_script )
 	RSCRIPT.close()
-	os.system(  '/usr/bin/Rscript ' +RSCRIPT.name +'&')
+	os.system(  'Rscript ' +RSCRIPT.name +'&')
 	
 	
 

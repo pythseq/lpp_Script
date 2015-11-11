@@ -60,7 +60,7 @@ if __name__=="__main__":
 	db_number = options.dbnum
 	r = redis.Redis(host='localhost',port=6379,db=db_number)
 	r.flushall()
-	FB_FILE = open(options.output+"redis",'w')
+	FB_FILE = open(options.output+".redis",'w')
 	FASTA = fasta_check(  open(options.fasta,'rU')  )
 	seq_length = {}
 	seq_data = {}
