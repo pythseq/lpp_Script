@@ -157,7 +157,7 @@ res <- nbinomTest( cds, "T", "N" )
 res$Condition = cbind(rep("Not DEGs",nrow(res)))
 res$Condition[res$foldChange>1 & res$%(para)s < %(threshold)s   ]<-"Up regulated gene"
 res$Condition[res$foldChange<1 & res$%(para)s < %(threshold)s  ]<-"Down regulated gene"
-p2<- ggplot(res,aes(log(baseMean),log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")+scale_colour_manual(values=c("green", "blue", "red"))+ geom_hline(yintercept=0,col="red")
+p2<- ggplot(res,aes(log2(baseMean),log2FoldChange,col=Condition))+geom_point()+ylab("log2FoldChange")+theme_few()+xlab("baseMean")+ggtitle("%(x_name)s vs %(y_name)s Diff")+scale_colour_manual(values=c("green", "blue", "red"))+ geom_hline(yintercept=0,col="red")+ guides(colour = guide_legend(title = "FDR<0.05 and |log2Foldchange|>=1"))+theme(legend.position=c(.2, .9))+xlim(-2,max(log2(res$baseMean))+1)
 print(p2, vp = vplayout(1,2))
 dev.off()
 
@@ -172,7 +172,7 @@ write.table(downSig,row.names=FALSE,file='%(out_prefix)s_down.end',quote=FALSE,s
 dev.new()
 pdf(file="%(out_prefix)s_RPKM.pdf")
 
-p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")+scale_colour_manual(values=c("green", "blue", "red"))
+p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")+scale_colour_manual(values=c("green", "blue", "red"))+ guides(colour = guide_legend(title = "FDR<0.05 and |log2Foldchange|>=1"))+theme(legend.position=c(.2, .9))+xlim(-2,max(log10(res$baseMean))+1)
 ggplot_build(p3)
 dev.off()
 
