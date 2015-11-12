@@ -26,7 +26,7 @@ ggplot_build(aa)
 dev.off()
 
 
-"""%(sys.argv[1],sys.argv[2],sys.argv[2])
+"""%(sys.argv[1],sys.argv[2])
 SCRIPT = open(sys.argv[3],'w')
 SCRIPT.write(commandline)
 SCRIPT.close()
