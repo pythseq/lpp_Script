@@ -42,4 +42,4 @@ END = open("%s.goseq.R"%(end),'w')
 END.write(r_script)
 END.close()
 
-os.system("R --no-save <  %s"%(END.name))
+#os.system("R --no-save <  %s"%(END.name))
