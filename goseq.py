@@ -34,7 +34,7 @@ pvals$padj<-p.adjust(pvals$over_represented_pvalue, method="BH")
 pvals$qvalue <-p.adjust(pvals$over_represented_pvalue, method="fdr")
 
 pvals$gene_num<-rep(length(ALL),nrow(pvals))
-pvals<-pvals[ pvals$under_represented_pvalue<0.05,  ]
+
 pvals<-pvals[c("category","numDEInCat","numInCat","over_represented_pvalue","padj","qvalue","gene_num","term","ontology")]
 colnames(pvals)[4]<-"pvalue"
 pvals<-pvals[order(pvals$qvalue),]
