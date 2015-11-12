@@ -34,11 +34,14 @@ R = open("GO_EnrichmentDraw.R",'w')
 r_script = """
 library(ggplot2)
 require(ggthemes)
-dev.new()
-pdf("GOEnrich.pdf",width=15)
+
+
+
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
+go_data$EnrichFactor = go_data$numDEInCat/go_data$numInCat
+pdf("GOEnrich.pdf",width=15,height=1*height )
 p <- qplot(Situation, term, data=go_data, size=numDEInCat,color=qvalue)
-p + scale_size("numDEInCat")+scale_color_gradientn(colours = rainbow(7))+theme_few()
+p + scale_size("EnrichFactor")+scale_color_gradientn(colours = rainbow(7))+theme_few()
 
 dev.off()
 

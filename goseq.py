@@ -40,4 +40,6 @@ write.table(enriched_go,"%(out)s.go_enrich",sep="\t",row.names=FALSE,quote=FALSE
 
 END = open("goseq.R",'w')
 END.write(r_script)
+END.close()
+
 os.system("R --no-save <  %s"%(END.name))
