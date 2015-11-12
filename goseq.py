@@ -37,7 +37,7 @@ pvals$gene_num<-rep(length(ALL),nrow(pvals))
 
 pvals<-pvals[c("category","numDEInCat","numInCat","over_represented_pvalue","padj","qvalue","gene_num","term","ontology")]
 colnames(pvals)[4]<-"pvalue"
-pvals<-pvals[order(pvals$qvalue),]
+pvals<-pvals[order(pvals$numDEInCat/pvals$numInCat,decreasing=T),]
 
 enriched_go<-pvals[pvals$qvalue<.05  ,]
 
