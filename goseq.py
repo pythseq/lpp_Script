@@ -28,12 +28,12 @@ names(gene_length.vector)<-length_info[,1]
 gene_length2<-gene_length.vector[names(gene_length.vector)%in%names(gene.vector)]
 pwf=nullp(gene.vector,bias.data=gene_length2,plot.fit=FALSE)
 pvals <- goseq(pwf,gene2cat=go)
-pvals$qvalue<-p.adjust(pvals$over_represented_pvalue, method="BH")
+pvals$qvalue<-p.adjust(pvals$under_represented_pvalue, method="BH")
 pvals$gene_num<-rep(length(ALL),nrow(pvals))
 pvals<-pvals[c("category","numDEInCat","numInCat","under_represented_pvalue","qvalue","gene_num","term","ontology")]
 colnames(pvals)[4]<-"pvalue"
 pvals<-pvals[order(pvals$qvalue),]
-enriched_go<-pvals[pvals$qvalue<.03,]
+enriched_go<-pvals[pvals$qvalue<.05,]
 
 write.table(enriched_go,"%(out)s.go_enrich",sep="\t",row.names=FALSE,quote=FALSE)
 """.replace("%(go)s",go).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
