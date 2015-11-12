@@ -10,7 +10,7 @@ from lpp import *
 ALL_Data = open(sys.argv[1],'rU')
 UP = open( sys.argv[2],'rU')
 DOWN = open(sys.argv[3],'rU')
-TMP = open("tmp",'w')
+TMP = open("keggtmp",'w')
 TMP.write(ALL_Data.next()[:-1]+'\tSituation\n')
 sample_name = os.path.split(sys.argv[1])[-1].split('_')[0]
 for line in ALL_Data:
@@ -34,10 +34,8 @@ R = open("KEGG_EnrichmentDraw.R",'w')
 r_script = """
 library(ggplot2)
 require(ggthemes)
-dev.new()
 pdf("KEGGEnrich.pdf",width=15)
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
-go_data$Pathway= go_data$Name
 p <- qplot(Situation, Pathway, data=go_data, size=Diff,color=Q_value)
 p + scale_size("numDEInCat")+scale_color_gradientn(colours = rainbow(7))+scale_colour_gradient(low="red", high="blue")+theme_few()
 
