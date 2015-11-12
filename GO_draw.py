@@ -24,7 +24,7 @@ tiff("%s.tiff",width=50*hei,height = 50 * max( countsTable$numDEInCat  ) ,type="
 ggplot_build(aa)
 dev.off()
 dev.new()
-pdf("%s.pdf",width=15,height = 0.25 * max( countsTable$numDEInCat  ))
+pdf("%s.pdf",width=15,height = 0.1 * max( countsTable$numDEInCat  ))
 ggplot_build(aa)
 dev.off()
 
