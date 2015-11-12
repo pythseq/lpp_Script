@@ -33,12 +33,12 @@ pvals$gene_num<-rep(length(ALL),nrow(pvals))
 pvals<-pvals[c("category","numDEInCat","numInCat","under_represented_pvalue","qvalue","gene_num","term","ontology")]
 colnames(pvals)[4]<-"pvalue"
 pvals<-pvals[order(pvals$qvalue),]
-enriched_go<-pvals[pvals$qvalue<.05,]
+enriched_go<-pvals[pvals$qvalue<.03,]
 
 write.table(enriched_go,"%(out)s.go_enrich",sep="\t",row.names=FALSE,quote=FALSE)
 """.replace("%(go)s",go).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
 
-END = open("goseq.R",'w')
+END = open("%s.goseq.R"%(end),'w')
 END.write(r_script)
 END.close()
 
