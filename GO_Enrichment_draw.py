@@ -42,7 +42,7 @@ go_data$EnrichFactor = go_data$numDEInCat/go_data$numInCat
 height = length(levels(go_data$category))
 pdf("GOEnrich.pdf",width=15,height=0.2*height )
 p <- qplot(Situation, term, data=go_data, size=numDEInCat,color=qvalue)
-p + scale_size("EnrichFactor")+scale_color_gradientn(colours = rainbow(7))+theme_few()
+p + scale_size("EnrichFactor")+scale_color_gradientn(colours = rainbow(7))+theme_few()+facet_grid(.~ontology,scales="free_y",space="free")
 
 dev.off()
 
