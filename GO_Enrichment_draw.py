@@ -18,7 +18,7 @@ for line in ALL_Data:
     
 
 
-sample_name = os.path.split(sys.argv[2])[-1].split('_')[0]
+sample_name = os.path.split(sys.argv[2])[-1].split('.')[0]
 UP.next()
 for line in UP:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
@@ -40,7 +40,7 @@ require(ggthemes)
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
 go_data$EnrichFactor = go_data$numDEInCat/go_data$numInCat
 height = length(levels(go_data$category))
-pdf("GOEnrich.pdf",width=15,height=1*height )
+pdf("GOEnrich.pdf",width=15,height=0.5*height )
 p <- qplot(Situation, term, data=go_data, size=numDEInCat,color=qvalue)
 p + scale_size("EnrichFactor")+scale_color_gradientn(colours = rainbow(7))+theme_few()
 
