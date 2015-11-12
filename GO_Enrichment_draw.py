@@ -40,7 +40,7 @@ require(ggthemes)
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
 go_data$EnrichFactor = go_data$numDEInCat/go_data$numInCat
 height = length(levels(go_data$category))
-width = 5 *lengh(levels(go_data$Situation))
+width = 5 *length(levels(go_data$Situation))
 pdf("GOEnrich.pdf",width=width,height=0.2*height )
 p <- qplot(Situation, term, data=go_data, size=EnrichFactor,color=qvalue)
 p + scale_size("EnrichFactor")+scale_color_gradientn(colours = rainbow(7))+theme_few()+facet_grid(.~ontology,scales="free_x",space="free")
