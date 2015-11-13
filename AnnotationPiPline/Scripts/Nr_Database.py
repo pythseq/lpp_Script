@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	for line in NR_ANNO_DETAIL:
 		line_l = line[:-1].split("\t")
 		name = line_l[0].split()[0]
-		data_hash[name]["Nr_Hit"] = line_l[1]+" "+line_l[2]
+		6[name]["Nr_Hit"] = line_l[1]+" "+line_l[2]
 		data_hash[name]["Nr_Eval"] = line_l[-2]
 		data_hash[name]["Nr_Bit_Score"] = line_l[-1]
 		data_hash[name]["Nr_Identity"] = line_l[2]
