@@ -37,8 +37,10 @@ require(ggthemes)
 
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
 height = length( levels( go_data$Pathway  )  )/2
+go_data$EnrichFactor <- go_data$Diff / go_data$All
 pdf("KEGGEnrich.pdf",width=15,height= height)
-p <- qplot(Situation, Pathway, data=go_data, size=Diff,color=Q_value)
+
+p <- qplot(Situation, Pathway, data=go_data, size=EnrichFactor,color=Q_value)
 p + scale_size("numDEInCat")+scale_colour_gradient(low="red", high="blue")+theme_few()
 
 dev.off()
