@@ -6,7 +6,7 @@
 from lpp import *
 RAW = open( sys.argv[1] )
 END = open(sys.argv[1]+'.top1','w')
-
+END.write(RAW.next())
 		
 already = Ddict()
 for line in RAW:
