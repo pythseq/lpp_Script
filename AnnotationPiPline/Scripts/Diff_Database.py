@@ -26,7 +26,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     data_hash = Ddict()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'a')
-    for a,b,c in os.walk(opions.Path):
+    for a,b,c in os.walk(options.Path):
         for e_f in c:
             if e_f.endswith(".end") and "_up" not in e_f and "_down" not in e_f:
                 condition_name = "Compare "+e_f.split(".")[0].replace("__"," vs ")
