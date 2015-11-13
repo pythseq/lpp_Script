@@ -41,7 +41,7 @@ go_data$EnrichFactor <- go_data$Diff / go_data$All
 pdf("KEGGEnrich.pdf",width=15,height= height)
 
 p <- qplot(Situation, Pathway, data=go_data, size=EnrichFactor,color=Q_value)
-p + scale_size("numDEInCat")+scale_colour_gradient(low="red", high="blue")+theme_few()
+p +scale_colour_gradient(low="red", high="blue")+theme_few()
 
 dev.off()
 
