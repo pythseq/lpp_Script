@@ -26,7 +26,7 @@ parser.add_option("-n", "--Nt", action="store",
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	DB_FILE = open( os.path.abspath(options.DB_FILE),'a')
-	
+	data_hash = Ddict()
 	NR_ANNO_DETAIL = open(   os.path.abspath(  options.NT ),'rU'   ) 
 	NR_ANNO_DETAIL.next()
 	for line in NR_ANNO_DETAIL:
