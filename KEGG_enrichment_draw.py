@@ -12,20 +12,20 @@ UP = open( sys.argv[2],'rU')
 DOWN = open(sys.argv[3],'rU')
 TMP = open("keggtmp",'w')
 TMP.write(ALL_Data.next()[:-1]+'\tSituation\n')
-sample_name = os.path.split(sys.argv[1])[-1].split('_')[0]
+sample_name = os.path.split(sys.argv[1])[-1].split('.')[0]
 for line in ALL_Data:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
     
 
 
-sample_name = os.path.split(sys.argv[2])[-1].split('_')[0]
+sample_name = os.path.split(sys.argv[2])[-1].split('.')[0]
 UP.next()
 for line in UP:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
     
     
     
-sample_name = os.path.split(sys.argv[3])[-1].split('_')[0]
+sample_name = os.path.split(sys.argv[3])[-1].split('.')[0]
 DOWN.next()
 for line in DOWN:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
