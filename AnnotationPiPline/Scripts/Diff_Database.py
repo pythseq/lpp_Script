@@ -49,7 +49,8 @@ if __name__ == '__main__':
                     
                     
                     
-    
+    for data in data_hash[name]:
+        data_hash["title"][data] = ""    
     DB_FILE.write(Redis_trans(data_hash))
 
 
