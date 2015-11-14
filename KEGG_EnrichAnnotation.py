@@ -8,7 +8,7 @@
 
 import os,sys
 from os.path import abspath
-
+from optparse import OptionParser
 from lpp import *
 
 usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
