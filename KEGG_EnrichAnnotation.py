@@ -48,8 +48,9 @@ if __name__ == '__main__':
                         pathway_gene[line_l[1]][line_l[0]] = ""
                 SIG = open(e_path+'/'+condit_name+".PathwaySig.sigend",'rU')
                 END = open(e_path+'/'+condit_name+".Pathway_EnrichAnnotation.xls",'w')
-                END.write("PathwayID\tPathwayName\tUnigene"+title_anno)
+                END.write("\tPathwayID\tPathwayName\tUnigene"+title_anno)
                 for line in SIG:
+                    print(line)
                     line_l = line.split("\t")
                     pathway_id,pathway_name = line_l[:2]
                     for each_gene in pathway_gene[pathway_id]:
