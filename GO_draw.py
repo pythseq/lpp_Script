@@ -18,10 +18,12 @@ exampleFile = "%s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
 
 hei<-length(levels(countsTable$term))
+
+pdf("%s.pdf", width = 0.25*hei ,height=16)
 bb <-ggplot(countsTable,aes(term,numDEInCat))
-aa<-bb+facet_grid(.~ontology,scales="free_x",space="free")+theme_few()+geom_bar(aes(fill=ontology,position="dodge",order=numDEInCat),stat="identity")+theme(legend.position="none",axis.text.x=element_text(angle=75,hjust=1.0,size=12),axis.title.y = element_text(size = 18),strip.text.x = element_text(size=30,color="darkred",face="bold")  )+ylab("Gene Number")
-pdf("%s.pdf", width = 0.15*hei ,height=16)
-ggplot_build(aa)
+aa<-bb+facet_grid(.~ontology,scales="free_x",space="free")+scale_y_continuous(trans='log')+theme_few()+geom_bar(aes(fill=ontology,position="dodge",order=numDEInCat),stat="identity")+theme(legend.position="none",axis.text.x=element_text(angle=75,hjust=1.0,size=12),axis.title.y = element_text(size = 18),strip.text.x = element_text(size=30,color="darkred",face="bold")  )+ylab("Gene Number")
+
+
 dev.off()
 
 
