@@ -40,18 +40,18 @@ parser.add_option("-o", "--OUTPUT", action="store",
 if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
-    data_all = open( options.DB_FILE,'rU' ).read()
-    data_all = re.sub("\r\n","\n",data_all)
-    data_all = re.sub("\n","\r\n",data_all)
-    CACHE = open("cache.redis",'w')
-    CACHE.write(data_all)
+    #data_all = open( options.DB_FILE,'rU' ).read()
+    #data_all = re.sub("\r\n","\n",data_all)
+    #data_all = re.sub("\n","\r\n",data_all)
+    #CACHE = open("cache.redis",'w')
+    #CACHE.write(data_all)
     END = open(options.output,'w')
     out_title = ["Name","Function","Seq_Nucleotide","Seq_Nucl_Length"]
     db_number = options.db_num
     
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     r.flushall()
-    os.system(" cat %s  | redis-cli  -n %s --pipe" %(  CACHE.name, db_number ))
+    os.system(" cat %s  | redis-cli  -n %s --pipe" %(  options.DB_FILE, db_number ))
     for key in sorted(r.hgetall("title")):
         if key not in out_title:
             out_title.append(key)
