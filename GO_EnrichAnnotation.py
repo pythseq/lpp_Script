@@ -36,7 +36,7 @@ if __name__ == '__main__':
             if e_f.endswith(".go"):
                 
                 condit_name = e_f.split(".")[0]
-                out_path_name = e_f+'/'+condit_name+'/'
+                out_path_name = e_path+'/'+condit_name+'/'
                 if not os.path.exists(out_path_name):
                     os.makedirs(out_path_name)
                 go_gene = Ddict()
