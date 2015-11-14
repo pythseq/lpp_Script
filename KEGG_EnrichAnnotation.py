@@ -44,7 +44,7 @@ if __name__ == '__main__':
                 pathway_gene = Ddict()
                 for line in PATHWAY:
                     line_l = line.split("\t")
-                    if line_l[0] in gene:
+                    if line_l[0] in all_need_gene:
                         pathway_gene[line_l[1]][line_l[0]] = ""
                 SIG = open(e_path+'/'+condit_name+".PathwaySig.sigend",'rU')
                 SIG.next()
