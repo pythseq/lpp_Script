@@ -26,7 +26,7 @@ if __name__ == '__main__':
     ANNO = open(options.Anno,'rU')
     title_anno = ANNO.next().split("\t",1)[1]
     annotation_hash  = {}
-    for line in title_anno:
+    for line in ANNO:
         unigene,other = line.split("\t",1)
         annotation_hash[unigene] = other
         
