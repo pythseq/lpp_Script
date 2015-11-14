@@ -46,7 +46,7 @@ if __name__ == '__main__':
     #CACHE = open("cache.redis",'w')
     #CACHE.write(data_all)
     END = open(options.output,'w')
-    out_title = ["Name","Function","Seq_Nucleotide","Seq_Nucl_Length"]
+    out_title = ["Name","Function","Sequence","Sequence_Length"]
     db_number = options.db_num
     
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
@@ -61,7 +61,8 @@ if __name__ == '__main__':
         
         if key =="title":
             continue
-        cache_data +=key
+        
+        cache_data=key
     
         for key2 in out_title[1:]:
             if key2 in r.hgetall(key):
@@ -72,7 +73,7 @@ if __name__ == '__main__':
     
         cache_data+="\n"
             
-    END.write(cache_data)
+        END.write(cache_data)
 
     
 	
