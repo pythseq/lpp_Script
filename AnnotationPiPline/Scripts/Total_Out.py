@@ -57,7 +57,7 @@ if __name__ == '__main__':
             out_title.append(key)
     END.write("\t".join(out_title)+'\n')
     cache_data = ""
-    for key in r:
+    for key in r.keys():
         
         if key =="title":
             continue
