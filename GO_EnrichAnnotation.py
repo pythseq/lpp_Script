@@ -33,27 +33,27 @@ if __name__ == '__main__':
         
     for e_path,paths,files in os.walk(options.PATH):
         for e_f in files:
-            if e_f.endswith(".m4"):
+            if e_f.endswith(".go"):
+                
                 condit_name = e_f.split(".")[0]
-                all_need_gene ={}
-                for line in open(   e_path+'/'+e_f ,'rU'):
-                    gene = line.split()[0]
+                out_path_name = e_f+'/'+condit_name+'/'
+                if not os.path.exists(out_path_name):
+                    os.makedirs(out_path_name)
+                go_gene = Ddict()
+                GO = open(e_path+'/'+e_f,'rU')
+                for line in GO:
+                    line_l = line.strip().split("\t")
+                    go_gene[line_l[-1]][line_l[0]] = ""
                     
-                    all_need_gene[gene] = ""
-                PATHWAY = open( e_path+"/"+condit_name+"_Pathway.tsv")
-                pathway_gene = Ddict()
-                for line in PATHWAY:
-                    line_l = line.split("\t")
-                    if line_l[0] in gene:
-                        pathway_gene[line_l[1]][line_l[0]] = ""
-                SIG = open(e_path+'/'+condit_name+".PathwaySig.sigend",'rU')
-                END = open(e_path+'/'+condit_name+".Pathway_EnrichAnnotation.xls",'w')
-                END.write("PathwayID\tPathwayName\tUnigene"+title_anno)
+                END = open(out_path_name+'/'+condit_name+".EnrichGO_Annotation.xls",'w')
+                END.write("GOID\tDescription\tUnigene\t"+title_anno)
+                SIG = open(  e_path+'/'+condit_name+ "_go_enrich.tsv",'rU'  )
+
                 for line in SIG:
                     line_l = line.split("\t")
-                    pathway_id,pathway_name = line_l[:2]
-                    for each_gene in pathway_gene[pathway_id]:
-                        out_cache = [ pathway_id,pathway_name,each_gene,annotation_hash[each_gene]  ]
+                    go_id,go_name = line_l[0],line_l[-2]
+                    for each_gene in go_gene[go_id]:
+                        out_cache = [ go_id,go_name,each_gene,annotation_hash[each_gene]  ]
                         END.write('\t'.join(  out_cache  )  )
                         
                         

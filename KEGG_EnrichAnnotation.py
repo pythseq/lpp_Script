@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 SIG.next()
                 END = open(e_path+'/'+condit_name+".Pathway_EnrichAnnotation.xls",'w')
                 END.write("PathwayID\tPathwayName\tUnigene\t"+title_anno)
-                print(pathway_gene)
+                
                 for line in SIG:
                     
                     line_l = line.split("\t")
