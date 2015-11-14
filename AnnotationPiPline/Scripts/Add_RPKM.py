@@ -97,6 +97,7 @@ if __name__=="__main__":
 			all_has[name]=""
 			END_FASTA.write('>'+name+'\n'+seq_data[name]+'\n')
 			data_hash[name]["Sequence"] = seq_data[name]
+			data_hash[name]["Sequence_Length"] = str(len(seq_data[name]))
 			
 			bed_cache = [ line_l[0],"0",str(seq_length[ line_l[0] ]-1),line_l[0],"0","+","0",str(seq_length[ line_l[0] ]-1),"0","1" , str(seq_length[ line_l[0] ]),"0" ]
 			BED.write('\t'.join(bed_cache)+'\n')
