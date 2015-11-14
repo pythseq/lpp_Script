@@ -113,6 +113,7 @@ if __name__=="__main__":
 		line_l = line.split("\t")
 		if line_l[0] in all_has:
 			END_COUNT.write(line)
+			name = line_l[0]
 			for i in xrange(1,len(line_l)):
 			
 				data_hash[name]["COUNT_"+title_l[i]]=line_l[i]
