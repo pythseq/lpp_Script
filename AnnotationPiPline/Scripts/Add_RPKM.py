@@ -110,7 +110,7 @@ if __name__=="__main__":
 	END_COUNT = open(options.output+".count",'w')
 	END_COUNT.write(COUNT.next())
 	for line in COUNT:
-		line_l = line.split("\t")
+		line_l = line.strip().split("\t")
 		if line_l[0] in all_has:
 			END_COUNT.write(line)
 			name = line_l[0]
