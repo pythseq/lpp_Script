@@ -21,7 +21,7 @@ parser.add_option("-o", "--end", action="store",
                   dest="output", 
                   help="OUTPUT Data")
 if __name__ == '__main__':
-
+	(options, args) = parser.parse_args()
 
 	DB_FILE = open(os.path.abspath(options.output)  ,'a')
 	data_hash = Ddict()
