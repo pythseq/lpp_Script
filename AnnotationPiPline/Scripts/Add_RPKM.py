@@ -116,6 +116,7 @@ if __name__=="__main__":
 			for i in xrange(1,len(line_l)):
 			
 				data_hash[name]["COUNT_"+title_l[i]]=line_l[i]
+				print("COUNT_"+title_l[i])
 		
 	for data in data_hash[name]:
 		data_hash["title"][data] = ""	
