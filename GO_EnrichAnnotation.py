@@ -10,7 +10,7 @@ import os,sys
 from os.path import abspath
 
 from lpp import *
-
+from optparse import OptionParser
 usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
 parser = OptionParser(usage =usage ) 
 parser.add_option("-a", "--Anno", action="store", 
