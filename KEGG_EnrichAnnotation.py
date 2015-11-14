@@ -49,7 +49,7 @@ if __name__ == '__main__':
                 SIG = open(e_path+'/'+condit_name+".PathwaySig.sigend",'rU')
                 SIG.next()
                 END = open(e_path+'/'+condit_name+".Pathway_EnrichAnnotation.xls",'w')
-                END.write("\tPathwayID\tPathwayName\tUnigene"+title_anno)
+                END.write("PathwayID\tPathwayName\tUnigene\t"+title_anno)
                 print(pathway_gene)
                 for line in SIG:
                     
