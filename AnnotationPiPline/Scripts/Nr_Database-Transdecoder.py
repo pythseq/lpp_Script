@@ -43,6 +43,7 @@ if __name__ == '__main__':
 		line_l = line[:-1].split("\t")
 		name = line_l[0].split()[0]
 		data_hash[name]["Nr_Hit"] = line_l[1]+" "+line_l[2]
+		data_hash[name]["Function"] = line_l[1]+" "+line_l[2]
 		data_hash[name]["Nr_Eval"] = line_l[-2]
 		data_hash[name]["Nr_Bit_Score"] = line_l[-1]
 		data_hash[name]["Nr_Identity"] = line_l[2]
@@ -51,6 +52,7 @@ if __name__ == '__main__':
 		data_hash[name]["Nr_Mismatch"] = line_l[5]
 		data_hash[name]["Nr_EndSubj"] = line_l[9]
 		data_hash[name]["Nr_StartSubj"] = line_l[8]
+		
 	for data in data_hash[name]:
 		data_hash["title"][data] = ""	
 	DB_FILE.write(Redis_trans(data_hash))
