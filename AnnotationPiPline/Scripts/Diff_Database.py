@@ -44,13 +44,15 @@ if __name__ == '__main__':
                     out_cache.append(pval)
                     out_cache.append(qval)
                     data_hash[name][condition_name]= ' | '.join( out_cache )
+                    data_hash["title"][condition_name]=""
                     new_conname = condition_name+"_"+line_l[-1]
+                    data_hash["title"][new_conname]=""
                     data_hash[name][new_conname]= ' | '.join( out_cache )
                     
                     
                     
-    for data in data_hash[name]:
-        data_hash["title"][data] = ""    
+    #for data in data_hash[name]:
+        #data_hash["title"][data] = ""    
     DB_FILE.write(Redis_trans(data_hash))
 
 
