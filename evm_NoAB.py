@@ -9,7 +9,7 @@
 from lpp import *
 RAW = open(sys.argv[1],'rU')
 END = open(sys.argv[1]+'1','w')
-print(RAW.name)
+
 DATA = RAW.read().split("\n\n")
 title,data = DATA[0].split("\n",1) 
 
