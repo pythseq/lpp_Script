@@ -11,4 +11,11 @@ RAW = open(sys.argv[1],'rU')
 END = open(sys.argv[1]+'1','w')
 
 DATA = RAW.read().split("\n\n")
-print(DATA[0])
+title,data = DATA[0].split("\n",1) 
+END.write(title)
+DATA[0] = data
+for data in DATA:
+    if "Mian" not in data and "GeneWise" not in data:
+        continue
+    END.write(data)
+    
