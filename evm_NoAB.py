@@ -11,4 +11,4 @@ RAW = open(sys.argv[1],'rU')
 END = open(sys.argv[1]+'1','w')
 
 DATA = RAW.read().split("\n\n")
-print(DATA.next())
+print(DATA[0])
