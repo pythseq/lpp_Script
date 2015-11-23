@@ -9,6 +9,6 @@
 from lpp import *
 RAW = open(sys.argv[1],'rU')
 END = open(sys.argv[1]+'1','w')
-END.write(RAW.next())
+
 DATA = RAW.read().split("\n\n")
 print(DATA.next())
