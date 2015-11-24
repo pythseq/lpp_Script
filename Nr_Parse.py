@@ -5,11 +5,11 @@
   Purpose: 
   Created: 2015/3/16
 """
-import os,sys
+
 from os.path import abspath
-sys.path.append( os.path.split(abspath(__file__))[0]+'/../Lib/' )
+
 from lpp import *
-from Dependcy import *
+
 def Redis_trans(data_hash):
     out_data = ""
     if type(data_hash)==type(Ddict()):
