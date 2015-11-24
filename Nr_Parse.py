@@ -7,7 +7,7 @@
 """
 
 from os.path import abspath
-
+from optparse import OptionParser
 from lpp import *
 
 def Redis_trans(data_hash):
