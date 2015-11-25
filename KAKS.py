@@ -40,4 +40,5 @@ if __name__=="__main__":
         ALL_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
     ALL_SEQ.close()
     os.system(  "TransDecoder  --CPU 64  -t %s"%( ALL_SEQ.name  ))
-        
+    os.system( "pagan --seq test.seq  && pagan --ref-seqfile outfile.fas  --ref-treefile outfile.tre  --output-ancestors")
+    os.system("""trimal -in  YKL197C.clw  -fasta |sed -r "s/\s+[0-9]+\s+bp//g" """)
