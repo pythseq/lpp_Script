@@ -35,7 +35,7 @@ if __name__=="__main__":
     table_need = OrthoTable.loc[:,["Ortholog","H.armID","H.armSeq","H.asID","H.asSeq"]]
     Ortholog_Pair = Ddict()
     ALL_SEQ = open(outPATH+"Total.fasta",'w')
-    for i in xrange(1,len(OrthoTable)+1):
+    for i in xrange(0,len(OrthoTable)):
         table_data = OrthoTable.loc[i]
         ALL_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
     ALL_SEQ.close()
