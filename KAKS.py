@@ -36,7 +36,7 @@ if __name__=="__main__":
     Ortholog_Pair = Ddict()
     ALL_SEQ = open(outPATH+"Total.fasta",'w')
     for i in xrange(1,len(OrthoTable)+1):
-        table_data = OrthoTable.loc(i)
+        table_data = OrthoTable.loc[i]
         ALL_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
     ALL_SEQ.close()
     os.system(  "TransDecoder  --CPU 64  -t %s"%( ALL_SEQ.name  ))
