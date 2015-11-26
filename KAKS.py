@@ -67,7 +67,7 @@ def CdsFinder( input_file   ):
                 Ortholog_Pair[orthId]["yanCDS_start"] = data_hash[key][ "start" ]
                 Ortholog_Pair[orthId]["yanCDS_end"] = data_hash[key][ "end" ]
                 Ortholog_Pair[orthId]["yanCDS_frame"] = data_hash[key][ "frame" ]                     
-            END.write('>'+key+'\n'+data_hash[key][ "Seq" ])
+            END.write('>'+key+'\n'+data_hash[key][ "Seq" ]+'\n')
             
             LOC.write( key+'\t'+data_hash[key][ "start"  ]+'\t'+ data_hash[key][ "end"  ]+'\t'+ data_hash[key][ "frame"  ]+'\n')
         return END.name
