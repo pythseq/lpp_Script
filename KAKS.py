@@ -96,21 +96,25 @@ def KaksCal(  input_file  ):
     M_A.write("Mian_vs_Ancestor\n")
     M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     mian_kaks = path+"/Mian_Anc.kaks"
-    os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
+    BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
+    #os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
     RAW = open( mian_kaks,'rU'  )
     RAW.next()
-    Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
+    Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
+    #Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
     
     yan_ances_name = path+"yan_vs_ances.axt"
     Y_A = open( yan_ances_name,'w' )
     Y_A.write("Yan_vs_Ancestor\n")
     Y_A.write(  cache_hash["Ances"]+'\n'+cache_hash["yan"]+'\n'   )
     yan_kaks = path+"/Yan_Anc.kaks"
-    os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, yan_kaks)  ) 
+    #os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
+    BASH.write("KaKs_Calculator  -i %s -o %s \n"%(Y_A.name, yan_kaks) )
     RAW = open( yan_kaks,'rU'  )
     
     RAW.next()
-    Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
+    Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
+    #Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
 
     
 
@@ -138,6 +142,7 @@ if __name__=="__main__":
     outPATH = os.path.abspath(options.output_Path)+'/'
     if not os.path.exists(outPATH):
         os.makedirs(outPATH)
+    BASH = open(outPATH+'run.bash','w')
     OrthoTable = pandas.read_table(options.Table)
     table_need = OrthoTable.loc[:,["Ortholog","H.armID","H.armSeq","H.asID","H.asSeq"]]
     Ortholog_Pair = Ddict()
