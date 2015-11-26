@@ -33,8 +33,8 @@ for line in RAW:
 BASH = open("total_run.sh",'w')
 all_need_bash = []
 for key in bash_hash:
-    all_need_bash.append(   bash_hash[key].name )
-    BASH.write("bash "+bash_hash[key].name+'\n')
+    #all_need_bash.append(   bash_hash[key].name )
+    BASH.write(bash_hash[key].name+'\n')
     
     
 #def run( command):
