@@ -27,6 +27,7 @@ for line in RAW:
     input_hash[num].write(line)
     j+=1
 def run( ( num ,name) ):
+    print( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )   )
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
 #map(run,xrange(0,cpu))
 data_list = []
