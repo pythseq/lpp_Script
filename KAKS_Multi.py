@@ -16,8 +16,9 @@ for i in xrange(0,cpu):
     out_path = os.path.abspath(  "./%s_out/"%(i)  )+'/'
     if not os.path.exists(  out_path):
         os.makedirs( out_path )
-        input_hash[i] = open(out_path+"cache.tsv",'w')
-        input_hash[i].write( title  )
+    input_hash[i] = open(out_path+"cache.tsv",'w')
+    input_hash[i].write( title  )
+
         
 j=0
 for line in RAW:
@@ -25,7 +26,7 @@ for line in RAW:
     num = j%cpu
     input_hash[num].write(line)
     j+=1
-def run(  num ,name ):
+def run( ( num ,name) ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
 #map(run,xrange(0,cpu))
 data_list = []
