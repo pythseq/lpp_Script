@@ -30,22 +30,22 @@ for line in RAW:
     num = j%cpu
     input_hash[num].write(line)
     j+=1
-BASH = open("total_run.sh",'w')
+#BASH = open("total_run.sh",'w')
+all_need_bash = []
 for key in bash_hash:
-    BASH.write(bash_hash[key].name+'\n')
+    all_need_bash.append(  "bash "+ bash_hash[key].name )
+    #BASH.write(bash_hash[key].name+'\n')
     
     
-#def run( ( num ,name) ):
-    #name = name.name
-    #path = os.path.split(os.path.abspath(name))[0]
-    #os.system( "KAKS.py -i %s -o %s/out/"%(  name,path   )  )
-#pool = Pool(cpu)
+def run( command):
+    os.system( command )
+pool = Pool(cpu)
 
 #data_list = []
 #for i in xrange(0,cpu):
     #data_list.append( [ i,  input_hash[i] ]   )
 #map(  run,data_list  )
-#pool.map( run,data_list )
+pool.map( run,data_list )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
