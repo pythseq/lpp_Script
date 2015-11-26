@@ -27,8 +27,8 @@ for line in RAW:
     
 def run(  num ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),input_hash[num].name   )  )
-map(run,xrange(0,cpu))
-#pool.map( run,xrange(0,cpu) )
+#map(run,xrange(0,cpu))
+pool.map( run,xrange(0,cpu) )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
