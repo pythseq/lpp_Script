@@ -168,11 +168,11 @@ def KaksCal(  input_file  ):
         all_filter.extend( xrange(start,end ) )    
     for data in [ cache_hash["Ances"],cache_hash["yan"]   ] :
         data = [ s for s in data  ]
-    for i in all_filter:
-        data[i]='_'        
-    data = ''.join(data)
-    data = data.replace("_","")
-    Y_A.write(data+'\n')
+        for i in all_filter:
+            data[i]='_'        
+            data = ''.join(data)
+            data = data.replace("_","")
+            Y_A.write(data+'\n')
 
     Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
