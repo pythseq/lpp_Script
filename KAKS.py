@@ -6,7 +6,38 @@
   Created: 2015/11/25
 """
 
-from lpp import *
+#from lpp import *
+class Ddict(defaultdict,dict):
+    def __init__(self):
+        defaultdict.__init__(self, Ddict)
+    def __repr__(self):
+        return dict.__repr__(self)
+class fasta_check(object):
+    def __init__(self,file_handle):
+        assert isinstance( file_handle,file ),'The Input paramater must be a File Handle'
+        self.file=iter(file_handle)
+        for line in self.file:
+            if line[0]=='>':
+                self.define=line
+                break
+    def __iter__(self):
+        return self
+    def next(self):
+        if not self.define:
+            raise StopIteration
+
+        name=self.define
+        self.define=''        
+        s=[]
+        for line in self.file:
+            if line[0]!='>':
+                s.append(line)
+            else:
+                self.define=line
+                break
+        s=''.join(s)
+        return (name,s)
+
 import pandas
 from optparse import OptionParser
 def Pagan( input_file  ):
@@ -87,9 +118,9 @@ def KaksCal(  input_file  ):
     cache_hash = {}
     for t,s in fasta_check( open( output_trimed,'rU'  )  ):
         s = re.sub("\s+", '', s)
-        if "mian" in t:
+        if "mian" in t or "M_" in t or "HARM_" in t:
             cache_hash["mian"] = s
-        elif "yan" in t:
+        elif "yan" in t or "M_" in t or "HAS_" in t:
             cache_hash["yan"] = s
         else:
             cache_hash["Ances"] = s
@@ -99,24 +130,24 @@ def KaksCal(  input_file  ):
     M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     mian_kaks = path+"/Mian_Anc.kaks"
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
-    #os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
-    #RAW = open( mian_kaks,'rU'  )
-    #RAW.next()
-    Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
-    #Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
+    os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
+    RAW = open( mian_kaks,'rU'  )
+    RAW.next()
+    #Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
+    Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
     
     yan_ances_name = path+"yan_vs_ances.axt"
     Y_A = open( yan_ances_name,'w' )
     Y_A.write("Yan_vs_Ancestor\n")
     Y_A.write(  cache_hash["Ances"]+'\n'+cache_hash["yan"]+'\n'   )
     yan_kaks = path+"/Yan_Anc.kaks"
-    #os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
+    os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(Y_A.name, yan_kaks) )
-    #RAW = open( yan_kaks,'rU'  )
+    RAW = open( yan_kaks,'rU'  )
     
-    #RAW.next()
-    Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
-    #Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
+    RAW.next()
+    #Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
+    Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
 
     
 
