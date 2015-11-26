@@ -7,7 +7,7 @@
 """
 from lpp import *
 from multiprocessing import Pool
-cpu = 32
+cpu = 2
 pool = Pool(cpu)
 RAW = open(sys.argv[1],'rU')
 title = RAW.next()
