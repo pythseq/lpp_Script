@@ -73,6 +73,8 @@ def CdsFinder( input_file   ):
             name = t[1:].split("|")[0]
             [(start,end,frame)] = re.findall( "\:(\d+)\-(\d+)\((\S)\)",t  )
             if name not in data_hash:
+                if s[-3:] in ["TAA","TAG","TGA"]:
+                    s = s[:-3]
                 data_hash[ name ]["Seq"] = s
                 data_hash[ name ]["start"]=start
                 data_hash[ name ]["end"]=end
@@ -129,7 +131,19 @@ def KaksCal(  input_file  ):
     mian_ances_name = path+"mian_vs_ances.axt"
     M_A = open( mian_ances_name,'w' )
     M_A.write("Mian_vs_Ancestor\n")
-    M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
+    all_filter = []
+    for loc_iter in re.finditer("\-+", cache_hash["Ances"] ):
+        start,end = loc_iter.span()
+        all_filter.extend( xrange(start,end ) )
+    for loc_iter in re.finditer("\-+", cache_hash["mian"] ):
+        start,end = loc_iter.span()
+        all_filter.extend( xrange(start,end ) )    
+        for data in [ cache_hash["Ances"],cache_hash["mian"]   ] :
+            for i in all_filter:
+                data[i]='_'
+            data = data.replace("_","")
+            M_A.write(data+'\n')    
+    #M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     M_A.close()
     mian_kaks = path+"/Mian_Anc.kaks"
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
@@ -143,7 +157,19 @@ def KaksCal(  input_file  ):
     yan_ances_name = path+"yan_vs_ances.axt"
     Y_A = open( yan_ances_name,'w' )
     Y_A.write("Yan_vs_Ancestor\n")
-    Y_A.write(  cache_hash["Ances"]+'\n'+cache_hash["yan"]+'\n'   )
+    all_filter = []
+    for loc_iter in re.finditer("\-+", cache_hash["Ances"] ):
+        start,end = loc_iter.span()
+        all_filter.extend( xrange(start,end ) )
+    for loc_iter in re.finditer("\-+", cache_hash["yan"] ):
+        start,end = loc_iter.span()
+        all_filter.extend( xrange(start,end ) )    
+    for data in [ cache_hash["Ances"],cache_hash["yan"]   ] :
+        for i in all_filter:
+            data[i]='_'
+        data = data.replace("_","")
+        Y_A.write(data+'\n')
+
     Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
     os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
