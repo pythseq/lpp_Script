@@ -35,8 +35,8 @@ pool = Pool(cpu)
 data_list = []
 for i in xrange(0,cpu):
     data_list.append( [ i,  input_hash[i] ]   )
-map(  run,data_list  )
-#pool.map( run,data_list )
+#map(  run,data_list  )
+pool.map( run,data_list )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
