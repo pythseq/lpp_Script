@@ -12,7 +12,7 @@ RAW = open(sys.argv[1],'rU')
 title = RAW.next()
 input_hash = {}
 for i in xrange(0,64):
-    out_path = os.path.abspath(  "./%s_out/"%(i)  )
+    out_path = os.path.abspath(  "./%s_out/"%(i)  )+'/'
     if not os.path.exists(  out_path):
         os.makedirs( out_path )
         input_hash[i] = open(out_path+"cache.tsv",'w')
@@ -26,7 +26,7 @@ for line in RAW:
     
 def run(  num ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),input_hash[num].name   )  )
-    
-pool.map(run,xrange(0,64))
+map(run,xrange(0,64))
+#pool.map(run,xrange(0,64))
         
     
