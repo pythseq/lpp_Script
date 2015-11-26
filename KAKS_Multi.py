@@ -29,7 +29,7 @@ def run(  num ,name ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
 #map(run,xrange(0,cpu))
 data_list = []
-for i in xrange(0,64):
+for i in xrange(0,cpu):
     data_list.append( [ i,  input_hash[i] ]   )
 map(  run,data_list  )
 #pool.map( run,data_list )
