@@ -21,7 +21,7 @@ for i in xrange(0,cpu):
     input_hash[i].write( title  )
     
     bash_hash[i] =  open(out_path+"run.sh",'w')
-    bash_hash[i].write( "KAKS.py -i %s -o %s/out/"%(  input_hash[i].name,out_path   )   )
+    bash_hash[i].write( "KAKS.py -i %s -o %s/out/&"%(  input_hash[i].name,out_path   )   )
     bash_hash[i].close()
         
 j=0
@@ -44,19 +44,19 @@ pool = Pool(cpu)
 #data_list = []
 #for i in xrange(0,cpu):
     #data_list.append( [ i,  input_hash[i] ]   )
-#map(  run,all_need_bash  )
-pool.map( run,all_need_bash )
-output_path = os.path.abspath( sys.argv[2] )
-if  not os.path.exists(output_path):
-    os.makedirs(output_path)
-END= open(output_path+'/KAKS_Result.tsv','w')
+map(  run,all_need_bash  )
+#pool.map( run,all_need_bash )
+#output_path = os.path.abspath( sys.argv[2] )
+#if  not os.path.exists(output_path):
+    #os.makedirs(output_path)
+#END= open(output_path+'/KAKS_Result.tsv','w')
 
-END.write(open( out_path+'out/KAKS_Result.tsv','rU').next() )
+#END.write(open( out_path+'out/KAKS_Result.tsv','rU').next() )
 
-for i in xrange(0,cpu):
-    RAW = open( out_path+'out/KAKS_Result.tsv','rU'  )
-    RAW.next()
-    for line in RAW:
-        END.write(line)
+#for i in xrange(0,cpu):
+    #RAW = open( out_path+'out/KAKS_Result.tsv','rU'  )
+    #RAW.next()
+    #for line in RAW:
+        #END.write(line)
         
     
