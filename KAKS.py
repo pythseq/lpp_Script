@@ -29,7 +29,7 @@ def Pagan( input_file  ):
             return s
         
 def CdsFinder( input_file   ):
-    path = os.split(input_file)[0]+'/'
+    path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
     os.system(" TransDecoder -t %s"%(input_file))
     CDS = fasta_check(open( "%s.transdecoder.cds",'rU'  ))
