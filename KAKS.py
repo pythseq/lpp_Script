@@ -98,8 +98,8 @@ def KaksCal(  input_file  ):
     mian_kaks = path+"/Mian_Anc.kaks"
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
     #os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
-    RAW = open( mian_kaks,'rU'  )
-    RAW.next()
+    #RAW = open( mian_kaks,'rU'  )
+    #RAW.next()
     Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
     #Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
     
@@ -110,9 +110,9 @@ def KaksCal(  input_file  ):
     yan_kaks = path+"/Yan_Anc.kaks"
     #os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(Y_A.name, yan_kaks) )
-    RAW = open( yan_kaks,'rU'  )
+    #RAW = open( yan_kaks,'rU'  )
     
-    RAW.next()
+    #RAW.next()
     Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
     #Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
 
