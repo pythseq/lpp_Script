@@ -151,10 +151,13 @@ def KaksCal(  input_file  ):
     BASH.write("KaKs_Calculator  -i %s -o %s  -m NG \n"%(M_A.name, mian_kaks) )
     os.system(  "KaKs_Calculator  -i %s -o %s  -m NG 1>/dev/null 2>/dev/null "%(M_A.name, mian_kaks)  )
     #print("KaKs_Calculator  -i %s -o %s  "%(M_A.name, mian_kaks))
-    RAW = open( mian_kaks,'rU'  )
-    RAW.next()
-    #Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
-    Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
+    if not os.path.getsize( mian_kaks  ):
+        RAW = open( mian_kaks,'rU'  )
+        RAW.next()
+        #Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
+        Ortholog_Pair[orthId]["KA/KS Harm"] = RAW.next().split("\t")[4]
+    else:
+        Ortholog_Pair[orthId]["KA/KS Harm"] = "Failed"
     
     yan_ances_name = path+"yan_vs_ances.axt"
     Y_A = open( yan_ances_name,'w' )
@@ -178,11 +181,14 @@ def KaksCal(  input_file  ):
     yan_kaks = path+"/Yan_Anc.kaks"
     os.system(  "KaKs_Calculator  -i %s -o %s -m NG 1>/dev/null 2>&1 "%(Y_A.name, yan_kaks)  ) 
     BASH.write("KaKs_Calculator  -i %s -o %s  -m NG\n"%(Y_A.name, yan_kaks) )
-    RAW = open( yan_kaks,'rU'  )
-    
-    RAW.next()
-    #Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
-    Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]        
+    if not  os.path.getsize( yan_kaks ):
+        RAW = open( yan_kaks,'rU'  )
+        
+        RAW.next()
+        #Ortholog_Pair[orthId]["KA/KS Has"] = "Waiting!!"    
+        Ortholog_Pair[orthId]["KA/KS Has"] = RAW.next().split("\t")[4]    
+    else:
+        Ortholog_Pair[orthId]["KA/KS Has"] ="Failed"
 
     
 
