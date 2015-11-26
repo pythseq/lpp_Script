@@ -148,8 +148,8 @@ def KaksCal(  input_file  ):
     #M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     M_A.close()
     mian_kaks = path+"/Mian_Anc.kaks"
-    BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
-    os.system(  "KaKs_Calculator  -i %s -o %s 1 -m NG 1>/dev/null 2>/dev/null "%(M_A.name, mian_kaks)  )
+    BASH.write("KaKs_Calculator  -i %s -o %s  -m NG \n"%(M_A.name, mian_kaks) )
+    os.system(  "KaKs_Calculator  -i %s -o %s  -m NG 1>/dev/null 2>/dev/null "%(M_A.name, mian_kaks)  )
     #print("KaKs_Calculator  -i %s -o %s  "%(M_A.name, mian_kaks))
     RAW = open( mian_kaks,'rU'  )
     RAW.next()
@@ -176,8 +176,8 @@ def KaksCal(  input_file  ):
 
     Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
-    os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
-    BASH.write("KaKs_Calculator  -i %s -o %s \n"%(Y_A.name, yan_kaks) )
+    os.system(  "KaKs_Calculator  -i %s -o %s -m NG 1>/dev/null 2>&1 "%(Y_A.name, yan_kaks)  ) 
+    BASH.write("KaKs_Calculator  -i %s -o %s  -m NG\n"%(Y_A.name, yan_kaks) )
     RAW = open( yan_kaks,'rU'  )
     
     RAW.next()
