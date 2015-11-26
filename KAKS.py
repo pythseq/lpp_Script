@@ -132,7 +132,8 @@ def KaksCal(  input_file  ):
     M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     mian_kaks = path+"/Mian_Anc.kaks"
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
-    os.system(  "KaKs_Calculator  -i %s -o %s "%(M_A.name, mian_kaks)  )
+    os.system(  "KaKs_Calculator  -i %s -o %s  "%(M_A.name, mian_kaks)  )
+    print("KaKs_Calculator  -i %s -o %s  "%(M_A.name, mian_kaks))
     RAW = open( mian_kaks,'rU'  )
     RAW.next()
     #Ortholog_Pair[orthId]["KA/KS Harm"] = "Waiting"
