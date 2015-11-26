@@ -139,6 +139,7 @@ def KaksCal(  input_file  ):
         start,end = loc_iter.span()
         all_filter.extend( xrange(start,end ) )    
         for data in [ cache_hash["Ances"],cache_hash["mian"]   ] :
+            data = [ s for s in data  ]
             for i in all_filter:
                 data[i]='_'
             data = data.replace("_","")
@@ -165,8 +166,10 @@ def KaksCal(  input_file  ):
         start,end = loc_iter.span()
         all_filter.extend( xrange(start,end ) )    
     for data in [ cache_hash["Ances"],cache_hash["yan"]   ] :
+        data = [ s for s in data  ]
         for i in all_filter:
-            data[i]='_'
+            data[i]='_'        
+
         data = data.replace("_","")
         Y_A.write(data+'\n')
 
