@@ -31,7 +31,7 @@ def Pagan( input_file  ):
 def CdsFinder( input_file   ):
     path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
-    os.system(" TransDecoder -t %s"%(input_file))
+    os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null"%(input_file))
     CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))
     for t,s in CDS:
         name = t[1:].split("|")[0]
@@ -75,7 +75,7 @@ def CdsFinder( input_file   ):
     
 def KaksCal(  input_file  ):
     global Ortholog_Pair
-    output = input_file.replace(".cds",".cds.maff",'w')
+    output = input_file.replace(".cds",".cds.maff")
     path = os.split(input_file)[0]+'/'
     os.system("pagan --seq %s --threads 64 --silent -o %s   "  %(  input_file, output ))
     output_trimed = output+"_trimed"
