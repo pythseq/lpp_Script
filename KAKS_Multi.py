@@ -34,6 +34,7 @@ BASH = open("total_run.sh",'w')
 all_need_bash = []
 for key in bash_hash:
     #all_need_bash.append(   bash_hash[key].name )
+    os.system(  "bash "+ bash_hash[key]  )
     BASH.write(bash_hash[key].name+'\n')
     
     
