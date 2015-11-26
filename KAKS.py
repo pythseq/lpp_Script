@@ -130,6 +130,7 @@ def KaksCal(  input_file  ):
     M_A = open( mian_ances_name,'w' )
     M_A.write("Mian_vs_Ancestor\n")
     M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
+    M_A.close()
     mian_kaks = path+"/Mian_Anc.kaks"
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(M_A.name, mian_kaks) )
     os.system(  "KaKs_Calculator  -i %s -o %s  "%(M_A.name, mian_kaks)  )
@@ -143,6 +144,7 @@ def KaksCal(  input_file  ):
     Y_A = open( yan_ances_name,'w' )
     Y_A.write("Yan_vs_Ancestor\n")
     Y_A.write(  cache_hash["Ances"]+'\n'+cache_hash["yan"]+'\n'   )
+    Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
     os.system(  "KaKs_Calculator  -i %s -o %s "%(Y_A.name, yan_kaks)  ) 
     BASH.write("KaKs_Calculator  -i %s -o %s \n"%(Y_A.name, yan_kaks) )
