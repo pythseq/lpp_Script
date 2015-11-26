@@ -62,6 +62,20 @@ def Pagan( input_file  ):
             return s
         
 def CdsFinder( input_file   ):
+    Ortholog_Pair[orthId]["AncestorCDS"] = '-'
+    Ortholog_Pair[orthId]["AncestorCDS_start"] = '-'
+    Ortholog_Pair[orthId]["AncestorCDS_end"] = '-'
+    Ortholog_Pair[orthId]["AncestorCDS_frame"] = '-'
+    Ortholog_Pair[orthId]["mianCDS"] = '-'
+    Ortholog_Pair[orthId]["mianCDS_end"] = '-'
+    Ortholog_Pair[orthId]["mianCDS_frame"] = '-'  
+    Ortholog_Pair[orthId]["mianCDS_start"] = '-'
+    Ortholog_Pair[orthId]["yanCDS"] = '-'
+    Ortholog_Pair[orthId]["yanCDS_start"] = '-'
+    Ortholog_Pair[orthId]["yanCDS_end"] = '-'
+    Ortholog_Pair[orthId]["yanCDS_frame"] = '-'
+    
+    
     path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
     os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null"%(input_file))
