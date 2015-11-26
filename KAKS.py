@@ -142,6 +142,7 @@ def KaksCal(  input_file  ):
             data = [ s for s in data  ]
             for i in all_filter:
                 data[i]='_'
+            data = ''.join(data)
             data = data.replace("_","")
             M_A.write(data+'\n')    
     #M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
@@ -169,7 +170,7 @@ def KaksCal(  input_file  ):
         data = [ s for s in data  ]
         for i in all_filter:
             data[i]='_'        
-
+        data = ''.join(data)
         data = data.replace("_","")
         Y_A.write(data+'\n')
 
