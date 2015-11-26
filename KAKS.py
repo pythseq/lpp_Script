@@ -75,11 +75,12 @@ def CdsFinder( input_file   ):
     
 def KaksCal(  input_file  ):
     global Ortholog_Pair
-    output = input_file.replace(".cds",".cds.maff")
+    
     path = os.path.split(input_file)[0]+'/'
+    output = path+"multiple_alignment"
     os.system("pagan --seq %s --threads 64 --silent -o %s   "  %(  input_file, output ))
-    output_trimed = output+"_trimed"
-    os.system("""trimal -in  %s  -fasta |sed -r "s/\s+[0-9]+\s+bp//g" >%s """%( output ,output_trimed ) )
+    output_trimed = output+"_trimed.fas"
+    os.system("""trimal -in  %s  -fasta |sed -r "s/\s+[0-9]+\s+bp//g" >%s """%( output+'.fas' ,output_trimed ) )
     cache_hash = {}
     for t,s in fasta_check( open( output_trimed,'rU'  )  ):
         if "mian" in t:
