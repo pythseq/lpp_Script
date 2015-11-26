@@ -7,6 +7,7 @@
 """
 
 #from lpp import *
+import os
 from collections import defaultdict
 class Ddict(defaultdict,dict):
     def __init__(self):
