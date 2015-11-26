@@ -32,21 +32,23 @@ def CdsFinder( input_file   ):
     path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
     os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null"%(input_file))
-    CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))
-    for t,s in CDS:
-        s = re.sub("\s+", "", s)
-        name = t[1:].split("|")[0]
-        [(start,end,frame)] = re.findall( "\:(\d+)\-(\d+)\((\S)\)",t  )
-        if name not in data_hash:
-            data_hash[ name ]["Seq"] = s
-            data_hash[ name ]["start"]=start
-            data_hash[ name ]["end"]=end
-            data_hash[ name ]["frame"]=frame
-        elif len(s) >len(data_hash[ name ]["Seq"]):
-            data_hash[ name ]["Seq"] = s
-            data_hash[ name ]["start"]=start
-            data_hash[ name ]["end"]=end
-            data_hash[ name ]["frame"]=frame                
+    size = os.path.getsize(  "%s.transdecoder.cds"%(input_file) )
+    if size >0:
+        CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))
+        for t,s in CDS:
+            s = re.sub("\s+", "", s)
+            name = t[1:].split("|")[0]
+            [(start,end,frame)] = re.findall( "\:(\d+)\-(\d+)\((\S)\)",t  )
+            if name not in data_hash:
+                data_hash[ name ]["Seq"] = s
+                data_hash[ name ]["start"]=start
+                data_hash[ name ]["end"]=end
+                data_hash[ name ]["frame"]=frame
+            elif len(s) >len(data_hash[ name ]["Seq"]):
+                data_hash[ name ]["Seq"] = s
+                data_hash[ name ]["start"]=start
+                data_hash[ name ]["end"]=end
+                data_hash[ name ]["frame"]=frame                
     if len(data_hash)==3:
         END = open(path+"all_cds.fa",'w')
         LOC = open(path+"Location.tsv",'w')
