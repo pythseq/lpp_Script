@@ -114,7 +114,7 @@ def KaksCal(  input_file  ):
 
 
 if __name__=="__main__":
-        '# you could type [  SCRIPT_NAME  ] -h to see the help log !!!!'
+    '# you could type [  SCRIPT_NAME  ] -h to see the help log !!!!'
     usage='''usage: python %prog [options]
 
     Calcite KAKS '''
