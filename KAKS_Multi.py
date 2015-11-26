@@ -20,7 +20,7 @@ for i in xrange(0,cpu):
     input_hash[i] = open(out_path+"cache.tsv",'w')
     input_hash[i].write( title  )
     
-    bash_hash[i] =  open(out_path+"run.sh",'w')
+    bash_hash[i] =  open("run_%s.sh"%(i),'w')
     bash_hash[i].write( "KAKS.py -i %s -o %s/out/&"%(  input_hash[i].name,out_path   )   )
     bash_hash[i].close()
         
