@@ -28,7 +28,8 @@ for line in RAW:
     j+=1
 def run( ( num ,name) ):
     name = name.name
-    os.system( "KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
+    path = os.path.split(os.path.abspath(name))[0]
+    os.system( "KAKS.py -i %s -o %s/out/"%(  name,path   )  )
 pool = Pool(cpu)
 
 data_list = []
