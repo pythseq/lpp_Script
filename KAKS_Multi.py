@@ -7,7 +7,7 @@
 """
 from lpp import *
 from multiprocessing import Pool
-cpu = 12
+cpu = 32
 pool = Pool(cpu)
 RAW = open(sys.argv[1],'rU')
 title = RAW.next()
@@ -28,7 +28,7 @@ for line in RAW:
 def run(  num ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),input_hash[num].name   )  )
 map(run,xrange(0,cpu))
-
+#pool.map( run,xrange(0,cpu) )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
@@ -39,6 +39,7 @@ END.write(open( out_path+'out/KAKS_Result.tsv','rU').next() )
 for i in xrange(0,cpu):
     RAW = open( out_path+'out/KAKS_Result.tsv','rU'  )
     RAW.next()
-    END.write(RAW.read())
+    for line in RAW:
+        END.write(line)
         
     
