@@ -78,7 +78,7 @@ def CdsFinder( input_file   ):
     
     path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
-    os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null"%(input_file))
+    os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null --workdir  %s/prediction"%(input_file, path))
     size = os.path.getsize(  "%s.transdecoder.cds"%(input_file) )
     if size >0:
         CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))

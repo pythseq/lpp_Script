@@ -8,7 +8,7 @@
 from lpp import *
 from multiprocessing import Pool
 cpu = 16
-pool = Pool(cpu)
+
 RAW = open(sys.argv[1],'rU')
 title = RAW.next()
 input_hash = {}
@@ -28,13 +28,14 @@ for line in RAW:
     j+=1
 def run( ( num ,name) ):
     name = name.name
-    os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
-#map(run,xrange(0,cpu))
+    os.system( "KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
+pool = Pool(cpu)
+
 data_list = []
 for i in xrange(0,cpu):
     data_list.append( [ i,  input_hash[i] ]   )
-#map(  run,data_list  )
-pool.map( run,data_list )
+map(  run,data_list  )
+#pool.map( run,data_list )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
