@@ -25,10 +25,14 @@ for line in RAW:
     num = j%cpu
     input_hash[num].write(line)
     
-def run(  num ):
-    os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),input_hash[num].name   )  )
+def run(  num ,name ):
+    os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
 #map(run,xrange(0,cpu))
-pool.map( run,xrange(0,cpu) )
+data_list = []
+for i in xrange(0,64):
+    data_list.append( [ i,  input_hash[i] ]   )
+map(  run,data_list  )
+#pool.map( run,data_list )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
