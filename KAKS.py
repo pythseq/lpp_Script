@@ -76,7 +76,7 @@ def CdsFinder( input_file   ):
 def KaksCal(  input_file  ):
     global Ortholog_Pair
     output = input_file.replace(".cds",".cds.maff")
-    path = os.split(input_file)[0]+'/'
+    path = os.path.split(input_file)[0]+'/'
     os.system("pagan --seq %s --threads 64 --silent -o %s   "  %(  input_file, output ))
     output_trimed = output+"_trimed"
     os.system("""trimal -in  %s  -fasta |sed -r "s/\s+[0-9]+\s+bp//g" >%s """%( output ,output_trimed ) )
