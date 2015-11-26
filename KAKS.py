@@ -175,6 +175,12 @@ if __name__=="__main__":
                 KaksCal(cds_name)
                 
     ALL_SEQ.close()
-    KAKS_Result = open(   )
+    KAKS_Result = open( outPATH+"/KAKS_Result.tsv",'w'   )
+    KAKS_Result.write("OrthologID"+'\t')
+    KAKS_Result.write(    '\t'.join(  sorted( Ortholog_Pair[ orthId ] )    ) +'\n'    )
     for orthId in Ortholog_Pair:
+        KAKS_Result.write(orthId)
+        for key in sorted( Ortholog_Pair[ orthId ]  ):
+            KAKS_Result.write('\t'+Ortholog_Pair[ orthId ][ key ] )
         
+        KAKS_Result.write('\n')
