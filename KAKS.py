@@ -170,9 +170,9 @@ def KaksCal(  input_file  ):
         data = [ s for s in data  ]
         for i in all_filter:
             data[i]='_'        
-            data = ''.join(data)
-            data = data.replace("_","")
-            Y_A.write(data+'\n')
+        data = ''.join(data)
+        data = data.replace("_","")
+        Y_A.write(data+'\n')
 
     Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
