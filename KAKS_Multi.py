@@ -21,10 +21,10 @@ for i in xrange(0,cpu):
         
 j=0
 for line in RAW:
-    j+=1
+    
     num = j%cpu
     input_hash[num].write(line)
-    
+    j+=1
 def run(  num ,name ):
     os.system( "cd %s && KAKS.py -i %s -o out/"%(  "./%s_out/"%(num    ),name   )  )
 #map(run,xrange(0,cpu))
