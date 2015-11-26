@@ -16,7 +16,7 @@ def Pagan( input_file  ):
     output = path+'outfile'
     ancestor = path+'ancestor'
     os.system("pagan --seq %s --threads 64 --silent -o %s   "  %(  input_file, output ))
-    RAW = fasta_check( open( output+".fas") ,'rU'   )
+    RAW = fasta_check( open( output+".fas" ,'rU'   ) )
     t,s in RAW.next()
     s = re.sub("\s+", "" , s)
     if s.count("-")/len(s)>0.4:
