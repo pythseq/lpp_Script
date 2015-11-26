@@ -30,16 +30,16 @@ for line in RAW:
     num = j%cpu
     input_hash[num].write(line)
     j+=1
-#BASH = open("total_run.sh",'w')
+BASH = open("total_run.sh",'w')
 all_need_bash = []
 for key in bash_hash:
     all_need_bash.append(  "bash "+ bash_hash[key].name )
-    #BASH.write(bash_hash[key].name+'\n')
+    BASH.write("bash "+bash_hash[key].name+'\n')
     
     
-def run( command):
-    os.system( command )
-pool = Pool(cpu)
+#def run( command):
+    #os.system( command )
+#pool = Pool(cpu)
 
 #data_list = []
 #for i in xrange(0,cpu):
