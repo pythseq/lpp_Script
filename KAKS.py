@@ -138,13 +138,13 @@ def KaksCal(  input_file  ):
     for loc_iter in re.finditer("\-+", cache_hash["mian"] ):
         start,end = loc_iter.span()
         all_filter.extend( xrange(start,end ) )    
-        for data in [ cache_hash["Ances"],cache_hash["mian"]   ] :
-            data = [ s for s in data  ]
-            for i in all_filter:
-                data[i]='_'
-            data = ''.join(data)
-            data = data.replace("_","")
-            M_A.write(data+'\n')    
+    for data in [ cache_hash["Ances"],cache_hash["mian"]   ] :
+        data = [ s for s in data  ]
+        for i in all_filter:
+            data[i]='_'
+        data = ''.join(data)
+        data = data.replace("_","")
+        M_A.write(data+'\n')    
     #M_A.write(  cache_hash["Ances"]+'\n'+cache_hash["mian"]+'\n'   )
     M_A.close()
     mian_kaks = path+"/Mian_Anc.kaks"
@@ -168,11 +168,11 @@ def KaksCal(  input_file  ):
         all_filter.extend( xrange(start,end ) )    
     for data in [ cache_hash["Ances"],cache_hash["yan"]   ] :
         data = [ s for s in data  ]
-        for i in all_filter:
-            data[i]='_'        
-        data = ''.join(data)
-        data = data.replace("_","")
-        Y_A.write(data+'\n')
+    for i in all_filter:
+        data[i]='_'        
+    data = ''.join(data)
+    data = data.replace("_","")
+    Y_A.write(data+'\n')
 
     Y_A.close()
     yan_kaks = path+"/Yan_Anc.kaks"
