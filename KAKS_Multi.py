@@ -12,13 +12,17 @@ cpu = 16
 RAW = open(sys.argv[1],'rU')
 title = RAW.next()
 input_hash = {}
+bash_hash = {}
 for i in xrange(0,cpu):
     out_path = os.path.abspath(  "./%s_out/"%(i)  )+'/'
     if not os.path.exists(  out_path):
         os.makedirs( out_path )
     input_hash[i] = open(out_path+"cache.tsv",'w')
     input_hash[i].write( title  )
-
+    
+    bash_hash[i] =  open(out_path+"run.sh",'w')
+    bash_hash[i].write( "KAKS.py -i %s -o %s/out/"%(  input_hash[i].name,out_path   )   )
+    bash_hash[i].close()
         
 j=0
 for line in RAW:
@@ -26,17 +30,22 @@ for line in RAW:
     num = j%cpu
     input_hash[num].write(line)
     j+=1
-def run( ( num ,name) ):
-    name = name.name
-    path = os.path.split(os.path.abspath(name))[0]
-    os.system( "KAKS.py -i %s -o %s/out/"%(  name,path   )  )
-pool = Pool(cpu)
+BASH = open("total_run.sh",'w')
+for key in bash_hash:
+    BASH.write(bash_hash[key].name+'\n')
+    
+    
+#def run( ( num ,name) ):
+    #name = name.name
+    #path = os.path.split(os.path.abspath(name))[0]
+    #os.system( "KAKS.py -i %s -o %s/out/"%(  name,path   )  )
+#pool = Pool(cpu)
 
-data_list = []
-for i in xrange(0,cpu):
-    data_list.append( [ i,  input_hash[i] ]   )
+#data_list = []
+#for i in xrange(0,cpu):
+    #data_list.append( [ i,  input_hash[i] ]   )
 #map(  run,data_list  )
-pool.map( run,data_list )
+#pool.map( run,data_list )
 output_path = os.path.abspath( sys.argv[2] )
 if  not os.path.exists(output_path):
     os.makedirs(output_path)
