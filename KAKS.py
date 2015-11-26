@@ -10,6 +10,7 @@ from lpp import *
 import pandas
 from optparse import OptionParser
 def Pagan( input_file  ):
+    global Ortholog_Pair
     input_file = os.path.abspath( input_file  )
     path = os.path.split(input_file)[0]+'/'
     output = path+'outfile'
@@ -19,10 +20,12 @@ def Pagan( input_file  ):
     t,s in RAW.next()
     s = re.sub("\s+", "" , s)
     if s.count("-")/len(s)>0.4:
+        Ortholog_Pair[orthId][ "AncestorySeq" ] = "-"
         return "Too Divergent!!"
     os.system("pagan --ref-seqfile %s.fas  --ref-treefile %s.tre  --output-ancestors -o %s  --threads 64 --silent"%( output,output,ancestor  ))
     for t,s in fasta_check(  open( "%s.fas"%(ancestor),'rU'   )  ):
         if "#1#" in t:
+
             return s
         
 def CdsFinder( input_file   ):
@@ -49,7 +52,22 @@ def CdsFinder( input_file   ):
         for key in data_hash:
             if "Ancestor" not in key:
                 ALL_SEQ.write('>'+key+'|CDS'+'\n'+data_hash[key][ "Seq" ])
+                Ortholog_Pair[orthId]["AncestorCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["AncestorCDS_start"] = data_hash[key][ "start" ]
+                Ortholog_Pair[orthId]["AncestorCDS_end"] = data_hash[key][ "end" ]
+                Ortholog_Pair[orthId]["AncestorCDS_frame"] = data_hash[key][ "frame" ]
+            elif "mian" not in key:
+                Ortholog_Pair[orthId]["mianCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["mianCDS_start"] = data_hash[key][ "start" ]
+                Ortholog_Pair[orthId]["mianCDS_end"] = data_hash[key][ "end" ]
+                Ortholog_Pair[orthId]["mianCDS_frame"] = data_hash[key][ "frame" ]     
+            else:
+                Ortholog_Pair[orthId]["yanCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["yanCDS_start"] = data_hash[key][ "start" ]
+                Ortholog_Pair[orthId]["yanCDS_end"] = data_hash[key][ "end" ]
+                Ortholog_Pair[orthId]["yanCDS_frame"] = data_hash[key][ "frame" ]                     
             END.write('>'+key+'\n'+data_hash[key][ "Seq" ])
+            
             LOC.write( key+'\t'+data_hash[key][ "start"  ]+'\t'+ data_hash[key][ "end"  ]+'\t'+ data_hash[key][ "frame"  ]+'\n')
         return END.name
     else:
@@ -136,7 +154,7 @@ if __name__=="__main__":
         RAW_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
         RAW_SEQ.close()
         ancestor = Pagan(RAW_SEQ.name)
-        Ortholog_Pair[orthId][ "AncestorSeq" ] = ancestor
+        Ortholog_Pair[orthId][ "AncestorSeq" ] = ancestor[:-1]
         
             
             
