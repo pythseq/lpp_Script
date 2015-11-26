@@ -37,6 +37,13 @@ if __name__=="__main__":
     ALL_SEQ = open(outPATH+"Total.fasta",'w')
     for i in xrange(0,len(OrthoTable)):
         table_data = OrthoTable.loc[i]
+        path_name = outPATH+table_data["OrthologID"]+'/'
+        if not os.path.exists(path_name):
+            os.makedirs( path_name )
+            
+        RAW_SEQ = open(path_name+"/Unigene.fa",'w')
+        RAW_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
+        os.system("pagan --seq %s  && pagan --ref-seqfile %s/outfile.fas  --ref-treefile %s/outfile.tre  --output-ancestors"%( RAW_SEQ.name, path_name,path_name  ))
         ALL_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
     ALL_SEQ.close()
     os.system(  "TransDecoder  --CPU 64  -t %s"%( ALL_SEQ.name  ))
