@@ -25,7 +25,7 @@ def Pagan( input_file  ):
     os.system("pagan --ref-seqfile %s.fas  --ref-treefile %s.tre  --output-ancestors -o %s  --threads 64 --silent"%( output,output,ancestor  ))
     for t,s in fasta_check(  open( "%s.fas"%(ancestor),'rU'   )  ):
         if "#1#" in t:
-
+            s = re.sub("\s+", "", s)
             return s
         
 def CdsFinder( input_file   ):
@@ -34,6 +34,7 @@ def CdsFinder( input_file   ):
     os.system(" TransDecoder -t %s 2>/dev/null 1>/dev/null"%(input_file))
     CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))
     for t,s in CDS:
+        s = re.sub("\s+", "", s)
         name = t[1:].split("|")[0]
         [(start,end,frame)] = re.findall( "\:(\d+)\-(\d+)\((\S)\)",t  )
         if name not in data_hash:
@@ -52,17 +53,17 @@ def CdsFinder( input_file   ):
         for key in data_hash:
             if "Ancestor" not in key:
                 ALL_SEQ.write('>'+key+'|CDS'+'\n'+data_hash[key][ "Seq" ])
-                Ortholog_Pair[orthId]["AncestorCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["AncestorCDS"] = data_hash[key][ "Seq" ]
                 Ortholog_Pair[orthId]["AncestorCDS_start"] = data_hash[key][ "start" ]
                 Ortholog_Pair[orthId]["AncestorCDS_end"] = data_hash[key][ "end" ]
                 Ortholog_Pair[orthId]["AncestorCDS_frame"] = data_hash[key][ "frame" ]
             elif "mian" not in key:
-                Ortholog_Pair[orthId]["mianCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["mianCDS"] = data_hash[key][ "Seq" ]
                 Ortholog_Pair[orthId]["mianCDS_start"] = data_hash[key][ "start" ]
                 Ortholog_Pair[orthId]["mianCDS_end"] = data_hash[key][ "end" ]
                 Ortholog_Pair[orthId]["mianCDS_frame"] = data_hash[key][ "frame" ]     
             else:
-                Ortholog_Pair[orthId]["yanCDS"] = data_hash[key][ "Seq" ][:-1]
+                Ortholog_Pair[orthId]["yanCDS"] = data_hash[key][ "Seq" ]
                 Ortholog_Pair[orthId]["yanCDS_start"] = data_hash[key][ "start" ]
                 Ortholog_Pair[orthId]["yanCDS_end"] = data_hash[key][ "end" ]
                 Ortholog_Pair[orthId]["yanCDS_frame"] = data_hash[key][ "frame" ]                     
@@ -83,6 +84,7 @@ def KaksCal(  input_file  ):
     os.system("""trimal -in  %s  -fasta |sed -r "s/\s+[0-9]+\s+bp//g" >%s """%( output+'.fas' ,output_trimed ) )
     cache_hash = {}
     for t,s in fasta_check( open( output_trimed,'rU'  )  ):
+        s = re.sub("\s+", '', s)
         if "mian" in t:
             cache_hash["mian"] = s
         elif "yan" in t:
@@ -155,7 +157,7 @@ if __name__=="__main__":
         RAW_SEQ.write(">"+table_data[ "H.armID" ]+'\n'+table_data[ "H.armSeq" ]+'\n'+ ">"+table_data[ "H.asID" ]+'\n'+table_data[ "H.asSeq" ]+'\n' )
         RAW_SEQ.close()
         ancestor = Pagan(RAW_SEQ.name)
-        Ortholog_Pair[orthId][ "AncestorSeq" ] = ancestor[:-1]
+        Ortholog_Pair[orthId][ "AncestorSeq" ] = ancestor
         
             
             
