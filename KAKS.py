@@ -32,7 +32,7 @@ def CdsFinder( input_file   ):
     path = os.path.split(input_file)[0]+'/'
     data_hash = Ddict()
     os.system(" TransDecoder -t %s"%(input_file))
-    CDS = fasta_check(open( "%s.transdecoder.cds",'rU'  ))
+    CDS = fasta_check(open( "%s.transdecoder.cds"%(input_file),'rU'  ))
     for t,s in CDS:
         name = t[1:].split("|")[0]
         [(start,end,frame)] = re.findall( "\:(\d+)\-(\d+)\((\S)\)",t  )
