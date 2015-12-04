@@ -79,14 +79,15 @@ if __name__ == '__main__':
 		uploadend = response.read()
 		
 		out_url = re.search("""(https[^']+)""", uploadend).group(1)
+		print( out_url )
 		result = None
 		while not  result:
 			time.sleep(5)
 			end_output = urllib.urlopen(out_url).read()
-			print(end_output)
+			
 			result = re.search("Normal view</a></font><br>(.+)</form>",end_output,re.DOTALL)
 		result = result.group(1)
-		print(result)
+		
 		ALN = open( options.Alignment,'w'  )
 		ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
 		i=0
