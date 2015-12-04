@@ -27,6 +27,10 @@ parser.add_option("-s", "--nul", action="store",
                       dest="Nul",
 
                       help="Nul Seq for IS")
+parser.add_option("-t", "--stat", action="store",
+                  dest="STAT",
+
+                  help="IS Staistics infomation")
 
 url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
 values = {"Programe":"blastn",
@@ -85,6 +89,9 @@ if __name__ == '__main__':
 	DATA = fasta_check( open(options.Sequence,'rU') )
 	sequence = re.sub('\s+','',DATA.next()[-1])
 	NUL = open(  options.Nul ,'w' )
+	STAT = open( options.STAT,'w')
+	STAT.write("IS_name\tNumber\tAverage.Length\n")
+	is_stat = Ddict
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url,data)
 	response = urllib2.urlopen(req)
@@ -117,9 +124,21 @@ if __name__ == '__main__':
 				q_start,q_end  = q_end,q_start
 			is_seq = sequence[q_start:q_end]
 			NUL.write('>'+isname+' '+line_l[1]+'\n'+is_seq+'\n')
+			is_stat[ line_l[1] ][ isname ]=is_seq
+			
 			is_length = len(is_seq)
 			out_data.extend([isname,line_l[0].split()[0],"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
-			out_data.extend(line_l[3:])
+			out_data.extend(line_l[2:])
 			ALN.write("\t".join(out_data)+'\n')
 	except Exception,error:
 		print(error)
+	for key in is_stat:
+		STAT.write(   key+'\t%s'%( len(is_stat[key]  )   )   )
+		all_length = 0
+		for key2,seq2 in is_stat[ key ].items():
+			all_length+= len(seq2)
+			
+		ave_length = all_length/len(is_stat[key] )
+		STAT.write( '\t%s\n'%(  ave_length  ) )
+		
+		
