@@ -117,7 +117,7 @@ if __name__ == '__main__':
 			is_seq = sequence[q_start:q_end]
 			NUL.write('>'+isname+' '+line_l[1]+'\n'+is_seq+'\n')
 			is_length = len(is_seq)
-			out_data.append(isname,line_l[0].split()[0],"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq)
+			out_data.extend([isname,line_l[0].split()[0],"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
 			out_data.extend(line_l[3:])
 			ALN.write("\t".join(out_data)+'\n')
 	except Exception,error:
