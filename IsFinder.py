@@ -90,7 +90,7 @@ if __name__ == '__main__':
 		
 		time.sleep(5)
 		end_output = urllib.urlopen(out_url).read()
-		result = re.search("Normal view</a></font><br>(.+)</form>",end_output,re.DOTALL)
+		result = re.search("Normal view</a></font><br>(.+)</form>",end_output,re.DOTALL).group(1)
 		print(result)
 		
 	except:
