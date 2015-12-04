@@ -85,6 +85,7 @@ if __name__ == '__main__':
 	response = urllib2.urlopen(req)
 	try:
 		uploadend = response.read()
+		print(uploadend)
 		out_url = re.search("""(https[^"]+)""", uploadend).group(1)
 		time.sleep(5)
 		end_output = urllib.urlopen(out_url).read()
