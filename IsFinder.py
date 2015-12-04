@@ -8,8 +8,8 @@
 from lpp import *
 import pandas as pd
 from optparse import OptionParser
-import poster
-import urllib2,urllib
+import poster,time,urllib2,urllib
+
 
 usage = "python2.7 %prog [options]"
 parser = OptionParser(usage =usage )
@@ -83,5 +83,12 @@ if __name__ == '__main__':
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url,data)
 	response = urllib2.urlopen(req)
-	end = response.read()
-	print(end)
+	try:
+		uploadend = response.read()
+		out_url = re.search("""(https[^"]+)""", uploadend).group(1)
+		time.sleep(5)
+		end_output = urllib.urlopen(out_url).read()
+		print(end_output)
+		
+	except:
+		print(end)
