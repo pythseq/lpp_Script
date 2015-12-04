@@ -105,6 +105,7 @@ if __name__ == '__main__':
 		for line in result.split("\n"):
 			i+=1
 			line_l = line.split("\t")
+			print(line_l)
 			out_data = []
 			isname= line_l[0].split()[0]+"_IS%s"%(i)
 			
