@@ -99,6 +99,7 @@ if __name__ == '__main__':
 				if line in has:
 					continue
 				has[line] = ""
+			for line in  sorted( has,key = lambda x: int(x.split("\t")[6])   ):
 				i+=1
 				line_l = line.split("\t")
 				chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
