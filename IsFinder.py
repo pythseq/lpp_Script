@@ -86,7 +86,7 @@ if __name__ == '__main__':
 	try:
 		uploadend = response.read()
 		
-		out_url = re.search("""(https[^"]+)""", uploadend).group(1)
+		out_url = re.search("""(https[^']+)""", uploadend).group(1)
 		print(out_url)
 		time.sleep(5)
 		end_output = urllib.urlopen(out_url).read()
