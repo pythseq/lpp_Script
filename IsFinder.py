@@ -92,9 +92,9 @@ if __name__ == '__main__':
 		for line in result.split("\n")[:-1]:
 			i+=1
 			line_l = line.split("\t")
-			
+			chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
 			out_data = []
-			isname= line_l[0].split()[0]+"_IS%s"%(i)
+			isname= chro_name+"_IS%s"%(i)
 			
 			q_start,q_end = int(line_l[6]),int(line_l[7])
 			if q_start <q_end:
@@ -107,7 +107,7 @@ if __name__ == '__main__':
 			is_stat[ line_l[1] ][ isname ]=is_seq
 			
 			is_length = len(is_seq)
-			out_data.extend([isname,line_l[0].split()[0],"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
+			out_data.extend([isname,chro_name,"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
 			out_data.extend(line_l[2:])
 			ALN.write("\t".join(out_data)+'\n')
 	except Exception,error:
