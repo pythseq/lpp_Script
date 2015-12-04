@@ -70,7 +70,7 @@ if __name__ == '__main__':
 	sequence = re.sub('\s+','',DATA.next()[-1])
 	NUL = open(  options.Nul ,'w' )
 	STAT = open( options.STAT,'w')
-	STAT.write("IS_name\tNumber\tAverage.Length\n")
+	
 	is_stat = Ddict()
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url,datagen, headers)
@@ -84,39 +84,43 @@ if __name__ == '__main__':
 		while not  result:
 			time.sleep(5)
 			end_output = urllib.urlopen(out_url).read()
-			print(end_output)
+
 			result = re.search("Normal view</a></font><br>(.*)</form>",end_output,re.DOTALL)
 		result = result.group(1)
-		
-		ALN = open( options.Alignment,'w'  )
-		ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
-		i=0
-		
-		has = {}
-		for line in result.split("\n")[:-1]:
-			if line in has:
-				continue
-			has[line] = ""
-			i+=1
-			line_l = line.split("\t")
-			chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
-			out_data = []
-			isname= chro_name+"_IS%s"%(i)
+		if result:
+			STAT.write("IS_name\tNumber\tAverage.Length\n")
+			ALN = open( options.Alignment,'w'  )
+			ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
+			i=0
 			
-			q_start,q_end = int(line_l[6]),int(line_l[7])
-			if q_start <q_end:
-				frame='+'
-			else:
-				frame='-'
-				q_start,q_end  = q_end,q_start
-			is_seq = sequence[q_start:q_end]
-			NUL.write('>'+isname+' '+line_l[1]+'\n'+is_seq+'\n')
-			is_stat[ line_l[1] ][ isname ]=is_seq
-			
-			is_length = len(is_seq)
-			out_data.extend([isname,chro_name,"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
-			out_data.extend(line_l[2:])
-			ALN.write("\t".join(out_data)+'\n')
+			has = {}
+			for line in result.split("\n")[:-1]:
+				if line in has:
+					continue
+				has[line] = ""
+				i+=1
+				line_l = line.split("\t")
+				chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
+				out_data = []
+				isname= chro_name+"_IS%s"%(i)
+				
+				q_start,q_end = int(line_l[6]),int(line_l[7])
+				if q_start <q_end:
+					frame='+'
+				else:
+					frame='-'
+					q_start,q_end  = q_end,q_start
+				is_seq = sequence[q_start:q_end]
+				NUL.write('>'+isname+' '+line_l[1]+'\n'+is_seq+'\n')
+				is_stat[ line_l[1] ][ isname ]=is_seq
+				
+				is_length = len(is_seq)
+				out_data.extend([isname,chro_name,"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
+				out_data.extend(line_l[2:])
+				ALN.write("\t".join(out_data)+'\n')
+		else:
+			ALN.wrrite( "Not Find IS!!" )
+			STAT.write(  "Not Find IS!!"  )			
 	except Exception,error:
 		print(error)
 	for key in is_stat:
