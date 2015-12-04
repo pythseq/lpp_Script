@@ -37,6 +37,7 @@ parser.add_option("-t", "--stat", action="store",
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	DATA = fasta_check( open(options.Sequence,'rU') )
+	ALN = open( options.Alignment,'w'  )
 	url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
 	values = {
 	    "Programe":"blastn",
@@ -89,7 +90,7 @@ if __name__ == '__main__':
 		result = result.group(1)
 		if result:
 			STAT.write("IS_name\tNumber\tAverage.Length\n")
-			ALN = open( options.Alignment,'w'  )
+			
 			ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
 			i=0
 			
