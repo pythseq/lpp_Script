@@ -102,10 +102,10 @@ if __name__ == '__main__':
 		ALN = open( options.Alignment,'w'  )
 		ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
 		i=0
-		for line in result.split("\n"):
+		for line in result.split("\n")[:-1]:
 			i+=1
 			line_l = line.split("\t")
-			print(line_l)
+			
 			out_data = []
 			isname= line_l[0].split()[0]+"_IS%s"%(i)
 			
