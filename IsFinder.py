@@ -91,7 +91,7 @@ if __name__ == '__main__':
 	NUL = open(  options.Nul ,'w' )
 	STAT = open( options.STAT,'w')
 	STAT.write("IS_name\tNumber\tAverage.Length\n")
-	is_stat = Ddict
+	is_stat = Ddict()
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url,data)
 	response = urllib2.urlopen(req)
