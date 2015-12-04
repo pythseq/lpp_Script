@@ -10,8 +10,9 @@ import tempfile
 import pandas as pd
 from optparse import OptionParser
 import poster,time,urllib2,urllib
-
-
+from poster.encode import multipart_encode  
+from poster.streaminghttp import register_openers 
+register_openers() 
 usage = "python2.7 %prog [options]"
 parser = OptionParser(usage =usage )
 parser.add_option("-i", "--Sequence", action="store",
@@ -32,68 +33,47 @@ parser.add_option("-t", "--stat", action="store",
 
                   help="IS Staistics infomation")
 
-url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
-values = {"Programe":"blastn",
-"reponse":"0",
-"seq":""">1_2920314_2921899|+|1
-AAAAAGCGGCAAATCATAGCGATTTGCCGCTTTCAGCTTGTCGACAAAGCCACAAAAAGT
-GGCTTGATCGACAAGCTTTTTTTGTTAAAATGTGAGTGAAATCTAGTTTTTGGAGGTTTT
-GCCATGTTGTCTAAGCACTCTAAAGATCAGCGCGAACAGCTTGAAGTCTTTGCCTTAAGT
-GAACTTGTCCCGGAAGACCATCTGGTCAGGAAAATAGAAGAAGCCATGGACTTTTCTTTT
-ATTTATGAAAAAGTTGCTCCCCTTTATTCTTCAAAAGGGCGCCCAAGCATTGATCCCGTT
-GTATTGATCAAAATGGTTCTGATTCAGTACGTGTTTGGCCACCGCTCGATGCGCGAAACC
-ATTAAACGGATCGAAACCGATGTCGCTTATCGCTGGTTTATTGGATATGGATTTTCTGAA
-AAAATCCCTCATTTTTCAACCTTCAGTAAAAACTATGAGCGCCGTTTTCATGATACGGAC
-CTATTTGAAACAATCTTCTATAAAATCTTGCGTCAGGCCATGGATCTCGGTCTTGTCGAC
-CCGTCGGTCGCCTTTATCGATGGAACCCATGTCAAAGCCAATGCGAATAAGAAAAAGTTT
-GTGAAGAAGATTGTGAGAAAAGAAACAAGAGCTTATCAGGAACAATTAGATCGAGAAATT
-AATGCCGATCGCGAAGCCAACGGCAAAAAGCCCTTAAAGCCCAGGCAATGCTCAGAAGAA
-CGGGAAATAAAAGAAAGTACGACAGATCCTGAGAGCGGTTATTTTGTAAAAGGTGAACGG
-GAACGTCTTTTTGCTTATGGTTTTCATACAGCTTGTGACCGGAATGGATTTGTGCTGGGG
-GCGGTTGTTGAGCCTGCCAATATTCATGACAGCCAAGTGTTCACGACCCTGTTTCAACAG
-GTGAAAGAGCACGTCGCTAAGCCTCATACAGTCGCAGTTGATGCCGGATATAAAACGCCG
-TTTATCGCAAAGTTTCTAAGTGATCAAAATGTCCGTCCCGTCATGCCTTACACTCGACCA
-CAAACTAAAAAAGGGTTCATGAGAAAACATGAATATGTATACGATGAATATTACGATGCT
-TATATTTGCCCTGACGATCACGTTCTGACATATCGCACAACCAACCGTGAAGGCTATCGG
-ATTTATGCATCAGATCCAAACCGATGTGAACACTGTTCTTTTCTGAAGCAATGTACGGAA
-AGTCGAAATCATCGAAAGATGATTCACAGGCATCTCTGGCAGGATCATTTGGATGAAGCC
-GACCATCTTCGCCACACGGATGAGAATAGGCGAATCTACGCCAAACGCAAAGAAACGATC
-GAACGAGTTTTTGCGGATTTAAAACACAAGCATGGCCTGCGCTGGACAACCCTGCGGGGA
-AAGAAAAAATTGTCCATGCAGGCGATGCTTGTTTTCGCTGCCATGAATCTCAAAAAGCTG
-GCGAATTGGACTTGGAAAAGTCCAATTCGCCAGCATTCTCATCGAAAAAACAGAATAAAT
-TGGACAAAAATAGGTCGGATTATAAAAATCCGACCTATTTTGTCAACAGTCTGAAAGCGG
-CAAATCATAGCGATTTGCCGCTTTTT""",
-	
-"matrice":"BLOSUM62",
-"alignement":"8"	,
-"gapouv":	"-1",
-"gapext":	"-1",
-"dropoff":	"0",
-"expect": "1e-5"	,
-"mot":	"0",
-"old":"500"	,
-"nas":"250"	,
-"thrsld":"0"	,
-"filtre":"T",
-"qgc":"1"	,
-"dbgc":	"1",
-"bhtk":	"100",
-"elss":"0"	,
-"bqd":	"F",
-"pga":"T"	,
-"match":"1"	,
-"msmatch": "-1"	,
-"qssad":	"3"}
+
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	DATA = fasta_check( open(options.Sequence,'rU') )
+	url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
+	values = {
+	    "Programe":"blastn",
+	    "reponse":"0",
+	    "seqfile":open(options.Sequence,'rb'),
+	    "seq":"",
+	    "matrice":"BLOSUM62",
+	    "alignement":"8"	,
+	    "gapouv":	"-1",
+	    "gapext":	"-1",
+	    "dropoff":	"0",
+	    "expect": "1e-5"	,
+	    "mot":	"0",
+	    "old":"500"	,
+	    "nas":"250"	,
+	    "thrsld":"0"	,
+	    "filtre":"T",
+	    "qgc":"1"	,
+	    "dbgc":	"1",
+	    "bhtk":	"100",
+	    "elss":"0"	,
+	    "bqd":	"F",
+	    "pga":"T"	,
+	    "match":"1"	,
+	    "msmatch": "-1"	,
+	    "qssad":	"3"
+	}	
+	datagen, headers = poster.encode.multipart_encode(values) 
+	
+	
 	sequence = re.sub('\s+','',DATA.next()[-1])
 	NUL = open(  options.Nul ,'w' )
 	STAT = open( options.STAT,'w')
 	STAT.write("IS_name\tNumber\tAverage.Length\n")
 	is_stat = Ddict()
 	data = urllib.urlencode(values)
-	req = urllib2.Request(url,data)
+	req = urllib2.Request(url,datagen, headers)
 	response = urllib2.urlopen(req)
 	try:
 		uploadend = response.read()
