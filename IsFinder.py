@@ -87,10 +87,11 @@ if __name__ == '__main__':
 		uploadend = response.read()
 		
 		out_url = re.search("""(https[^']+)""", uploadend).group(1)
-		print(out_url)
+		
 		time.sleep(5)
 		end_output = urllib.urlopen(out_url).read()
-		print(end_output)
+		result = re.search("Normal view</a></font><br>(.+)</form>",end_output,re.DOTALL)
+		print(result)
 		
 	except:
 		print(end)
