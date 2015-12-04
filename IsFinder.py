@@ -50,13 +50,13 @@ if __name__ == '__main__':
 	    "dropoff":	"0",
 	    "expect": "1e-5"	,
 	    "mot":	"0",
-	    "old":"500"	,
-	    "nas":"250"	,
+	    "old":"1"	,
+	    "nas":"1"	,
 	    "thrsld":"0"	,
 	    "filtre":"T",
 	    "qgc":"1"	,
 	    "dbgc":	"1",
-	    "bhtk":	"100",
+	    "bhtk":	"1",
 	    "elss":"0"	,
 	    "bqd":	"F",
 	    "pga":"T"	,
@@ -91,7 +91,12 @@ if __name__ == '__main__':
 		ALN = open( options.Alignment,'w'  )
 		ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
 		i=0
+		
+		has = {}
 		for line in result.split("\n")[:-1]:
+			if line in has:
+				continue
+			has[line] = ""
 			i+=1
 			line_l = line.split("\t")
 			chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
