@@ -102,13 +102,14 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )
         for line in align_result:
+            line_l = line.strip().split() 
             subj_start = line_l[8]
             subj_stop = line_l[9]
             if int(subj_start) <  int(subj_stop):
                 frame = '+'
             else:
                 frame = '-'
-            line_l = line.strip().split() 
+            
             if line_l[0] in has_hash:
                 continue
             has_hash[ line_l[0] ] = ""
@@ -128,13 +129,14 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
+                        
+            line_l = line.strip().split() 
             subj_start = line_l[8]
             subj_stop = line_l[9]
             if int(subj_start) <  int(subj_stop):
                 frame = '+'
             else:
                 frame = '-'            
-            line_l = line.strip().split()     
             if line_l[0] in has_hash:
                 continue
             has_hash[ line_l[0] ] = ""            
