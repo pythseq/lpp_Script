@@ -85,7 +85,7 @@ if __name__=="__main__":
         tmp_file_name 
     )
     os.system(commandline)
-    temp_align_result = tmp_file_name+
+    temp_align_result = tmp_file_name
     END = open(options.output,'w')
     commandline = """ diamond  view  -a  %s  """%(temp_align_result)
     align_result = os.popen(commandline)    
