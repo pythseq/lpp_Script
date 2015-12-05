@@ -54,13 +54,14 @@ if __name__ == '__main__':
 	path = os.path.split(os.path.abspath(__file__))[0]+'/'
 
 	r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+	print(db_number)
 	r.flushall()
 	DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 
 	SWISS = fasta_check(open(   os.path.abspath(  options.SWISS ),'rU'   ) )
 
 	data_hash = Ddict()
-	for t,s in NR_ANNO_DETAIL:
+	for t,s in SWISS:
 		t = t[1:]
 		name = t.split()[0]
 		data_hash[name]["Annotation"] = t
