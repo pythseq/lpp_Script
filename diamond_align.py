@@ -96,7 +96,9 @@ if __name__=="__main__":
         for i in xrange(1,len(align_title_list)):
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )
-        END.write(align_result.read())
+        for line in align_result:
+            line_l = line.strip().split() 
+            END.write('\t'.join(line_l)+'\n')
     else:
         
         align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjLength","SubjCoverage","SubjStart","SubjEnd","Evalue","Bitscore"]
@@ -104,10 +106,10 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
             END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
-            print(line)
-            line_l = line.split("\t")            
+            
+            line_l = line.strip().split()            
             subj = line_l[1]
-            print(subj)
+            
             subj_r = r.hgetall(subj)
             # print(subj_r)
             subj = subj_r["Annotation"]
@@ -124,7 +126,7 @@ if __name__=="__main__":
             subj_coverage = 100*aln_length/float(subj_length)
             end_list.append( "%.2f"%(subj_coverage   ) )
             end_list.extend( line_l[8:]  )
-            END.write('\t'.join(end_list))
+            END.write('\t'.join(end_list)+'\n')
             
             
 
