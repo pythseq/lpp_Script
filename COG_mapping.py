@@ -6,6 +6,8 @@
 from lpp import *
 from optparse import OptionParser 
 from parse_eggNog import *
+import tempfile
+import pandas as pd
 usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
 parser = OptionParser(usage =usage ) 
 parser.add_option("-i", "--INPUT", action="store", 
@@ -23,10 +25,14 @@ parser.add_option("-o", "--end", action="store",
                   help="OUTPUT Data")
 (options, args) = parser.parse_args() 
 if __name__ == '__main__':
+	all_eggnog_frame = pd.read_table(options.input)
 	BLAST = open(options.input,'rU')
 	BLAST.next()
-	END = open(options.output,'w')
-	END.write("Gene\tSubject\tIdentity\tAlignmentLength\tMismatch\tGap\tQueryStart\tQueryEnd\tSubjStart\tSubjEnd\tE_value\tBitscore\tCOG\tAnnotation\tCat\tCategory Annotation\n")
+	
+	TMP = tempfile.TemporaryFile
+	
+	
+	TMP.write("Name\tCOG\tCOG_Annotation\tCat\tCategory Annotation\n")
 	for line in open(options.input,'rU'):
 		line_l = line.strip().split("\t")
 		subj= line_l[1].split()[0]
@@ -43,7 +49,10 @@ if __name__ == '__main__':
 			for each_cat in nog_cat:
 				cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
 				for each_anno in cat_anno:
-					END.write(line[:-1]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+' [%s]\n'%(each_cat.Cat))
+					TMP.write(line_l[0]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+' [%s]\n'%(each_cat.Cat))
 	
 	
 	
+	all_cog_frame = pd.read_table(TMP.name)
+	result_data_frame = pd.DataFrame.merge( all_eggnog_frame,all_cog_frame,left_on='Name', right_on='Name', how='outer' )
+	result_data_frame.to_csv(options.output,sep="\t",index =False)
