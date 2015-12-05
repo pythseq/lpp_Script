@@ -54,6 +54,7 @@ if __name__=="__main__":
     if db_has:
         db_number = general_config.get("Redis", dbname)   
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    dbname = dbname.capitalize()
     Input = options.Input
     OUTPUT = options.output
     Database = options.Database
@@ -92,13 +93,20 @@ if __name__=="__main__":
     if not db_has:
         
         
-        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
+        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
         for i in xrange(1,len(align_title_list)):
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )
         for line in align_result:
             line_l = line.strip().split() 
-            END.write('\t'.join(line_l)+'\n')
+            q_alignlength = int( line_l[7]) - int( line_l[6]  )+1
+            q_length = query_length[line_l[0]]
+            q_coverage = 100*q_alignlength/float(q_length)
+            end_list = line_l[:6]
+            end_list.append( q_length    )
+            end_list.append( "(%.0f/%s) %.2f"%( q_alignlength,q_length,  q_coverage   ) )
+            end_list.extend( line_l[6:]  )
+            END.write('\t'.join(end_list)+'\n')
     else:
         
         align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjLength","SubjCoverage","SubjStart","SubjEnd","Evalue","Bitscore"]
