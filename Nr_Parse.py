@@ -54,7 +54,7 @@ if __name__ == '__main__':
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
-    r.flushall()
+    r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 
     NR_ANNO_DETAIL = fasta_check(open(   os.path.abspath(  options.NR ),'rU'   ) )

@@ -105,7 +105,7 @@ if __name__ == '__main__':
     ) 
     db_number = general_config.get("Redis", "eggnog")
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
-    r.flushall()      
+    r.flushdb()      
 
     NOG_des.createTable(ifNotExists=True)
     NOG_GENE.createTable(ifNotExists=True)
