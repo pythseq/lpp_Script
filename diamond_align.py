@@ -56,7 +56,8 @@ if __name__=="__main__":
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     if dbname =="kegg":
         dbname ="KEGG"
-    dbname = dbname.capitalize()
+    else:
+        dbname = dbname.capitalize()
     Input = options.Input
     OUTPUT = options.output
     Database = options.Database
