@@ -42,6 +42,7 @@ parser.add_option("-n", "--Nr", action="store",
 
                   help="Nr fasta sequence")
 general_config = ConfigParser()
+path = os.path.split(os.path.abspath(__file__))[0]+'/'
 general_config.read(
     os.path.join( path+"database_redis.ini")
 ) 
