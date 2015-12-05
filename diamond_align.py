@@ -104,10 +104,10 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
             END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
-            line_l = line.split("\t")
-            subj_r = r.hgetall(line_l[1])
+            line_l = line.split("\t")            
             subj = line_l[1]
-            
+            subj_r = r.hgetall(line_l[1])
+            print(subj_r)
             subj = subj_r["Annotation"]
             line_l[1] = subj
             end_list = line_l[:5]
