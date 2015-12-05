@@ -52,7 +52,7 @@ if __name__=="__main__":
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
     if db_has:
-        db_number = general_config.get("Redis", "nr")   
+        db_number = general_config.get("Redis", dbname)   
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     Input = options.Input
     OUTPUT = options.output
