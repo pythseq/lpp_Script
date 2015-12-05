@@ -118,7 +118,7 @@ if __name__=="__main__":
                 
                 subj = subj_r["Annotation"]
                 subj_length = subj_r["Length"]
-                subj_coverage = "%.2f"%( 100*aln_length/float(subj_length) )
+                subj_coverage = "%s/%s %.2f"%( aln_length ,subj_length ,100*aln_length/float(subj_length) )
                 
             line_l[1] = subj
             end_list = line_l[:6]
@@ -126,7 +126,7 @@ if __name__=="__main__":
             end_list.append( q_length    )
             
             q_coverage = 100*aln_length/float(q_length)
-            end_list.append( "%.2f"%(q_coverage   ) )
+            end_list.append( "(%s/%s) %.2f"%( aln_length,q_length,  q_coverage   ) )
             end_list.extend(  line_l[6:8] )
             
             end_list.append(  subj_length )
