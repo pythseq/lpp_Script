@@ -146,7 +146,7 @@ if __name__=="__main__":
             subj_length = ""
             subj_coverage = ""
             aln_length  = float( line_l[3] )
-            subjaln_length = abs(int(subj_stop) - int(subj_start ) ) +1
+            subjaln_length = abs(int(line_l[9]) - int(line_l[8] ) ) +1
             if subj_r:
                 
                 subj = subj_r["Annotation"]
