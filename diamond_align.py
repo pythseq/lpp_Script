@@ -121,13 +121,13 @@ if __name__=="__main__":
                 subj_coverage = "%.2f"%( 100*aln_length/float(subj_length) )
                 
             line_l[1] = subj
-            end_list = line_l[:5]
+            end_list = line_l[:6]
             q_length = query_length[line_l[0]]
             end_list.append( q_length    )
             
             q_coverage = 100*aln_length/float(q_length)
             end_list.append( "%.2f"%(q_coverage   ) )
-            end_list.extend(  line_l[5:7] )
+            end_list.extend(  line_l[6:8] )
             
             end_list.append(  subj_length )
             
@@ -137,4 +137,4 @@ if __name__=="__main__":
             
             
 
-    os.remove(temp_align_result)
+    os.remove(temp_align_result+".daa")
