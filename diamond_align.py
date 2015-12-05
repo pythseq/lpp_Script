@@ -119,7 +119,7 @@ if __name__=="__main__":
                 
                 subj = subj_r["Annotation"]
                 subj_length = subj_r["Length"]
-                subj_coverage = "%.0f/%s %.2f"%( subjaln_length ,subj_length ,100*subjaln_length/float(subj_length) )
+                subj_coverage = "(%.0f/%s) %.2f"%( subjaln_length ,subj_length ,100*subjaln_length/float(subj_length) )
                 
             line_l[1] = subj
             end_list = line_l[:6]
