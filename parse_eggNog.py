@@ -74,7 +74,7 @@ if __name__ == '__main__':
     general_config.read(
         os.path.join( path+"database_redis.ini")
     ) 
-    print(general_config)
+    print(general_config.get("Redis", "nr"))
     usage = '''usage: python2.7 %prog [options] 
          parse eggNOG data
    
