@@ -47,7 +47,7 @@ general_config.read(
     os.path.join( path+"database_redis.ini")
 ) 
 db_number = general_config.get("Redis", "nr")    
-print(db_number)
+
 if __name__ == '__main__':
     (options, args) = parser.parse_args()
     
@@ -61,8 +61,9 @@ if __name__ == '__main__':
 
     data_hash = Ddict()
     for t,s in NR_ANNO_DETAIL:
-        name = t.split()[0][1:]
-        data_hash[name]["Annotation"] = t[:-1]
+        t= t[1:-1]
+        name = t.split()[0]
+        data_hash[name]["Annotation"] = t
         s1 = re.sub("\s+", '', s)
         # data_hash[name]["Seq"] = s1
         data_hash[name]["Length"] = str(len(s1))

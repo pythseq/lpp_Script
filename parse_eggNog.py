@@ -6,7 +6,7 @@
   Created: 2014/6/20
 """
 from ConfigParser import ConfigParser
-import os,sys
+import os,sys,redis
 sys.path.append(
     os.path.abspath(os.path.split(__file__)[0]+'../Lib/' )
 )	
@@ -69,12 +69,8 @@ connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 
 if __name__ == '__main__':
-    general_config = ConfigParser()
-    path = os.path.split(os.path.abspath(__file__))[0]+'/'
-    general_config.read(
-        os.path.join( path+"database_redis.ini")
-    ) 
-    db_number = general_config.get("Redis", "eggnog")
+      
+    
     usage = '''usage: python2.7 %prog [options] 
          parse eggNOG data
    
@@ -102,7 +98,14 @@ if __name__ == '__main__':
     os.system(mysql_build+"-e 'create database eggNOG;'")
     os.system(mysql_build+"-e 'drop database eggNOG;'")
     os.system(mysql_build+"-e 'create database eggNOG;'")
-    
+    general_config = ConfigParser()
+    path = os.path.split(os.path.abspath(__file__))[0]+'/'
+    general_config.read(
+        os.path.join( path+"database_redis.ini")
+    ) 
+    db_number = general_config.get("Redis", "eggnog")
+    r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    r.flushall()      
 
     NOG_des.createTable(ifNotExists=True)
     NOG_GENE.createTable(ifNotExists=True)
@@ -179,7 +182,7 @@ if __name__ == '__main__':
             END.write(">"+t_name+'\n'+s)
             seq_data_hash[t_name]["Annotation"] = t_name
             s1 = re.sub("\s+", '', s)
-            seq_data_hash[t_name]["Seq"] = s1
+            #seq_data_hash[t_name]["Seq"] = s1
             data_hash[name]["Length"] = str(len(s1))
     DB_FILE.write(Redis_trans(seq_data_hash))
     os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
