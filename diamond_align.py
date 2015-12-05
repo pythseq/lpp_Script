@@ -92,7 +92,8 @@ if __name__=="__main__":
     temp_align_result = tmp_file_name
     END = open(options.output,'w')
     commandline = """ diamond  view  -a  %s  """%(temp_align_result)
-    align_result = os.popen(commandline)    
+    align_result = os.popen(commandline) 
+    has_hash = {}
     if not db_has:
         
         
@@ -102,6 +103,9 @@ if __name__=="__main__":
         END.write( "\t".join( align_title_list ) +'\n' )
         for line in align_result:
             line_l = line.strip().split() 
+            if line_l[0] in has_hash:
+                continue
+            has_hash[ line_l[0] ] = ""
             q_alignlength = int( line_l[7]) - int( line_l[6]  )+1
             q_length = query_length[line_l[0]]
             q_coverage = 100*q_alignlength/float(q_length)
@@ -118,7 +122,10 @@ if __name__=="__main__":
         END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
             
-            line_l = line.strip().split()            
+            line_l = line.strip().split()     
+            if line_l[0] in has_hash:
+                continue
+            has_hash[ line_l[0] ] = ""            
             subj = line_l[1]
 
             subj_r = r.hgetall(subj)
