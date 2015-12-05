@@ -44,6 +44,16 @@ parser.add_option("-t", "--Type", action="store",
 
 if __name__=="__main__":
     (options, args) = parser.parse_args()
+    general_config = ConfigParser()
+    redisconfigpath = os.path.split(os.path.abspath(__file__))[0]+'/'
+    general_config.read(
+        os.path.join( redisconfigpath+"database_redis.ini")
+    )
+    dbname = options.dbname.lower()
+    db_has = general_config.has_option("Redis", dbname)
+    if db_has:
+        db_number = general_config.get("Redis", "nr")   
+        r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     Input = options.Input
     OUTPUT = options.output
     Database = options.Database
@@ -75,4 +85,42 @@ if __name__=="__main__":
         tmp_file_name 
     )
     os.system(commandline)
+    temp_align_result = tmp_file_name+'.daa'
+    if not db_has:
+        commandline = """ diamond  view  -a  %s  """%(temp_align_result)
+        align_result = os.popen(commandline)
+        END = open(options.output,'w')
+        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
+        for i in xrange(1,len(align_title_list)):
+            align_title_list[i] = dbname+'_'+align_title_list[i]
+        END.write( "\t".join( align_title_list ) +'\n' )
+        END.write(align_result.read())
+    else:
+        
+        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjLength","SubjCoverage","SubjStart","SubjEnd","Evalue","Bitscore"]
+        for i in xrange(1,len(align_title_list)):
+            align_title_list[i] = dbname+'_'+align_title_list[i]
+            END.write( "\t".join( align_title_list ) +'\n' )        
+        for line in align_result:
+            line_l = line.split("\t")
+            subj_r = r.hgetall(line_l[1])
+            subj = line_l[1]
+            
+            subj = subj_r["Annotation"]
+            line_l[1] = subj
+            end_list = line_l[:5]
+            q_length = query_length[line_l[0]]
+            end_list.append( q_length    )
+            aln_length  = float( line_l[3] )
+            q_coverage = 100*aln_length/float(q_length)
+            end_list.append( "%.2f"%(q_coverage   ) )
+            end_list.extend(  line_l[5:7] )
+            subj_length = subj_r["Length"]
+            end_list.append(  subj_length )
+            subj_coverage = 100*aln_length/float(subj_length)
+            end_list.append( "%.2f"%(subj_coverage   ) )
+            end_list.extend( line_l[8:]  )
+            END.write('\t'.join(end_list))
+            
+            
 
