@@ -59,7 +59,7 @@ if __name__ == '__main__':
     general_config.read(
         os.path.join( path+"database_redis.ini")
     )     
-    db_has = general_config.has_option("Redis", dbname)
+    db_has = general_config.has_option("Redis", kind)
     if db_has:
         db_number = general_config.get("Redis", kind) 
     else:
