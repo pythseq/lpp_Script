@@ -64,7 +64,7 @@ if __name__=="__main__":
         name = t.split()[0][1:]
         length = str(len(re.sub("\s+", "", s)))
         query_length[name]=length
-    temp_name = os.getpid()
+    temp_name = str(os.getpid())
     tmp_file_name = Path+temp_name
     commandline = """     diamond %s -q %s -d %s  -e %s  --max-target-seqs 1  -p 64 -a %s"""%( 
         Type,
