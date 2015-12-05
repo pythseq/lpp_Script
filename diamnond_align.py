@@ -86,10 +86,11 @@ if __name__=="__main__":
     )
     os.system(commandline)
     temp_align_result = tmp_file_name+'.daa'
+    END = open(options.output,'w')
     if not db_has:
         commandline = """ diamond  view  -a  %s  """%(temp_align_result)
         align_result = os.popen(commandline)
-        END = open(options.output,'w')
+        
         align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
         for i in xrange(1,len(align_title_list)):
             align_title_list[i] = dbname+'_'+align_title_list[i]
