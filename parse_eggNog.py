@@ -95,7 +95,7 @@ if __name__ == '__main__':
     parser.add_option("-s", "--Seq", action="store",
                           dest="sequence",
                           help="NOG gene Category")      
-    parser.add_option("-r", "--Db_File", action="store",
+    parser.add_option("-x", "--Db_File", action="store",
                       dest="Db_File",
                       help="Redis Database File")      
     (options, args) = parser.parse_args()
