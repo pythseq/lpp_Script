@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	TMP = tempfile.NamedTemporaryFile()
 	
 	
-	TMP.write("Name\tCOG\tCOG_Annotation\tCat\tCategory Annotation\n")
+	TMP.write("Name\tCOG\tCOG_Annotation\tCOG_FunCat\tCategory Annotation\n")
 	for line in open(options.input,'rU'):
 		line_l = line.strip().split("\t")
 		subj= line_l[1].split()[0]

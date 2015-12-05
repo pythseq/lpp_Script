@@ -40,19 +40,37 @@ parser.add_option("-d", "--Database", action="store",
 parser.add_option("-n", "--Nr", action="store",
                   dest="NR",
 
-                  help="KEGG fasta sequence")
-general_config = ConfigParser()
+                  help="fasta sequence")
+
+parser.add_option("-k", "--KIND", action="store",
+                  dest="kind",
+
+                  help="Database name of kind")
+
 path = os.path.split(os.path.abspath(__file__))[0]+'/'
-general_config.read(
-    os.path.join( path+"database_redis.ini")
-) 
-db_number = general_config.get("Redis", "kegg")    
+
+   
 
 if __name__ == '__main__':
     (options, args) = parser.parse_args()
-    
+    general_config = ConfigParser()
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
-    
+    kind = options.kind.lower()
+    general_config.read(
+        os.path.join( path+"database_redis.ini")
+    )     
+    db_has = general_config.has_option("Redis", dbname)
+    if db_has:
+        db_number = general_config.get("Redis", kind) 
+    else:
+        max_number = 0
+        for key,number in general_config.items("Redis"):
+            if int(number)>max_number:
+                max_number=int(number)
+        db_number = max_number+1
+        general_config.set("Redis", kind,str(db_number))
+        
+        general_config.write( open(path+"database_redis.ini",'w') )
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
