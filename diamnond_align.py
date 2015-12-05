@@ -72,7 +72,7 @@ if __name__=="__main__":
 
         Database,
         E_value,
-        OUTPUT 
+        tmp_file_name 
     )
     os.system(commandline)
 
