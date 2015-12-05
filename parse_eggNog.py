@@ -5,6 +5,7 @@
   Purpose: 
   Created: 2014/6/20
 """
+from ConfigParser import ConfigParser
 import os,sys
 sys.path.append(
     os.path.abspath(os.path.split(__file__)[0]+'../Lib/' )
@@ -66,7 +67,14 @@ mysql_build = "mysql -u%s -p%s  --local-infile=1 "%(user,password)
 connection_string = 'mysql://%s:%s@localhost/eggNOG'%(user,password)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
+
 if __name__ == '__main__':
+    general_config = ConfigParser()
+    path = os.path.split(os.path.abspath(__file__))[0]+'/'
+    general_config.read(
+        os.path.join( path+"database_redis.ini")
+    ) 
+    print(general_config)
     usage = '''usage: python2.7 %prog [options] 
          parse eggNOG data
    
@@ -87,7 +95,9 @@ if __name__ == '__main__':
     parser.add_option("-s", "--Seq", action="store",
                           dest="sequence",
                           help="NOG gene Category")      
-    
+    parser.add_option("-r", "--Db_File", action="store",
+                      dest="Db_File",
+                      help="Redis Database File")      
     (options, args) = parser.parse_args()
     os.system(mysql_build+"-e 'create database eggNOG;'")
     os.system(mysql_build+"-e 'drop database eggNOG;'")
@@ -161,7 +171,14 @@ if __name__ == '__main__':
     
     SEQ = fasta_check(open(options.sequence,'rU'))
     END = open('total.validate.sequence.fasta','w')
+    seq_data_hash = Ddict()
+    DB_FILE = open(options.Db_File,'w')
     for t,s in SEQ:
         t_name = t.strip()[1:]
         if NOG_GENE.selectBy(Gene = t_name).count():
             END.write(">"+t_name+'\n'+s)
+            seq_data_hash[t_name]["Annotation"] = t_name
+            s1 = re.sub("\s+", '', s)
+            seq_data_hash[t_name]["Seq"] = s1
+            data_hash[name]["Length"] = str(len(s1))
+    DB_FILE.write(Redis_trans(seq_data_hash))
