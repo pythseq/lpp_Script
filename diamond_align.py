@@ -113,6 +113,7 @@ if __name__=="__main__":
             subj_r = r.hgetall(subj)
             subj_length = ""
             subj_coverage = ""
+            aln_length  = float( line_l[3] )
             if subj_r:
                 
                 subj = subj_r["Annotation"]
@@ -123,7 +124,7 @@ if __name__=="__main__":
             end_list = line_l[:5]
             q_length = query_length[line_l[0]]
             end_list.append( q_length    )
-            aln_length  = float( line_l[3] )
+            
             q_coverage = 100*aln_length/float(q_length)
             end_list.append( "%.2f"%(q_coverage   ) )
             end_list.extend(  line_l[5:7] )
@@ -136,3 +137,4 @@ if __name__=="__main__":
             
             
 
+    os.remove(temp_align_result)
