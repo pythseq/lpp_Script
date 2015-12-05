@@ -7,9 +7,10 @@
 """
 
 from os.path import abspath
+import redis
 from optparse import OptionParser
 from lpp import *
-
+from ConfigParser import ConfigParser
 def Redis_trans(data_hash):
     out_data = ""
     if type(data_hash)==type(Ddict()):
@@ -42,18 +43,27 @@ parser.add_option("-n", "--Nr", action="store",
                   help="Nr Ghostz Aligment Result")
 if __name__ == '__main__':
     (options, args) = parser.parse_args()
-
+    general_config = ConfigParser()
+    path = os.path.split(os.path.abspath(__file__))[0]+'/'
+    general_config.read(
+        os.path.join( path+"database_redis.ini")
+    ) 
+    db_number = general_config.get("Redis", "nr")    
+    print(db_number)
+    r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    r.flushall()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 
     NR_ANNO_DETAIL = fasta_check(open(   os.path.abspath(  options.NR ),'rU'   ) )
 
     data_hash = Ddict()
     for t,s in NR_ANNO_DETAIL:
-        name = t.split()[0]
+        name = t.split()[0][1:]
         data_hash[name]["Annotation"] = t[:-1]
         s1 = re.sub("\s+", '', s)
-        data_hash[name]["Seq"] = s1
+        # data_hash[name]["Seq"] = s1
         data_hash[name]["Length"] = str(len(s1))
 
 DB_FILE.write(Redis_trans(data_hash))
 
+os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
