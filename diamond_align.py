@@ -85,7 +85,7 @@ if __name__=="__main__":
         tmp_file_name 
     )
     os.system(commandline)
-    temp_align_result = tmp_file_name+'.daa'
+    temp_align_result = tmp_file_name+
     END = open(options.output,'w')
     commandline = """ diamond  view  -a  %s  """%(temp_align_result)
     align_result = os.popen(commandline)    
@@ -104,6 +104,7 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
             END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
+            print(line)
             line_l = line.split("\t")            
             subj = line_l[1]
             subj_r = r.hgetall(line_l[1])
