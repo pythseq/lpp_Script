@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
 	data_hash = Ddict()
 	for t,s in SWISS:
-		t = t[1:]
+		t = t.strip()[1:]
 		name = t.split()[0]
 		data_hash[name]["Annotation"] = t
 		s1 = re.sub("\s+", '', s)

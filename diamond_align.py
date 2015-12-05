@@ -109,10 +109,16 @@ if __name__=="__main__":
             
             line_l = line.strip().split()            
             subj = line_l[1]
-            print(subj)
+
             subj_r = r.hgetall(subj)
-            # print(subj_r)
-            subj = subj_r["Annotation"]
+            subj_length = ""
+            subj_coverage = ""
+            if subj_r:
+                
+                subj = subj_r["Annotation"]
+                subj_length = subj_r["Length"]
+                subj_coverage = "%.2f"%( 100*aln_length/float(subj_length) )
+                
             line_l[1] = subj
             end_list = line_l[:5]
             q_length = query_length[line_l[0]]
@@ -121,10 +127,10 @@ if __name__=="__main__":
             q_coverage = 100*aln_length/float(q_length)
             end_list.append( "%.2f"%(q_coverage   ) )
             end_list.extend(  line_l[5:7] )
-            subj_length = subj_r["Length"]
+            
             end_list.append(  subj_length )
-            subj_coverage = 100*aln_length/float(subj_length)
-            end_list.append( "%.2f"%(subj_coverage   ) )
+            
+            end_list.append( subj_coverage )
             end_list.extend( line_l[8:]  )
             END.write('\t'.join(end_list)+'\n')
             
