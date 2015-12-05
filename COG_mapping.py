@@ -29,7 +29,7 @@ if __name__ == '__main__':
 	BLAST = open(options.input,'rU')
 	BLAST.next()
 	
-	TMP = tempfile.TemporaryFile()
+	TMP = tempfile.NamedTemporaryFile()
 	
 	
 	TMP.write("Name\tCOG\tCOG_Annotation\tCat\tCategory Annotation\n")
