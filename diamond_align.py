@@ -97,11 +97,17 @@ if __name__=="__main__":
     if not db_has:
         
         
-        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
+        align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","Alignment_Frame","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
         for i in xrange(1,len(align_title_list)):
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )
         for line in align_result:
+            subj_start = line_l[8]
+            subj_stop = line_l[9]
+            if int(subj_start) <  int(subj_stop):
+                frame = '+'
+            else:
+                frame = '-'
             line_l = line.strip().split() 
             if line_l[0] in has_hash:
                 continue
@@ -110,6 +116,7 @@ if __name__=="__main__":
             q_length = query_length[line_l[0]]
             q_coverage = 100*q_alignlength/float(q_length)
             end_list = line_l[:6]
+            end_list.append(frame)
             end_list.append( q_length    )
             end_list.append( "(%.0f/%s) %.2f"%( q_alignlength,q_length,  q_coverage   ) )
             end_list.extend( line_l[6:]  )
@@ -121,7 +128,12 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )        
         for line in align_result:
-            
+            subj_start = line_l[8]
+            subj_stop = line_l[9]
+            if int(subj_start) <  int(subj_stop):
+                frame = '+'
+            else:
+                frame = '-'            
             line_l = line.strip().split()     
             if line_l[0] in has_hash:
                 continue
@@ -132,7 +144,7 @@ if __name__=="__main__":
             subj_length = ""
             subj_coverage = ""
             aln_length  = float( line_l[3] )
-            subjaln_length = int(line_l[9]) - int(line_l[8] )+1
+            subjaln_length = abs(int(subj_stop) - int(subj_start ) ) +1
             if subj_r:
                 
                 subj = subj_r["Annotation"]
@@ -142,6 +154,7 @@ if __name__=="__main__":
             line_l[1] = subj
             end_list = line_l[:6]
             q_length = query_length[line_l[0]]
+            end_list.append(frame)
             end_list.append( q_length    )
             q_alignlength = int( line_l[7]) - int( line_l[6]  )+1
             q_coverage = 100*q_alignlength/float(q_length)
