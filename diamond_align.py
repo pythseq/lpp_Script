@@ -107,8 +107,9 @@ if __name__=="__main__":
             print(line)
             line_l = line.split("\t")            
             subj = line_l[1]
-            subj_r = r.hgetall(line_l[1])
-            print(subj_r)
+            print(subj)
+            subj_r = r.hgetall(subj)
+            # print(subj_r)
             subj = subj_r["Annotation"]
             line_l[1] = subj
             end_list = line_l[:5]
