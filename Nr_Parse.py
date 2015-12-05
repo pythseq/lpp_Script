@@ -40,16 +40,17 @@ parser.add_option("-d", "--Database", action="store",
 parser.add_option("-n", "--Nr", action="store",
                   dest="NR",
 
-                  help="Nr Ghostz Aligment Result")
+                  help="Nr fasta sequence")
+general_config.read(
+    os.path.join( path+"database_redis.ini")
+) 
+db_number = general_config.get("Redis", "nr")    
+print(db_number)
 if __name__ == '__main__':
     (options, args) = parser.parse_args()
     general_config = ConfigParser()
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
-    general_config.read(
-        os.path.join( path+"database_redis.ini")
-    ) 
-    db_number = general_config.get("Redis", "nr")    
-    print(db_number)
+    
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     r.flushall()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
