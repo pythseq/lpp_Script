@@ -64,7 +64,7 @@ if __name__=="__main__":
     ver = options.ver
     if ver:
         all_ver = general_config.items("Version")
-        Print("Database\tVersion\n")
+        print("Database\tVersion\n")
         for dbname,dbver in all_ver:
             print(dbname+'\t'+dbver+'\n')
         sys.exit()    
