@@ -28,8 +28,8 @@ if __name__ == '__main__':
 	all_eggnog_frame = pd.read_table(options.input)
 	BLAST = open(options.input,'rU')
 	BLAST.next()
-	
-	TMP = tempfile.NamedTemporaryFile()
+	TMP = open("tmp",'w')
+	# TMP = tempfile.NamedTemporaryFile()
 	
 	
 	TMP.write("Name\tCOG\tCOG_Annotation\tCOG_FunCat\tCategory Annotation\n")
