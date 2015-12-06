@@ -47,13 +47,27 @@ parser.add_option("-t", "--Type", action="store",
                   default ="blastp"
                   )
 
+parser.add_option("-v", "--Version", action="store_true",
+                  dest="ver",
+                  default = False,
+                  help="show Database Version",
+
+                  )
+
 if __name__=="__main__":
     (options, args) = parser.parse_args()
     general_config = ConfigParser()
     redisconfigpath = os.path.split(os.path.abspath(__file__))[0]+'/'
     general_config.read(
         os.path.join( redisconfigpath+"database.ini")
-    )
+    )    
+    ver = options.ver
+    if ver:
+        all_ver = general_config.items("Version")
+        Print("Database\tVersion\n")
+        for dbname,dbver in all_ver:
+            print(dbname+'\t'+dbver+'\n')
+        sys.exit()    
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
     
