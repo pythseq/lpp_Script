@@ -70,7 +70,7 @@ if __name__=="__main__":
         sys.exit()    
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
-    
+    Database = options.Database
     
     if Database:
         Database = options.Database
