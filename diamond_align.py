@@ -64,9 +64,9 @@ if __name__=="__main__":
     ver = options.ver
     if ver:
         all_ver = general_config.items("Version")
-        print("Database\tVersion\n")
+        print("Database\tVersion")
         for dbname,dbver in all_ver:
-            print(dbname+'\t'+dbver+'\n')
+            print(dbname+'\t'+dbver)
         sys.exit()    
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
