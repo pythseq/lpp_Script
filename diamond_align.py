@@ -68,9 +68,7 @@ if __name__=="__main__":
         else:
             print(colored(  "No Database Input !!",'red'  ))
             sys.exit()            
-    if Database:
-        print(colored(  "No Database Input !!",'red'  ))
-        sys.exit()
+
     if db_has:
         db_number = general_config.get("Redis", dbname)   
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
