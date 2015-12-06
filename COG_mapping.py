@@ -49,7 +49,7 @@ if __name__ == '__main__':
 			for each_cat in nog_cat:
 				cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
 				for each_anno in cat_anno:
-					TMP.write(line_l[0]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description+' [%s]\n'%(each_cat.Cat))
+					TMP.write(line_l[0]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description.strip()+' [%s]\n'%(each_cat.Cat))
 	
 	
 	
