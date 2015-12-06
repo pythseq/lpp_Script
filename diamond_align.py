@@ -88,7 +88,7 @@ if __name__=="__main__":
     if Database.endswith(".dmnd"):
         Database = re.sub( "\.dmnd$","",Database)
     if not os.path.exists( Database+ '.dmnd'    ):
-        print( colored("Diamond %s is not Found","red")   )
+        print( colored("Diamond %s is not Found"%(Database),"red")   )
         sys.exit()
     if db_has:
         db_number = general_config.get("Redis", dbname)   
