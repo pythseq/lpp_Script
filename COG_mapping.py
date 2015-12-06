@@ -64,8 +64,12 @@ if __name__ == '__main__':
 	TMP2 = tempfile.NamedTemporaryFile()
 	result_stat_frame.to_csv(TMP2.name,sep = "\t")
 	STAT = open(options.output+".stats",'w')
+	TMP2.next()
+	title = TMP2.next()
+	title.replace("count","Gene count")
 	STAT.write("Category\t"+TMP2.next())
 	for line in TMP2:
+		print(line.split("\t")[0])
 		name = re.search("\[(\w+)\]$",line.split("\t")[0]).group(1)
 		STAT.write( name+'\t'+ line)
 	
