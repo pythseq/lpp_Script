@@ -55,4 +55,17 @@ if __name__ == '__main__':
 	
 	all_cog_frame = pd.read_table(TMP.name)
 	result_data_frame = pd.DataFrame.merge( all_eggnog_frame,all_cog_frame,left_on='Name', right_on='Name', how='outer' )
-	result_data_frame.to_csv(options.output,sep="\t",index =False)
+	result_data_frame.to_csv(options.output+".xls",sep="\t",index =False)
+	result_stat_frame = pd.DataFrame( result_data_frame,columns=("COG_FunCat","Category Annotation")  )
+	result_stat_frame = result_stat_frame[ pd.notnull( result_stat_frame["COG_FunCat"]  )   ]
+	result_stat_frame["Gene"] = result_stat_frame["COG_FunCat"]
+	result_stat_frame.rename(columns={"COG_FunCat":"Gene"},inplace=True)
+	result_stat_frame = result_stat_frame.groupby(["Category Annotation"] ).agg([ 'count'])
+	TMP2 = tempfile.NamedTemporaryFile()
+	result_stat_frame.to_csv(TMP2.name,sep = "\t")
+	STAT = open(options.output+".stats",'w')
+	STAT.write("Category\t"+TMP2.next())
+	for line in TMP2:
+		name = re.search("\[(\w+)]$",line.split("\t")[0]).group(1)
+		STAT.write( name+'\t'+ line)
+	

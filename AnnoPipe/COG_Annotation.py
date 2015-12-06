@@ -34,4 +34,19 @@ if __name__=="__main__":
 	FASTA = fasta_check(open(options.input,'rU'))
 	sequence = FASTA.next()[-1]
 	blast_type = Nul_or_Protein(sequence)
-	
+	output_prefix = os.path.abspath(  options.output_prefix )
+	out_put_path = os.path.split(output_prefix)[0]
+	cog = options.cog
+	if not os.path.exists( out_put_path ):
+		os.makedirs( out_put_path )
+		
+	diamond_result = output_prefix+'.tsv'
+	error = RunDiamond(options.input,options.evalue, blast_type,"eggnog",diamond_result)
+	if error:
+		print( colored("%s 's COG process in Diamond of eggnog is error!!","red") )
+		print(colored( error,"blue"  ))
+		print(  "##############################################"   )
+		
+		sys.exit()
+		
+		

@@ -9,6 +9,7 @@ from lpp import *
 import subprocess
 import os,sys
 from os.path import abspath
+from  termcolor import colored
 import pandas as pd
 def Nul_or_Protein( seq ):
 	seq = re.sub("\s+","",seq.lower())
