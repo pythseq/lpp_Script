@@ -38,7 +38,7 @@ parser.add_option("-e", "--Evalue", action="store",
                   help="Evalue !")
 parser.add_option("-n", "--DBName", action="store",
                   dest="dbname",
-
+                  default="",
                   help="DB Name")
 parser.add_option("-t", "--Type", action="store",
                   dest="type",
