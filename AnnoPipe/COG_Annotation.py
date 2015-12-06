@@ -49,7 +49,7 @@ if __name__=="__main__":
 		
 		sys.exit()
 	
-	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o "%( diamond_result,cog,output_prefix)
+	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o %s"%( diamond_result,cog,output_prefix)
 	cogmapping_process = subprocess.Popen( cogmapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogmapping_process.communicate()	
 	
