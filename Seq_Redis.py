@@ -57,7 +57,7 @@ if __name__ == '__main__':
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     kind = options.kind.lower()
     general_config.read(
-        os.path.join( path+"database_redis.ini")
+        os.path.join( path+"database.ini.ini")
     )     
     db_has = general_config.has_option("Redis", kind)
     if db_has:
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         db_number = max_number+1
         general_config.set("Redis", kind,str(db_number))
         
-        general_config.write( open(path+"database_redis.ini",'w') )
+        general_config.write( open(path+"database.ini",'w') )
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
     r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')

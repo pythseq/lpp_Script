@@ -18,14 +18,19 @@ parser.add_option("-i", "--Input", action="store",
                   dest="Input",
 
                   help="Input Fasta Sequence")
+
 parser.add_option("-o", "--Output", action="store",
                   dest="output",
 
                   help="Output File")
+parser.add_option("-a", "--Already", action="store",
+                  dest="already",
+                  default='',
+                  help="use database that prebuilded")
 
 parser.add_option("-d", "--Database", action="store",
                   dest="Database",
-
+                  default = "" ,
                   help="Database Location")
 parser.add_option("-e", "--Evalue", action="store",
                   dest="Evalue",
@@ -47,10 +52,25 @@ if __name__=="__main__":
     general_config = ConfigParser()
     redisconfigpath = os.path.split(os.path.abspath(__file__))[0]+'/'
     general_config.read(
-        os.path.join( redisconfigpath+"database_redis.ini")
+        os.path.join( redisconfigpath+"database.ini")
     )
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
+    Database = options.Database
+    db_already = options.aleady.lower()
+    if not Database:
+        if db_already:
+            if general_config.has_option("Location", db_already):
+                Database = general_config.get("Location", db_already)
+            else:
+                print(colored(  "Diamnond database %s is not  Found !!"%(db_already),'red'  ))
+                sys.exit()
+        else:
+            print(colored(  "No Database Input !!",'red'  ))
+            sys.exit()            
+    if Database:
+        print(colored(  "No Database Input !!",'red'  ))
+        sys.exit()
     if db_has:
         db_number = general_config.get("Redis", dbname)   
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
@@ -60,7 +80,7 @@ if __name__=="__main__":
         dbname = dbname.capitalize()
     Input = options.Input
     OUTPUT = options.output
-    Database = options.Database
+    
     Path = os.path.split(OUTPUT)[0]
     Type = options.type
     if Type not in ["blastx","blastp"]:
