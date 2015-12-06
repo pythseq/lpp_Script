@@ -57,7 +57,7 @@ if __name__=="__main__":
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
     Database = options.Database
-    db_already = options.aleady.lower()
+    db_already = options.already.lower()
     if not Database:
         if db_already:
             if general_config.has_option("Location", db_already):
