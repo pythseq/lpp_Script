@@ -28,8 +28,8 @@ if __name__ == '__main__':
 	all_eggnog_frame = pd.read_table(options.input)
 	BLAST = open(options.input,'rU')
 	BLAST.next()
-	TMP = open("tmp",'w')
-	# TMP = tempfile.NamedTemporaryFile()
+	TMP = open("%s.tmp"%(os.getpid()),'w')
+
 	
 	
 	TMP.write("Name\tCOG\tCOG_Annotation\tCOG_FunCat\tCategory Annotation\n")
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 				cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
 				for each_anno in cat_anno:
 					TMP.write(line_l[0]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description.strip()+' [%s]\n'%(each_cat.Cat))
-	
+	TMP.close()
 	
 	
 	all_cog_frame = pd.read_table(TMP.name)
@@ -61,9 +61,10 @@ if __name__ == '__main__':
 
 	result_stat_frame.rename(columns={"COG_FunCat":"Gene"},inplace=True)
 	result_stat_frame = result_stat_frame.groupby(["Category Annotation"] ).agg([ 'count'])
-	TMP2 = tempfile.NamedTemporaryFile()
-	result_stat_frame.to_csv(TMP2.name,sep = "\t")
+	
+	result_stat_frame.to_csv(TMP.name,sep = "\t")
 	STAT = open(options.output+".stats",'w')
+	TMP2 = open(TMP.name,'rU')
 	TMP2.next()
 	title = TMP2.next()
 	title.replace("count","Gene count")
@@ -72,4 +73,4 @@ if __name__ == '__main__':
 		print(line.split("\t")[0])
 		name = re.search("\[(\w+)\]$",line.split("\t")[0]).group(1)
 		STAT.write( name+'\t'+ line)
-	
+	os.remove(TMP.name)
