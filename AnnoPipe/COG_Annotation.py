@@ -35,7 +35,7 @@ if __name__=="__main__":
 	sequence = FASTA.next()[-1]
 	blast_type = Nul_or_Protein(sequence)
 	output_prefix = os.path.abspath(  options.output_prefix )
-	out_put_path = os.path.split(output_prefix)[0]
+	out_put_path = os.path.split(output_prefix)[0]+'/'
 	cog = options.cog
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )
@@ -48,5 +48,23 @@ if __name__=="__main__":
 		print(  "##############################################"   )
 		
 		sys.exit()
-		
+	
+	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o "%( diamond_result,cog,output_prefix)
+	cogmapping_process = subprocess.Popen( cogmapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
+	stdout,stderr = cogmapping_process.communicate()	
+	
+	
+	cogdraw_command = "COG_Draw.py   -i %s.xls  -o %s -r %s"%(
+	    output_prefix,
+	    out_put_path+"stats",
+	    out_put_path+'Draw.R',
+	)
+	cogdraw_process = subprocess.Popen(  cogdraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
+	stdout,stderr = cogdraw_process.communicate()	
+	
+	
+	
+	
+	
+
 		
