@@ -56,9 +56,12 @@ if __name__=="__main__":
     )
     dbname = options.dbname.lower()
     db_has = general_config.has_option("Redis", dbname)
-    Database = options.Database
-    db_already = options.already.lower()
-    if not Database:
+    
+    
+    if Database:
+        Database = options.Database
+    else:
+        db_already = options.already.lower()
         if db_already:
             if general_config.has_option("Location", db_already):
                 Database = general_config.get("Location", db_already)
@@ -67,8 +70,12 @@ if __name__=="__main__":
                 sys.exit()
         else:
             print(colored(  "No Database Input !!",'red'  ))
-            sys.exit()            
-
+            sys.exit()        
+    if Database.endswith(".dmnd"):
+        Database = re.sub( "\.dmnd$","",Database)
+    if not os.path.exists( Database+ '.dmnd'    ):
+        print( colored("Diamond %s is not Found","red")   )
+        sys.exit()
     if db_has:
         db_number = general_config.get("Redis", dbname)   
         r = redis.Redis(host='localhost',port=6379,db=int(db_number))
