@@ -66,6 +66,6 @@ if __name__ == '__main__':
 	STAT = open(options.output+".stats",'w')
 	STAT.write("Category\t"+TMP2.next())
 	for line in TMP2:
-		name = re.search("\[(\w+)]$",line.split("\t")[0]).group(1)
+		name = re.search("\[(\w+)\]$",line.split("\t")[0]).group(1)
 		STAT.write( name+'\t'+ line)
 	
