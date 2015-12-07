@@ -10,6 +10,7 @@ from optparse import OptionParser
 
 if __name__=="__main__":
     config_hash = Config_Parse()
+    print(config_hash)
     usage = '''usage: python2.7 %prog'''
     parser = OptionParser(usage =usage ) 
     parser.add_option("-p", "--PEP", action="store", 
