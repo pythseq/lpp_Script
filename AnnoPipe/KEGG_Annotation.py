@@ -37,6 +37,7 @@ if __name__=="__main__":
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
     out_put_path = os.path.split(output_prefix)[0]+'/'
+    print(out_put_path)
     tag = "%s"%( os.getpid() )
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
@@ -46,7 +47,7 @@ if __name__=="__main__":
     if not proteinseq:
         proteinseq = options.NUL
         
-    # error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
+    error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
     error=""
     if error:
         print( colored("%s 's KEGG process in Diamond of kegg is error!!","red") )
@@ -55,7 +56,7 @@ if __name__=="__main__":
 
         sys.exit()
 
-    print(config_hash["Utils"]["gapmap"])    
+ 
     blast_mapping_command = config_hash["Utils"]["gapmap"]+'/blast_sql.py -f %(diamond)s   -r  %(diamond)s   -1 forward -2 forward  -n Forward -N Reverse -p %(pep)s -d %(dna)s -x %(tag)s -q'%(
         {
             "diamond":diamond_result,

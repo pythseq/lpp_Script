@@ -26,7 +26,7 @@ def Config_Parse():
 		for key in general_config.options(section):
 
 			config_hash[section][key] = general_config.get(section,key)
-			print(general_config.get(section,key))
+
 	return config_hash
 
 
