@@ -39,8 +39,23 @@ if __name__=="__main__":
 	cog = options.cog
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )
-		
-	diamond_result = output_prefix+'.tsv'
+	README = open(out_put_path+'/Readme.txt','w')
+	
+	README.write(
+"""
+将所有的序列比对到eggNOG数据库，并映射到COG。该文件夹结果如下：
+
+*_AlignEggNOG.tsv\t与eggNOG数据库的详细比对结果，Excel打开
+*_COG.tsv\t每一个基因的COG映射结果,Excel打开
+*_COG.xls\t每个基因与eggNOG比对和COG映射结果整合结果,Excel打开
+*_COG.stats\t每一个COG功能分类的基因个数统计表,Excel打开
+
+
+
+"""	
+	
+	)
+	diamond_result = output_prefix+'_AlignEggNOG.tsv'
 	error = RunDiamond(options.input,options.evalue, blast_type,"eggnog",diamond_result)
 	if error:
 		print( colored("%s 's COG process in Diamond of eggnog is error!!","red") )
@@ -49,13 +64,13 @@ if __name__=="__main__":
 		
 		sys.exit()
 	
-	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o %s"%( diamond_result,cog,output_prefix)
+	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o %s"%( diamond_result,cog,output_prefix+"_COG")
 	cogmapping_process = subprocess.Popen( cogmapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogmapping_process.communicate()	
 	
 	
 	cogdraw_command = "COG_Draw.py   -i %s.xls  -o %s -r %s"%(
-	    output_prefix,
+	    output_prefix+"_COG",
 	    out_put_path+"stats",
 	    out_put_path+'Draw.R',
 	)
