@@ -49,7 +49,7 @@ r"""
 	
 	
 	    )
-	diamond_result = output_prefix+'_NrAlignment.xls'
+	diamond_result = output_prefix+'_NrAlignment.tsv'
 	error = RunDiamond(options.input,options.evalue, blast_type,"Nr",diamond_result)
 	if error:
 		print( colored("%s 's Nr process in Diamond of Nr is error!!","red") )
@@ -57,6 +57,7 @@ r"""
 		print(  "##############################################"   )
 
 		sys.exit()
+	os.rename(output_prefix+'_NrAlignment.tsv',output_prefix+'_NrAlignment.xls')
 	
 	
 
