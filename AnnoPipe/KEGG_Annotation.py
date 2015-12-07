@@ -72,6 +72,7 @@ if __name__=="__main__":
 
 
     source_location = out_put_path+'/source/'
+    print(source_location)
     source_command = config_hash["Utils"]["gapmap"]+"/Mapping_sql.py -o %s -d %s"%(
         source_location,
         tag,
