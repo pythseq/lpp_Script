@@ -52,7 +52,7 @@ dev.off()
 
 	
 	
-	"""%(options.input,options.Output)
+	"""%(options.input,options.Output,options.Output)
 	SCRIPT = open(options.R,'w')
 	SCRIPT.write(commandline)
 	SCRIPT.close()

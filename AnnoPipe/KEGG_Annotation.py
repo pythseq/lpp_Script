@@ -113,7 +113,7 @@ if __name__=="__main__":
         out_put_path+'Draw.R',
     )
     pathwaydraw_process = subprocess.Popen(  pathwaydraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
-    stdout,stderr = cogdraw_process.communicate()	
+    stdout,stderr = pathwaydraw_process.communicate()	
 
 
 
