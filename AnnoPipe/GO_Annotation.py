@@ -49,7 +49,7 @@ if __name__=="__main__":
 	
 	
 	
-	gomapping_command = "GO_Mapping.py    -i %s  -o %s"%( diamond_result,cog,output_prefix)
+	gomapping_command = "GO_Mapping.py    -i %s  -o %s"%( diamond_result,output_prefix)
 	gomapping_process = subprocess.Popen( gomapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = gomapping_process.communicate()	
 
