@@ -54,12 +54,12 @@ if __name__=="__main__":
 
         sys.exit()
 
+    print(config_hash["Utils"]["gapmap"])    
     blast_mapping_command = config_hash["Utils"]["gapmap"]+'/blast_sql.py -f %(diamond)s   -r  %(diamond)s   -1 forward -2 forward  -n Forward -N Reverse -p %(pep)s -d %(dna)s -x %(tag)s -q'%(
         {
             "diamond":diamond_result,
             "pep":proteinseq,
             "dna":options.NUL,
-
             "tag":tag
         }
     )
