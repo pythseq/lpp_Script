@@ -75,7 +75,7 @@ if __name__=="__main__":
 	    out_put_path+"stats",
 	    out_put_path+'Draw.R',
 	)
-	cogdraw_process = subprocess.Popen(  cogdraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
+	cogdraw_process = subprocess.Popen(  godraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogdraw_process.communicate()	
 	
 	
