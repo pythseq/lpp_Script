@@ -45,6 +45,7 @@ if __name__=="__main__":
 			line_l_new[-4]='+'
 		else:
 			line_l_new[-4]='-'
+		line_l_new[0] = line_l_new[0].split()[0]
 		already[line_l[2]][line_l[6]] = '\t'.join(line_l_new)
 		
 	for key in already:
