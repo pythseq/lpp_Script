@@ -81,8 +81,9 @@ if __name__=="__main__":
             tag,
         )
     print(source_command)
-    source_process = subprocess.Popen( source_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
-    source_process.communicate()
+    os.system(  source_command )
+    # source_process = subprocess.Popen( source_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
+    # source_process.communicate()
     pathway_detail_frame = pd.read_table( "%s_detail.tsv"%(  output_prefix  )   )
     # os.remove( "%s_detail.tsv"%(  output_prefix  ) )
     
