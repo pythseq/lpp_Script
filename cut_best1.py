@@ -33,7 +33,7 @@ if __name__=="__main__":
 		title_list =title_list[2:-3]
 		title_list =[ "Nt_"+x.split('_',1)[-1] for x in title_list  ]
 		title_list[0]="Name"
-		END.write( "\t".join(title_list)  )
+		END.write( "\t".join(title_list)+'\n'  )
 		
 	
 	already = Ddict()
@@ -48,4 +48,4 @@ if __name__=="__main__":
 		
 	for key in already:
 		key2 = sorted(already[key])[-1]
-		END.write(already[key][key2])
+		END.write(already[key][key2]+'\n')
