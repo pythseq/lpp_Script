@@ -28,11 +28,12 @@ if __name__=="__main__":
 		line_l = line.split("\t")
 		if line.startswith("GO:"):
 			function =line_l[1]
+			goid = line_l[0]
 			component =  GO_COMPONENT.select(GO_COMPONENT.q.Go==line_l[0])[0].Compent
 			component = component.capitalize().replace("_"," ")
 		else:
 			gene = line_l[3]
-			data_hash[component][function+'\t'+line_l[0]][gene] = ""
+			data_hash[component][function+'\t'+goid][gene] = ""
 	
 	for compe,func_hash in data_hash.items():
 		for func ,gene_hash in func_hash.items():
