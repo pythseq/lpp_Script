@@ -36,6 +36,12 @@ if __name__=="__main__":
     sequence = FASTA.next()[-1]
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
+    
+    out_put_path = os.path.split(output_prefix)[0]+'/'
+
+    tag = "%s"%( os.getpid() )
+    if not os.path.exists( out_put_path ):
+        os.makedirs( out_put_path )
     README = open(output_prefix+"/Readme.txt",'w')
     README.write(
 """
@@ -54,13 +60,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     
     
     
-    )
-    out_put_path = os.path.split(output_prefix)[0]+'/'
-
-    tag = "%s"%( os.getpid() )
-    if not os.path.exists( out_put_path ):
-        os.makedirs( out_put_path )
-
+    )        
     diamond_result = output_prefix+'_AlignKEGG.tsv'
     proteinseq = options.PEP
     if not proteinseq:
