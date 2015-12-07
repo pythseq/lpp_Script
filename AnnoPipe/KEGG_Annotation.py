@@ -42,7 +42,7 @@ if __name__=="__main__":
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
 
-    diamond_result = output_prefix+'.tsv'
+    diamond_result = output_prefix+'_AlignKEGG.tsv'
     proteinseq = options.PEP
     if not proteinseq:
         proteinseq = options.NUL
@@ -84,6 +84,7 @@ if __name__=="__main__":
     os.system(  source_command )
 
     pathway_detail_frame = pd.read_table( "%s_detail.tsv"%(  output_prefix  )   )
+    pathway_detail_frame = pd.DataFrame(pathway_detail_frame,columns=pathway_detail_frame.columns[:-1])
     os.remove( "%s_detail.tsv"%(  output_prefix  ) )
     
     pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery.tsv %(out)s_PathwayCategory_Stats.stat"%(
@@ -97,7 +98,7 @@ if __name__=="__main__":
     pathway_category_frame = pd.read_table("%s_PathwayCategoery.tsv"%(output_prefix) )
     
     pathway_result_frame = pd.merge( pathway_detail_frame,pathway_category_frame,left_on='Name', right_on='Name', how='outer' )
-    pathway_result_frame.to_csv( "%s_pathway_detail.xls"%(output_prefix),sep="\t",index=False  )
+    pathway_result_frame.to_csv( "%s_pathway.tsv"%(output_prefix),sep="\t",index=False  )
     os.remove("%(out)s_PathwayCategoery.tsv"%(
     {
         "out":output_prefix
@@ -106,7 +107,7 @@ if __name__=="__main__":
               )
 
 
-    pathwaydraw_command = "Pathway_Draw.py   -i %s_pathway_detail.xls  -o %s -r %s"%(
+    pathwaydraw_command = "Pathway_Draw.py   -i %s_pathway.tsv  -o %s -r %s"%(
         output_prefix,
         out_put_path+"stats",
         out_put_path+'Draw.R',
@@ -114,6 +115,21 @@ if __name__=="__main__":
     pathwaydraw_process = subprocess.Popen(  pathwaydraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     stdout,stderr = pathwaydraw_process.communicate()	
     os.system(command)
+    
+    
+    
+    database_generate_commandline = " KEGG_Database.py  -a %s  -p %s  -d %s_KEGG.tbl  "%(  diamond_result,"%s_pathway.tsv"%(output_prefix) ,output_prefix   )
+    os.system(database_generate_commandline)
+    
+    
+    
+    make_commandline = config_hash["Tools"]["sphinx"] +" -Q -b html -d %(out)s/doctrees %(location)s %(out)s/pathway && tar -zcf %(out)s.tar.gz %(out)s && rm %(out)s -rf &&rm %(location)s -rf"%(
+        {
+            "out":out_put_path+"Pathway",
+            "location":source_location
+        }
+    )    
+    os.system(make_commandline)
 
 
 

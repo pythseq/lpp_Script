@@ -61,7 +61,7 @@ if __name__=="__main__":
 	go_anno_frame = pd.read_table(output_prefix+"_GO.tsv")
 	#merge frame
 	result_data_frame = pd.DataFrame.merge( swiss_anno_frame,go_anno_frame,left_on='Name', right_on='Name', how='outer' )
-	result_data_frame.to_csv("%s.tbl"%(  output_prefix  ),sep="\t",index=False )
+	result_data_frame.to_csv("%s.xls"%(  output_prefix  ),sep="\t",index=False )
 	#Draw GO
 	
 	golist_command = "GO_List.py -i %(out)s.GO-mapping.list -o %(out)s_GO.stats"%( {"out":output_prefix}  )

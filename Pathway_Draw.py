@@ -27,9 +27,9 @@ parser.add_option("-r", "--R", action="store",
 
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
-	raw_data = pd.read_table(options.input)
-	raw_data = pd.DataFrame(raw_data, columns=raw_data.columns[:-1])
-	raw_data = raw_data.drop_duplicates()
+	# raw_data = pd.read_table(options.input)
+	# raw_data = pd.DataFrame(raw_data, columns=raw_data.columns[:-1])
+	# raw_data = raw_data.drop_duplicates()
 	raw_data.to_csv( options.input,sep="\t",index=False  )
 	commandline = """
 #!/usr/local/bin/Rscript
