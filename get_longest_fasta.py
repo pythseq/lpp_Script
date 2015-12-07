@@ -16,8 +16,8 @@ if __name__=="__main__":
 	                  help="input file")
 
 	parser.add_option("-o", "--end", action="store", 
-	                  dest="output_prefix", 
-	                  help="output_prefix")
+	                  dest="output", 
+	                  help="output fasta file")
 
 	parser.add_option("-l", "--length", action="store", 
 	                  dest="length",
@@ -25,7 +25,7 @@ if __name__=="__main__":
 	                  help="evalue cutoff")
 	(options, args) = parser.parse_args()
 	RAW = fasta_check( open(options.input,'rU')  )
-	END = open(name, mode='w')
+	END = open(options.output, mode='w')
 	length_hash = Ddict()
 	for t,s in RAW:
 		length = len(re.sub("\s+","",s))
