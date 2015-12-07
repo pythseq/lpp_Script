@@ -4,15 +4,48 @@
 # Purpose: 
 # Created: 2011/4/28
 from lpp import *
-RAW = open( sys.argv[1] )
-END = open(sys.argv[1]+'.top1','w')
-END.write(RAW.next())
-		
-already = Ddict()
-for line in RAW:
-	line_l = line.split('\t')
+from optparse import OptionParser
 
-	already[line_l[2]][line_l[6]] = line
-for key in already:
-	key2 = sorted(already[key])[-1]
-	END.write(already[key][key2])
+if __name__=="__main__":
+	usage = '''usage: python2.7 %prog'''
+	parser = OptionParser(usage =usage ) 
+	parser.add_option("-i", "--INPUT", action="store", 
+                      dest="input", 
+                      help="input file")
+
+	parser.add_option("-o", "--end", action="store", 
+                      dest="output", 
+                      help="output")
+
+	parser.add_option("-f", "--filter", action="store", 
+                      dest="Filter",
+	                  type="store_true",
+	                  default=False,
+                      help="For blast_Filter?")
+	
+	(options, args) = parser.parse_args() 
+	RAW = open( options.input )
+	END = open(options.output,'w')
+	title = RAW.next()
+	Filter = options.Filter
+	if Filter:
+		title_list = title.split("\t")
+		title_list =title_list[2:-3]
+		title_list =[ "Nt_"+x.split('_',1)[-1] for x in title_list  ]
+		title_list[0]="Name"
+		END.write( "\t".join(title_list)  )
+		
+	
+	already = Ddict()
+	for line in RAW:
+		line_l = line.split('\t')
+		line_l_new = line_l[2:-3]
+		if line_l_new[-4]=='1':
+			line_l_new[-4]='+'
+		else:
+			line_l_new[-4]='-'
+		already[line_l[2]][line_l[6]] = '\t'.join(line_l_new)
+		
+	for key in already:
+		key2 = sorted(already[key])[-1]
+		END.write(already[key][key2])
