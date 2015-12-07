@@ -17,7 +17,7 @@ import pandas as pd
 general_config = ConfigParser()
 
 general_config.read(
-    os.path.join( "general.ini")
+    "general.ini"
 )
 config_hash = Ddict()
 def Config_Parse():
