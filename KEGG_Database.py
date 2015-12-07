@@ -51,8 +51,9 @@ if __name__ == '__main__':
 	# kegg_annotation_frame.columns = ["KEGG","KEGG_Hit","KEGG_Identity","KEGG_AlignmentLength","KEGG_MismatchNumber","KEGG_GapNumber","","KEGG_QueryStart" ,"KEGG_QueryEnd","KEGG_SubjStart","KEGG_SubjEnd","KEGG_Eval","KEGG_Bit_Score"     ]
 	# kegg_annotation_frame["Name"] = kegg_annotation_frame["KEGG"].str.split(' ',1,return_type='frame')[0]
 	kegg_annotation_frame["Function"] = kegg_annotation_frame["KEGG_Hit"].str.split(' ',1,return_type='frame')[1]
-	column_name = list( kegg_annotation_frame.columns[-1:] )
-	column_n2 = list( kegg_annotation_frame.columns[0:-1] )
+	column_name = [ kegg_annotation_frame.columns[0] ]
+	column_name.append(  kegg_annotation_frame.columns[-1]  )
+	column_n2 = list( kegg_annotation_frame.columns[1:-1] )
 	column_name.extend(column_n2)
 	kegg_annotation_frame = pd.DataFrame(kegg_annotation_frame,columns=column_name)
 	
