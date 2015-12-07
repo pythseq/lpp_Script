@@ -6,7 +6,7 @@
   Created: 2015/1/23
 """
 from optparse import OptionParser
-import sys
+import sys,os
 from GO_obo_parse import *
 usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
 parser = OptionParser(usage =usage ) 
