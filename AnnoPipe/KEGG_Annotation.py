@@ -114,7 +114,7 @@ if __name__=="__main__":
     )
     pathwaydraw_process = subprocess.Popen(  pathwaydraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     stdout,stderr = pathwaydraw_process.communicate()	
-    os.system(command)
+
     
     
     
