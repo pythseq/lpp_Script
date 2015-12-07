@@ -40,10 +40,9 @@ exampleFile = "%s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
 countsTable <- countsTable[ countsTable$Category!='' ,   ] 
 aa<-ggplot(countsTable)+geom_bar(aes(x=Category, fill=Category),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()+theme(axis.text.y=element_text(size=15,color="darkred",face="bold"))
-png("%s.png", width=1024, height=512,type="cairo")
+tiff("%s.tiff", width=1024, height=512,type="cairo")
 ggplot_build(aa)
-dev.off()
-dev.new()
+
 pdf("%s.pdf",width=15)
 ggplot_build(aa)
 dev.off()

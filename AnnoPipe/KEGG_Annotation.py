@@ -36,6 +36,25 @@ if __name__=="__main__":
     sequence = FASTA.next()[-1]
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
+    README = open(output_prefix+"/Readme.txt",'w')
+    README.write(
+"""
+该文件夹放置KEGG通路分析结果，我们将所得的序列比对到KEGG数据库并进一步映射到KO（KEGG Orthology），并通过KO映射到Pathway。附件说明如下：
+*_pathway.tsv\t基因映射到KEGG KO 和Pathway的明细，用Excel打开
+*_AlignKEGG.tsv\t基因序列与KEGG数据库比对结果，用excel打开
+*_PathwayCategory_Stats.stat\tKEGG每一个功能模块的Pathway映射到的基因个数统计,用excel打开
+stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
+*.tar.gz\tPathway分析结果的可视化结果，请解压，有两个文件夹，其中doctree文件夹位搜索索引，无需打开。Pathway文件夹下是一个网站，请点击index.html观看，每一个Pathway如果有基因被比对上，后面会出现all字样。
+
+
+
+
+"""
+    
+    
+    
+    
+    )
     out_put_path = os.path.split(output_prefix)[0]+'/'
 
     tag = "%s"%( os.getpid() )
@@ -118,7 +137,7 @@ if __name__=="__main__":
     
     
     
-    database_generate_commandline = " KEGG_Database.py  -a %s  -p %s  -d %s_KEGG.tbl  "%(  diamond_result,"%s_pathway.tsv"%(output_prefix) ,output_prefix   )
+    database_generate_commandline = " KEGG_Database.py  -a %s  -p %s  -d %s_KEGG.xls  "%(  diamond_result,"%s_pathway.tsv"%(output_prefix) ,output_prefix   )
     os.system(database_generate_commandline)
     
     
