@@ -94,6 +94,7 @@ if __name__ == '__main__':
 	
 	
 	END_DETAIL = open( options.output+'.GO-mapping.detail','w'  )
+	END_DETAIL.write("Gene\tGOTerm\n")
 	for each_id in id_go:
 		END_DETAIL.write( each_id+'\t'+'\t'.join( id_go[ each_id ]  ) +'\n' )
 
