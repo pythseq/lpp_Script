@@ -30,8 +30,7 @@ if __name__ == '__main__':
 	raw_data = pd.read_table(options.input)
 	raw_data = pd.DataFrame(raw_data, columns=raw_data.columns[:-1])
 	raw_data = raw_data.drop_duplicates()
-	tmp_data = "%s.data"%( os.getpid() )
-	raw_data.to_csv( tmp_data,sep="\t",index=False  )
+	raw_data.to_csv( options.input,sep="\t",index=False  )
 	commandline = """
 #!/usr/local/bin/Rscript
 require(ggplot2)
