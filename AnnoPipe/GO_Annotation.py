@@ -70,7 +70,7 @@ if __name__=="__main__":
 	stdout,stderr = golist_process.communicate()	
 	
 	
-	godraw_command = "COG_Draw.py   -i %s_GO.stats  -o %s -r %s"%(
+	godraw_command = "GO_Draw.py   -i %s_GO.stats  -o %s -r %s"%(
 	    output_prefix,
 	    out_put_path+"stats",
 	    out_put_path+'Draw.R',
