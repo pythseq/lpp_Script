@@ -42,14 +42,20 @@ if __name__=="__main__":
 r"""
 将所有的基因序列比对到swissprot数据库，并使用blast2go进行GO Mapping。所有的GO根据GO的有向无环图向上回溯，直到第三层。而后统计每一个第三层
 结果说明如下：
-*.GO-mapping.detail
-
+*.GO-mapping.detail\t基因映射到GO的列表，可以提交到WEGO等网站自动生成可视化结果。EXCEL打开
+*.Genome1.GO-mapping.list\t根据有向五环图自动回溯的GO过程，包含每一个第三级GO下所包含的基因和期GO映射。EXCEL打开
+*_GO.stats\t每一个第三级GO所映射到的基因个数，由于GO是有向无环图结果，一个子GO可能具有多个parent GO。所以该部分的基因总数要大于实际的基因总数。Excel打开
+*_GO.tsv\t每一个基因的GO详细映射结果，用Excel打开
+*_SwissAlignment.tsv\t所有基因与swissprot数据库比对的详细结果，用Excel打开
+*.xls\tSwissprot和Gene Ontology分析结果的整合结果，用Excel打开。
+stat*\tGO分析的可视化结果。
+Draw.R\tGO分析可视化画图脚本，用R运行。
 
 """	
 	
 	
 	    )
-	diamond_result = output_prefix+'.tsv'
+	diamond_result = output_prefix+'_SwissAlignment.tsv'
 	error = RunDiamond(options.input,options.evalue, blast_type,"swissprot",diamond_result)
 	if error:
 		print( colored("%s 's Swissprot process in Diamond of eggnog is error!!","red") )
