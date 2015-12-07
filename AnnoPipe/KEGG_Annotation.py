@@ -37,7 +37,7 @@ if __name__=="__main__":
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
     out_put_path = os.path.split(output_prefix)[0]+'/'
-    print(out_put_path)
+
     tag = "%s"%( os.getpid() )
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
@@ -72,7 +72,7 @@ if __name__=="__main__":
 
 
     source_location = out_put_path+'/source/'
-    print(source_location)
+
     source_command = config_hash["Utils"]["gapmap"]+"/Mapping_sql.py -o %s -d %s"%(
         source_location,
         tag,
@@ -86,7 +86,7 @@ if __name__=="__main__":
     pathway_detail_frame = pd.read_table( "%s_detail.tsv"%(  output_prefix  )   )
     # os.remove( "%s_detail.tsv"%(  output_prefix  ) )
     
-    pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery.tsv %(out)_PathwayCategory_Stats.stat"%(
+    pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery.tsv %(out)s_PathwayCategory_Stats.stat"%(
                 {
                     "name":tag,
                     "out":output_prefix
