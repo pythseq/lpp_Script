@@ -39,7 +39,8 @@ if __name__=="__main__":
 	already = Ddict()
 	for line in RAW:
 		line_l = line.split('\t')
-		line_l_new = line_l[2:-3]
+		if Filter:
+			line_l_new = line_l[2:-3]
 		if line_l_new[-4]=='1':
 			line_l_new[-4]='+'
 		else:
