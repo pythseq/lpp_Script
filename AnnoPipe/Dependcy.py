@@ -11,7 +11,25 @@ import os,sys
 from os.path import abspath
 from  termcolor import colored
 from optparse import OptionParser
+from ConfigParser import ConfigParser
 import pandas as pd
+
+general_config = ConfigParser()
+
+general_config.read(
+    os.path.join( "general.ini")
+)
+config_hash = Ddict()
+def Config_Parse(general_config):
+	config_hash = Ddict()
+	for section in general_config.sections():
+		for key in general_config.options(section):
+
+			config_hash[section][key] = general_config.get(section,key)
+	return config_hash
+
+
+
 def Nul_or_Protein( seq ):
 	seq = re.sub("\s+","",seq.lower())
 	if len(set(seq) )<7 and set(seq) & set([ 'a','t','c','g'     ]):
