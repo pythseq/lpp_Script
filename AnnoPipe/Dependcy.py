@@ -20,7 +20,7 @@ general_config.read(
     "general.ini"
 )
 
-def Config_Parse():
+def Config_Parse(general_config):
 	config_hash = Ddict()
 	for section in general_config.sections():
 		for key in general_config.options(section):

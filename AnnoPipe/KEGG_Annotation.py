@@ -15,7 +15,7 @@ if __name__=="__main__":
     general_config.read(
         "general.ini"
     )    
-    config_hash = Config_Parse()
+    config_hash = Config_Parse(general_config)
     usage = '''usage: python2.7 %prog'''
     parser = OptionParser(usage =usage ) 
     parser.add_option("-p", "--PEP", action="store", 
