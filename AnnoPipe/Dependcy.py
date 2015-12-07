@@ -15,12 +15,12 @@ from ConfigParser import ConfigParser
 import pandas as pd
 
 general_config = ConfigParser()
-
+path =os.path.split(__file__)[0]
 general_config.read(
-    "general.ini"
+    path+"/general.ini"
 )
 
-def Config_Parse(general_config):
+def Config_Parse():
 	config_hash = Ddict()
 	for section in general_config.sections():
 		for key in general_config.options(section):

@@ -9,13 +9,8 @@ from Dependcy import *
 from optparse import OptionParser
 
 if __name__=="__main__":
-    
-    general_config = ConfigParser()
-    
-    general_config.read(
-        "general.ini"
-    )    
-    config_hash = Config_Parse(general_config)
+    config_hash = Config_Parse()
+
     usage = '''usage: python2.7 %prog'''
     parser = OptionParser(usage =usage ) 
     parser.add_option("-p", "--PEP", action="store", 
