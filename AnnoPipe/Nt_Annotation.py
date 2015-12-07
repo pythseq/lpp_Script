@@ -32,6 +32,7 @@ if __name__=="__main__":
 	general_config.read(
         databaseconf
     )	
+	print( general_config.sections() )
 	Database = general_config.get("Location", "nt")
 	temp_name = str(os.getpid())
 	base_path = os.path.split(os.path.abspath(options.output))[0]+'/'
