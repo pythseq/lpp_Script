@@ -64,7 +64,7 @@ if __name__=="__main__":
 	
 	#Draw GO
 	
-	golist_command = "GO_List.py -i %(out)s.GO-mapping.list -o %(outs)_GO.stats"%( {"out":output_prefix}  )
+	golist_command = "GO_List.py -i %(out)s.GO-mapping.list -o %(out)s_GO.stats"%( {"out":output_prefix}  )
 	golist_command_list = golist_command.split()
 	golist_process = subprocess.Popen( golist_command_list,stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = golist_process.communicate()	
