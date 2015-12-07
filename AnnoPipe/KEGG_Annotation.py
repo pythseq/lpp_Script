@@ -47,7 +47,7 @@ if __name__=="__main__":
     if not proteinseq:
         proteinseq = options.NUL
         
-    error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
+    # error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
     error=""
     if error:
         print( colored("%s 's KEGG process in Diamond of kegg is error!!","red") )
