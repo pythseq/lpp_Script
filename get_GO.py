@@ -6,10 +6,9 @@
   Created: 2014/12/30
 """
 import sys,shlex,os,subprocess
-from os.path import abspath
-sys.path.append( os.path.split(abspath(__file__))[0]+'/../Lib/' )
+
 from lpp import *
-from Dependcy import *
+from optparse import OptionParser
 from GO_obo_parse import *
 
 usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
