@@ -33,6 +33,10 @@ if __name__=="__main__":
 	blast_type = Nul_or_Protein(sequence)
 	output_prefix = os.path.abspath(  options.output_prefix )
 	out_put_path = os.path.split(output_prefix)[0]+'/'
+	
+
+	if not os.path.exists( out_put_path ):
+		os.makedirs( out_put_path )
 	README = open(out_put_path+"Readme.txt",'w')
 	README.write(
 r"""
@@ -44,11 +48,7 @@ r"""
 """	
 	
 	
-	)
-
-	if not os.path.exists( out_put_path ):
-		os.makedirs( out_put_path )
-
+	    )
 	diamond_result = output_prefix+'.tsv'
 	error = RunDiamond(options.input,options.evalue, blast_type,"swissprot",diamond_result)
 	if error:

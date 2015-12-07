@@ -42,7 +42,7 @@ if __name__=="__main__":
     tag = "%s"%( os.getpid() )
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
-    README = open(output_prefix+"/Readme.txt",'w')
+    README = open(out_put_path+"/Readme.txt",'w')
     README.write(
 """
 该文件夹放置KEGG通路分析结果，我们将所得的序列比对到KEGG数据库并进一步映射到KO（KEGG Orthology），并通过KO映射到Pathway。附件说明如下：
