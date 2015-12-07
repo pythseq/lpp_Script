@@ -17,9 +17,9 @@ if __name__=="__main__":
                       dest="output", 
                       help="output")
 
-	parser.add_option("-f", "--filter", action="store", 
+	parser.add_option("-f", "--filter", action="store_true", 
                       dest="Filter",
-	                  type="store_true",
+
 	                  default=False,
                       help="For blast_Filter?")
 	
