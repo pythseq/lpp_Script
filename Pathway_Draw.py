@@ -6,23 +6,54 @@
   Created: 2015/1/23
 """
 import sys,os
+import pandas as pd
+from optparse import OptionParser
 
-commandline = """
+usage = "python2.7 %prog [options]"
+parser = OptionParser(usage =usage )
+parser.add_option("-i", "--Input", action="store",
+                  dest="input",
 
+                  help="input file")
+parser.add_option("-o", "--output", action="store",
+                  dest="Output",
+
+                  help="Output Prefix")
+parser.add_option("-r", "--R", action="store",
+                  dest="R",
+
+                  help="R File")
+
+
+if __name__ == '__main__':
+	(options, args) = parser.parse_args()
+	raw_data = pd.read_table(options.input)
+	raw_data = pd.DataFrame(raw_data, columns=raw_data.columns[:-1])
+	raw_data = raw_data.drop_duplicates()
+	tmp_data = "%s.data"%( os.getpid() )
+	raw_data.to_csv( tmp_data,sep="\t",index=False  )
+	commandline = """
+#!/usr/local/bin/Rscript
 require(ggplot2)
+require(ggthemes)
 library(grid)
-countsTable <- read.delim( "%s", header=TRUE, stringsAsFactors=TRUE )
-countable3 <- countsTable[countsTable$Q_value<0.05,]
-#countable3<-countable2[order(countable2$Q_value),]
-aa<-ggplot(countable3)+geom_bar(aes(x=Name,y=Diff, fill=Q_value),stat="identity")+coord_flip()+ylab("Differential Gene Number")+theme(axis.text.y=element_text(color="darkred",face="bold"))
-pdf("%s.pdf",width=10,height=3)
-aa <- ggplot_gtable(ggplot_build(aa))
-grid.draw(aa)
+exampleFile = "%s"
+countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
+aa<-ggplot(countsTable)+geom_bar(aes(x=Category, fill=Category),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()+theme(axis.text.y=element_text(size=25,color="darkred",face="bold"))
+png("%s.png", width=1024, height=512,type="cairo")
+ggplot_build(aa)
+dev.off()
+dev.new()
+pdf("%s.pdf",width=15)
+ggplot_build(aa)
 dev.off()
 
 
-"""%(sys.argv[1],sys.argv[2])
-SCRIPT = open(sys.argv[3],'w')
-SCRIPT.write(commandline)
-SCRIPT.close()
-os.system("Rscript %s"%(sys.argv[3]))
+
+	
+	
+	"""%(options.input,options.Output)
+	SCRIPT = open(options.R,'w')
+	SCRIPT.write(commandline)
+	SCRIPT.close()
+	os.system("Rscript %s &&rm Rplot*.pdf"%(options.R))
