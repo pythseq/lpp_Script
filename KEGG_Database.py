@@ -48,8 +48,7 @@ if __name__ == '__main__':
 	KEGG_ANNO_Detail = open(options.ANNO,'rU')
 	kegg_annotation_frame = pd.read_table(options.ANNO)
 	
-	# kegg_annotation_frame.columns = ["KEGG","KEGG_Hit","KEGG_Identity","KEGG_AlignmentLength","KEGG_MismatchNumber","KEGG_GapNumber","","KEGG_QueryStart" ,"KEGG_QueryEnd","KEGG_SubjStart","KEGG_SubjEnd","KEGG_Eval","KEGG_Bit_Score"     ]
-	# kegg_annotation_frame["Name"] = kegg_annotation_frame["KEGG"].str.split(' ',1,return_type='frame')[0]
+
 	kegg_annotation_frame["Function"] = kegg_annotation_frame["KEGG_Hit"].str.split(' ',1,return_type='frame')[1]
 	column_name = [ kegg_annotation_frame.columns[0] ]
 	column_name.append(  kegg_annotation_frame.columns[-1]  )
