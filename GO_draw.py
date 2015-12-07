@@ -6,8 +6,28 @@
   Created: 2015/1/23
 """
 import sys,os
+from optparse import OptionParser
+usage = "python2.7 %prog [options]"
+parser = OptionParser(usage =usage )
+parser.add_option("-i", "--STAT", action="store",
+                  dest="STAT",
 
-commandline = """
+                  help="GO STAT File")
+
+
+parser.add_option("-o", "--Output", action="store",
+                  dest="OUTPUT",
+
+                  help="Graph Appendix")
+parser.add_option("-r", "--R", action="store",
+                  dest="RSCRIPT",
+
+                  help="Rscript name")
+if __name__=="__main__":
+	(options, args) = parser.parse_args()
+	
+
+	commandline = """
 
 
 #!/usr/local/bin/Rscript
@@ -17,18 +37,20 @@ library(grid)
 exampleFile = "%s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
 
-hei<-length(levels(countsTable$term))
-
-pdf("%s.pdf", width = 0.4*hei ,height=0.5*hei)
-bb <-ggplot(countsTable,aes(term,numDEInCat))
-aa<-bb+facet_grid(.~ontology,scales="free_x",space="free")+theme_few()+geom_bar(aes(fill=ontology,position="dodge",order=numDEInCat),stat="identity")+theme(legend.position="none",axis.text.x=element_text(angle=75,hjust=1.0,size=12),axis.title.y = element_text(size = 18),strip.text.x = element_text(size=30,color="darkred",face="bold")  )+ylab("Gene Number")
-aa
-
+hei<-length(levels(countsTable$Function))
+bb <-ggplot(countsTable,aes(Function,GeneNumber))
+aa<-bb+facet_grid(.~Component,scales="free_x",space="free")+theme_few()+geom_bar(aes(fill=Component,position="dodge",order=Component),stat="identity")+theme(legend.position="none",axis.text.x=element_text(angle=75,hjust=1.0,size=12),strip.text.x = element_text(size=14,color="darkred",face="bold")  )+ylab("Gene Number")
+tiff("%s.tiff",width=50*hei,type="cairo")
+ggplot_build(aa)
+dev.off()
+dev.new()
+pdf("%s.pdf",width=15)
+ggplot_build(aa)
 dev.off()
 
 
-"""%(sys.argv[1],sys.argv[2])
-SCRIPT = open(sys.argv[3],'w')
-SCRIPT.write(commandline)
-SCRIPT.close()
-os.system("Rscript %s"%(sys.argv[3]))
+"""%(options.STAT,options.OUTPUT,options.OUTPUT)
+	SCRIPT = open(options.RSCRIPT,'w')
+	SCRIPT.write(commandline)
+	SCRIPT.close()
+	os.system("Rscript %s"%(sys.argv[3]))

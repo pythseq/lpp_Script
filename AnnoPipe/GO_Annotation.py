@@ -6,7 +6,7 @@
   Created: 2015/12/6
 """
 from Dependcy import *
-
+from optparse import OptionParser
 
 if __name__=="__main__":
 	usage = '''usage: python2.7 %prog'''
@@ -70,7 +70,7 @@ if __name__=="__main__":
 	stdout,stderr = golist_process.communicate()	
 	
 	
-	cogdraw_command = "COG_Draw.py   -i %s.annotaion_detail  -o %s -r %s"%(
+	godraw_command = "COG_Draw.py   -i %s_GO.stats  -o %s -r %s"%(
 	    output_prefix,
 	    out_put_path+"stats",
 	    out_put_path+'Draw.R',
