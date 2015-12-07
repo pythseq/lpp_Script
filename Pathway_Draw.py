@@ -56,5 +56,5 @@ dev.off()
 	SCRIPT = open(options.R,'w')
 	SCRIPT.write(commandline)
 	SCRIPT.close()
-	r_path = os.path.split(options.R)[0]
+	r_path = os.path.split( os.path.abspath(options.R )  )[0]
 	os.system("Rscript %s &&rm %s/Rplot*.pdf"%(options.R,r_path))
