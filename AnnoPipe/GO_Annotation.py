@@ -45,26 +45,40 @@ if __name__=="__main__":
 		print(  "##############################################"   )
 
 		sys.exit()
-
+	swiss_anno_frame = pd.read_table(  diamond_result  )	
+	
+	
+	
 	gomapping_command = "GO_Mapping.py    -i %s  -o %s"%( diamond_result,cog,output_prefix)
 	gomapping_process = subprocess.Popen( gomapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = gomapping_process.communicate()	
 
 	
-	getGO_command = "get_GO.py  -i %(result)s.GO-mapping.detail -o   %(result)s.annotaion_detail"%({ "result":output_prefix  })
+	getGO_command = "get_GO.py  -i %(result)s.GO-mapping.detail -o   %(result)s_GO.tsv"%({ "result":output_prefix  })
 	getGO_command_list = getGO_command.split()
 	getGO_process = subprocess.Popen( getGO_command_list,stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = getGO_process.communicate()	
-	go_anno_frame = pd.read_table(output_prefix+".annotaion_detail")
+	go_anno_frame = pd.read_table(output_prefix+"_GO.tsv")
+	#merge frame
+	result_data_frame = pd.DataFrame.merge( swiss_anno_frame,go_anno_frame,left_on='Name', right_on='Name', how='outer' )
+	
+	#Draw GO
+	
+	golist_command = "GO_List.py -i %(out)s.GO-mapping.list -o %(outs)_GO.stats"%( {"out":output_prefix}  )
+	golist_command_list = golist_command.split()
+	golist_process = subprocess.Popen( golist_command_list,stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
+	stdout,stderr = golist_process.communicate()	
 	
 	
-	cogdraw_command = "COG_Draw.py   -i %s.xls  -o %s -r %s"%(
+	cogdraw_command = "COG_Draw.py   -i %s.annotaion_detail  -o %s -r %s"%(
 	    output_prefix,
 	    out_put_path+"stats",
 	    out_put_path+'Draw.R',
 	)
 	cogdraw_process = subprocess.Popen(  cogdraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogdraw_process.communicate()	
+	
+	
 
 
 

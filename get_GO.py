@@ -31,7 +31,7 @@ if __name__ == '__main__':
 		for  e_f in line_l[1:]:
 			id_go[line_l[0]] [e_f] = ""
 	END = open(options.output,'w')
-	END.write('GeneID\t'+"GO-BiologicalProcess"+'\t'+"GO-MolecularFunction"+"\tGo-CellularComponent\n")
+	END.write('Name\t'+"GO-BiologicalProcess"+'\t'+"GO-MolecularFunction"+"\tGo-CellularComponent\n")
 	end_order = ["biological_process","molecular_function","cellular_component"]
 	for key in id_go:
 		all_go = id_go[key]
