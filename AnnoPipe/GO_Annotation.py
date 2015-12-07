@@ -33,6 +33,18 @@ if __name__=="__main__":
 	blast_type = Nul_or_Protein(sequence)
 	output_prefix = os.path.abspath(  options.output_prefix )
 	out_put_path = os.path.split(output_prefix)[0]+'/'
+	README = open(out_put_path+"Readme.txt",'w')
+	README.write(
+r"""
+将所有的基因序列比对到swissprot数据库，并使用blast2go进行GO Mapping。所有的GO根据GO的有向无环图向上回溯，直到第三层。而后统计每一个第三层
+结果说明如下：
+*.GO-mapping.detail
+
+
+"""	
+	
+	
+	)
 
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )

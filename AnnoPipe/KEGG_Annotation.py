@@ -45,7 +45,7 @@ if __name__=="__main__":
 *_PathwayCategory_Stats.stat\tKEGG每一个功能模块的Pathway映射到的基因个数统计,用excel打开
 stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
 *.tar.gz\tPathway分析结果的可视化结果，请解压，有两个文件夹，其中doctree文件夹位搜索索引，无需打开。Pathway文件夹下是一个网站，请点击index.html观看，每一个Pathway如果有基因被比对上，后面会出现all字样。
-
+*.R\t可视化画图脚本，用R语言运行，您可以根据需要自行调整。
 
 
 

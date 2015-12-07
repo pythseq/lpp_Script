@@ -40,9 +40,8 @@ countsTable = countsTable[countsTable$COG_FunCat!='',]
 aa<-ggplot(countsTable)+geom_bar(aes(x=Category.Annotation, fill=Category.Annotation),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()
 pdf("%s.pdf",width=15  )
 ggplot_build(aa)
-dev.off()
-dev.new()
-png("%s.png", width=1024, height=512,type="cairo")
+
+tiff("%s.tiff", width=1024, height=512,type="cairo")
 ggplot_build(aa)
 dev.off()
 
