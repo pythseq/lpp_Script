@@ -80,12 +80,11 @@ if __name__=="__main__":
             output_prefix,
             tag,
         )
-    print(source_command)
+
     os.system(  source_command )
-    # source_process = subprocess.Popen( source_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
-    # source_process.communicate()
+
     pathway_detail_frame = pd.read_table( "%s_detail.tsv"%(  output_prefix  )   )
-    # os.remove( "%s_detail.tsv"%(  output_prefix  ) )
+    os.remove( "%s_detail.tsv"%(  output_prefix  ) )
     
     pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery.tsv %(out)s_PathwayCategory_Stats.stat"%(
                 {
@@ -99,12 +98,12 @@ if __name__=="__main__":
     
     pathway_result_frame = pd.merge( pathway_detail_frame,pathway_category_frame,left_on='Name', right_on='Name', how='outer' )
     pathway_result_frame.to_csv( "%s_pathway_detail.xls"%(output_prefix),sep="\t",index=False  )
-    # os.remove("%(out)s_PathwayCategoery.tsv"%(
-    # {
-        # "out":output_prefix
-    # }
-    # )  
-              # )
+    os.remove("%(out)s_PathwayCategoery.tsv"%(
+    {
+        "out":output_prefix
+    }
+    )  
+              )
 
 
     pathwaydraw_command = "Pathway_Draw.py   -i %s_pathway_detail.xls  -o %s -r %s"%(
@@ -114,6 +113,7 @@ if __name__=="__main__":
     )
     pathwaydraw_process = subprocess.Popen(  pathwaydraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     stdout,stderr = pathwaydraw_process.communicate()	
+    os.system(command)
 
 
 
