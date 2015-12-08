@@ -107,10 +107,10 @@ if __name__ == '__main__':
 			
 			)			
 		elif each_db =="Nr":
-			commandline = " Nr_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nr/ -e %(e-val)s"%( 
+			commandline = " Nr_Annotation.py -i %(protein)s  -o %(output_prefix)s/Nr/ -e %(e-val)s"%( 
 			    {
-			        "nucl":nuclseq,
-
+			        
+			        "protein":proteinseq,
 					"output_prefix":output_prefix,
 					"e-val":e_val
 			
@@ -118,9 +118,9 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db =="Nt":
-			commandline = " Nt_Annotation.py -i %(protein)s  -o %(output_prefix)s/Nt/ -e %(e-val)s"%( 
+			commandline = " Nt_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nt/ -e %(e-val)s"%( 
 		        {
-		            "protein":proteinseq,
+		            "nucl":nuclseq,
 		            "output_prefix":output_prefix,
 		            "e-val":e_val
 		
