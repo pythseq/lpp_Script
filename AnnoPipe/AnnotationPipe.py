@@ -67,14 +67,14 @@ if __name__ == '__main__':
 		proteinseq = nuclseq
 	
 	name= os.path.basename(proteinseq).rsplit(".",1)[0]
-	output_prefix = os.path.abspath(options.output_prefix)+'/'+name+'/'
+	output_prefix = os.path.abspath(options.output_prefix)+'/Detail/'+name+'/'
 	
 	commandlist = [
 	]
 	
 	for each_db in data_hash:
 		if each_db =="KEGG":
-			commandline = "KEGG_Annotation.py -p %(protein)s -n %(nucl)s  -o %(output_prefix)s/Detail/KEGG/ -e %(e-val)s"%( 
+			commandline = "KEGG_Annotation.py -p %(protein)s -n %(nucl)s  -o %(output_prefix)s/KEGG/ -e %(e-val)s"%( 
 			    {
 			        "protein":proteinseq,
 			        "nucl":nuclseq,
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db == "GO":
-			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)sDetail/Swiss/ -e %(e-val)s"%( 
+			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)s/Swiss/ -e %(e-val)s"%( 
 				{
 					"protein":proteinseq,
 					"output_prefix":output_prefix,
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 			
 			)		
 		elif each_db == 'COG':
-			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)sDetail/eggNOG/ -e %(e-val)s"%( 
+			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)s/eggNOG/ -e %(e-val)s"%( 
 				{
 			        "cog":cog,
 					"protein":proteinseq,
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 			
 			)			
 		elif each_db =="Nr":
-			commandline = " Nr_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Detail/Nr/ -e %(e-val)s"%( 
+			commandline = " Nr_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nr/ -e %(e-val)s"%( 
 			    {
 			        "nucl":nuclseq,
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db =="Nt":
-			commandline = " Nt_Annotation.py -i %(protein)s  -o %(output_prefix)s/Detail/Nt/ -e %(e-val)s"%( 
+			commandline = " Nt_Annotation.py -i %(protein)s  -o %(output_prefix)s/Nt/ -e %(e-val)s"%( 
 		        {
 		            "protein":proteinseq,
 		            "output_prefix":output_prefix,
