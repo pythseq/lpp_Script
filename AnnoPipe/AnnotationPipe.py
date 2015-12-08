@@ -133,8 +133,8 @@ if __name__ == '__main__':
 	def run(data):
 		os.system(data)
 		
-	print('\n'.join(commandlist))
-	# pool.map(run,commandlist)
+	# print('\n'.join(commandlist))
+	pool.map(run,commandlist)
 	
 	
 	
