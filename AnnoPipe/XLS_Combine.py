@@ -81,7 +81,7 @@ Total文件夹\t所有注释信息汇总在一起的结果
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
         
         result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
-        result_frame =result_frame.sort(["from",'id'],axis=1)
+        result_frame =result_frame.sort(["from",'id'],axis=0)
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
         result_frame.to_excel( category_Excel,category ,index=False   )
@@ -99,14 +99,14 @@ Total文件夹\t所有注释信息汇总在一起的结果
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
     
         result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
-        result_frame =result_frame.sort(["from",'id'],axis=1)
+        result_frame =result_frame.sort(["from",'id'],axis=0)
         result_frame = result_frame.drop(["from",'id'],axis=1)        
         result_frame.to_excel( chrosome_Excel,chrosome,index=False    )
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
-    all_resultframe =all_resultframe.sort(["from",'id'],axis=1)
+    all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
     all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
     if options.gff:
