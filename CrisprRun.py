@@ -10,7 +10,7 @@ from lpp import *
 import pandas as pd
 if __name__ == '__main__':
     usage = '''usage: python2.7 %prog [options] 
-		     Pilr-CR Crispr Finding！！！
+		     Pilr-CR Crispr Finding !!!
 		     '''
     
     parser = OptionParser(usage =usage )    
