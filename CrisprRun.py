@@ -31,13 +31,13 @@ if __name__ == '__main__':
     TMP_INPUT = open( output_path+"%s.contigs"%(os.getpid()),'w' )
     seq_hash = {}
     for t,s in fasta_check( open(Genome,'rU') ):
-        t = re.sub( "_+$","", t.strip().split("|")[0])
+        t = re.sub( "_+$","", t.strip().split("|")[-1])
         if t.startswith('>'):
             t = t[1:]
             
         s1 = re.sub("\s+", "", s)
         seq_hash[t]=s1
-        TMP_INPUT.write('>'+t+s)
+        TMP_INPUT.write('>'+t+'\n'+s)
         
     TMP_INPUT.close()
         
