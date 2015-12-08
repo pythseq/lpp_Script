@@ -49,6 +49,9 @@ if __name__ == '__main__':
     RAW = open(tmp_name,'rU')
     total_data = RAW.read()
     data_block = re.split( "\n(?:DETAIL REPORT|SUMMARY BY [A-Z]+)\n",total_data    )
-    print(len(data_block))
-    print("\n\n\n\n\n######################\n\n\n\n".join(data_block) )
+    align_detail = data_block[1]
+    align_detail = align_detail.strip()
+    detail_list = re.split("\n{3}",align_detail)
+    print(len( detail_list ) )
+    
     
