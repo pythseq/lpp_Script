@@ -81,7 +81,7 @@ Total文件夹\t所有注释信息汇总在一起的结果
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
         
-        STAT.write.write(category+'\t%s\n'%(len(result_frame["Name"] ) ) )
+        STAT.write(category+'\t%s\n'%(len(result_frame["Name"] ) ) )
         
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
         
