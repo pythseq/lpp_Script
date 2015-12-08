@@ -190,6 +190,6 @@ if __name__ == '__main__':
             seq_data_hash[t_name]["Annotation"] = t_name
             s1 = re.sub("\s+", '', s)
             #seq_data_hash[t_name]["Seq"] = s1
-            data_hash[name]["Length"] = str(len(s1))
+            seq_data_hash[name]["Length"] = str(len(s1))
     DB_FILE.write(Redis_trans(seq_data_hash))
     os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
