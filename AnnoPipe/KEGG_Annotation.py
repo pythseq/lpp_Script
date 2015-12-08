@@ -32,7 +32,7 @@ if __name__=="__main__":
 
 
     (options, args) = parser.parse_args() 
-    FASTA = fasta_check(  options.PEP  )
+    FASTA = fasta_check(  open(options.PEP,'rU')  )
     sequence = FASTA.next()[-1]
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
