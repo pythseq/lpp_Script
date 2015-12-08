@@ -76,8 +76,9 @@ if __name__ == '__main__':
 	
 	for each_db in data_hash:
 		if each_db =="KEGG":
-			commandline = "KEGG_Annotation.py -p %(protein)s -n %(nucl)s  -o %(output_prefix)s/KEGG/ -e %(e-val)s"%( 
+			commandline = "KEGG_Annotation.py -p %(protein)s -n %(nucl)s  -o %(output_prefix)s/KEGG/%(name)s -e %(e-val)s"%( 
 			    {
+			        "name":name,
 			        "protein":proteinseq,
 			        "nucl":nuclseq,
 			        "output_prefix":output_prefix,
@@ -87,8 +88,9 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db == "GO":
-			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)s/Swiss/ -e %(e-val)s"%( 
+			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)s/Swiss/%(name)s -e %(e-val)s"%( 
 				{
+			        "name":name,
 					"protein":proteinseq,
 					"output_prefix":output_prefix,
 					"e-val":e_val
@@ -97,8 +99,9 @@ if __name__ == '__main__':
 			
 			)		
 		elif each_db == 'COG':
-			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)s/eggNOG/ -e %(e-val)s"%( 
+			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)s/eggNOG/%(name)s -e %(e-val)s"%( 
 				{
+			        "name":name,
 			        "cog":cog,
 					"protein":proteinseq,
 					"output_prefix":output_prefix,
@@ -108,9 +111,9 @@ if __name__ == '__main__':
 			
 			)			
 		elif each_db =="Nr":
-			commandline = " Nr_Annotation.py -i %(protein)s  -o %(output_prefix)s/Nr/ -e %(e-val)s"%( 
+			commandline = " Nr_Annotation.py -i %(protein)s  -o %(output_prefix)s/Nr/%(name)s -e %(e-val)s"%( 
 			    {
-			        
+			        "name":name,
 			        "protein":proteinseq,
 					"output_prefix":output_prefix,
 					"e-val":e_val
@@ -119,8 +122,9 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db =="Nt":
-			commandline = " Nt_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nt/ -e %(e-val)s"%( 
+			commandline = " Nt_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nt/%(name)s -e %(e-val)s"%( 
 		        {
+			        "name":name,
 		            "nucl":nuclseq,
 		            "output_prefix":output_prefix,
 		            "e-val":e_val
