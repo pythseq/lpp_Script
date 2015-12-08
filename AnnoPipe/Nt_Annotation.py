@@ -36,6 +36,8 @@ if __name__=="__main__":
 	Database = general_config.get("Location", "nt")
 	temp_name = str(os.getpid())
 	base_path = os.path.split(os.path.abspath(options.output))[0]+'/'
+	if not os.path.exists(base_path):
+		os.makedirs(base_path)
 	tmp = base_path+temp_name
 	os.system(""" blastn -db %s -query %s  -num_threads 64 -max_target_seqs 1 -evalue %s  -outfmt  5    >> %s"""% ( Database,options.input,options.evalue,tmp+'.xml'  )   )
 	os.system( "blast_parse.py %s"%(tmp+'.xml') )
