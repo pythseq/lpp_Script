@@ -73,8 +73,9 @@ Total文件夹\t所有注释信息汇总在一起的结果
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
         
-        print(result_frame["from"])
+        
         result_frame["from"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[0]
+        print(result_frame["from"])
         result_frame["id"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[1]
         result_frame =result_frame.sort(["from",'id'],axis=1)
         result_frame = result_frame.drop(["from",'id'],axis=1)
