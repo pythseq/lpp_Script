@@ -7,7 +7,7 @@
 """
 from Dependcy import *
 from optparse import OptionParser
-import os
+import os,string
 
 def combine_xls( data_list   ):
     out_frame = pd.read_table(data_list[0])
@@ -72,10 +72,10 @@ Total文件夹\t所有注释信息汇总在一起的结果
             all_excel.append(  category_hash[category][chrosome]  )
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
-        result_frame["from"] = result_frame["Name"].astype("string")+"....."
+        
         print(result_frame["from"])
-        result_frame["from"] = result_frame["Name"].astype("string").rsplit('_',1)[0]
-        result_frame["id"] = result_frame["Name"].astype("string").rsplit('_',1)[-1]
+        result_frame["from"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[0]
+        result_frame["id"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[1]
         result_frame =result_frame.sort(["from",'id'],axis=1)
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
