@@ -148,6 +148,7 @@ def check_path(path):
 	path = os.path.abspath(path)
 	if not os.path.exists(path):
 		os.makedirs( path )
+	return path+'/'
 def complement( char ):
 	char = re.sub( '\s+','',char  )
 
