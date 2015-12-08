@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	if not options.PEP and not options.NUL:
 		sys.exit()
 	
-	elif proteinseq:
+	if proteinseq:
 		data_hash1 = {
 		    "KEGG":proteinseq,
 		    "Nr":proteinseq,
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 		    "GO":proteinseq
 		}
 		
-	elif nuclseq:
+	if nuclseq:
 		data_hash2 = {
 			"KEGG":nuclseq,
 			"Nr":nuclseq,
