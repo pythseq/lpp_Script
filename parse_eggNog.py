@@ -165,7 +165,9 @@ if __name__ == '__main__':
         for line in RELA: 
             try:
                 rela_data = relalify(line[:-1].split("\t"))
-                TMP.write(rela_data.Protein+'\t'+rela_data.NOG_ID+'\n')
+                if rela_data.NOG_ID[:3] in ["COG","NOG","KOG"]:
+                    
+                    TMP.write(rela_data.Protein+'\t'+rela_data.NOG_ID+'\n')
             except:
                 print(line)
 
