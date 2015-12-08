@@ -69,6 +69,12 @@ if __name__ == '__main__':
 	
 	name= os.path.basename(proteinseq).rsplit(".",1)[0]
 	output_prefix = os.path.abspath(options.output_prefix)+'/Detail/'+name+'/'
+	README = open(output_prefix+'/Readme.txt','w')
+	README.write(  """该文件夹存储注释结果，分为连个子文件夹，分别为Detail和Table。
+其中Detail代表分析的明细，所有数据库比对的中间结果和可视化统计以及可供浏览的网页。
+Table文件夹是所有注释分析的结果明细统计表，按照数据库分类和染色体来源进行了两次分类，其中在数据库分类文件夹为Database文件夹，里面有不同库的Venn图和统计信息
+
+"""  )
 	proteinseq = os.path.abspath(proteinseq)
 	nuclseq = os.path.abspath(nuclseq)
 	commandlist = [
