@@ -85,7 +85,7 @@ if __name__ == '__main__':
 			
 			)
 		elif each_db == "GO":
-			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)sDetail/GO/ -e %(e-val)s"%( 
+			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)sDetail/Swiss/ -e %(e-val)s"%( 
 				{
 					"protein":proteinseq,
 					"output_prefix":output_prefix,
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 			
 			)		
 		elif each_db == 'COG':
-			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)sDetail/COG/ -e %(e-val)s"%( 
+			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)sDetail/eggNOG/ -e %(e-val)s"%( 
 				{
 			        "cog":cog,
 					"protein":proteinseq,

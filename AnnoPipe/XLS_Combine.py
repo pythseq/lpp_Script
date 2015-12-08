@@ -101,6 +101,9 @@ temp = venn.diagram(
      x = list(
  
         """)
+    VENN_R.close()
+    
+    os.system("Rscript %s "%( VENN_R.name  ))
     end_list = []
     for category ,data in database_data.items():
         end_list.append(  """    %s=c(%s)
