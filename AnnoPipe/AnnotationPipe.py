@@ -57,7 +57,7 @@ if __name__ == '__main__':
 			"Nr":nuclseq,
 			"COG":nuclseq,
 			"GO":nuclseq,
-		    "NT":nuclseq,
+		    "Nt":nuclseq,
 		}	
 	data_hash2.update(data_hash1)
 	data_hash = data_hash2	
