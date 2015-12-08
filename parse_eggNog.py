@@ -188,7 +188,7 @@ if __name__ == '__main__':
         if NOG_GENE.selectBy(Gene = t_name).count():
             END.write(">"+t_name+'\n'+s)
             seq_data_hash[t_name]["Annotation"] = t_name
-            # s1 = re.sub("\s+", '', s)
+            s1 = re.sub("\s+", '', s)
             #seq_data_hash[t_name]["Seq"] = s1
             data_hash[name]["Length"] = str(len(s1))
     DB_FILE.write(Redis_trans(seq_data_hash))
