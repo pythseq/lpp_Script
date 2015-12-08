@@ -28,7 +28,11 @@ if __name__=="__main__":
                       help="input path")
     parser.add_option("-o", "--outPath", action="store", 
                       dest="outputpath", 
-                      help="outpath")		
+                      help="outpath")	
+    parser.add_option("-g", "--GFFANNO", action="store", 
+                      dest="gff", 
+                      default="",
+                      help="Annotation from gff file")	    
 
 
 
@@ -74,13 +78,13 @@ Total文件夹\t所有注释信息汇总在一起的结果
         result_frame = combine_xls(all_excel)
         
         
-        result_frame["from"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[0]
-        print(result_frame["from"])
-        result_frame["id"] = string.rsplit( result_frame["Name"].astype("string"),"_",1  )[1]
+        result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
+        
+        result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
         result_frame =result_frame.sort(["from",'id'],axis=1)
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
-        result_frame.to_excel( category_Excel,category   )
+        result_frame.to_excel( category_Excel,category ,index=False   )
         
     category_Excel.save()
 
@@ -92,12 +96,23 @@ Total文件夹\t所有注释信息汇总在一起的结果
             all_excel.append(  category_hash[category][chrosome]  )
         
         result_frame = combine_xls(all_excel)
-        result_frame.to_excel( chrosome_Excel,chrosome   )
+        result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
+    
+        result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
+        result_frame =result_frame.sort(["from",'id'],axis=1)
+        result_frame = result_frame.drop(["from",'id'],axis=1)        
+        result_frame.to_excel( chrosome_Excel,chrosome,index=False    )
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
-    all_resultframe.to_excel( out_put_path+"AnnotationAll.xls"   )
-    
+    all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
+    all_resultframe =all_resultframe.sort(["from",'id'],axis=1)
+    all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
+    all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
+    if options.gff:
+        all_gff_frame= pd.read_table( options.gff  )
+        total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
+        total_resultframe.to_excel(out_put_path+"GeneFeature+Annotation.xls",index=False   )
     
     
     
