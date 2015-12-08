@@ -101,20 +101,20 @@ temp = venn.diagram(
      x = list(
  
         """)
+    end_list = []
     for category ,data in database_data.items():
-        VENN_R.write(
-"""    %s=c(%s),
+        end_list.append(  """    %s=c(%s)
         
 """%(
     category,
     ','.join(["'"+x+"'"  for x in data])
     
    
-   )        
-        
-        
-        )
-    VENN_R.write("""
+   )
+   )
+    VENN_R.write(",",join(end_list))
+
+    VENN_R.write("""),
     filename = NULL,
 	col = "black",
 	lty = "solid",
