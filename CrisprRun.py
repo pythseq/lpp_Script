@@ -7,12 +7,12 @@
 """
 from lpp import *
 
-from optparse import OptionParser
 import pandas as pd
 if __name__ == '__main__':
     usage = '''usage: python2.7 %prog [options] 
 		     Pilr-CR Crispr Finding！！！
 		     '''
+    
     parser = OptionParser(usage =usage )    
     parser.add_option("-g", "--Genome", action="store",
                       dest="Genome",

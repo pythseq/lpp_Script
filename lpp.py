@@ -139,10 +139,14 @@ class SmithWaterman():
 		return self.score
 
 
-def check_path( path ):
-	if os.path.exists(path):
+def overwrite_path( path ):
+	if  os.path.exists(path):
 		shutil.rmtree(path)
 	os.makedirs( path )
+	
+def check_path(path):
+	if not os.path.exists(path):
+		os.makedirs( path )
 def complement( char ):
 	char = re.sub( '\s+','',char  )
 
