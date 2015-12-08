@@ -50,4 +50,5 @@ if __name__ == '__main__':
     total_data = RAW.read()
     data_block = re.split( "\n(?:DETAIL REPORT|SUMMARY BY [A-Z]+)\n",total_data    )
     print(len(data_block))
+    print(data_block)
     
