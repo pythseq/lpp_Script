@@ -8,7 +8,8 @@
 from lpp import *
 from multiprocessing import Pool
 from Dependcy import *
-
+def Run(data):
+	os.system(data)
 if __name__ == '__main__':
 	usage = '''usage: python2.7 %prog'''
 	parser = OptionParser(usage =usage ) 
@@ -130,11 +131,10 @@ if __name__ == '__main__':
 			
 		commandlist.append(commandline)
 		
-	def run(data):
-		os.system(data)
+	
 		
 	# print('\n'.join(commandlist))
-	pool.map(run,commandlist)
+	pool.map(Run,commandlist)
 	
 	
 	
