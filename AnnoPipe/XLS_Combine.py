@@ -10,9 +10,9 @@ from optparse import OptionParser
 import os
 
 def combine_xls( data_list   ):
-    out_frame = data_list[0]
+    out_frame = pd.read_table(data_list[0])
     for each_data in data_list[1:]:
-        out_frame = pd.DataFrame.merge(out_frame, each_data, left_on='Name', right_on='Name', how='outer')
+        out_frame = pd.DataFrame.merge(out_frame, pd.read_table(each_data), left_on='Name', right_on='Name', how='outer')
     return out_frame
 
 
