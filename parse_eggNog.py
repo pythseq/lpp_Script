@@ -134,6 +134,8 @@ if __name__ == '__main__':
     DES.next()
     TMP = open("tmp1",'w')
     for line in DES:
+        if line[:3] not in ["COG","NOG","KOG"]:
+            continue
         if line[-1]=='\n':
             line = line[:-1]        
         nog_data =  noglify(line.split("\t"))
@@ -149,9 +151,11 @@ if __name__ == '__main__':
         if line[-1]=='\n':
             line = line[:-1]
         nog_data =  noglify(line.split("\t"))
-        nog_table = NOG_des.selectBy(  Name=nog_data.Id  )
-        for data in nog_data.Description:
-            TMP.write(nog_data.Id+'\t'+data+'\n')
+        # nog_table = NOG_des.selectBy(  Name=nog_data.Id  )
+        if nog_data.Id[:3] in ["COG","NOG","COG"]:
+        
+            for data in nog_data.Description:
+                TMP.write(nog_data.Id+'\t'+data+'\n')
     load_cate_script = """-e 'load data local infile   "%s" into table  NOG_Category (no_g,cat);'"""%(TMP.name)
     os.system( mysql_connection+load_cate_script   )
     
