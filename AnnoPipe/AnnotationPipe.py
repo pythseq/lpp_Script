@@ -37,7 +37,7 @@ if __name__ == '__main__':
 	proteinseq = options.PEP
 	e_val = options.evalue
 	cog = options.cog
-	nuclseq = options.PEP
+	nuclseq = options.NUL
 	data_hash1 = {}
 	data_hash2 = {}
 	if not options.PEP and not options.NUL:
