@@ -21,6 +21,7 @@ if __name__=="__main__":
 
     usage = '''usage: python2.7 %prog'''
     parser = OptionParser(usage =usage ) 
+    
     parser.add_option("-i", "--inputpath", action="store", 
                       dest="inputpath", 
                       default = "./",
@@ -71,6 +72,11 @@ Total文件夹\t所有注释信息汇总在一起的结果
             all_excel.append(  category_hash[category][chrosome]  )
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
+        result_frame["from"] = result_frame["Name"].rsplit('_',1)[0]
+        result_frame["id"] = result_frame["Name"].rsplit('_',1)[-1]
+        result_frame =result_frame.sort(["from",'id'],axis=1)
+        result_frame = result_frame.drop(["from",'id'],axis=1)
+        
         result_frame.to_excel( category_Excel,category   )
         
     category_Excel.save()
