@@ -92,7 +92,7 @@ Total文件夹\t所有注释信息汇总在一起的结果
         result_frame.to_excel( chrosome_Excel,chrosome   )
     chrosome_Excel.save()
     
-    all_resultframe = combine_xls(all_excel)
+    all_resultframe = combine_xls(total_excel)
     all_resultframe.to_excel( out_put_path+"AnnotationAll.xls"   )
     
     
