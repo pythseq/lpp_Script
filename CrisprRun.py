@@ -30,7 +30,7 @@ if __name__ == '__main__':
     Genome = os.path.abspath(options.Genome)
     TMP_INPUT = open( output_path+"%s.contigs"%(os.getpid()),'w' )
     seq_hash = {}
-    for t,s in Genome:
+    for t,s in fasta_check( open(Genome,'rU') ):
         t = re.sub( "_+$","", t.strip().split("|")[0])
         if t.startswith('>'):
             t = t[1:]
