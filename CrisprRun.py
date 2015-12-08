@@ -24,6 +24,8 @@ if __name__ == '__main__':
                       help="Output Path") 
 
     (options, args) = parser.parse_args()
+    outputprefix = options.outputprefix
+    output_path = check_path(os.path.dirname(outputprefix) )    
     
     Genome = os.path.abspath(options.Genome)
     TMP_INPUT = open( output_path+"%s.contigs"%(os.getpid()),'w' )
@@ -39,8 +41,7 @@ if __name__ == '__main__':
         
     TMP_INPUT.close()
         
-    outputprefix = options.outputprefix
-    output_path = check_path(os.path.dirname(outputprefix) )
+    
     tmp_name = output_path+"%s.tmp"%(os.getpid())
     os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix))
     os.remove( TMP_INPUT.name)
