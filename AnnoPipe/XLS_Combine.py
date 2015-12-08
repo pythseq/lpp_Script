@@ -77,9 +77,9 @@ Total文件夹\t所有注释信息汇总在一起的结果
 
     chrosome_Excel = pd.ExcelWriter(chrosome_dir+'ChorosomeAnnotation.xlsx', engine='xlsxwriter')
     
-    for chrosome in chrosome_dir:
+    for chrosome in chrosome_hash:
         all_excel = []
-        for category in chrosome_dir[chrosome]:
+        for category in chrosome_hash[chrosome]:
             all_excel.append(  category_hash[category][chrosome]  )
         
         result_frame = combine_xls(all_excel)
