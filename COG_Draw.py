@@ -37,7 +37,7 @@ library(grid)
 exampleFile = "%s"
 countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
 countsTable = countsTable[countsTable$COG_FunCat!='',]
-aa<-ggplot(countsTable)+geom_bar(aes(x=Category.Annotation, fill=Category.Annotation),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()
+aa<-ggplot(countsTable)+geom_bar(aes(x=COG_Category.Annotation, fill=COG_Category.Annotation),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()
 pdf("%s.pdf",width=15  )
 ggplot_build(aa)
 

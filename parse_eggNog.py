@@ -101,7 +101,7 @@ if __name__ == '__main__':
     general_config = ConfigParser()
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     general_config.read(
-        os.path.join( path+"database_redis.ini")
+        os.path.join( path+"database.ini")
     ) 
     db_number = general_config.get("Redis", "eggnog")
     r = redis.Redis(host='localhost',port=6379,db=int(db_number))
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     relalify = Rela._make
     DES = open(options.description , 'rU')
     DES.next()
-    TMP = open("tmp",'w')
+    TMP = open("tmp1",'w')
     for line in DES:
         if line[-1]=='\n':
             line = line[:-1]        
@@ -144,7 +144,7 @@ if __name__ == '__main__':
    
     
     CAT = open(options.cate,'rU')
-    TMP = open("tmp",'w')
+    TMP = open("tmp2",'w')
     for line in CAT:
         if line[-1]=='\n':
             line = line[:-1]
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     os.system( mysql_connection+load_cate_script   )
     
 
-    TMP = open("tmp",'w')
+    TMP = open("tmp3",'w')
     for each_f in  glob.glob("*"+options.rela):
         RELA = open(each_f , 'rU')
         RELA.next()
