@@ -105,6 +105,7 @@ Total文件夹\t所有注释信息汇总在一起的结果
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
+    all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
