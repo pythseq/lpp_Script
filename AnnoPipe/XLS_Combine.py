@@ -69,14 +69,19 @@ Total文件夹\t所有注释信息汇总在一起的结果
             os.makedirs(e_path)
             
     category_Excel = pd.ExcelWriter(category_dir+'CategoryAnnotation.xlsx', engine='xlsxwriter')
+    STAT = open(category_dir+'/stat.tsv','w')
+    STAT.write("Database\tHitGeneNumber\n")
     total_excel = []
+    database_data  = {}
     for category in category_hash:
         all_excel = []
+        
         for chrosome in category_hash[category]:
             all_excel.append(  category_hash[category][chrosome]  )
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
         
+        END.write.write(category+'\t%s\n'%(len(result_frame["Name"] ) ) )
         
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
         
@@ -85,9 +90,59 @@ Total文件夹\t所有注释信息汇总在一起的结果
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
         result_frame.to_excel( category_Excel,category ,index=False   )
-        
+        if category!="Nt":
+            database_data[category] = result_frame["Name"]
     category_Excel.save()
-
+    VENN_R = open( category_dir+"/Draw.R",'w'   )
+    VENN_R.write(
+        """
+require("VennDiagram")
+temp = venn.diagram(
+     x = list(
+ 
+        """)
+    for category ,data in database_data.items():
+        VENN_R.write(
+"""    %s=c(%s),
+        
+"""%(
+    category,
+    ','.join(["'"+x+"'"  for x in data])
+    
+   
+   )        
+        
+        
+        )
+    VENN_R.write("""
+    filename = NULL,
+	col = "black",
+	lty = "solid",
+	lwd = 4,
+	fill = c("cornflowerblue", "green", "yellow", "darkorchid1"),
+	alpha = 0.50,
+	label.col = c("orange", "white", "darkorchid4", "white", "white", "white", "white", "white", "darkblue", "white", "white", "white", "white", "darkgreen", "white"),
+	cex = 2.5,
+	fontfamily = "serif",
+	fontface = "bold",
+	cat.col = c("darkblue", "darkgreen", "orange", "darkorchid4"),
+	cat.cex = 2.5,
+	cat.fontfamily = "serif"
+	)    
+pdf("%s")
+grid.draw(temp)    
+dev.off()    
+    """%(
+           category_dir+'/stat.pdf'
+           
+       
+       )
+       
+       
+       )
+    
+    
+    
     chrosome_Excel = pd.ExcelWriter(chrosome_dir+'ChorosomeAnnotation.xlsx', engine='xlsxwriter')
     
     for chrosome in chrosome_hash:
@@ -105,11 +160,14 @@ Total文件夹\t所有注释信息汇总在一起的结果
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
+    STAT.write("Total\t%s\n"%(len(all_resultframe)))
+    
     all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
     all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
+    
     if options.gff:
         all_gff_frame= pd.read_table( options.gff  )
         total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
