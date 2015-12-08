@@ -68,7 +68,8 @@ if __name__ == '__main__':
 	
 	name= os.path.basename(proteinseq).rsplit(".",1)[0]
 	output_prefix = os.path.abspath(options.output_prefix)+'/Detail/'+name+'/'
-	
+	proteinseq = os.path.abspath(proteinseq)
+	nuclseq = os.path.abspath(nuclseq)
 	commandlist = [
 	]
 	
