@@ -112,7 +112,7 @@ temp = venn.diagram(
    
    )
    )
-    VENN_R.write(",",join(end_list))
+    VENN_R.write(",".join(end_list))
 
     VENN_R.write("""),
     filename = NULL,
