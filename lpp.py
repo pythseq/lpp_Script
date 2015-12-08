@@ -145,6 +145,7 @@ def overwrite_path( path ):
 	os.makedirs( path )
 	
 def check_path(path):
+	path = os.path.abspath(path)
 	if not os.path.exists(path):
 		os.makedirs( path )
 def complement( char ):
