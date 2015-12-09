@@ -80,7 +80,7 @@ if __name__ == '__main__':
             spacerid+=1
             align_list = AlignList._make(align_list)
             startpos = int(align_list.Pos)
-            repeat_length = int(align_list.Repeat)
+            repeat_length = len(align_list.Repeat)
             spacer_start = startpos+repeat_length
             spacer_end = spacer_start+int(align_list.SpacerLength)
             spacer_name = seq_name+"_Crispr%sSpacer%s"%(crispr_number,spacerid)
