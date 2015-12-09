@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     RAW = open(tmp_name,'rU')
     total_data = RAW.read()
-    
+    print(total_data)
     
     ###Justify if has Crispr Sequence!!
     if "0 putative CRISPR arrays found." in total_data:
