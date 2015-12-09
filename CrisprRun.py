@@ -53,14 +53,14 @@ if __name__ == '__main__':
     TMP_INPUT.close()
         
     
-    tmp_name = output_path+"%s_RAW.txt"%(outputprefix)
+    tmp_name = "%s_RAW.txt"%(outputprefix)
     os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix)) 
-    print("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix)) 
+    # print("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix)) 
     os.remove( TMP_INPUT.name)
 
     RAW = open(tmp_name,'rU')
     total_data = RAW.read()
-    print(total_data)
+    # print(total_data)
     
     ###Justify if has Crispr Sequence!!
     if "0 putative CRISPR arrays found." in total_data:
