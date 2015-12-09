@@ -59,9 +59,12 @@ if __name__ == '__main__':
     detail_list = re.split("\n{3}",align_detail)
     SPACER_SEQ = open(outputprefix+'_Spacer.fa','w')
     SPACER_TSV = open(outputprefix+'_Spacer.xls','w')
-    SPACER_TSV.write( '\t'.join( ["Name","Kind","Function","Ref_Source","Ref_Start","Ref_Stop","Ref_Frame"	,"Seq_Nucleotide",	"Seq_Nucl_Length"])+'\n' 
- )
-    AlignList = namedtuple("Align","Pos,Repeat,iden,SpacerLength,Left,Repeat,Spacer")
+    SPACER_TSV.write( 
+        '\t'.join( 
+            ["Name","Kind","Function","Ref_Source","Ref_Start","Ref_Stop","Ref_Frame"	,"Seq_Nucleotide",	"Seq_Nucl_Length"]
+            )+'\n' 
+                      )
+    AlignList = namedtuple("Align","Pos,RepeatLength,iden,SpacerLength,Left,Repeat,Spacer")
     for each_detail in detail_list:
         crispr_number = re.search("Array\s+(\d+)",each_detail).group(1)
         seq_name = re.search(">(\S+)",each_detail).group(1)
