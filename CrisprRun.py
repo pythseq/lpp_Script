@@ -92,12 +92,12 @@ if __name__ == '__main__':
                         "CrisprSpacer",
                         "CrisprSpacer",
                         seq_name,
-                        spacer_start,
-                        spacer_end,
+                        str(spacer_start),
+                        str(spacer_end),
                         "+",
                         align_list.Spacer,
                         
-                        align_list.SpacerLength,
+                        str(align_list.SpacerLength),
    
                     ]            
                 )+'\n'
