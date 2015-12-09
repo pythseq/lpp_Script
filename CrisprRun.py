@@ -154,7 +154,7 @@ if __name__ == '__main__':
     "Number,Source,Start,Length,Copies,DpRepeatLength,SpacerLength,Distance,DPConsensus")
     
     for each_element in element_list:
-        data_list = element_block.split()
+        data_list = each_element.split()
         element_detail_list = ElememtList._make( data_list )
         elementname = element_detail_list.Source+"_CrisprElement"+element_detail_list.Number
         elementstop = str( int(element_detail_list.Start)+int(element_detail_list.Length) )
