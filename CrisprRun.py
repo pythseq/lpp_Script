@@ -26,6 +26,17 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     outputprefix = options.outputprefix
     output_path = check_path(os.path.dirname(outputprefix) )    
+    END = open(output_path+'/Readme.txt','w')
+    END.write(
+"""
+使用Pile-CR预测
+
+
+"""    
+    
+    
+    
+    )
     
     Genome = os.path.abspath(options.Genome)
     TMP_INPUT = open( output_path+"%s.contigs"%(os.getpid()),'w' )
@@ -208,4 +219,12 @@ if __name__ == '__main__':
         
         
         )
+        
+    
+    ## SPACE NT ALignment ##
+    os.system( "Nt_Annotation.py  -i  %s -o  %s_NtAlign.tsv  -e 1e-5 "%(SPACER_SEQ.name,outputprefix)  )
+    space_raw_frame = pd.read_table(SPACER_TSV.name)
+    space_anno_frame = pd.read_table(   "%s_NtAlign.tsv" %(  outputprefix )    )
+    space_new_frame = pd.DataFrame.merge(  space_raw_frame, space_anno_frame,left_on="Name",right_on="Name",how='outer'  )
+    space_new_frame.to_csv( SPACER_TSV.name    )
     

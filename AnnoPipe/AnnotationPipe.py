@@ -129,7 +129,7 @@ Table文件夹是所有注释分析的结果明细统计表，按照数据库分
 			
 			)
 		elif each_db =="Nt":
-			commandline = " Nt_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nt/%(name)s -e %(e-val)s"%( 
+			commandline = " Nt_Annotation.py -i %(nucl)s  -o %(output_prefix)s/Nt/%(name)s.xls -e %(e-val)s"%( 
 		        {
 			        "name":name,
 		            "nucl":nuclseq,

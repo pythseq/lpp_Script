@@ -49,7 +49,7 @@ if __name__ == '__main__':
 	kegg_annotation_frame = pd.read_table(options.ANNO)
 	
 
-	kegg_annotation_frame["Function"] = kegg_annotation_frame["KEGG_Hit"].str.split(' ',1,return_type='frame')[1]
+	# kegg_annotation_frame["Function"] = kegg_annotation_frame["KEGG_Hit"].str.split(' ',1,return_type='frame')[1]
 	column_name = list( kegg_annotation_frame.columns[-1:] )
 	column_n2 = list( kegg_annotation_frame.columns[1:-1] )
 	column_name.extend(column_n2)
