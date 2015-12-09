@@ -48,10 +48,36 @@ if __name__ == '__main__':
     
     RAW = open(tmp_name,'rU')
     total_data = RAW.read()
+    if "0 putative CRISPR arrays found." in total_data:
+        END = open(output_path+'Result.txt',)
+        END.write("0 putative CRISPR arrays found.")
+        sys.exit()
+        
     data_block = re.split( "\n(?:DETAIL REPORT|SUMMARY BY [A-Z]+)\n",total_data    )
     align_detail = data_block[1]
     align_detail = align_detail.strip()
     detail_list = re.split("\n{3}",align_detail)
-    print(len( detail_list ) )
+    SPACER_SEQ = open(output_path+'/Spacer.fa','w')
+    SPACER_TSV = open(output_path+'/Spacer.xls','w')
+    AlignList = namedtuple("Align","Pos,Repeat,iden,SpacerLength,Left,Repeat,Spacer")
+    for each_detail in detail_list:
+        cirpsr_number = re.search("Array\s+(\d+)",each_detail).group(1)
+        seq_name = re.search(">(\S+)",each_detail).group(1)
+        data_line_list = each_detail.split("\n")
+        data_line_list = data_line_list[5:]
+        spacerid = 0 
+        for key in data_line_list:
+            align_list = key.split()
+            if key.startswith("=="):
+                break
+            if len(align_list)!=7:
+                continue
+            AlignList._make(align_list)
+            startpos = int(AlignList.Pos)
+            repeat_length = int(AlignList.Repeat)
+            spacer_start = startpos+repeat_length
+            spacer_end = spacer_start+int(AlignList.SpacerLength)
+            
+            
     
     
