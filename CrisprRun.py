@@ -57,8 +57,8 @@ if __name__ == '__main__':
     align_detail = data_block[1]
     align_detail = align_detail.strip()
     detail_list = re.split("\n{3}",align_detail)
-    SPACER_SEQ = open(output_path+'/Spacer.fa','w')
-    SPACER_TSV = open(output_path+'/Spacer.xls','w')
+    SPACER_SEQ = open(outputprefix+'_Spacer.fa','w')
+    SPACER_TSV = open(outputprefix+'_Spacer.xls','w')
     SPACER_TSV.write( '\t'.join( ["Name","Kind","Function","Ref_Source","Ref_Start","Ref_Stop","Ref_Frame"	,"Seq_Nucleotide",	"Seq_Nucl_Length"]+'\n' )
  )
     AlignList = namedtuple("Align","Pos,Repeat,iden,SpacerLength,Left,Repeat,Spacer")
