@@ -59,9 +59,11 @@ if __name__ == '__main__':
     detail_list = re.split("\n{3}",align_detail)
     SPACER_SEQ = open(output_path+'/Spacer.fa','w')
     SPACER_TSV = open(output_path+'/Spacer.xls','w')
+    SPACER_TSV.write( '\t'.join( ["Name","Kind","Function","Ref_Source","Ref_Start","Ref_Stop","Ref_Frame"	,"Seq_Nucleotide",	"Seq_Nucl_Length"]+'\n' )
+ )
     AlignList = namedtuple("Align","Pos,Repeat,iden,SpacerLength,Left,Repeat,Spacer")
     for each_detail in detail_list:
-        cirpsr_number = re.search("Array\s+(\d+)",each_detail).group(1)
+        crispr_number = re.search("Array\s+(\d+)",each_detail).group(1)
         seq_name = re.search(">(\S+)",each_detail).group(1)
         data_line_list = each_detail.split("\n")
         data_line_list = data_line_list[5:]
@@ -72,12 +74,32 @@ if __name__ == '__main__':
                 break
             if len(align_list)!=7:
                 continue
+            spacerid+=1
             AlignList._make(align_list)
             startpos = int(AlignList.Pos)
             repeat_length = int(AlignList.Repeat)
             spacer_start = startpos+repeat_length
             spacer_end = spacer_start+int(AlignList.SpacerLength)
+            spacer_name = seq_name+"_Crispr%sSpacer%s"%(crispr_number,spacerid)
             
+            spacer_name = SPACER_TSV.write(
+                "\t".join(
+                    [
+                        spacer_name
+                        
+                        
+                    
+                    ]
+            
+            
+                )
+            )
+            
+            
+            
+            
+            
+            )
             
     
     
