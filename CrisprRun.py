@@ -78,11 +78,11 @@ if __name__ == '__main__':
             if len(align_list)!=7:
                 continue
             spacerid+=1
-            AlignList._make(align_list)
-            startpos = int(AlignList.Pos)
-            repeat_length = int(AlignList.Repeat)
+            align_list = AlignList._make(align_list)
+            startpos = int(align_list.Pos)
+            repeat_length = int(align_list.Repeat)
             spacer_start = startpos+repeat_length
-            spacer_end = spacer_start+int(AlignList.SpacerLength)
+            spacer_end = spacer_start+int(align_list.SpacerLength)
             spacer_name = seq_name+"_Crispr%sSpacer%s"%(crispr_number,spacerid)
             
             SPACER_TSV.write(
@@ -95,14 +95,14 @@ if __name__ == '__main__':
                         spacer_start,
                         spacer_end,
                         "+",
-                        AlignList.Spacer,
+                        align_list.Spacer,
                         
-                        AlignList.SpacerLength,
+                        align_list.SpacerLength,
    
                     ]            
                 )+'\n'
             )
-            SPACER_SEQ.write('>'+spacer_name+'\n'+AlignList.Spacer+'\n')
+            SPACER_SEQ.write('>'+spacer_name+'\n'+align_list.Spacer+'\n')
             
             
             
