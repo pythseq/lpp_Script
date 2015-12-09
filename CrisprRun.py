@@ -64,7 +64,7 @@ if __name__ == '__main__':
     
     ###Justify if has Crispr Sequence!!
     if "0 putative CRISPR arrays found." in total_data:
-        END = open(output_path+'Result.txt',)
+        END = open(output_path+'Result.txt','w')
         END.write("0 putative CRISPR arrays found.")
         sys.exit()
         
