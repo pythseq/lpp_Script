@@ -44,7 +44,9 @@ if __name__ == '__main__':
     DATA = fasta_check( open(options.Sequence,'rU') )
     outputprefix = options.outputprefix
     outputpath = check_path(  os.path.dirname( outputprefix   )   )
-    README = open("""
+    README = open(outputpath+'/Readme','w')
+    README.write(   
+"""
 使用在线网站ISFINDER（https://www-is.biotoul.fr/）预测IS序列，使用blastn+e value 1e-5作为参数
 包含以下结果：
 *.fa预测到的IS序列
