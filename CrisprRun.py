@@ -42,17 +42,37 @@ if __name__ == '__main__':
     TMP_INPUT.close()
         
     
-    tmp_name = output_path+"%s.tmp"%(os.getpid())
-    os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix))
+    tmp_name = output_path+"%s_RAW.txt"%(outputprefix)
+    os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix))    
     os.remove( TMP_INPUT.name)
-    
+
     RAW = open(tmp_name,'rU')
     total_data = RAW.read()
+    
+    
+    ###Justify if has Crispr Sequence!!
     if "0 putative CRISPR arrays found." in total_data:
         END = open(output_path+'Result.txt',)
         END.write("0 putative CRISPR arrays found.")
         sys.exit()
         
+    
+
+    #####Rename DP Sequence ######
+    DP_SEQ =    fasta_check( open( "%s_DP.fa"%(outputprefix) ,'rU' )  )
+    Crispr_id = 0
+    DP_NEW =  open( "%s_DP2.fa"%(outputprefix) ,'w' )
+    for t,s in DP_SEQ:
+        Crispr_id +=1
+        genome_name = t.strip().split("[")[0]
+        DP_NEW.write(genome_name+'_CrisprEmement%s\n'%(Crispr_id)+s)
+    
+    shutil.move(  DP_NEW.name,"%s_DP.fa"%(outputprefix))    
+    
+    
+    
+    
+    ####################SPACER PARSE#########################################
     data_block = re.split( "\n(?:DETAIL REPORT|SUMMARY BY [A-Z]+)\n",total_data    )
     align_detail = data_block[1]
     align_detail = align_detail.strip()
@@ -110,4 +130,80 @@ if __name__ == '__main__':
         
             
     
+
+
+
+    ################Element Parse #########################
+    element_block =data_block[-1].strip()
+    element_list = element_block.split("\n")[4:]
+    ELEMENT_SEQ = open(  "%s_CrisprElement.fa"%( outputprefix  ),'w')
+    ELEMENT_TSV = open(  "%s_CrisprElement.xls"%( outputprefix  ),'w')
+    ELEMENT_STAT = open(  "%s_CrisprElement.tsv"%( outputprefix  ),'w')
+    title_data = element_block[0]
+    title_list= ["Name","Ref_Source" "Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length"  , "Copies" , "Repeatlength" , "Spacerlength" ,"Distance" , "DP_Consensus"]
+    ELEMENT_TSV.write( 
+        "\t".join( 
+            [
+                "Name","Kind","Function","Ref_Source" "Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length" 
+            ]  
+        )+'\n'
+                       )
+    ELEMENT_STAT.write( "\t".join(  title_list )+'\n')
+    ElememtList = namedtuple(
+    "Length",
+    "Number,Source,Start,Length,Copies,DpRepeatLength,SpacerLength,Distance,DPConsensus")
+    
+    for each_element in element_list:
+        data_list = element_block.split()
+        element_detail_list = ElememtList._make( data_list )
+        elementname = element_detail_list.Source+"_CrisprElement"+element_detail_list.Number
+        elementstop = str( int(element_detail_list.Start)+int(element_detail_list.Length) )
+        elment_seq = seq_hash[ element_detail_list.Source  ][  int(element_detail_list.Start)   :int(elementstop) ]
+      
+        ELEMENT_SEQ.write('>'+elementname+'\n'+elment_seq+'\n')
+        ELEMENT_TSV.write(
+            '\t'.join(
+                [
+                    elementname,
+                    "CrisprElement",
+                    "CrisprElement",
+                    element_detail_list.Source,
+                    element_detail_list.Start,
+                    elementstop,
+                    '+',
+                    elment_seq,
+                    element_detail_list.Length
+                    
+                
+                
+                ]    
+            )+'\n'        
+        )
+        
+        ["Name","Ref_Source" "Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length"  , "Copies" , "Repeatlength" , "Spacerlength" ,"Distance" , "DP_Consensus"]
+        ELEMENT_STAT.write(
+            '\t'.join(
+                [
+                    elementname,
+                    element_detail_list.Source,
+                    element_detail_list.Start,
+                    elementstop,
+                    '+',
+                    elment_seq,
+                    element_detail_list.Length,
+                    element_detail_list.Copies,
+                    element_detail_list.DpRepeatLength,
+                    element_detail_list.SpacerLength,
+                    element_detail_list.Distance,
+                    element_detail_list.DPConsensus
+            
+            
+            
+                ]    
+                )+'\n'             
+            
+        
+        
+        
+        )
     
