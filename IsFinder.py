@@ -110,7 +110,7 @@ if __name__ == '__main__':
         if result:
             STAT.write("IS_name\tNumber\tAverage.Length\n")
 
-            ALN.write( '\t'.join(["Name","Ref_Source","IS_Kind","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
+            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_End","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
             i=0
 
             has = {}
@@ -136,7 +136,7 @@ if __name__ == '__main__':
                 is_stat[ line_l[1] ][ isname ]=is_seq
 
                 is_length = len(is_seq)
-                out_data.extend([isname,chro_name,"IS_Element",line_l[6],line_l[7],frame,str(is_length),is_seq])
+                out_data.extend([isname,chro_name,"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
                 out_data.extend(line_l[2:])
                 ALN.write("\t".join(out_data)+'\n')
         else:
