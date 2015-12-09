@@ -66,8 +66,8 @@ if __name__ == '__main__':
     if "0 putative CRISPR arrays found." in total_data:
         END = open(output_path+'Result.txt','w')
         END.write("0 putative CRISPR arrays found.")
-        os.remove(path)
-        sys.exit("%s_DP.fa "%( outputprefix  ))
+        os.remove("%s_DP.fa "%( outputprefix  ))
+        sys.exit()
         
     
 
