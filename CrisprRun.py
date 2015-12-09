@@ -155,6 +155,8 @@ if __name__ == '__main__':
     
     for each_element in element_list:
         data_list = each_element.split()
+        if len(data_list)!=9:
+            data_list.insert(-1,"")
         element_detail_list = ElememtList._make( data_list )
         elementname = element_detail_list.Source+"_CrisprElement"+element_detail_list.Number
         elementstop = str( int(element_detail_list.Start)+int(element_detail_list.Length) )
