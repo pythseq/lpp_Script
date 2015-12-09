@@ -82,24 +82,29 @@ if __name__ == '__main__':
             spacer_end = spacer_start+int(AlignList.SpacerLength)
             spacer_name = seq_name+"_Crispr%sSpacer%s"%(crispr_number,spacerid)
             
-            spacer_name = SPACER_TSV.write(
+            SPACER_TSV.write(
                 "\t".join(
                     [
-                        spacer_name
+                        spacer_name,
+                        "CrisprSpacer",
+                        "CrisprSpacer",
+                        seq_name,
+                        spacer_start,
+                        spacer_end,
+                        "+",
+                        AlignList.Spacer,
                         
-                        
-                    
-                    ]
-            
-            
-                )
+                        AlignList.SpacerLength,
+   
+                    ]            
+                )+'\n'
             )
+            SPACER_SEQ.write('>'+spacer_name+'\n'+AlignList.Spacer+'\n')
             
             
             
             
-            
-            )
+        
             
     
     
