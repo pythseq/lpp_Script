@@ -54,7 +54,8 @@ if __name__ == '__main__':
         
     
     tmp_name = output_path+"%s_RAW.txt"%(outputprefix)
-    os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix))    
+    os.system ("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix)) 
+    print("pilercr -in %s  -out %s -seq %s_DP.fa -quiet -noinfo -trimseqs"%(TMP_INPUT.name,tmp_name,outputprefix)) 
     os.remove( TMP_INPUT.name)
 
     RAW = open(tmp_name,'rU')
