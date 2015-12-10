@@ -118,6 +118,7 @@ if __name__ == '__main__':
         start = data["Ref_Start"]
         stop = data["Ref_Stop"]
         gi_belong = ""
+        print(data["Name"])
         for gi_start,gi_list in gi_location.items():
             if start>= gi_start and start <= gi_list[0]:
                 gi_belong = gi_list[1]
