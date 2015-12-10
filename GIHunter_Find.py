@@ -120,11 +120,11 @@ if __name__ == '__main__':
         gi_belong = ""
 
         for gi_start,gi_list in gi_location.items():
-            if start>= gi_start and start <= gi_list[0]:
+            if int(start)>= gi_start and start <= gi_list[0]:
                 gi_belong = gi_list[1]
                 break
             
-            if stop>= gi_start and stop <= gi_list[0]:
+            if int(stop)>= gi_start and stop <= gi_list[0]:
                 gi_belong = gi_list[1]
                 break            
             
