@@ -60,7 +60,7 @@ if __name__ == '__main__':
         shutil.rmtree( output_path+'GIV/'  )
     #Prepare OUTPUT
     GISTAT =  open( output_path+Outprefix+'_GI.stat','w' )
-    GISTAT.write( "\tName\tFrom\tEnd\tLength"    )
+    GISTAT.write( "\tName\tFrom\tEnd\tLength\n"    )
     GISEQ = open(output_path+Outprefix+'_GI.fa','w')
     GIGENE = open(output_path+Outprefix+'_GIGene.ffn','w')
     GIPROTEIN = open(output_path+Outprefix+'_GIProtein.faa','w')
@@ -87,7 +87,7 @@ if __name__ == '__main__':
         GISEQ.write('>'+gi_name+'\n'+gi_seq)
         gi_length = int(stop)-int(start)+1
         gi_stat.append(gi_length)
-        GISTAT.write(gi_name+'\t'+start+'\t'+stop+'\t'+str(gi_length)+'\n')
+        GISTAT.write('\t'+gi_name+'\t'+start+'\t'+stop+'\t'+str(gi_length)+'\n')
         gi_location[int(start)]=[ int(stop),gi_name   ]
         
         GITSV.write(  
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             )+'\n'
         
     )
-    print(gi_location )
+
     PREDICTIONXLS = InputPrefix+'.xls'
     predict_frame = pd.read_table(PREDICTIONXLS)
     for i in xrange(0, len(predict_frame)):
@@ -155,3 +155,8 @@ if __name__ == '__main__':
     
 
 
+    import numpy as np
+    total_gi_length = sum(gi_stat)
+    average_gi_length = numpy.average(gi_stat)
+    GISTAT.write("AverageLength\t%s\n"%(average_gi_length))
+    GISTAT.write("Total Length\t"+"("+"%s/%s) "%( total_gi_length,len(genomeseq) )+"%.2f\%\n" %(100.0* total_gi_length /len( genomeseq)  )   )
