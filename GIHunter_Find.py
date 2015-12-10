@@ -159,4 +159,4 @@ if __name__ == '__main__':
     total_gi_length = sum(gi_stat)
     average_gi_length = numpy.average(gi_stat)
     GISTAT.write("AverageLength\t%s\n"%(average_gi_length))
-    GISTAT.write("Total Length\t"+"("+"%s/%s) "%( total_gi_length,len(genomeseq) )+"%.2f\%\n" %(100.0* total_gi_length /len( genomeseq)  )   )
+    GISTAT.write("Total Length\t"+"("+"%s/%s) "%( total_gi_length,len(genomeseq) )+"%.2f" %(100.0* total_gi_length /len( genomeseq)  )+'%\n'   )
