@@ -120,11 +120,11 @@ if __name__ == '__main__':
         gi_belong = ""
         print(start)
         for gi_start,gi_list in gi_location.items():
-            if int(start)>= gi_start and start <= gi_list[0]:
+            if start>= gi_start and start <= gi_list[0]:
                 gi_belong = gi_list[1]
                 break
             
-            if int(stop)>= gi_start and stop <= gi_list[0]:
+            if stop>= gi_start and stop <= gi_list[0]:
                 gi_belong = gi_list[1]
                 break            
             
@@ -140,17 +140,18 @@ if __name__ == '__main__':
             
             
             
-            )   
-            GIPROTEIN.write(
-            
-                pep_hash[ data["Name"] ][0]+'___%s  '%(gi_belong)+\
-                pep_hash[ data["Name"] ][1]+'\n'+\
-                pep_hash[ data["Name"] ][2]
-            
-            
-            
-            
-            )               
+            )  
+            if data["Name"] in pep_hash:
+                GIPROTEIN.write(
+                
+                    pep_hash[ data["Name"] ][0]+'___%s  '%(gi_belong)+\
+                    pep_hash[ data["Name"] ][1]+'\n'+\
+                    pep_hash[ data["Name"] ][2]
+                
+                
+                
+                
+                )               
     
 
 
