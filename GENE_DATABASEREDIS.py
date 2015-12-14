@@ -10,7 +10,7 @@ from ConfigParser import ConfigParser
 general_config = ConfigParser()
 path = os.path.split(os.path.abspath(__file__))[0]+'/'
 general_config.read(
-    os.path.join( path+"database.ini.ini")
+    os.path.join( path+"database.ini")
 )
 if __name__ == '__main__':
 
