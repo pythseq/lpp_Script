@@ -228,5 +228,5 @@ if __name__ == '__main__':
     space_raw_frame = pd.read_table(SPACER_TSV.name)
     space_anno_frame = pd.read_table(   "%s_NtAlign.tsv" %(  outputprefix )    )
     space_new_frame = pd.DataFrame.merge(  space_raw_frame, space_anno_frame,left_on="Name",right_on="Name",how='outer'  )
-    space_new_frame.to_csv( SPACER_TSV.name    )
+    space_new_frame.to_csv( SPACER_TSV.name,sep="\t",index=False    )
     
