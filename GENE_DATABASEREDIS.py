@@ -16,6 +16,6 @@ if __name__ == '__main__':
 	db_number_hash = {}
 	for db, number in general_config.items("Redis"):
 		db_number_hash[db] = number
-	for db,location in general_config.items("Location"):
-		print(db,location)
+	for db,location in general_config.items("Protocol"):
+		os.system("cat %s |redis-cli --pipe -n %s &"%(location,db_number_hash[db]   ))
     
