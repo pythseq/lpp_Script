@@ -13,7 +13,9 @@ general_config.read(
     os.path.join( path+"database.ini")
 )
 if __name__ == '__main__':
-
+	db_number_hash = {}
 	for db, number in general_config.items("Redis"):
-		print(db,number)
+		db_number_hash[db] = number
+	for db,location in general_config.items("Location"):
+		print(db,location)
     
