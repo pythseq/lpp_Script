@@ -30,6 +30,12 @@ if __name__ == '__main__':
     END.write(
 """
 使用Pile-CR预测
+  *_DP.fa Crispr串联重复序列
+  *_Spacer.fa   Crispr中Spacer序列
+  *_Spacer.xls   Crispr中Spacer详细注释结果和基因组位置
+  *_NtAlign.tsv   Crispr中Spacer的序列注释结果
+  *_RAW.txt     Pilercr原始分析结果
+  
 
 
 """    
@@ -153,11 +159,11 @@ if __name__ == '__main__':
     ELEMENT_TSV = open(  "%s_CrisprElement.xls"%( outputprefix  ),'w')
     ELEMENT_STAT = open(  "%s_CrisprElement.tsv"%( outputprefix  ),'w')
     title_data = element_block[0]
-    title_list= ["Name","Ref_Source" "Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length"  , "Copies" , "Repeatlength" , "Spacerlength" ,"Distance" , "DP_Consensus"]
+    title_list= ["Name","Ref_Source" ,"Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length"  , "Copies" , "Repeatlength" , "Spacerlength" ,"Distance" , "DP_Consensus"]
     ELEMENT_TSV.write( 
         "\t".join( 
             [
-                "Name","Kind","Function","Ref_Source" "Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length" 
+                "Name","Kind","Function","Ref_Source" ,"Ref_Start","Ref_Stop" ,"Ref_Frame","Seq_Nucleotide",  "Seq_Nucl_Length" 
             ]  
         )+'\n'
                        )
