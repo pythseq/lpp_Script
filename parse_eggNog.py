@@ -96,9 +96,9 @@ if __name__ == '__main__':
                       help="Redis Database File")
 
     (options, args) = parser.parse_args()
-    # os.system(mysql_build+"-e 'create database eggNOG;'")
-    # os.system(mysql_build+"-e 'drop database eggNOG;'")
-    # os.system(mysql_build+"-e 'create database eggNOG;'")
+    os.system(mysql_build+"-e 'create database eggNOG;'")
+    os.system(mysql_build+"-e 'drop database eggNOG;'")
+    os.system(mysql_build+"-e 'create database eggNOG;'")
     general_config = ConfigParser()
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     general_config.read(
@@ -141,8 +141,8 @@ if __name__ == '__main__':
             line = line[:-1]        
         nog_data =  noglify(line.split("\t"))
         TMP.write(line+'\n')
-    # load_des_script = """-e 'load data local infile   "%s" into table NOG_Description (name, description);'"""%(TMP.name)
-    # os.system( mysql_connection+load_des_script   )
+    load_des_script = """-e 'load data local infile   "%s" into table NOG_Description (name, description);'"""%(TMP.name)
+    os.system( mysql_connection+load_des_script   )
 
    
     
@@ -152,16 +152,17 @@ if __name__ == '__main__':
         if line[-1]=='\n':
             line = line[:-1]
         nog_data =  noglify(line.split("\t"))
-        # nog_table = NOG_des.selectBy(  Name=nog_data.Id  )
+        nog_table = NOG_des.selectBy(  Name=nog_data.Id  )
         if nog_data.Id[:3] in ["COG","NOG","COG"]:
         
             for data in nog_data.Description:
                 TMP.write(nog_data.Id+'\t'+data+'\n')
-    # load_cate_script = """-e 'load data local infile   "%s" into table  NOG_Category (no_g,cat);'"""%(TMP.name)
-    # os.system( mysql_connection+load_cate_script   )
+    load_cate_script = """-e 'load data local infile   "%s" into table  NOG_Category (no_g,cat);'"""%(TMP.name)
+    os.system( mysql_connection+load_cate_script   )
     
 
     TMP = open("tmp3",'w')
+    all_hasgene = {}
     for each_f in  glob.glob("*"+options.rela):
         RELA = open(each_f , 'rU')
         RELA.next()
@@ -173,11 +174,12 @@ if __name__ == '__main__':
                 if rela_data.NOG_ID[:3] in ["COG","NOG","KOG"]:
                     
                     TMP.write(rela_data.Protein+'\t'+rela_data.NOG_ID+'\n')
+                    all_hasgene[rela_data.Protein] = ""
             except:
                 print(line)
 
-    # load_rela_script = """-e 'load data local infile   "%s" into table Gene_NOG (gene,no_g);'"""%(TMP.name)
-    # os.system( mysql_connection+load_rela_script   )
+    load_rela_script = """-e 'load data local infile   "%s" into table Gene_NOG (gene,no_g);'"""%(TMP.name)
+    os.system( mysql_connection+load_rela_script   )
     
     SEQ = fasta_check(open(options.sequence,'rU'))
     END = open('total.validate.sequence.fasta','w')
@@ -185,7 +187,8 @@ if __name__ == '__main__':
     DB_FILE = open(options.Db_File,'w')
     for t,s in SEQ:
         t_name = t.strip()[1:]
-        if NOG_GENE.selectBy(Gene = t_name).count():
+        # if NOG_GENE.selectBy(Gene = t_name).count():
+        if t_name in all_hasgene:
             END.write(">"+t_name+'\n'+s)
             seq_data_hash[t_name]["Annotation"] = t_name
             s1 = re.sub("\s+", '', s)
