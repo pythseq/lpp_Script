@@ -24,7 +24,7 @@ if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	seqname = options.name
 	prefix = os.path.basename(seqname)
-	outpath = options.outprefix+'/'+prefix+'/'
+	outpath = options.outprefix+'/'+prefix
 	outpath = check_path(outpath)
 	outputname = outpath+prefix+'_Phage'
 	os.system( " phage_finder_v2.0.sh  %s  %s"%(seqname,outpath)  )
