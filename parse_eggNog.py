@@ -206,7 +206,7 @@ if __name__ == '__main__':
             seq_data_hash[t_name]["Length"] = str(len(s1))
             TMP.write(t_name+'\t'+str(len(s1))+'\n')
     TMP.close()
-    load_rela_script = """-e 'load data local infile   "%s" into table EGGNOG_GENE Gene_NOG (gene,no_g);'"""%(TMP.name)
+    load_rela_script = """-e 'load data local infile   "%s" into table eggNOG_GENE (gene,length);'"""%(TMP.name)
     DB_FILE.write(Redis_trans(seq_data_hash))
     os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
     
