@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	outpath = check_path(outpath)
 	outputname = outpath+prefix+'_Phage'
 	os.system( " phage_finder_v2.0.sh  %s  %s"%(seqname,outpath)  )
-	for e_f in os.glob(outpath+"*.*"):
+	for e_f in glob.glob(outpath+"*.*"):
 		if e_f.endswith(".hmm3") or e_f.endswith(".out") or e_f.endswith(".log"):
 			os.remove(e_f)
 		else:
