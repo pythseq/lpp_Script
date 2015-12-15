@@ -114,7 +114,7 @@ if __name__ == '__main__':
         os.path.join( path+"database.ini")
     ) 
     db_number = general_config.get("Redis", "eggnog")
-    r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
     r.flushdb()      
 
     NOG_des.createTable(ifNotExists=True)
@@ -188,6 +188,7 @@ if __name__ == '__main__':
                 print(line)
 
     load_rela_script = """-e 'load data local infile   "%s" into table Gene_NOG (gene,no_g);'"""%(TMP.name)
+    
     os.system( mysql_connection+load_rela_script   )
     
     SEQ = fasta_check(open(options.sequence,'rU'))
@@ -207,6 +208,7 @@ if __name__ == '__main__':
             TMP.write(t_name+'\t'+str(len(s1))+'\n')
     TMP.close()
     load_rela_script = """-e 'load data local infile   "%s" into table eggNOG_GENE (gene,length);'"""%(TMP.name)
+    os.system( mysql_connection+load_des_script   )
     DB_FILE.write(Redis_trans(seq_data_hash))
     os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
     

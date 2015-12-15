@@ -44,7 +44,7 @@ parser.add_option("-n", "--Nr", action="store",
 general_config = ConfigParser()
 path = os.path.split(os.path.abspath(__file__))[0]+'/'
 general_config.read(
-    os.path.join( path+"database_redis.ini")
+    os.path.join( path+"database.ini")
 ) 
 db_number = general_config.get("Redis", "nr")    
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     
-    r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
     r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 

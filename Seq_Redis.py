@@ -71,7 +71,7 @@ if __name__ == '__main__':
         general_config.set("Redis", kind,str(db_number))
         
         general_config.write( open(path+"database.ini",'w') )
-    r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+    r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
     r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 

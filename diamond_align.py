@@ -92,7 +92,7 @@ if __name__=="__main__":
         sys.exit()
     if db_has:
         db_number = general_config.get("Redis", dbname)   
-        r = redis.Redis(host='localhost',port=6379,db=int(db_number))
+        r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
     if dbname =="kegg":
         dbname ="KEGG"
     else:
