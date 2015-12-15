@@ -141,12 +141,14 @@ if __name__ == '__main__':
       
     UNIPROT = open(options.uniprot,'rU')  
     UNIDATA = open("Uniprot_mapping.list",'w')
+    has_data = {}
     for line in UNIPROT:
         line_l = line.split('\t')
         if line_l[0] !='UniProtKB':
             continue
-        UNIDATA.write(line_l[1]+'\t'+line_l[4]+'\n')
-    
+        if line_l[1]+'\t'+line_l[4] not in has_data:
+            UNIDATA.write(line_l[1]+'\t'+line_l[4]+'\n')
+            has_data[line_l[1]+'\t'+line_l[4]]=""
     GO_ROOT.createTable(ifNotExists=True)
     GO_ALTER.createTable(ifNotExists=True)
     GO_DEF.createTable(ifNotExists=True)
