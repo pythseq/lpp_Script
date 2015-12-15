@@ -46,6 +46,15 @@ class CAT_DES( SQLObject  ):
     Description = StringCol()
     cat_index = DatabaseIndex(Abb)
     
+class EGGNOG_GENE( SQLObject  ):
+    class sqlmeta:
+        table="eggNOG_GENE"
+    Gene= StringCol(length=50)
+    Length = StringCol()
+    cat_index = DatabaseIndex(Gene)
+        
+
+
 
 
 def get_or_create(model, **kwargs):
@@ -112,7 +121,7 @@ if __name__ == '__main__':
     NOG_GENE.createTable(ifNotExists=True)
     CAT_DES.createTable(ifNotExists=True)
     NOG_CAT.createTable(ifNotExists=True)
-   
+    EGGNOG_GENE.createTable(ifNotExists=True)
     ANNO = open(options.anno,'rU')
 
     for (abb,description) in  re.findall( "\[(\w)\]\s+([^\n]+)",ANNO.read()  ):
@@ -185,6 +194,7 @@ if __name__ == '__main__':
     END = open('total.validate.sequence.fasta','w')
     seq_data_hash = Ddict()
     DB_FILE = open(options.Db_File,'w')
+    TMP = open("tmp4",'w')
     for t,s in SEQ:
         t_name = t.strip()[1:]
         # if NOG_GENE.selectBy(Gene = t_name).count():
@@ -194,5 +204,10 @@ if __name__ == '__main__':
             s1 = re.sub("\s+", '', s)
             #seq_data_hash[t_name]["Seq"] = s1
             seq_data_hash[t_name]["Length"] = str(len(s1))
+            TMP.write(t_name+'\t'+str(len(s1))+'\n')
+    TMP.close()
+    load_rela_script = """-e 'load data local infile   "%s" into table EGGNOG_GENE Gene_NOG (gene,no_g);'"""%(TMP.name)
     DB_FILE.write(Redis_trans(seq_data_hash))
     os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
+    
+    
