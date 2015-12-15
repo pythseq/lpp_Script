@@ -47,7 +47,7 @@ if __name__ == '__main__':
 		PHAGEXLS.write("Name\tKind\tFunction\tRef_Source\tRef_Start\tRef_Stop\tRef_Frame\tSeq_Nucleotide\tSeq_Nucl_Length\n")
 		for t,s in fasta_check( open(outputname+'.con','rU')):
 			s = re.sub("\s+", "", s)
-			[(start,end)] = re.findall( "\(\d+)\-(\d+) bp\)",t)
+			[(start,end)] = re.findall( "\((\d+)\-(\d+) bp\)",t)
 			length = int(end)-int(start)+1
 			phage_name = t.split()[0].rsplit("_",1)[-1]
 			phage_function = re.search("\S+\s+(.+)\s+\(",t).group(1)
