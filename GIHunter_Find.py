@@ -45,15 +45,15 @@ if __name__ == '__main__':
 
     ##Run GIHunter##
 
-    # os.system(  "GIHunter  %(Input)s.fna  %(Input)s.ptt %(Input)s.rnt  %(Output)s "%(
+    os.system(  "GIHunter  %(Input)s.fna  %(Input)s.ptt %(Input)s.rnt  %(Output)s "%(
 
-        # {
-            # "Input":InputPrefix,
-            # "Output":Outprefix,
+        {
+            "Input":InputPrefix,
+            "Output":Outprefix,
 
-        # }
-    # )   
-                # )
+        }
+    )   
+                )
     output_path = os.path.abspath(os.getcwd())+'/Genomic_Island/'+Outprefix+'/'
 
     if os.path.exists(output_path+'GIV/'):
