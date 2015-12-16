@@ -8,9 +8,9 @@ from sqlobject import *
 from optparse import OptionParser
 user = "root"
 password = "gass_1985"
-mysql_connection = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 GO "%(user,password)
-mysql_build = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@192.168.0.10/GO'%(user,password)    
+mysql_connection = "mysql -h 192.168.0.21 -u%s -p%s  --local-infile=1 GO "%(user,password)
+mysql_build = "mysql -h 192.168.0.21 -u%s -p%s  --local-infile=1 "%(user,password)
+connection_string = 'mysql://%s:%s@192.168.0.21/GO'%(user,password)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 
