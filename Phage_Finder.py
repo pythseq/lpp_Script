@@ -28,6 +28,16 @@ if __name__ == '__main__':
 	outpath = check_path(outpath)
 	outputname = outpath+prefix+'_Phage'
 	os.system( " phage_finder_v2.0.sh  %s  %s"%(seqname,outpath)  )
+	README = open(outpath+'/Readme','w')
+	README.write("""
+使用PhageFinder进行前噬菌体寻找。结果如下：
+*.con 前噬菌体序列
+*.xls前噬菌体序列的详细详细信息表格
+*.pep前噬菌体内包含的蛋白
+*.seq 前噬菌体内包含的基因
+	
+	
+	""")
 	for e_f in glob.glob(outpath+"*.*"):
 		if e_f.endswith(".hmm3") or e_f.endswith(".out") or e_f.endswith(".log"):
 			os.remove(e_f)
@@ -53,6 +63,7 @@ if __name__ == '__main__':
 			phage_function = re.search("\S+\s+(.+)\s+\(",t).group(1)
 			PHAGEXLS.write( prefix+'_'+phage_name+"\tPhageElement"+'\t'+phage_function+'\t'+prefix+'\t'+start+'\t'+end+'\t+\t'+s+'\t'+str(length)+'\n'  )
 			
-			
+	else:
+		README.write("""\n未发现任何前噬菌体序列。\n""")
 			
 	
