@@ -61,5 +61,6 @@ if __name__=="__main__":
 	dataframe["Nt_identity"]  = 100*dataframe["Nt_identity"]/dataframe["Nt_query-len"]
 	dataframe2 = pd.DataFrame(dataframe,columns=['Name',u'Nt_Hit',"Nt_identity", 'Nt_query-len',u'Nt_Query_Coverage', u'Nt_query-from',u'Nt_query-to', u'Nt_Hit_len','Nt_Hit_Coverage',u'Nt_hit-frame',  u'Nt_hit-from',u'Nt_hit-to', u'Nt_evalue' , u'Nt_bit-score' ])
 	dataframe2.to_csv(options.output,sep="\t",index=False)
+	os.remove( "%s.top1"%(tmp)  )
 
 

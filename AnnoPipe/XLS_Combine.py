@@ -258,12 +258,12 @@ dev.off()
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
-    all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xlsx" ,index=False   )
+    all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
     
     if options.gff:
         all_gff_frame= pd.read_table( options.gff  )
         total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
-        total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xls",index=False,sep="\t"   )
+        total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
     
     
     
