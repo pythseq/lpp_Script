@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     ##Run GIHunter##
 
-    os.system(  "/pub/SOFTWARE/Other/GIHunter/GIHunter  %(Input)s.fna  %(Input)s.ptt %(Input)s.rnt  %(Output)s "%(
+    os.system(  "GIHunter  %(Input)s.fna  %(Input)s.ptt %(Input)s.rnt  %(Output)s "%(
 
         {
             "Input":InputPrefix,
