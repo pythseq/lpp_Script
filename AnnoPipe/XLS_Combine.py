@@ -101,7 +101,7 @@ def combine_xls( data_list   ):
     for each_data in data_list[1:]:
         # out_frame = rmerge(out_frame, pd.read_table(each_data),on="Name",how="outer")
         out_frame = pd.DataFrame.merge(out_frame, pd.read_table(each_data), left_on='Name', right_on='Name', how='right')
-    return out_frame
+    return out_frame.drop_duplicates()
 
 
 if __name__=="__main__":
@@ -260,7 +260,7 @@ dev.off()
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
-    all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
+    all_resultframe.to_csv( out_put_path+"All_HasAnnotation.xls" ,index=False ,sep='\t'  )
     stat_result["Total"] = [ "Total",len( all_resultframe["Name"]  ) ]
     if options.gff:
         DATA = open(options.gff ,'rU')

@@ -54,6 +54,7 @@ if __name__ == '__main__':
 	
 	
 	all_cog_frame = pd.read_table(TMP.name)
+	all_cog_frame = all_cog_frame.drop_duplicates()
 	result_data_frame = pd.DataFrame.merge( all_eggnog_frame,all_cog_frame,left_on='Name', right_on='Name', how='outer' )
 	result_data_frame.to_csv(options.output+".xls",sep="\t",index =False)
 	result_stat_frame = pd.DataFrame( result_data_frame,columns=("COG_FunCat","COG_Category Annotation")  )
@@ -70,7 +71,7 @@ if __name__ == '__main__':
 	title.replace("count","Gene count")
 	STAT.write("Category\t"+TMP2.next())
 	for line in TMP2:
-		print(line.split("\t")[0])
+
 		name = re.search("\[(\w+)\]$",line.split("\t")[0]).group(1)
 		STAT.write( name+'\t'+ line)
 	os.remove(TMP.name)
