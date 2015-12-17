@@ -162,7 +162,7 @@ if __name__ == '__main__':
             line = line[:-1]
         nog_data =  noglify(line.split("\t"))
         nog_table = NOG_des.selectBy(  Name=nog_data.Id  )
-        if nog_data.Id[:3] in ["COG","NOG","COG"]:
+        if nog_data.Id[:3] in ["COG","NOG","KOG"]:
         
             for data in nog_data.Description:
                 TMP.write(nog_data.Id+'\t'+data+'\n')

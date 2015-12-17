@@ -74,3 +74,4 @@ if __name__ == '__main__':
 		name = re.search("\[(\w+)\]$",line.split("\t")[0]).group(1)
 		STAT.write( name+'\t'+ line)
 	os.remove(TMP.name)
+	os.remove(TMP2.name)

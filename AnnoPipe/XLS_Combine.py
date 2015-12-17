@@ -158,9 +158,11 @@ Total文件夹\t所有注释信息汇总在一起的结果
             
     category_Excel = pd.ExcelWriter(category_dir+'CategoryAnnotation.xlsx', engine='xlsxwriter')
     STAT = open(category_dir+'/stat.tsv','w')
-    STAT.write("Database\tHitGeneNumber\n")
+    STAT.write("Database\tHitGeneNumber\tTotalGeneNumber\tPerc(%)\n")
     total_excel = []
     database_data  = {}
+    stat_result = {}
+
     for category in category_hash:
         all_excel = []
         
@@ -168,8 +170,8 @@ Total文件夹\t所有注释信息汇总在一起的结果
             all_excel.append(  category_hash[category][chrosome]  )
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
-        
-        STAT.write(category+'\t%s\n'%(len(result_frame["Name"] ) ) )
+        stat_result[category] = [category,len(result_frame["Name"])  ]
+        # STAT.write(category+'\t%s\t%.2f\n'%(len(result_frame["Name"] ) ,100.0* len(result_frame["Name"] )  /   ) )
         
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
         
@@ -259,12 +261,28 @@ dev.off()
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
     all_resultframe.to_excel( out_put_path+"All_HasAnnotation.xls" ,index=False   )
-    
+    stat_result["Total"] = [ "Total",len( all_resultframe["Name"]  ) ]
     if options.gff:
-        all_gff_frame= pd.read_table( options.gff  )
-        total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
-        total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
-    
+        DATA = open(options.gff ,'rU')
+        line = DATA.next()
+        if line.startswith('>'):
+            total_number = 0
+            SEQ = fasta_check(open(options.gff ,'rU') )
+            for t,s in SEQ:
+                total_number +=1
+            
+        else:
+            all_gff_frame= pd.read_table( options.gff  )
+            total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
+            total_number = len( total_resultframe["Name"]   )
+            
+            total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
+        for key in stat_result: 
+            category,genenumber = stat_result[key]
+            perc = 100.0*genenumber/total_number
+            STAT.write(  "\t".join( [ category, str(genenumber),total_number ,"%.2f"%(perc)     ] ) +'\n'   )
+        
+            
     
     
 
