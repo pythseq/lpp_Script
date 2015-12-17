@@ -47,7 +47,7 @@ parser.add_option("-g", "--Graph", action="store",
 
 (options, args) = parser.parse_args()
 
-all_fastq_file = glob.glob(input_path+"/*.pair1")
+all_fastq_file = glob.glob(options.input+"/*.pair1")
 data_file_group = {}
 for each_file in all_fastq_file:
 	name = os.path.split(each_file)[-1].split('.')[0].split("_")[0]
