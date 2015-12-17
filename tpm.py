@@ -7,6 +7,7 @@ Created: 2014/11/3
 """
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import re
 from lpp import *
@@ -95,12 +96,16 @@ for line in MATRIX:
 	gene_name = line_l[0]
 	express_l = line_l[1:]
 	rpkm_cache = []
+	all_rpkm = []
 	for i in xrange(0,len(express_l) ):
 		rpkm = 10**3*float(express_l[i])/sum_RPK[title_l[i]]/unigene_length[gene_name]
 		all_data.append(rpkm)
+		
 		data_hash[ title_l[i]    ].append(float(express_l[i]) )
 		rpkm_cache.append("%s"%(rpkm))
-	END.write(gene_name+"\t"+"\t".join(rpkm_cache)+'\n')
+		all_rpkm.append(rpkm)
+	if max(all_rpkm)>=1:
+		END.write(gene_name+"\t"+"\t".join(rpkm_cache)+'\n')
 		
 data = [ data_hash[i]  for i in sorted(data_hash)]
 fig, ax1 = plt.subplots(figsize=(10,6),dpi=100)

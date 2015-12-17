@@ -126,7 +126,7 @@ if __name__=="__main__":
 
     (options, args) = parser.parse_args() 
 
-    out_put_path = os.path.abspath(  options.outputpath )
+    out_put_path = os.path.abspath(  options.outputpath )+'/'
 
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
