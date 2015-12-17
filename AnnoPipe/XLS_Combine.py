@@ -99,8 +99,8 @@ def combine_xls( data_list   ):
     out_frame = pd.read_table(data_list[0])
 
     for each_data in data_list[1:]:
-        out_frame = rmerge(out_frame, pd.read_table(each_data),on="Name",how="outer")
-        # out_frame = pd.DataFrame.merge(out_frame, pd.read_table(each_data), left_on='Name', right_on='Name', how='right')
+        # out_frame = rmerge(out_frame, pd.read_table(each_data),on="Name",how="outer")
+        out_frame = pd.DataFrame.merge(out_frame, pd.read_table(each_data), left_on='Name', right_on='Name', how='right')
     return out_frame
 
 
@@ -280,7 +280,7 @@ dev.off()
         for key in stat_result: 
             category,genenumber = stat_result[key]
             perc = 100.0*genenumber/total_number
-            STAT.write(  "\t".join( [ category, str(genenumber),total_number ,"%.2f"%(perc)     ] ) +'\n'   )
+            STAT.write(  "\t".join( [ category, str(genenumber),str(total_number) ,"%.2f"%(perc)     ] ) +'\n'   )
         
             
     
