@@ -120,7 +120,7 @@ if __name__=="__main__":
     parser.add_option("-g", "--GFFANNO", action="store", 
                       dest="gff", 
                       default="",
-                      help="Annotation from gff file")	    
+                      help="Annotation from gff file or Raw Unigene Sequence!")	    
 
 
 
