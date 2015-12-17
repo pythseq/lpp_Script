@@ -254,7 +254,7 @@ dev.off()
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
-    STAT.write("Total\t%s\n"%(len(all_resultframe)))
+
     
     all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
@@ -278,11 +278,15 @@ dev.off()
             
             total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
         for key in stat_result: 
-            category,genenumber = stat_result[key]
-            perc = 100.0*genenumber/total_number
-            STAT.write(  "\t".join( [ category, str(genenumber),str(total_number) ,"%.2f"%(perc)     ] ) +'\n'   )
+            if key !="Total":
+                category,genenumber = stat_result[key]
+                perc = 100.0*genenumber/total_number
+                STAT.write(  "\t".join( [ category, str(genenumber),str(total_number) ,"%.2f"%(perc)     ] ) +'\n'   )
         
-            
+        category,genenumber = stat_result["Total"]
+        perc = 100.0*genenumber/total_number
+        STAT.write(  "\t".join( [ category, str(genenumber),str(total_number) ,"%.2f"%(perc)     ] ) +'\n'   )        
+        
     
     
 
