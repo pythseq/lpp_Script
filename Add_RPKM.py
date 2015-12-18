@@ -41,18 +41,55 @@ if __name__ == '__main__':
 	rpkm_filter = rpkm_data[  rpkm_data["max"] >=thrshold   ]
 	del rpkm_filter["max"]
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
+	
+	
+	########Draw Graph#######################
+	RAW = open(options.OutputPrefix+'.rpkm','rU')
+	RPDRAW = open( "R.Data",'w'  )
+	RPDRAW.write("RPKM\tSample\n")
+	title_l = RAW.next().strip().split("\t")[1:]
+	
+	for line in RAW:
+		line_l = line.split("\t")
+		data_l = line_l[1:]
+		for i in xrange(0,len(data_l)):
+			RPDRAW.write(data_l[i]+'\t'+title_l[i]+'\n')
+			
+	RPDRAW.close()		
+	R_Script = open("Draw.R",'w')
+	R_Script.write(
+	    """
+library("ggplot2")
+countsTable <- read.delim( "%s", header=TRUE, stringsAsFactors=TRUE )
+pdf("%s_rpkm.pdf")
+ggplot(countsTable, aes(log10(RPKM+1),fill=Sample))+geom_density(alpha=0.2) 
+dev.off()
+
+
+	    
+"""%(
+	   RPDRAW.name,
+	   options.OutputPrefix
+   
+   
+   )
+	
+	
+	
+	)
+	os.system("Rscript %s"%(R_Script.name) )
 	old_name = rpkm_filter.columns[1:]
 	new_name = [ "RPKM_"+x for x in old_name    ]
 	changname_hash = dict(zip(old_name,new_name))
 	rpkm_filter.rename( changname_hash, inplace=True  )
 	
 	all_filteredGene = list(rpkm_filter["gene"])
-	print(len( rpkm_filter["gene"] ))
+
 	fil_geneHash =  dict(zip(all_filteredGene,[""]*len(all_filteredGene)))
-	print(len(fil_geneHash ))
+
 	count_data = pd.read_table( options.Count )
 	count_has_data = count_data[  count_data["gene"].isin(fil_geneHash) ]	
-	print(len(count_has_data))
+
 	count_has_data.to_csv( options.OutputPrefix+'.count',sep="\t",index=False  )
 	old_name = count_has_data.columns[1:]
 	new_name = [ "ReadCount_"+x for x in old_name    ]
