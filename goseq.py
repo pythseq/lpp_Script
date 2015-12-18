@@ -37,17 +37,17 @@ go = options.Go
 end = options.Out
 r_script="""
 library("goseq")
-DEG<-read.table("%(inp)s", header = FALSE)
+DEG<-read.table("%(inp)s", header = FALSE,sep="\t")
 DEG <-levels(DEG[,1])
 DEG.vector <- t(DEG)
 ALL<-levels(read.table("%(go)s", header = FALSE)[,1])
-go <-read.table("%(go)s", header = FALSE)
+go <-read.table("%(go)s", header = FALSE,sep="\t")
 
 ALL.vector<-c(t(ALL))
 gene.vector=as.integer(ALL.vector%in%DEG.vector)
 names(gene.vector)=ALL.vector 
 
-length_info = read.table("%(length)s", header = FALSE)
+length_info = read.table("%(length)s", header = FALSE,sep="\t")
 gene_length.vector<-c(t(length_info[,2]))
 names(gene_length.vector)<-length_info[,1]
 gene_length2<-gene_length.vector[names(gene_length.vector)%in%names(gene.vector)]
@@ -74,4 +74,4 @@ END = open("%s.goseq.R"%(end),'w')
 END.write(r_script)
 END.close()
 
-#os.system("R --no-save <  %s"%(END.name))
+os.system("R --no-save <  %s"%(END.name))
