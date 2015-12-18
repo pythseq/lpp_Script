@@ -38,8 +38,8 @@ if __name__ == '__main__':
 	fil_geneHash =  zip(all_filteredGene,[""]*len(all_filteredGene))
 	TMP = open("%s.tmp"%os.getpid(),'w')
 	TMP.write("gene\tSequence\n")
-	SEQ = open(   optios.OutputPrefix+'.fasta','w'    )
-	BED = open(   optios.OutputPrefix+'.bed','w'    )
+	SEQ = open(   options.OutputPrefix+'.fasta','w'    )
+	BED = open(   options.OutputPrefix+'.bed','w'    )
 	for t,s in fasta_check(  open( options.Seq  )  ):
 		name  = t[1:].split()[0]
 		s1 = re.sub( "\s+", '', s )
