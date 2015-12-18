@@ -100,10 +100,12 @@ dev.off()
 	TMP.write("gene\tSequence\n")
 	SEQ = open(   options.OutputPrefix+'.fasta','w'    )
 	BED = open(   options.OutputPrefix+'.bed','w'    )
+	LENGTH = open(   options.OutputPrefix+'.length','w'    )
 	for t,s in fasta_check(  open( options.Seq  )  ):
 		name  = t[1:].split()[0]
 		s1 = re.sub( "\s+", '', s )
 		if name in fil_geneHash:
+			LENGTH.write(name+'\t%s\n'%( len(s1) )  )
 			TMP.write(name+'\t'+s1+'\n')
 			SEQ.write(t+s)
 			BED.write(
