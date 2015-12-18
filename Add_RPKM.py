@@ -31,7 +31,7 @@ if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	thrshold = options.Threshold
 	rpkm_data= pd.read_table(options.Rpkm)
-	rpkm_data["max"] = data[ data.columns[1:]   ].max(1)
+	rpkm_data["max"] = rpkm_data[ rpkm_data.columns[1:]   ].max(1)
 	rpkm_filter = rpkm_data[  rpkm_data["max"] >=thrshold   ]
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
 	all_filteredGene = list(rpkm_data["gene"])
