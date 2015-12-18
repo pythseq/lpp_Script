@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
 	old_name = rpkm_filter.columns[1:]
 	new_name = [ "RPKM_"+x for x in old_name    ]
-	changname_hash = zip(old_name,new_name)
+	changname_hash = dict(zip(old_name,new_name))
 	rpkm_filter.rename( changname_hash, inplace=True  )
 	
 	all_filteredGene = list(rpkm_data["gene"])
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 	count_has_data.to_csv( options.OutputPrefix+'.count',sep="\t",index=False  )
 	old_name = count_has_data.columns[1:]
 	new_name = [ "ReadCount_"+x for x in old_name    ]
-	changname_hash = zip(old_name,new_name)
+	changname_hash = dict( zip(old_name,new_name) )
 	count_has_data.rename( changname_hash, inplace=True  )	
 	
 	TMP = open("%s.tmp"%os.getpid(),'w')
