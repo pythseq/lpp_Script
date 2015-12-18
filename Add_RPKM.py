@@ -23,7 +23,10 @@ parser.add_option("-s", "--Fasta", action="store",
 
                   help="Sequence File")
 
+parser.add_option("-r", "--Rpkm", action="store",
+                  dest="Rpkm",
 
+                  help="Rpkm File")
 
 
 parser.add_option("-c", "--Count", action="store",
