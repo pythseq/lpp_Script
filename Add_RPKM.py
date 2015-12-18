@@ -41,7 +41,7 @@ if __name__ == '__main__':
 	rpkm_filter = rpkm_data[  rpkm_data["max"] >=thrshold   ]
 	del rpkm_filter["max"]
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
-	old_name = rpkm_filter.columns()[1:]
+	old_name = rpkm_filter.columns[1:]
 	new_name = [ "RPKM_"+x for x in old_name    ]
 	changname_hash = zip(old_name,new_name)
 	rpkm_filter.rename( changname_hash, inplace=True  )
@@ -52,7 +52,7 @@ if __name__ == '__main__':
 	count_data = pd.read_table( options.Count )
 	count_has_data = count_data[  count_data["gene"].isin(fil_geneHash) ]	
 	count_has_data.to_csv( options.OutputPrefix+'.count',sep="\t",index=False  )
-	old_name = count_has_data.columns()[1:]
+	old_name = count_has_data.columns[1:]
 	new_name = [ "ReadCount_"+x for x in old_name    ]
 	changname_hash = zip(old_name,new_name)
 	count_has_data.rename( changname_hash, inplace=True  )	
