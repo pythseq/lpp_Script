@@ -6,10 +6,35 @@
   Created: 2015/6/26
 """
 import sys,os
-data = sys.argv[1]
-length = sys.argv[3]
-go = sys.argv[2]
-end = sys.argv[4]
+from lpp import *
+usage = "python2.7 %prog [options]"
+parser = OptionParser(usage =usage )
+parser.add_option("-i", "--Input", action="store",
+                  dest="data",
+
+                  help=" Differential gene list by Deseq ")
+
+
+parser.add_option("-l", "--Genelength", action="store",
+                  dest="genelength",
+
+                  help="All Gene Length")
+
+parser.add_option("-g", "--Go", action="store",
+                  dest="Go",
+
+                  help="All Gene Go Annotation")
+
+parser.add_option("-o", "--Out", action="store",
+                  dest="Out",
+
+                  help="OutputFile")
+
+(options, args) = parser.parse_args()
+data = options.data
+length = options.genelength
+go = options.Go
+end = options.Out
 r_script="""
 library("goseq")
 DEG<-read.table("%(inp)s", header = FALSE)
@@ -42,7 +67,7 @@ pvals<-pvals[pvals$numDEInCat/pvals$numInCat>=0.1,]
 pvals<-pvals[pvals$numInCat>=50,]
 enriched_go<-pvals[pvals$qvalue<.05  ,]
 
-write.table(enriched_go,"%(out)s.go_enrich",sep="\t",row.names=FALSE,quote=FALSE)
+write.table(enriched_go,"%(out)s.go_enrich.tsv",sep="\t",row.names=FALSE,quote=FALSE)
 """.replace("%(go)s",go).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
 
 END = open("%s.goseq.R"%(end),'w')
