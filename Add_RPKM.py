@@ -48,7 +48,7 @@ if __name__ == '__main__':
 	
 	all_filteredGene = list(rpkm_data["gene"])
 	fil_geneHash =  dict(zip(all_filteredGene,[""]*len(all_filteredGene)))
-	
+	print(fil_geneHash)
 	count_data = pd.read_table( options.Count )
 	count_has_data = count_data[  count_data["gene"].isin(fil_geneHash) ]	
 	count_has_data.to_csv( options.OutputPrefix+'.count',sep="\t",index=False  )
