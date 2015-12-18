@@ -18,16 +18,13 @@ parser.add_option("-t", "--Threshold", action="store",
 
                   help="rpkm threshold")
 
-parser.add_option("-S", "--Fasta", action="store",
-                  dest="Seq",
-
-                  help="Sequence File")
-
-
 parser.add_option("-s", "--Fasta", action="store",
                   dest="Seq",
 
                   help="Sequence File")
+
+
+
 
 parser.add_option("-c", "--Count", action="store",
                   dest="Count",
