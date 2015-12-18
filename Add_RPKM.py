@@ -35,7 +35,7 @@ if __name__ == '__main__':
 	rpkm_filter = rpkm_data[  rpkm_data["max"] >=thrshold   ]
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
 	all_filteredGene = list(rpkm_data["gene"])
-	fil_geneHash =  zip(all_filteredGene,[""]*len(all_filteredGene))
+	fil_geneHash =  dict(zip(all_filteredGene,[""]*len(all_filteredGene)))
 	TMP = open("%s.tmp"%os.getpid(),'w')
 	TMP.write("gene\tSequence\n")
 	SEQ = open(   options.OutputPrefix+'.fasta','w'    )
