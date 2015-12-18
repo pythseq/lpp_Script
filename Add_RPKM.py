@@ -47,6 +47,7 @@ if __name__ == '__main__':
 	rpkm_filter.rename( changname_hash, inplace=True  )
 	
 	all_filteredGene = list(rpkm_filter["gene"])
+	print(len( rpkm_filter["gene"] ))
 	fil_geneHash =  dict(zip(all_filteredGene,[""]*len(all_filteredGene)))
 	print(len(fil_geneHash ))
 	count_data = pd.read_table( options.Count )
