@@ -50,7 +50,7 @@ if __name__ == '__main__':
 	title_l = RAW.next().strip().split("\t")[1:]
 	
 	for line in RAW:
-		line_l = line.split("\t")
+		line_l = line.strip().split("\t")
 		data_l = line_l[1:]
 		for i in xrange(0,len(data_l)):
 			RPDRAW.write(data_l[i]+'\t'+title_l[i]+'\n')
