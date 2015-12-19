@@ -228,8 +228,9 @@ class File_Ddict(object):
 	'''file_ddict(file_TAG,options)   options=1,from 2 lines to start,
 	oprions=0 from the first to start
 	'''
-	@jit
+	
 	@staticmethod
+	@jit
 	def check( cache_hash ):
 		cache_exec = {'':''}
 		def creep( i ):
