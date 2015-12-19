@@ -304,7 +304,7 @@ class fasta_check(object):
 			if line[0]=='>':
 				self.define=line
 				break
-	
+	@jit
 	def __iter__(self):
 		return self
 	@jit
