@@ -656,8 +656,9 @@ class uniprot_parse(object):
 			self.seq = seq
 		return self
 class GBK_nul_seq(object):
-	@jit
+	
 	@classmethod
+	@jit
 	def complement(cls,char):
 		libary=string.maketrans('atcgATCG','tagcTAGC')
 		return char[::-1].translate(libary)
