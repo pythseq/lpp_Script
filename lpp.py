@@ -621,8 +621,9 @@ class EMBL_nul_seq(object):
 		return fasta_end
 
 class uniprot_parse(object):
-	@jit
+	
 	@classmethod
+	@jit
 	def seq_manup(cls,seq):
 		seq = re.sub('\W+','',seq)
 		seq = re.sub('(\w{60})',r'\1\n',seq)
