@@ -19,7 +19,7 @@ def get_wanted( data,wanted    ):
 		end.append( data[i] )
 	return end
 
-@jit
+
 class SmithWaterman():
 	"""docstring for SmithWaterman
 	seq1 需要比对的第一个序列
@@ -159,7 +159,7 @@ def complement( char ):
 	libary=string.maketrans('atcgATCG','tagcTAGC')
 	end = char[::-1].translate(libary)
 	return end
-@jit
+
 class fastq_check( object ):
 	class NotFastqError(  ValueError ):
 		pass
@@ -174,8 +174,10 @@ class fastq_check( object ):
 				self.define=line
 
 				break
+		
 	def __iter__( self ):
 		return self
+	@jit
 	def next(self):
 		if not self.define:
 			self.define=self.file_handle.next()
@@ -195,11 +197,12 @@ class fastq_check( object ):
 #			error_message = ' the File %s of  line %s  is not fastq format!!!!  '%( self.filename , self.linenumber-3)  
 #			raise self.NotFastqError, error_message
 class Ddict(defaultdict,dict):
+	@jit
 	def __init__(self):
 		defaultdict.__init__(self, Ddict)
 	def __repr__(self):
 		return dict.__repr__(self)
-@jit
+
 class File_dict(object):
 	'''file_ddict(file_TAG,options)   options=1,from 2 lines to start,
 	oprions=0 from the first to start
@@ -270,7 +273,7 @@ class File_Ddict(object):
 				exec( 'self.hash%s=\'\''%( key1 ) )
 
 		return self.hash
-@jit
+
 class block_reading(object):
 	def __init__(self,file_handle,tag):
 		self.file=iter(file_handle)
@@ -290,8 +293,9 @@ class block_reading(object):
 		if not self.container:
 			raise StopIteration
 		return self.container
-@jit
+
 class fasta_check(object):
+	@jit
 	def __init__(self,file_handle):
 		assert isinstance( file_handle,file ),'The Input paramater must be a File Handle'
 		self.file=iter(file_handle)
@@ -299,6 +303,7 @@ class fasta_check(object):
 			if line[0]=='>':
 				self.define=line
 				break
+	
 	def __iter__(self):
 		return self
 	@jit
@@ -548,11 +553,12 @@ class dom_confusing_parse(object):
 		self.file_name=file_name
 	def parse(self):
 		manipulate(self.file_name)
-@jit
+
 class blast_parse(object):
 	def __init__(self,blast_file,output_file):
 		self.input=iter(block_reading(blast_file,'\s*<Iteration>'))
 		self.output=output_file
+	@jit
 	def parse(self):
 		self.tag=0
 		for key1 in self.input:
@@ -612,7 +618,7 @@ class EMBL_nul_seq(object):
 		cds_all = re.findall('\nFT   CDS             ([^/]+).+?\nFT                   /protein_id="(\S+)"',block)
 		fasta_end = self.retrieve_seq(cds_all)
 		return fasta_end
-@jit
+
 class uniprot_parse(object):
 	@jit
 	@classmethod
