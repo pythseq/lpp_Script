@@ -40,7 +40,7 @@ library("goseq")
 DEG<-read.table("%(inp)s", header = FALSE,sep="\\t")
 DEG <-levels(DEG[,1])
 DEG.vector <- t(DEG)
-ALL<-levels(read.table("%(go)s", header = FALSE)[,1])
+ALL<-levels(read.table("%(go)s", header = FALSE,sep="\\t")[,1])
 go <-read.table("%(go)s", header = FALSE,sep="\\t")
 
 ALL.vector<-c(t(ALL))
