@@ -37,11 +37,11 @@ go = options.Go
 end = options.Out
 r_script="""
 library("goseq")
-DEG<-read.table("%(inp)s", header = FALSE,sep="\\t")
+DEG<-read.table("%(inp)s", header = TRUE,sep="\\t")
 DEG <-levels(DEG[,1])
 DEG.vector <- t(DEG)
-ALL<-levels(read.table("%(go)s", header = FALSE,sep="\\t")[,1])
-go <-read.table("%(go)s", header = FALSE,sep="\\t")
+ALL<-levels(read.table("%(go)s", header = TRUE,sep="\\t")[,1])
+go <-read.table("%(go)s", header = TRUE,sep="\\t")
 
 ALL.vector<-c(t(ALL))
 gene.vector=as.integer(ALL.vector%in%DEG.vector)
