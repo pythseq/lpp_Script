@@ -3,61 +3,58 @@
 """
   Author:   --<>
   Purpose: 
-  Created: 2015/11/14
+  Created: 2015/3/16
 """
-
-import os,sys
-from os.path import abspath
-
 from lpp import *
-from optparse import OptionParser
-usage = '''usage: python2.7 %prog -i input_path -t [The type you want]'''
-parser = OptionParser(usage =usage ) 
-parser.add_option("-a", "--Anno", action="store", 
+usage = "python2.7 %prog [options]"
+parser = OptionParser(usage =usage )
+parser.add_option("-o", "--Output", action="store",
+                  dest="OutputPrefix",
+
+                  help="OutputPrefix")
+
+parser.add_option("-g", "--GO", action="store",
+                  dest="ALLGO",
+                  help="AllGO Mapping File")
+
+parser.add_option("-d", "--Diff", action="store",
+                  dest="Diff",
+
+                  help="Gene Different File")
+parser.add_option("-a", "--Annotation", action="store",
                   dest="Anno",
-                  default = 'Anno', 
-                  help="Annotation Table File")
 
-parser.add_option("-p", "--PATH", action="store", 
-                  dest="PATH", 
-                  help="Input Path")
+                  help="Gene Annotation File")
+
+
+parser.add_option("-e", "--Enrich", action="store",
+                  dest="Enrich",
+
+                  help="Gene Enrichment File")
+
+
+
 if __name__ == '__main__':
-    (options, args) = parser.parse_args()
-    ANNO = open(options.Anno,'rU')
-    title_anno = ANNO.next().split("\t",1)[1]
-    annotation_hash  = {}
-    for line in ANNO:
-        unigene,other = line.split("\t",1)
-        annotation_hash[unigene] = other
-        
-        
-    for e_path,paths,files in os.walk(options.PATH):
-        for e_f in files:
-            if e_f.endswith(".go"):
-                
-                condit_name = e_f.split(".")[0]
-                out_path_name = e_path+'/'+condit_name+'/'
-                if not os.path.exists(out_path_name):
-                    os.makedirs(out_path_name)
-                go_gene = Ddict()
-                GO = open(e_path+'/'+e_f,'rU')
-                for line in GO:
-                    line_l = line.strip().split("\t")
-                    go_gene[line_l[-1]][line_l[0]] = ""
-                    
-                END = open(out_path_name+'/'+condit_name+".EnrichGO_Annotation.xls",'w')
-                END.write("GOID\tDescription\tUnigene\t"+title_anno)
-                SIG = open(  e_path+'/'+condit_name+ "_go_enrich.tsv",'rU'  )
-
-                for line in SIG:
-                    line_l = line.split("\t")
-                    go_id,go_name = line_l[0],line_l[-2]
-                    for each_gene in go_gene[go_id]:
-                        out_cache = [ go_id,go_name,each_gene,annotation_hash[each_gene]  ]
-                        END.write('\t'.join(  out_cache  )  )
-                        
-                        
-                        
-                        
-                        
-                        
+	(options, args) = parser.parse_args()
+	
+	#Extract All Differental Gene Annotation
+	all_diff_gene = pd.read_table(options.Diff)
+	all_Annotaion = pd.read_table( options.Anno )
+	all_diff_anno = all_Annotaion[ all_Annotaion["name"].isin( all_diff_gene["id"]  )  ]
+	
+	all_go = pd.read_table( options.ALLGO )
+	all_enrichgo = pd.read_table( options.Enrich )
+	all_enrichgo_gene = all_go[ all_go["GOTerm"].isin( all_enrichgo["category"]  )  ]
+	
+	
+	enrich_go_annotation = pd.DataFrame.merge(
+	    left=all_enrichgo_gene, 
+	    right = all_diff_anno,
+	    left_on = "Gene",
+	    right_on = "Name",
+	    how="inner"
+	    
+	)
+	enrich_go_annotation.to_csv(OutputPrefix+'.Annotation.tsv',sep = "\t",index = False)
+	
+	
