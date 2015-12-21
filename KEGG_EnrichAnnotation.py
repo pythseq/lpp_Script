@@ -55,9 +55,9 @@ if __name__ == '__main__':
         for each_name in name_list:
             p_namelist = re.findall("(map\d{5})", each_name)
             for p_name in p_namelist:
-                DETAIL.write(line_l[0]+'\t'+p_name+'\t'+each_name+'\n')
+                ALL_PATHWAY.write(line_l[0]+'\t'+p_name+'\t'+each_name+'\n')
             
-    DETAIL.close()
+    ALL_PATHWAY.close()
     all_pathway_data = pd.read_table( DETAIL.name ).drop_duplicates()
     all_enriched_pathway  = pd.read_table( DETAIL.Enrich ).drop_duplicates()
     all_enriched_genePathway = all_pathway_data[  all_pathway_data["PathwayID"].isin (all_enriched_pathway["ID"])  ]
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         how="inner"
     
     )    
-    os.remove(DETAIL.name)
+    os.remove(ALL_PATHWAY.name)
     enrich_go_annotation.to_csv(  options.OutputPrefix+"Annotation.tsv",sep='\t',index= False  )
     
     
