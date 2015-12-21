@@ -107,7 +107,7 @@ dev.off()
 		if name in fil_geneHash:
 			LENGTH.write(name+'\t%s\n'%( len(s1) )  )
 			TMP.write(name+'\t'+s1+'\n')
-			SEQ.write(t+s)
+			SEQ.write('>'+name+'\n'+s)
 			BED.write(
 			 '\t'.join(
 			    [
