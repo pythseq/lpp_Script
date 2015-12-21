@@ -40,6 +40,7 @@ if __name__ == '__main__':
 	rpkm_data["max"] = rpkm_data[ rpkm_data.columns[1:]   ].max(1)
 	rpkm_filter = rpkm_data[  rpkm_data["max"] >=thrshold   ]
 	del rpkm_filter["max"]
+	
 	rpkm_filter.to_csv(options.OutputPrefix+'.rpkm',index = False,sep = "\t"   )
 	
 	
@@ -81,7 +82,7 @@ dev.off()
 	old_name = rpkm_filter.columns[1:]
 	new_name = [ "RPKM_"+x for x in old_name    ]
 	changname_hash = dict(zip(old_name,new_name))
-	rpkm_filter.rename( changname_hash, inplace=True  )
+	rpkm_filter.rename( columns= changname_hash, inplace=True  )
 	
 	all_filteredGene = list(rpkm_filter["gene"])
 
@@ -94,7 +95,7 @@ dev.off()
 	old_name = count_has_data.columns[1:]
 	new_name = [ "ReadCount_"+x for x in old_name    ]
 	changname_hash = dict( zip(old_name,new_name) )
-	count_has_data.rename( changname_hash, inplace=True  )	
+	count_has_data.rename(columns= changname_hash, inplace=True  )	
 	
 	TMP = open("%s.tmp"%os.getpid(),'w')
 	TMP.write("gene\tSequence\n")
