@@ -59,7 +59,7 @@ if __name__ == '__main__':
             
     ALL_PATHWAY.close()
     all_pathway_data = pd.read_table( DETAIL.name ).drop_duplicates()
-    all_enriched_pathway  = pd.read_table( DETAIL.Enrich ).drop_duplicates()
+    all_enriched_pathway  = pd.read_table( options.Enrich ).drop_duplicates()
     all_enriched_genePathway = all_pathway_data[  all_pathway_data["PathwayID"].isin (all_enriched_pathway["ID"])  ]
     enrich_go_annotation = pd.merge(
         left=all_enriched_genePathway, 
