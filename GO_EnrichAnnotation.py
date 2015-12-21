@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	all_enrichgo_gene = all_go[ all_go["GOTerm"].isin( all_enrichgo["category"]  )  ]
 	
 	
-	enrich_go_annotation = pd.DataFrame.merge(
+	enrich_go_annotation = pd.merge(
 	    left=all_enrichgo_gene, 
 	    right = all_diff_anno,
 	    left_on = "Gene",
