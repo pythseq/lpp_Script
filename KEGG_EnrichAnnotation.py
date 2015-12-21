@@ -41,7 +41,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     all_diff_gene = pd.read_table(options.Diff)
     annotation_data = pd.read_table( options.Anno  )
-    all_diff_anno = all_Annotaion[ all_Annotaion["Name"].isin( all_diff_gene["id"]  )  ]
+    all_diff_anno = annotation_data[ annotation_data["Name"].isin( all_diff_gene["id"]  )  ]
     
     ALL_PATHWAY = open( "%s"%(os.getpid()) ,'w')
     ALL_PATHWAY.write("Name\tPathwayID\tPathway\n")
