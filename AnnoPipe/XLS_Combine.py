@@ -174,7 +174,8 @@ dev.off()
     all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
     all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
-    all_resultframe = all_resultframe.drop(["from",'id'],axis=1)    
+    all_resultframe = all_resultframe.drop(["from",'id'],axis=1)
+    all_resultframe = all_resultframe.drop_duplicates()
     all_resultframe.to_csv( out_put_path+"All_HasAnnotation.xlsx" ,index=False ,sep='\t'  )
     stat_result["Total"] = [ "Total",len( all_resultframe["Name"]  ) ]
     if options.gff:
