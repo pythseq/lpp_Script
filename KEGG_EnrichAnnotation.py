@@ -70,7 +70,7 @@ if __name__ == '__main__':
     
     )    
     os.remove(ALL_PATHWAY.name)
-    enrich_go_annotation.sort(["PathwayID"])
+    enrich_go_annotation = enrich_go_annotation.sort(["PathwayID"])
     enrich_go_annotation.to_csv(  options.OutputPrefix+".Annotation.tsv",sep='\t',index= False  )
     
     
