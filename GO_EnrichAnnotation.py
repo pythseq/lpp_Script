@@ -55,6 +55,7 @@ if __name__ == '__main__':
 	    how="inner"
 	    
 	)
+	del  enrich_go_annotation["Name"]
 	enrich_go_annotation.to_csv(options.OutputPrefix+'.Annotation.tsv',sep = "\t",index = False)
 	
 	
