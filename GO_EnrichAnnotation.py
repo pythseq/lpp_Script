@@ -40,7 +40,7 @@ if __name__ == '__main__':
 	#Extract All Differental Gene Annotation
 	all_diff_gene = pd.read_table(options.Diff)
 	all_Annotaion = pd.read_table( options.Anno )
-	all_diff_anno = all_Annotaion[ all_Annotaion["name"].isin( all_diff_gene["id"]  )  ]
+	all_diff_anno = all_Annotaion[ all_Annotaion["Name"].isin( all_diff_gene["id"]  )  ]
 	
 	all_go = pd.read_table( options.ALLGO )
 	all_enrichgo = pd.read_table( options.Enrich )
