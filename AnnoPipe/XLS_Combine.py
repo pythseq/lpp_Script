@@ -9,16 +9,24 @@ from Dependcy import *
 from optparse import OptionParser
 import os,string
 def combine_xls( data_list   ):
+    out_frame = pd.read_table(data_list[0]).drop_duplicates()
+
+    for each_data in data_list[1:]:
+
+        new_frame = pd.read_table(each_data).drop_duplicates()
+        on_need = list(out_frame.columns  & new_frame.columns)
+
+        out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
+    return out_frame.drop_duplicates()
+def Rawcombine_xls( data_list   ):
     out_frame = data_list[0].drop_duplicates()
 
     for new_frame in data_list[1:]:
-        # out_frame = rmerge(out_frame, pd.read_table(each_data),on="Name",how="outer")
-        # new_frame = pd.read_table(each_data).drop_duplicates()
+
         on_need = list(out_frame.columns  & new_frame.columns)
-        # print(on_need)
+
         out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
     return out_frame.drop_duplicates()
-
 
 if __name__=="__main__":
     config_hash = Config_Parse()
@@ -170,7 +178,7 @@ dev.off()
         all_result.append(result_frame)
     chrosome_Excel.save()
     
-    all_resultframe = combine_xls(total_excel)
+    all_resultframe = Rawcombine_xls(all_result)
 
     
     all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
