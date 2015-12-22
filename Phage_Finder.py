@@ -52,7 +52,8 @@ if __name__ == '__main__':
 		XLS.write("Name\tBelongToPhage\n")
 		TMP = open(outputname+'.tmp','w')
 		for t,s in fasta_check(  open(outputname+'.seq'   )   ):
-			seq_name,annotation = t[1:].strip().split(' ',1)[0]
+
+			seq_name,annotation = t[1:].strip().split(' ',1)
 			name,genome,phage = seq_name.split(' ',1)[0].rsplit("_",2)
 			XLS.write(name+'\t'+genome+'_'+phage+'\n')
 			TMP.write('>'+name+"__"+genome+'_'+phage+' '+annotation+'\n'+s+'\n')
@@ -60,7 +61,7 @@ if __name__ == '__main__':
 		shutil.move(TMP.name,outputname+".seq")
 		TMP = open(outputname+'.tmp','w')
 		for t,s in fasta_check(  open(outputname+'.pep'   )   ):
-			seq_name,annotation = t[1:].strip().split(' ',1)[0]
+			seq_name,annotation = t[1:].strip().split(' ',1)
 			name,genome,phage = seq_name.split(' ',1)[0].rsplit("_",2)
 			TMP.write('>'+name+"__"+genome+'_'+phage+' '+annotation+'\n'+s+'\n')
 		TMP.close()
