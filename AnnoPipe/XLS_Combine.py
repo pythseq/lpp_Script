@@ -9,13 +9,13 @@ from Dependcy import *
 from optparse import OptionParser
 import os,string
 def combine_xls( data_list   ):
-    out_frame = pd.read_table(data_list[0]).drop_duplicates()
+    out_frame = data_list[0].drop_duplicates()
 
-    for each_data in data_list[1:]:
+    for new_frame in data_list[1:]:
         # out_frame = rmerge(out_frame, pd.read_table(each_data),on="Name",how="outer")
-        new_frame = pd.read_table(each_data).drop_duplicates()
+        # new_frame = pd.read_table(each_data).drop_duplicates()
         on_need = list(out_frame.columns  & new_frame.columns)
-        print(on_need)
+        # print(on_need)
         out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
     return out_frame.drop_duplicates()
 
@@ -154,7 +154,7 @@ dev.off()
     
     
     chrosome_Excel = pd.ExcelWriter(chrosome_dir+'ChorosomeAnnotation.xlsx', engine='xlsxwriter')
-    
+    all_result = []
     for chrosome in chrosome_hash:
         all_excel = []
         for category in chrosome_hash[chrosome]:
@@ -167,6 +167,7 @@ dev.off()
         result_frame =result_frame.sort(["from",'id'],axis=0)
         result_frame = result_frame.drop(["from",'id'],axis=1)        
         result_frame.to_excel( chrosome_Excel,chrosome,index=False    )
+        all_result.append(result_frame)
     chrosome_Excel.save()
     
     all_resultframe = combine_xls(total_excel)
