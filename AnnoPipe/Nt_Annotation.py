@@ -66,3 +66,6 @@ if __name__=="__main__":
 		os.remove( "%s.top1"%(tmp)  )
 
 
+	else:
+		os.remove(tmp+".Bparse")
+		END = open(options.output,'w')
