@@ -12,7 +12,7 @@ def combine_xls( data_list   ):
     out_frame = pd.read_table(data_list[0]).drop_duplicates()
 
     for each_data in data_list[1:]:
-        out_frame = merge(out_frame, pd.read_table(each_data),on="Name",how="outer")
+        out_frame = pd.merge(out_frame, pd.read_table(each_data),on="Name",how="outer")
         new_frame = pd.read_table(each_data).drop_duplicates()
         # on_need = list(out_frame.columns  & new_frame.columns)
         # out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
