@@ -42,9 +42,10 @@ if __name__=="__main__":
 	os.system(""" blastn -db %s -query %s  -num_threads 64 -max_target_seqs 1 -evalue %s  -outfmt  5    >> %s"""% ( Database,options.input,options.evalue,tmp+'.xml'  )   )
 	os.system( "blast_parse.py %s"%(tmp+'.xml') )
 	os.remove(tmp+'.xml')
-	os.system(  "cut_best1.py  -i %s.Bparse -o %s.top1 -f "%( tmp,tmp  )  )
-	os.remove( "%s.Bparse"%(tmp)  )
-	if os.path.getsize(tmp+".top1"):
+	if os.path.getsize(tmp+".Bparse"):
+		os.system(  "cut_best1.py  -i %s.Bparse -o %s.top1 -f "%( tmp,tmp  )  )
+		os.remove( "%s.Bparse"%(tmp)  )
+		
 		dataframe = pd.read_table(  tmp+'.top1'  )
 		dataframe = dataframe.drop("Nt_num",1  )
 		dataframe = dataframe.drop("Nt_num.1",1  )
