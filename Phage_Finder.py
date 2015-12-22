@@ -65,7 +65,7 @@ if __name__ == '__main__':
 			name,genome,phage = seq_name.split(' ',1)[0].rsplit("_",2)
 			TMP.write('>'+name+"__"+genome+'_'+phage+' '+annotation+'\n'+s+'\n')
 		TMP.close()
-		shutil.move(TMP.name,outputname+".seq")		
+		shutil.move(TMP.name,outputname+".pep")		
 		
 		
 		con_data = Ddict()
