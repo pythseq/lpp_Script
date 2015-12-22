@@ -559,7 +559,7 @@ class blast_parse(object):
 	def __init__(self,blast_file,output_file):
 		self.input=iter(block_reading(blast_file,'\s*<Iteration>'))
 		self.output=output_file
-	@jit
+	
 	def parse(self):
 		self.tag=0
 		for key1 in self.input:
