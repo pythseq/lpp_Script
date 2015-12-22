@@ -84,4 +84,4 @@ if __name__ == '__main__':
 			
 	dir_list = glob.glob(outpath+'/*/')
 	for e_dir in dir_list:
-		print(e_dir)
+		shutil.rmtree(e_dir)
