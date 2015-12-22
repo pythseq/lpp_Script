@@ -47,11 +47,26 @@ if __name__ == '__main__':
 			shutil.move(e_f,outputname+'.'+appendix)
 			
 	if os.path.getsize(outputname+'.pep'):
+		
 		XLS = open(outputname+"_PhageGene.xls",'w')
 		XLS.write("Name\tBelongToPhage\n")
+		TMP = open(outputname+'.tmp','w')
 		for t,s in fasta_check(  open(outputname+'.seq'   )   ):
-			name,phage = t[1:].strip().rsplit("_",1)
-			XLS.write(name+'\t'+prefix+'_'+phage+'\n')
+			seq_name,annotation = t[1:].strip().split(' ',1)[0]
+			name,genome,phage = seq_name.split(' ',1)[0].rsplit("_",2)
+			XLS.write(name+'\t'+genome+'_'+phage+'\n')
+			TMP.write('>'+name+"__"+genome+'_'+phage+' '+annotation+'\n'+s+'\n')
+		TMP.close()
+		shutil.move(TMP.name,outputname+".seq")
+		TMP = open(outputname+'.tmp','w')
+		for t,s in fasta_check(  open(outputname+'.pep'   )   ):
+			seq_name,annotation = t[1:].strip().split(' ',1)[0]
+			name,genome,phage = seq_name.split(' ',1)[0].rsplit("_",2)
+			TMP.write('>'+name+"__"+genome+'_'+phage+' '+annotation+'\n'+s+'\n')
+		TMP.close()
+		shutil.move(TMP.name,outputname+".seq")		
+		
+		
 		con_data = Ddict()
 		PHAGEXLS = open(outputname+"_PhageElement.xls",'w')
 		PHAGEXLS.write("Name\tKind\tFunction\tRef_Source\tRef_Start\tRef_Stop\tRef_Frame\tSeq_Nucleotide\tSeq_Nucl_Length\n")
@@ -66,4 +81,6 @@ if __name__ == '__main__':
 	else:
 		README.write("""\n未发现任何前噬菌体序列。\n""")
 			
-	
+	dir_list = glob.glob(outpath+'/*/')
+	for e_dir in dir_list:
+		print(e_dir)
