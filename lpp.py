@@ -9,8 +9,7 @@ from codecs import open
 import string,shutil
 import pandas as pd
 from optparse import OptionParser
-from numba import jit
-@jit
+
 def get_wanted( data,wanted    ):
 	assert isinstance (  data,( dict, Ddict, list ,tuple   )    )
 	end = []
@@ -140,26 +139,22 @@ class SmithWaterman():
 		return self.score
 
 
-@jit
 def overwrite_path( path ):
 	if  os.path.exists(path):
 		shutil.rmtree(path)
 	os.makedirs( path )
 	
-@jit
 def check_path(path):
 	path = os.path.abspath(path)
 	if not os.path.exists(path):
 		os.makedirs( path )
 	return path+'/'
-@jit
 def complement( char ):
 	char = re.sub( '\s+','',char  )
 
 	libary=string.maketrans('atcgATCG','tagcTAGC')
 	end = char[::-1].translate(libary)
 	return end
-
 class fastq_check( object ):
 	class NotFastqError(  ValueError ):
 		pass
@@ -174,10 +169,8 @@ class fastq_check( object ):
 				self.define=line
 
 				break
-		
 	def __iter__( self ):
 		return self
-	@jit
 	def next(self):
 		if not self.define:
 			self.define=self.file_handle.next()
@@ -197,24 +190,20 @@ class fastq_check( object ):
 #			error_message = ' the File %s of  line %s  is not fastq format!!!!  '%( self.filename , self.linenumber-3)  
 #			raise self.NotFastqError, error_message
 class Ddict(defaultdict,dict):
-	@jit
 	def __init__(self):
 		defaultdict.__init__(self, Ddict)
 	def __repr__(self):
 		return dict.__repr__(self)
-
 class File_dict(object):
 	'''file_ddict(file_TAG,options)   options=1,from 2 lines to start,
 	oprions=0 from the first to start
 	'''
-	
 	def __init__(self,FILE_HANDLE,OPTIONS=0):
 		self.__FILE=FILE_HANDLE
 		self.__OPTIONS=OPTIONS
 		self.__HASH={}
 		for i in range(0,self.__OPTIONS):
 			self.file.next()
-	@jit	
 	def read(self,NUMBER_1,NUMBER_2):
 		assert isinstance(NUMBER_1,int);assert isinstance(NUMBER_2,int)
 		for _line in self.__FILE:
@@ -228,9 +217,7 @@ class File_Ddict(object):
 	'''file_ddict(file_TAG,options)   options=1,from 2 lines to start,
 	oprions=0 from the first to start
 	'''
-	
 	@staticmethod
-	@jit
 	def check( cache_hash ):
 		cache_exec = {'':''}
 		def creep( i ):
@@ -250,7 +237,6 @@ class File_Ddict(object):
 			self.file.next()
 		self.hash=Ddict()
 	'''number_1 the first value's number '''   		
-	@jit
 	def read(self,*number_list):
 		number_list=[key1-1 for key1 in number_list]
 		for key1 in  number_list:
@@ -274,15 +260,12 @@ class File_Ddict(object):
 				exec( 'self.hash%s=\'\''%( key1 ) )
 
 		return self.hash
-
 class block_reading(object):
 	def __init__(self,file_handle,tag):
 		self.file=iter(file_handle)
 		self.tag=tag
-	@jit	
 	def __iter__(self):
 		return self
-	@jit
 	def next(self):
 		self.container=[]
 		for line in self.file:
@@ -294,9 +277,7 @@ class block_reading(object):
 		if not self.container:
 			raise StopIteration
 		return self.container
-
 class fasta_check(object):
-	@jit
 	def __init__(self,file_handle):
 		assert isinstance( file_handle,file ),'The Input paramater must be a File Handle'
 		self.file=iter(file_handle)
@@ -304,10 +285,8 @@ class fasta_check(object):
 			if line[0]=='>':
 				self.define=line
 				break
-	@jit
 	def __iter__(self):
 		return self
-	@jit
 	def next(self):
 		if not self.define:
 			raise StopIteration
@@ -323,7 +302,6 @@ class fasta_check(object):
 				break
 		s=''.join(s)
 		return (name,s)
-@jit
 def static(RAW):
 	dom=parse(RAW)
 	all_kinds_element=[]
@@ -335,14 +313,12 @@ def static(RAW):
 		element[element_name]=''
 	del element['#text']
 	return element,dom
-@jit
 def kill(name):
 	import re
 	name=re.sub('#','',name)
 	name=re.sub('\t',';',name)
 	name=re.sub('\n',';',name)
 	return name
-@jit
 def getx(node):
 	if node.hasAttribute('rdf:ID'):
 		name=node.getAttribute('rdf:ID')
@@ -357,7 +333,6 @@ def getx(node):
 			name=''
 	name=kill(name)
 	return name
-@jit
 def extract(element,dom):
 	for node in element:
 		file=re.sub('bp:','',node)
@@ -440,7 +415,6 @@ class dom_nomal_parse(object):
 #            STATIC.write(name+'\t'+node_length+'\n')
 		end=extract(self.nodes_list,self.dom)
 '''______________________________humancyc parse____________________________________________________________'''
-
 def manipulate(file):
 	def static(dom):
 		hash={}
@@ -554,12 +528,10 @@ class dom_confusing_parse(object):
 		self.file_name=file_name
 	def parse(self):
 		manipulate(self.file_name)
-
 class blast_parse(object):
 	def __init__(self,blast_file,output_file):
 		self.input=iter(block_reading(blast_file,'\s*<Iteration>'))
 		self.output=output_file
-	
 	def parse(self):
 		self.tag=0
 		for key1 in self.input:
@@ -619,11 +591,8 @@ class EMBL_nul_seq(object):
 		cds_all = re.findall('\nFT   CDS             ([^/]+).+?\nFT                   /protein_id="(\S+)"',block)
 		fasta_end = self.retrieve_seq(cds_all)
 		return fasta_end
-
 class uniprot_parse(object):
-	
 	@classmethod
-	@jit
 	def seq_manup(cls,seq):
 		seq = re.sub('\W+','',seq)
 		seq = re.sub('(\w{60})',r'\1\n',seq)
@@ -656,9 +625,7 @@ class uniprot_parse(object):
 			self.seq = seq
 		return self
 class GBK_nul_seq(object):
-	
 	@classmethod
-	@jit
 	def complement(cls,char):
 		libary=string.maketrans('atcgATCG','tagcTAGC')
 		return char[::-1].translate(libary)
@@ -704,7 +671,6 @@ class GBK_nul_seq(object):
 
 		return fasta_end,all_protein_seq
 
-@jit
 def get_taxon_seed( taxon_number ):
 	all_end={}
 	def creeper(taxon_number):
@@ -729,7 +695,6 @@ def K_Mer( string,length=4  ):
 	return all_kmer , k_mer_hash
 
 
-@jit
 def Redis_trans(data_hash):
 	out_data = ""
 	if type(data_hash)==type(Ddict()):
