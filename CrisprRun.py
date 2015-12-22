@@ -232,7 +232,9 @@ if __name__ == '__main__':
     ## SPACE NT ALignment ##
     os.system( "Nt_Annotation.py  -i  %s -o  %s_NtAlign.tsv  -e 1e-5 "%(SPACER_SEQ.name,outputprefix)  )
     space_raw_frame = pd.read_table(SPACER_TSV.name)
-    space_anno_frame = pd.read_table(   "%s_NtAlign.tsv" %(  outputprefix )    )
-    space_new_frame = pd.DataFrame.merge(  space_raw_frame, space_anno_frame,left_on="Name",right_on="Name",how='outer'  )
-    space_new_frame.to_csv( SPACER_TSV.name,sep="\t",index=False    )
-    
+    if os.path.getsize(  "%s_NtAlign.tsv" %(  outputprefix )   ):
+        space_anno_frame = pd.read_table(   "%s_NtAlign.tsv" %(  outputprefix )    )
+        space_new_frame = pd.DataFrame.merge(  space_raw_frame, space_anno_frame,left_on="Name",right_on="Name",how='outer'  )
+        space_new_frame.to_csv( SPACER_TSV.name,sep="\t",index=False    )
+    else:
+        space_raw_frame.to_csv( SPACER_TSV.name,sep="\t",index=False )
