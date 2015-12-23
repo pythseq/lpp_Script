@@ -145,7 +145,6 @@ temp = venn.diagram(
 	cat.col = c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3"),
 	cat.cex = 1,
 
-	ind = TRUE
 	) 
 pdf("%s")
 grid.draw(temp)    
