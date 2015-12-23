@@ -57,7 +57,7 @@ if __name__ == '__main__':
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     kind = options.kind.lower()
     general_config.read(
-        os.path.join( path+"database.ini.ini")
+        os.path.join( path+"database.ini")
     )     
     db_has = general_config.has_option("Redis", kind)
     if db_has:
