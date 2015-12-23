@@ -44,13 +44,13 @@ if __name__ == '__main__':
 		unique = {}
 
 		if gene_nog.count()>1:
-			gene_nog = gene_nog[0]
+			gene_nog = gene_nog.first()
 		for each_gene_nog in gene_nog:
 			
 			description = NOG_des.select(NOG_des.q.Name==each_gene_nog.NOG)[0].Description
 			nog_cat = [NOG_CAT.select( NOG_CAT.q.NOG==each_gene_nog.NOG  )[0]]
 			for each_cat in nog_cat:
-				cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  )
+				cat_anno = CAT_DES.select(CAT_DES.q.Abb==each_cat.Cat  ).first()
 				
 				for each_anno in cat_anno:
 					TMP.write(line_l[0]+"\t"+each_gene_nog.NOG+'\t'+description+'\t'+each_cat.Cat+'\t'+each_anno.Description.strip()+' [%s]\n'%(each_cat.Cat))
