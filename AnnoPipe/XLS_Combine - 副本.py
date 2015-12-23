@@ -135,18 +135,19 @@ temp = venn.diagram(
 
     VENN_R.write("""),
     filename = NULL,
-
-	fill = c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3"),
+	col = "black",
+	lty = "solid",
+	lwd = 4,
+	fill = c("cornflowerblue", "green", "yellow", "darkorchid1"),
 	alpha = 0.50,
 	label.col = c("orange", "white", "darkorchid4", "white", "white", "white", "white", "white", "darkblue", "white", "white", "white", "white", "darkgreen", "white"),
-	cex = c(1.5, 1.5, 1.5, 1.5, 1.5, 1, 0.8, 1, 0.8, 1, 0.8, 1, 0.8, 1, 0.8, 
-    1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 1, 1, 1, 1, 1.5),
-	margin = 0.05,
-	cat.col = c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3"),
+	cex = 2.5,
+	fontfamily = "serif",
+	fontface = "bold",
+	cat.col = c("darkblue", "darkgreen", "orange", "darkorchid4"),
 	cat.cex = 2.5,
-	margin = 0.05,
-	ind = TRUE
-	) 
+	cat.fontfamily = "serif"
+	)    
 pdf("%s")
 grid.draw(temp)    
 dev.off()    
