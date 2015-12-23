@@ -106,8 +106,8 @@ GeneFeature+Annotation.xlsx	注释的基因信息和基因序列等信息的总�
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
         result_frame.to_excel( category_Excel,category ,index=False   )
-        if category!="Nt":
-            database_data[category] = result_frame["Name"]
+        # if category!="Nt":
+        database_data[category] = result_frame["Name"]
     category_Excel.save()
     VENN_R = open( category_dir+"/Draw.R",'w'   )
     VENN_R.write(
