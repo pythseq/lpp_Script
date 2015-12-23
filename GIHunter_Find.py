@@ -59,6 +59,20 @@ if __name__ == '__main__':
     if os.path.exists(output_path+'GIV/'):
         shutil.rmtree( output_path+'GIV/'  )
     #Prepare OUTPUT
+    README = open( output_path+'Readme.txt','w' )
+    README.write("""
+使用GIHunter（http://www5.esu.edu/cpsc/bioinfo/software/GIHunter/）预测基因岛的结果
+*_GIs.txt		GIHunter预测的原始结果（如果没发现基因岛的话，该文件为空）
+*_GI.xls		基因岛的明细信息
+Genome1_GI.stat	基因岛的长度统计信息
+*_GIProtein.faa	基因岛内包含的蛋白质序列
+*_GIGene.ffn		基因岛内包含的基因序列
+*_GI.fa			基因岛完整序列
+*_GI_Component.xls	基因岛包含基因的明细信息
+    
+    
+    
+    """)
     GISTAT =  open( output_path+Outprefix+'_GI.stat','w' )
     GISTAT.write( "\tName\tFrom\tEnd\tLength\n"    )
     GISEQ = open(output_path+Outprefix+'_GI.fa','w')

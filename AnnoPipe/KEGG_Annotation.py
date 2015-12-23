@@ -149,6 +149,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
         }
     )    
     os.system(make_commandline)
+    os.remove( config_hash["Utils"]["gapmap"]+'/'+tag )
 
 
 
