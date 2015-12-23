@@ -42,7 +42,8 @@ if __name__ == '__main__':
 		query = line_l[0].split()[0]
 		gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith(cog))   )
 		unique = {}
-		if len(gene_nog)>1:
+
+		if gene_nog.count()>1:
 			gene_nog = gene_nog[0]
 		for each_gene_nog in gene_nog:
 			
