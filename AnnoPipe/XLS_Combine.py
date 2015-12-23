@@ -138,13 +138,13 @@ temp = venn.diagram(
 
 	fill = c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3"),
 	alpha = 0.50,
-	label.col = c("orange", "white", "darkorchid4", "white", "white", "white", "white", "white", "darkblue", "white", "white", "white", "white", "darkgreen", "white"),
+
 	cex = c(1.5, 1.5, 1.5, 1.5, 1.5, 1, 0.8, 1, 0.8, 1, 0.8, 1, 0.8, 1, 0.8, 
     1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 1, 1, 1, 1, 1.5),
 	margin = 0.05,
 	cat.col = c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3"),
-	cat.cex = 2.5,
-	margin = 0.05,
+	cat.cex = 1,
+
 	ind = TRUE
 	) 
 pdf("%s")
