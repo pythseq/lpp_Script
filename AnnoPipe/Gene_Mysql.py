@@ -111,5 +111,11 @@ if __name__ == '__main__':
         print(" -k must be one of %s"%(", ".join(data_has.keys())))
         sys.exit()
     table = data_has[kind]
-    print( table.sqlmeta.table)
+    TMP = open("%s.tmp"%(os.getpid()) ,'w')
+    for t,s in fasta_check(  open(options.Input,'rU')  ):
+        t = t[1:].strip()
+        length = str( len(  re.sub( "\s+","",s  )    )  )
+        annotaton =t 
+        name = t.split()[0]
+        TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
     load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
