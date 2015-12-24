@@ -63,7 +63,6 @@ if __name__ == '__main__':
 	data_hash2.update(data_hash1)
 	data_hash = data_hash2	
 	
-	print(data_hash)
 	if not nuclseq:
 		nuclseq = proteinseq
 	elif not proteinseq:

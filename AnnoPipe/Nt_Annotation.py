@@ -27,7 +27,7 @@ if __name__=="__main__":
                       help="evalue cutoff")
 	(options, args) = parser.parse_args() 
 	path = os.path.split(os.path.abspath(__file__) )[0]+'/'
-	databaseconf = path+'../database.ini'
+	databaseconf = path+'/database.ini'
 	general_config = ConfigParser()
 	general_config.read(
         databaseconf
