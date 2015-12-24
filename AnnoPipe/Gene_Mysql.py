@@ -118,5 +118,5 @@ if __name__ == '__main__':
         annotaton =t 
         name = t.split()[0]
         TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
-    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
+    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(TMP.name,table.sqlmeta.table )
     os.system(mysql_connection+load_rela_script)
