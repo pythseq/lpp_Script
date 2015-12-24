@@ -119,3 +119,4 @@ if __name__ == '__main__':
         name = t.split()[0]
         TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
     load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
+    os.system(load_rela_script)
