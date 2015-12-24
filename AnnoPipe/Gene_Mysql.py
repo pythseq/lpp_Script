@@ -111,4 +111,5 @@ if __name__ == '__main__':
         print(" -k must be one of %s"%(", ".join(data_has.keys())))
         sys.exit()
     table = data_has[kind]
-    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,SwissProt.sqlmeta.table )
+    print( table.sqlmeta.table)
+    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
