@@ -24,7 +24,7 @@ class SwissProt(SQLObject):
 
 class eggNOG( SQLObject  ):
     class sqlmeta:
-        table="eggNOg"
+        table="eggNOG"
     Name = StringCol(length=400,unique=True)
     Annotation = StringCol()
     Length = IntCol()
@@ -33,7 +33,7 @@ class eggNOG( SQLObject  ):
     
 class Nr( SQLObject  ):
     class sqlmeta:
-        table="eggNOg"
+        table="Nr"
     Name = StringCol(length=400,unique=True)
     Annotation = StringCol()
     Length = IntCol()
@@ -41,7 +41,7 @@ class Nr( SQLObject  ):
     
 class KEGG( SQLObject  ):
     class sqlmeta:
-        table="eggNOg"
+        table="KEGG"
     Name = StringCol(length=400,unique=True)
     Annotation = StringCol()
     Length = IntCol()
@@ -88,7 +88,7 @@ if __name__ == '__main__':
                       help="Kind")
 
     (options, args) = parser.parse_args()
-  
+    
 
     
     
