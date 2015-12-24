@@ -9,6 +9,7 @@ import sys,shlex,os,subprocess
 from ConfigParser import ConfigParser
 import redis
 import tempfile
+from Gene_Mysql import *
 from  termcolor import colored
 from lpp import *
 from optparse import OptionParser
@@ -32,6 +33,7 @@ parser.add_option("-d", "--Database", action="store",
                   dest="Database",
                   default = "" ,
                   help="Database Location")
+
 parser.add_option("-e", "--Evalue", action="store",
                   dest="Evalue",
 
@@ -53,6 +55,15 @@ parser.add_option("-v", "--Version", action="store_true",
                   help="show Database Version",
 
                   )
+db_table = {
+    "kegg":KEGG,
+    "nr":Nr,
+    "eggnog":eggNOG,
+    "swissprot":SwissProt
+
+
+}
+
 
 if __name__=="__main__":
     (options, args) = parser.parse_args()
@@ -69,7 +80,7 @@ if __name__=="__main__":
             print(dbname+'\t'+dbver)
         sys.exit()    
     dbname = options.dbname.lower()
-    db_has = general_config.has_option("Redis", dbname)
+
     Database = options.Database
     
     if Database:
@@ -90,9 +101,10 @@ if __name__=="__main__":
     if not os.path.exists( Database+ '.dmnd'    ):
         print( colored("Diamond %s is not Found"%(Database),"red")   )
         sys.exit()
-    if db_has:
-        db_number = general_config.get("Redis", dbname)   
-        r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
+    db_has = ""
+    if dbname in db_table:
+        db_has = dbname
+        SQLDB = db_table[dbname]
     if dbname =="kegg":
         dbname ="KEGG"
     else:
@@ -133,7 +145,7 @@ if __name__=="__main__":
     commandline = """ diamond  view  -a  %s  """%(temp_align_result)
     align_result = os.popen(commandline) 
     has_hash = {}
-    if not db_has:
+    if  not db_has:
         
         
         align_title_list = ["Name","Hit","Identity","AlignmentLength","Mismatch","Gap","Alignment_Frame","QueryLength","QueryCoverage","QueryStart","QueryEnd","SubjStart","SubjEnd","Evalue","Bitscore"]
@@ -181,15 +193,15 @@ if __name__=="__main__":
             has_hash[ line_l[0] ] = ""            
             subj = line_l[1]
 
-            subj_r = r.hgetall(subj)
+            subj_r = SQLDB.selectBy(Name = subj)
             subj_length = ""
             subj_coverage = ""
             aln_length  = float( line_l[3] )
             subjaln_length = abs(int(line_l[9]) - int(line_l[8] ) ) +1
-            if subj_r:
+            if subj_r.count():
                 
-                subj = subj_r["Annotation"]
-                subj_length = subj_r["Length"]
+                subj = subj_r[0].Annotation
+                subj_length = subj_r[0].Length
                 subj_coverage = "(%.0f/%s) %.2f"%( subjaln_length ,subj_length ,100*subjaln_length/float(subj_length) )
                 
             line_l[1] = subj
