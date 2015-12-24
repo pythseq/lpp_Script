@@ -204,12 +204,12 @@ if __name__ == '__main__':
             seq_data_hash[t_name]["Annotation"] = t_name
             s1 = re.sub("\s+", '', s)
             #seq_data_hash[t_name]["Seq"] = s1
-            seq_data_hash[t_name]["Length"] = str(len(s1))
-            TMP.write(t_name+'\t'+str(len(s1))+'\n')
+            # seq_data_hash[t_name]["Length"] = str(len(s1))
+            TMP.write(t_name+'\t'+t_name+'\t'+str(len(s1))+'\n')
     TMP.close()
-    load_rela_script = """-e 'load data local infile   "%s" into table eggNOG_GENE (gene,length);'"""%(TMP.name)
-    os.system( mysql_connection+load_des_script   )
+    # load_rela_script = """-e 'load data local infile   "%s" into table eggNOG_GENE (gene,length);'"""%(TMP.name)
+    # os.system( mysql_connection+load_rela_script   )
     DB_FILE.write(Redis_trans(seq_data_hash))
-    os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
+    # os.system( "cat %s | redis-cli -n %s --pipe"%(  DB_FILE.name,db_number  ))
     
     

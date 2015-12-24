@@ -66,7 +66,7 @@ def get_or_create(model, **kwargs):
 user = "root"
 password = "gass_1985"
 mysql_connection = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 Annotation "%(user,password)
-mysql_build = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 "%(user,password)
+# mysql_build = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 "%(user,password)
 connection_string = 'mysql://%s:%s@192.168.0.10/Annotation'%(user,password)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
@@ -119,4 +119,4 @@ if __name__ == '__main__':
         name = t.split()[0]
         TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
     load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
-    os.system(load_rela_script)
+    os.system(mysql_connection+load_rela_script)
