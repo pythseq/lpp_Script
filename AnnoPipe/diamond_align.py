@@ -201,7 +201,7 @@ if __name__=="__main__":
             if subj_r.count():
                 
                 subj = subj_r[0].Annotation
-                subj_length = subj_r[0].Length
+                subj_length = str(subj_r[0].Length)
                 subj_coverage = "(%.0f/%s) %.2f"%( subjaln_length ,subj_length ,100*subjaln_length/float(subj_length) )
                 
             line_l[1] = subj
