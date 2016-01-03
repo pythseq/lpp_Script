@@ -21,19 +21,17 @@ if __name__=="__main__":
 	parser.add_option("-o", "--end", action="store", 
                       dest="output", 
                       help="output")
+	parser.add_option("-d", "--Database", action="store", 
+	                  dest="database", 
+	                  help="database")	
 
 	parser.add_option("-e", "--evalue", action="store", 
                       dest="evalue", 
                       help="evalue cutoff")
 	(options, args) = parser.parse_args() 
-	path = os.path.split(os.path.abspath(__file__) )[0]+'/'
-	databaseconf = path+'/database.ini'
-	general_config = ConfigParser()
-	general_config.read(
-        databaseconf
-    )	
 
-	Database = general_config.get("Location", "nt")
+
+	Database = options.database
 	temp_name = str(os.getpid())
 	base_path = os.path.split(os.path.abspath(options.output))[0]+'/'
 	if not os.path.exists(base_path):
