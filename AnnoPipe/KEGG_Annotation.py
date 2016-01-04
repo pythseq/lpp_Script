@@ -28,6 +28,10 @@ if __name__=="__main__":
     parser.add_option("-e", "--evalue", action="store", 
                       dest="evalue", 
                       help="evalue cutoff")
+    parser.add_option("-k", "--ko", action="store_true", 
+                      dest="KO", 
+                      default=False,
+                      help="evalue cutoff")    
 
 
 
@@ -66,7 +70,11 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     if not proteinseq:
         proteinseq = options.NUL
         
-    error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
+    if options.KO:
+        error = RunDiamond(proteinseq,options.evalue, blast_type,"ko",diamond_result)
+    else:
+        
+        error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
     #error=""
     if error:
         print( colored("%s 's KEGG process in Diamond of kegg is error!!","red") )
