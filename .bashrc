@@ -194,5 +194,7 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/
 export CLASSPATH=$JAVA_HOME/bin
 export PERl5LIB=$PERl5LIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/
 export PERLLIB=$PERLLIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/:/pub/SOFTWARE/Other/PhageFinder/lib
-export PATH=$PATH:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin
+export PATH=$PATH:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin:/usr/bin/
 export DISPLAY=:0
+
+source activate LPP
