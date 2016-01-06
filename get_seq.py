@@ -33,8 +33,10 @@ parser.add_option("-o", "--OUTPUT", action="store",
 
 FASTA = fasta_check(  open( options.fasta,'rU'  )   )
 
-
-all_name = File_Ddict(  open( options.list,'rU'   )   ).read( options.number , options.number   )
+all_name = {}
+for line in open( options.list,'rU'   ) :
+	all_name[  line.split()[0]    ] = ""
+# all_name = File_Ddict(  open( options.list,'rU'   )   ).read( options.number , options.number   )
 all_have = {}
 END = open( options.output ,'w' )
 for t,s in FASTA:
