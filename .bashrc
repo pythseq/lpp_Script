@@ -143,7 +143,7 @@ export PATH=$PATH:/pub/SOFTWARE/Other/MUMmer3.23
 export PATH=$PATH:/pub/SOFTWARE/Other/inparanoid_4.1
 
 ###################Zipper############################
-export PATH=$PATH:/home/lpp/Project/Zipper_addtion/Zipper_v2:/pub/SOFTWARE/Other/blat_binary
+export PATH=$PATH:/home/lpp/Project/Zipper:/pub/SOFTWARE/Other/blat_binary
 #################sra_tools##############################
 export PATH=$PATH:/pub/SOFTWARE/Other/sratoolkit.2.3.2-5-ubuntu64/bin:/pub/SOFTWARE/Other/stampy-1.0.23
 ###################RECON##############################
