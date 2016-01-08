@@ -37,6 +37,8 @@ if __name__=="__main__":
 
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )
+	if os.path.exists(out_put_path+'/stats.pdf'):
+		sys.exit()
 	README = open(out_put_path+"Readme.txt",'w')
 	README.write(
 """

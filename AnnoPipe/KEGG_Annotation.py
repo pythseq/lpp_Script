@@ -46,6 +46,9 @@ if __name__=="__main__":
     tag = "%s"%( os.getpid() )
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
+    end_list = glob.glob(out_put_path+'/*.tar.gz')
+    if end_list:
+        sys.exit()
     README = open(out_put_path+"/Readme.txt",'w')
     README.write(
 """

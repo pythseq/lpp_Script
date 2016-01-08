@@ -33,7 +33,9 @@ if __name__=="__main__":
 	blast_type = Nul_or_Protein(sequence)
 	output_prefix = os.path.abspath(  options.output_prefix )
 	out_put_path = os.path.split(output_prefix)[0]+'/'
-	
+	end_list= glob.glob(out_put_path+'/*.xls')
+	if end_list:
+		sys.exit()
 
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )
