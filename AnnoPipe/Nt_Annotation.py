@@ -9,7 +9,7 @@ from optparse import OptionParser
 import os
 import pandas as pd
 from ConfigParser import ConfigParser
-import glob
+import glob,sys
 
 if __name__=="__main__":
 	usage = '''usage: python2.7 %prog'''
