@@ -10,10 +10,11 @@ from optparse import OptionParser
 import os,string
 def combine_xls( data_list   ):
     out_frame = pd.read_table(data_list[0]).drop_duplicates()
-
+    out_frame = out_frame.where((pd.notnull(out_frame)), None)
     for each_data in data_list[1:]:
-
+        
         new_frame = pd.read_table(each_data).drop_duplicates()
+        new_frame = new_frame.where((pd.notnull(new_frame)), None)
         on_need = list(out_frame.columns  & new_frame.columns)
 
         out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
