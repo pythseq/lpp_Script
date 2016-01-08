@@ -56,7 +56,7 @@ if __name__ == '__main__':
     
     
     """)
-    ALN = open( outputprefix+".xls",'w'  )
+    
     url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
     values = {
         "Programe":"blastn",
@@ -108,6 +108,7 @@ if __name__ == '__main__':
             result = re.search("Normal view</a></font><br>(.*)</form>",end_output,re.DOTALL)
         result = result.group(1)
         if result:
+            ALN = open( outputprefix+".xls",'w'  )
             STAT.write("IS_name\tNumber\tAverage.Length\n")
 
             ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
@@ -140,7 +141,6 @@ if __name__ == '__main__':
                 out_data.extend(line_l[2:])
                 ALN.write("\t".join(out_data)+'\n')
         else:
-            # ALN.write( "Not Find IS!!" )
             STAT.write(  "Not Find IS!!"  )			
     except Exception,error:
         print(error)
