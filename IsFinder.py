@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 out_data.extend(line_l[2:])
                 ALN.write("\t".join(out_data)+'\n')
         else:
-            ALN.write( "Not Find IS!!" )
+            # ALN.write( "Not Find IS!!" )
             STAT.write(  "Not Find IS!!"  )			
     except Exception,error:
         print(error)
