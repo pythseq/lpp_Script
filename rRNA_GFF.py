@@ -65,7 +65,7 @@ if __name__ == '__main__':
 	            data_list[-1]
 	        )
 	    )	
-		sequence = all_seq[ scaffold ][ int(line_l[3]):int( line_l[4])   ]
+		sequence = all_seq[ scaffold ][ int(data_list[3]):int( data_list[4])   ]
 		if data_list[6]=='-':
 			sequence = complement(sequence)
 		SEQ.write(sequence+'\n')
