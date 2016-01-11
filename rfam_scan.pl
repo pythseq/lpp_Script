@@ -278,7 +278,7 @@ sub run_infernal_search {
     }
 
 #    system "cmsearch $options $cmfile $fafile > /tmp/$$.res" and die;
-    system "cmsearch --tabfile /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
+    system "cmsearch --cpu 64 --tabfile /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
 #    system "cat /tmp/$$.res";
     return ("/tmp/$$.res", "/tmp/$$.cmsearch");
 }
