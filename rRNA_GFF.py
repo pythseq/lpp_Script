@@ -53,22 +53,22 @@ if __name__ == '__main__':
 	    )			
 		SEQ.write( '>'+mrna_id+'\n'   )
 		exon_num = 0
-		if int(data_list.IntronBegin) ==0:
-			exon_num+=1
-			exon_id = mrna_id+'.exon%s'%(exon_num)
-			GFF.write(
-		        "%s\tID=%s;Parent=%s;Name=%s;product=%s\n"%(
-		            scaffold,
-		            exon_id,
-		            mrna_id,
-		            exon_id,
-		            data_list[-1]
-		        )
-		    )	
-			sequence = all_seq[ scaffold ][ int(line_l[3]):int( line_l[4])   ]
-			if data_list[6]=='-':
-				sequence = complement(sequence)
-			SEQ.write(sequence+'\n')
+		
+		exon_num+=1
+		exon_id = mrna_id+'.exon%s'%(exon_num)
+		GFF.write(
+	        "%s\tID=%s;Parent=%s;Name=%s;product=%s\n"%(
+	            scaffold,
+	            exon_id,
+	            mrna_id,
+	            exon_id,
+	            data_list[-1]
+	        )
+	    )	
+		sequence = all_seq[ scaffold ][ int(line_l[3]):int( line_l[4])   ]
+		if data_list[6]=='-':
+			sequence = complement(sequence)
+		SEQ.write(sequence+'\n')
 			
 				
 	
