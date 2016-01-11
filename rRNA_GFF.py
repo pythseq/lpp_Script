@@ -19,12 +19,14 @@ if __name__ == '__main__':
 	GFF  = open( sys.argv[3],'w')
 	SEQ = open(sys.argv[4],'w')
 	for line in RAW:
-		print(line)
+		
 		if line.startswith("# --------"):
 			break
 		
 	all_has = {}
 	for line in RAW:
+		if line.startswith("# --------"):
+			break		
 		data_list =line.strip().split("\t")
 		scaffold = data_list[0]
 		
