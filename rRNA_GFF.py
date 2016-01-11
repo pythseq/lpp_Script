@@ -38,8 +38,9 @@ if __name__ == '__main__':
 		gene_id = scaffold +'.rRNA.TU.%s'%( all_has[ scaffold ] )
 		
 		mrna_id = scaffold +'.rRNA.%s'%( all_has[ scaffold ] )
-		
+		data_list[2]="gene"
 		data_prefix = "\t".join(data_list[:-1])
+		
 		GFF.write(
 	        "%s\tID=%s;Name=%s\n"%(
 		        data_prefix,
@@ -47,7 +48,8 @@ if __name__ == '__main__':
 	            gene_id
 	        )
 	               )
-		
+		data_list[2]="rRNA"
+		data_prefix = "\t".join(data_list[:-1])		
 		GFF.write(
 	        "%s\tID=%s;Parent=%s;Name=%s;product=%s\n"%(
 		        data_prefix,
@@ -62,7 +64,7 @@ if __name__ == '__main__':
 		
 		exon_num+=1
 		exon_id = mrna_id+'.exon%s'%(exon_num)
-		data_list[2]="rRNA"
+		data_list[2]="exon"
 		data_prefix = "\t".join(data_list[:-1])
 		GFF.write(
 	        "%s\tID=%s;Parent=%s;Name=%s;product=%s\n"%(
