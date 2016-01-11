@@ -25,7 +25,8 @@ if __name__ == '__main__':
 	all_has = {}
 	for line in RAW:
 		data_list =trnatuple(line[:-1].split("\t") )
-		begin = data_list.Begin, end = data_list.End
+		begin = data_list.Begin
+		end = data_list.End
 		intrbeg = data_list.IntronBegin
 		intrend = data_list.IntronEnd
 		if int(begin)>int(end):
