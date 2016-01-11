@@ -34,7 +34,7 @@ if __name__ == '__main__':
 			all_has[scaffold]+=1
 		else:
 			all_has[scaffold]=1
-		data_prefix = "\t".join(data_list[:-1])
+
 		gene_id = scaffold +'.rRNA.TU.%s'%( all_has[ scaffold ] )
 		
 		mrna_id = scaffold +'.rRNA.%s'%( all_has[ scaffold ] )
