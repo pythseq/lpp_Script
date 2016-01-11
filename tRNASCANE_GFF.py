@@ -41,7 +41,7 @@ if __name__ == '__main__':
 			else:
 				all_has[data_list.scaffold]=1
 			gene_id = data_list.scaffold +'.tRNA.TU.%s'%( all_has[ data_list.scaffold ] )
-			mrna_id = ata_list.scaffold +'.tRNA.%s'%( all_has[ data_list.scaffold ] )
+			mrna_id = data_list.scaffold +'.tRNA.%s'%( all_has[ data_list.scaffold ] )
 			GFF.write(
 			    "%s\ttRNAscan-SE\tgene\t%s\t%s\t.\t%s\t.\tID=%s;Name=%s\n"%(
 			        data_list.scaffold,
