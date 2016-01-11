@@ -19,7 +19,7 @@ if __name__ == '__main__':
 	GFF  = open( sys.argv[3],'w')
 	SEQ = open(sys.argv[4],'w')
 	for line in RAW:
-		if line.startswith("---"):
+		if line.startswith("# --------"):
 			break
 
 	all_has = {}
