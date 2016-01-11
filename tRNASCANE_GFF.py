@@ -12,7 +12,7 @@ all_seq = {}
 
 if __name__ == '__main__':
 	for t,s in fasta_check( open(sys.argv[1],'rU')  ):
-		s1 = re.sub("\s+", "", string)
+		s1 = re.sub("\s+", "", s)
 		all_seq[ t[1:].split()[0]   ] = s1
 		
 	RAW = open(sys.argv[2],'rU')
