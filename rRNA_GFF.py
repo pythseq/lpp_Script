@@ -69,7 +69,6 @@ if __name__ == '__main__':
 		GFF.write(
 	        "%s\tID=%s;Parent=%s;Name=%s;product=%s\n"%(
 		        data_prefix,
-	            scaffold,
 	            exon_id,
 	            mrna_id,
 	            exon_id,
