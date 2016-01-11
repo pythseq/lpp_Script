@@ -48,7 +48,7 @@ if __name__ == '__main__':
 	            mrna_id,
 	            gene_id,
 	            mrna_id,
-	            line_l[-1]
+	            data_list[-1]
 	        )
 	    )			
 		SEQ.write( '>'+mrna_id+'\n'   )
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 		            exon_id,
 		            mrna_id,
 		            exon_id,
-		            line_l[-1]
+		            data_list[-1]
 		        )
 		    )	
 			sequence = all_seq[ scaffold ][ int(line_l[3]):int( line_l[4])   ]
