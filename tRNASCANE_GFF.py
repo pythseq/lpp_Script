@@ -21,7 +21,7 @@ if __name__ == '__main__':
 	for line in RAW:
 		if line.startswith("---"):
 			break
-	trnatuple = namedtuple("scaffold","Number","Begin","End","type","codon","IntronBegin","IntronEnd","Score")._make
+	trnatuple = namedtuple("Name","scaffold,Number,Begin,End,type,codon,IntronBegin,IntronEnd,Score")._make
 	all_has = {}
 	for line in RAW:
 		data_list =trnatuple(line[:-1].split("\t") )
