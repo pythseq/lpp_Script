@@ -13,7 +13,7 @@ all_seq = {}
 if __name__ == '__main__':
 	for t,s in fasta_check( open(sys.argv[1],'rU')  ):
 		s1 = re.sub("\s+", "", s)
-		all_seq[ t[1:].split()[0]   ] = s1
+		all_seq[ t[1:].split()[0].split("|")[0]   ] = s1
 		
 	RAW = open(sys.argv[2],'rU')
 	GFF  = open( sys.argv[3],'w')
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 	trnatuple = namedtuple("Name","scaffold,Number,Begin,End,type,codon,IntronBegin,IntronEnd,Score")._make
 	all_has = {}
 	for line in RAW:
-		data_list =trnatuple(line[:-1].split("\t") )
+		data_list =trnatuple([x.strip() for x in line[:-1].split("\t") ])
 		begin = data_list.Begin
 		end = data_list.End
 		intrbeg = data_list.IntronBegin
