@@ -240,8 +240,8 @@ sub cleanup {
 sub run_blast_pre_filter {
     my $blastcmd;
     if( $filter =~ /ncbi/ ) {
-	#$blastcmd = "blastn -query $fafile -db $blastdb -evalue $blastcut  -num_threads 64 -num_alignments 1000000 -num_descriptions 1000000  -window_size 7  -dust no -outfmt 6"
-	$blastcmd = "blastall -p blastn -i $fafile -d $blastdb -e $blastcut -W7 -F F  -a 64 -b 1000000 -v 1000000 -m 8";
+	$blastcmd = "blastn -query $fafile -db $blastdb -evalue $blastcut  -num_threads 64 -num_alignments 1000000 -num_descriptions 1000000  -window_size 7  -dust no -outfmt 6"
+	#$blastcmd = "blastall -p blastn -i $fafile -d $blastdb -e $blastcut -W7 -F F  -a 64 -b 1000000 -v 1000000 -m 8";
     }
     elsif( $filter =~ /wu/ ) {
 	$blastcmd = "wublastn $blastdb $fafile -e $blastcut W=7 B=1000000 V=1000000 -hspmax 0 -gspmax 0 -kap -mformat 2";
