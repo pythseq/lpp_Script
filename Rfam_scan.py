@@ -31,12 +31,14 @@ if __name__ == '__main__':
 	e_value = options.evalue
 	outputprefix = options.outputprefix
 	sequence  = options.Sequence
-	# command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  /dev/stdout  %s %s |sort -n -k 8"%( e_value,database,sequence )
-	# OUTPUT = os.popen(command)
-	OUTPUT = open("out2.res",'rU')
+	command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  /dev/stdout  %s %s |sort -n -k 8"%( e_value,database,sequence )
+	OUTPUT = os.popen(command)
+
 	genome_hash = {}
 	GFF = open(outputprefix+".gff",'w')
+	CACHE = open("cache",'w')
 	for line in OUTPUT:
+		CACHE.write(line)
 		if line.startswith("#"):
 			continue
 		else:
