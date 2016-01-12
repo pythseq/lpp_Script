@@ -68,11 +68,12 @@ if __name__ == '__main__':
 			exon_ID = source+'.misc_RNA.%s.exon1'%(genome_hash[source])
 			start,end = sorted( [int(line_l[7]),int(line_l[8])] )
 			end_seq = all_seq[source][start:end]
-			if frame=='-':
-				end_seq = complement(end_seq)
-				SEQEND.write('>'+rna_ID+'\n'+end_seq+'\n')
+			
 			frame = line_l[9]
 			score = line_l[-4]
+			if frame=='-':
+				end_seq = complement(end_seq)
+				SEQEND.write('>'+rna_ID+'\n'+end_seq+'\n')			
 			GFF.write("%s\tInfernal\tgene\t%s\t%s\t%s\t%s\t.\tID=%s;Name=%s\n"%(
 			    source,
 			    start,
