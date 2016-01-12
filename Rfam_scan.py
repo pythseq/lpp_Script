@@ -54,7 +54,7 @@ if __name__ == '__main__':
 			exon_ID = source+'.misc_RNA.%s.exon1'%(genome_hash[source])
 			start,end = sorted( [int(line_l[7]),int(line_l[8])] )
 			frame = line_l[9]
-			score = line_l[-2]
+			score = line_l[-4]
 			GFF.write("%s\tInfernal\tgene\t%s\t%s\t%s\t%s\t.\tID=%s;Name=%s\n"%(
 			    source,
 			    start,
