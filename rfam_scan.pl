@@ -240,7 +240,8 @@ sub cleanup {
 sub run_blast_pre_filter {
     my $blastcmd;
     if( $filter =~ /ncbi/ ) {
-	$blastcmd = "blastall -p blastn -i $fafile -d $blastdb -e $blastcut -W7 -F F  -a 64 -b 1000000 -v 1000000 -m 8";
+	$blastcmd = "blastn -in $fafile -db $blastdb -evalue $blastcut  -num_threads 64 -num_alignment 1000000 -num_descriptions 1000000  -window_size 7  -dust No -outfmt 6"
+	#$blastcmd = "blastall -p blastn -i $fafile -d $blastdb -e $blastcut -W7 -F F  -a 64 -b 1000000 -v 1000000 -m 8";
     }
     elsif( $filter =~ /wu/ ) {
 	$blastcmd = "wublastn $blastdb $fafile -e $blastcut W=7 B=1000000 V=1000000 -hspmax 0 -gspmax 0 -kap -mformat 2";
@@ -264,7 +265,7 @@ sub run_infernal_search {
 	    $options = " -E $evalueThresh ";
     }
     else {
-	$options = " --ga ";
+	$options = " --cut_ga ";
     }
 
     if( $global ) {
@@ -278,7 +279,7 @@ sub run_infernal_search {
     }
 
 #    system "cmsearch $options $cmfile $fafile > /tmp/$$.res" and die;
-    system "cmsearch --cpu 64 --tblout /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
+    system "cmsearch  --cpu 64 --tblout /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
 #    system "cat /tmp/$$.res";
     return ("/tmp/$$.res", "/tmp/$$.cmsearch");
 }
