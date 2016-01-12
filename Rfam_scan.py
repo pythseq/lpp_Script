@@ -5,10 +5,7 @@
   Purpose: 
   Created: 2016/1/12
 """
-from BCBio import GFF
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio.SeqFeature import SeqFeature, FeatureLocation
+
 from lpp import *
 usage = "python2.7 %prog [options]"
 parser = OptionParser(usage =usage )
