@@ -34,7 +34,7 @@ if __name__ == '__main__':
 	sequence  = options.Sequence
 	cache_name = "/tmp/%s"%(os.getpid())
 	sort_cache_name = "./%s"%(os.getpid())
-	SEQ = open(sequence,'rU')
+	SEQ = fasta_check( open(sequence,'rU') )
 	all_seq = {}
 	for t,s in SEQ:
 		s1 = re.sub("\s+", '', s)
