@@ -32,9 +32,10 @@ if __name__ == '__main__':
 	outputprefix = options.outputprefix
 	sequence  = options.Sequence
 	cache_name = "/tmp/%s"%(os.getpid())
-	command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  %s  %s %s && cat %s sort -n -k 8 >%s"%( e_value,cache_name,database,sequence,cache_name,cache_name )
+	sort_cache_name = "./%s"%(os.getpid())
+	command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  %s  %s %s && cat %s sort -n -k 8 >%s"%( e_value,cache_name,database,sequence,cache_name,sort_cache_name )
 	os.system(command)
-	OUTPUT = open(  cache_name,'rU'   )
+	OUTPUT = open(  sort_cache_name,'rU'   )
 	genome_hash = {}
 	GFF = open(outputprefix+".gff",'w')
 	CACHE = open("cache",'w')
