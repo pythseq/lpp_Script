@@ -66,6 +66,8 @@ Usage: $0 <options> cm_file fasta_file
     Options
         -h              : show this help
 	-o <file>       : write the output to <file>
+	-blastdb <file> : use Rfam blast database for speed
+                          (otherwise do full slow CM search)
 
     Expert options
 	-t <bits>       : specify cutoff in bits
@@ -86,7 +88,13 @@ model-specific mode.  The curated Rfam thresholds may not be meaningful.
 EOF
 }
 
-
+if( !$blastdb ) {
+    print STDERR <<EOF;
+WARN: No BLAST database specified.  Your search may be extremely slow.
+Also, the model-specific global/local mode is not used, therefore
+curated Rfam thresholds may not be meaningful.
+EOF
+}
 
 my %exclude = ();
 if( $nobig ) {
@@ -113,13 +121,23 @@ my $cmfh = IO::File->new( $cmfile );
 my $cm = read_cm_library( $cmfh );
 
 my ($features, $cmsearchOut, @cmsearchOut);
-
-print STDERR "run infernal search\n" if( $verbose );
-my ($resfile, $cmsfile) = run_infernal_search( $cmfile, $fafile );
-print STDERR "parse infernal results\n" if( $verbose );
-push(@cmsearchOut, $cmsfile);
-$features = parse_infernal_table( $resfile );
-
+if( $blastdb ) {
+    print STDERR "run blast pre-filter\n" if( $verbose );
+    my $resfile = run_blast_pre_filter();
+    print STDERR "parse blast results\n" if( $verbose );
+    my $results = parse_blast_table( $resfile );
+    
+    print STDERR "run infernal search\n" if( $verbose );
+    ($features, $cmsearchOut) = run_multi_infernal_search( $cmfile, $results );
+    @cmsearchOut = @{$cmsearchOut};
+}
+else {
+    print STDERR "run infernal search\n" if( $verbose );
+    my ($resfile, $cmsfile) = run_infernal_search( $cmfile, $fafile );
+    print STDERR "parse infernal results\n" if( $verbose );
+    push(@cmsearchOut, $cmsfile);
+    $features = parse_infernal_table( $resfile );
+}
 
 my $outfh = \*STDOUT;
 if( $outfile ) {
@@ -165,13 +183,72 @@ exit;
 
 ####
 
+sub run_multi_infernal_search {
+    my $cmfile = shift;
+    my $results = shift;
+
+    my (@f, @cmsearchOut);
+    my $count=0;
+    # loop over families from blast results
+    foreach my $acc ( keys %{$results} ) {
+	if( exists $exclude{$acc} ) { 
+	    next;   # skip anything we're asked to
+	}
+	$count++;
+	
+	my $out = Bio::SeqIO->new( -file => ">/tmp/$$.seq",
+				   -format => 'Fasta' );
+	
+	my $rfamid;
+	foreach my $seqid ( keys %{ $results->{$acc} } ) {
+	    foreach my $hit ( @{ $results->{$acc}->{$seqid} } ) {
+		$rfamid = $hit->{-id};
+		my( $start, $end ) = ( $hit->{-start},
+				       $hit->{-end},
+				       );
+		print "WARNING: start>end in [$seqid/$start-$end]!\n" if $start>$end;
+		my $newseq = $seqs->{$seqid}->trunc( $start, $end );
+		$newseq->revcom() if $start>$end;
+		$newseq->display_id( "$seqid/$start-$end" );
+		$out->write_seq( $newseq );
+
+		print STDERR "searching [$seqid/$start-$end] with [$rfamid]\n" if( $verbose );
+	    }
+	}
+	$out->close;
+	die "FATAL: can't find a file I've written in /tmp [$$.seq]" if( not -s "/tmp/$$.seq" );
+    
+	my $cmfile = get_cm_from_id( $cmfh, $rfamid );
+	my ($resfile, $cmsfile) = run_infernal_search( $cmfile, "/tmp/$$.seq", $rfamid );
+	my $feat = parse_infernal_table( $resfile );
+	copy($cmsfile, $cmsfile . '.' . $count);
+	push( @f, @{$feat} );
+	push(@cmsearchOut, $cmsfile . '.' . $count);
+    }
+    return (\@f, \@cmsearchOut);
+}
 
 
 sub cleanup {
     unlink "/tmp/$$.res";
+    unlink "/tmp/$$.blast";
     unlink "/tmp/$$.seq";
+    unlink "/tmp/$$.cm";
 }
 
+
+sub run_blast_pre_filter {
+    my $blastcmd;
+    if( $filter =~ /ncbi/ ) {
+	$blastcmd = "blastall -p blastn -i $fafile -d $blastdb -e $blastcut -W7 -F F  -a 64 -b 1000000 -v 1000000 -m 8";
+    }
+    elsif( $filter =~ /wu/ ) {
+	$blastcmd = "wublastn $blastdb $fafile -e $blastcut W=7 B=1000000 V=1000000 -hspmax 0 -gspmax 0 -kap -mformat 2";
+    }
+    my $outfile = "/tmp/$$.blast";
+    system "$blastcmd > $outfile" and die "FATAL: failed to run blast [$blastcmd]\n";
+    return $outfile;
+}
 
 
 sub run_infernal_search {
@@ -187,7 +264,7 @@ sub run_infernal_search {
 	    $options = " -E $evalueThresh ";
     }
     else {
-	$options = " --cut_ga ";
+	$options = " --ga ";
     }
 
     if( $global ) {
@@ -201,7 +278,7 @@ sub run_infernal_search {
     }
 
 #    system "cmsearch $options $cmfile $fafile > /tmp/$$.res" and die;
-    system "cmscan  --noali  --cpu 64 --tblout /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
+    system "cmsearch --cpu 64 --tabfile /tmp/$$.res $options $cmfile $fafile > /tmp/$$.cmsearch" and die;
 #    system "cat /tmp/$$.res";
     return ("/tmp/$$.res", "/tmp/$$.cmsearch");
 }
