@@ -25,6 +25,7 @@ parser.add_option("-d", "--db", action="store",
                   dest="database",
 
                   help="cm database")
+
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
 	database = options.database
@@ -33,12 +34,20 @@ if __name__ == '__main__':
 	sequence  = options.Sequence
 	cache_name = "/tmp/%s"%(os.getpid())
 	sort_cache_name = "./%s"%(os.getpid())
+	SEQ = open(sequence,'rU')
+	all_seq = {}
+	for t,s in SEQ:
+		s1 = re.sub("\s+", '', s)
+		all_seq[t[1:].split()[0]] = s1
+	
 	command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  %s  %s %s && cat %s| sort -n -k 8 >%s"%( e_value,cache_name,database,sequence,cache_name,sort_cache_name )
 	os.system(command)
 	OUTPUT = open(  sort_cache_name,'rU'   )
 	genome_hash = {}
 	GFF = open(outputprefix+".gff",'w')
 	CACHE = open("cache",'w')
+	SEQEND = open(outputprefix+".fasta",'w')
+	
 	for line in OUTPUT:
 		CACHE.write(line)
 		if line.startswith("#") or not line.strip():
@@ -58,6 +67,10 @@ if __name__ == '__main__':
 			rna_ID = source+'.misc_RNA.%s'%(genome_hash[source])
 			exon_ID = source+'.misc_RNA.%s.exon1'%(genome_hash[source])
 			start,end = sorted( [int(line_l[7]),int(line_l[8])] )
+			end_seq = all_seq[source][start:end]
+			if frame=='-':
+				end_seq = complement(end_seq)
+				SEQEND.write('>'+rna_ID+'\n'+end_seq+'\n')
 			frame = line_l[9]
 			score = line_l[-4]
 			GFF.write("%s\tInfernal\tgene\t%s\t%s\t%s\t%s\t.\tID=%s;Name=%s\n"%(
