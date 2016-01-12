@@ -39,11 +39,11 @@ if __name__ == '__main__':
 	CACHE = open("cache",'w')
 	for line in OUTPUT:
 		CACHE.write(line)
-		if line.startswith("#"):
+		if line.startswith("#") or not line.strip():
 			continue
 		else:
 			line_l = line.strip().split()
-			print(line)
+			
 			if "rRNA" in line_l[0] or "tRNA" in line_l[0]:
 				continue
 			source = line_l[2]
