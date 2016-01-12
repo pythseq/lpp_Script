@@ -27,10 +27,10 @@ parser.add_option("-d", "--db", action="store",
                   help="cm database")
 if __name__ == '__main__':
 	(options, args) = parser.parse_args()
-	# database = options.database
-	# e_value = options.evalue
-	# outputprefix = options.outputprefix
-	# sequence  = options.Sequence
+	database = options.database
+	e_value = options.evalue
+	outputprefix = options.outputprefix
+	sequence  = options.Sequence
 	# command = "cmscan  --noali  --rfam  --acc  --cpu 64 -E %s --tblout  /dev/stdout  %s %s |sort -n -k 8"%( e_value,database,sequence )
 	# OUTPUT = os.popen(command)
 	OUTPUT = open("out2.res",'rU')
