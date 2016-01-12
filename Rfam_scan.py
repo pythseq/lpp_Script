@@ -73,7 +73,7 @@ if __name__ == '__main__':
 			score = line_l[-4]
 			if frame=='-':
 				end_seq = complement(end_seq)
-				SEQEND.write('>'+rna_ID+'\n'+end_seq+'\n')			
+			SEQEND.write('>'+rna_ID+'\n'+end_seq+'\n')			
 			GFF.write("%s\tInfernal\tgene\t%s\t%s\t%s\t%s\t.\tID=%s;Name=%s\n"%(
 			    source,
 			    start,
