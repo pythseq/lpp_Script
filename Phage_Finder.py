@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	outpath = options.outprefix+'/'+prefix
 	outpath = check_path(outpath)
 	outputname = outpath+prefix+'_Phage'
-	os.system( " phage_finder_v2.0.sh  %s  %s"%(seqname,outpath)  )
+	os.system( " phage_finder_v2.1.sh   %s  %s"%(seqname,outpath)  )
 	README = open(outpath+'/Readme','w')
 	README.write("""
 使用PhageFinder进行前噬菌体寻找。结果如下：
