@@ -205,7 +205,7 @@ dev.off()
             for i in xrange(0,len(total_resultframe)):
                 
                 if not  pd.isnull(total_resultframe.loc[i,"KEGG_Hit"]):
-                    total_resultframe.loc[i,"Function"] = str(total_resultframe.loc[i,"KEGG_Hit"].split(' ',1))[1]
+                    total_resultframe.loc[i,"Function"] = str(total_resultframe.loc[i,"KEGG_Hit"]).split(' ',1)[1]
                     
             total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
         for key in stat_result: 
