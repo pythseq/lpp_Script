@@ -46,7 +46,7 @@ if __name__=="__main__":
 		else:
 			line_l_new[-4]='-'
 		line_l_new[0] = line_l_new[0].split()[0]
-		already[line_l[2]][line_l[9]] = '\t'.join(line_l_new)
+		already[line_l[2]][line_l[10]] = '\t'.join(line_l_new)
 		
 	for key in already:
 		key2 = sorted(already[key])[-1]
