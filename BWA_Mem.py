@@ -40,6 +40,8 @@ thread = options.thread
 
 outputpath = os.path.abspath( options.outputpath)+'/'
 inputpath = os.path.abspath(  options.inputpath )+'/'
+if not os.path.exists(  outputpath  ):
+	os.makedirs( outputpath )
 # build index
 os.system( 'bwa index -a is %s 2>&1 >/dev/null'%(  ref  )  )
 def BWA_MAPPING( file_list  ):
@@ -51,8 +53,8 @@ def BWA_MAPPING( file_list  ):
 	name = os.path.basename(  file_list[0]   ) .split('.')[0]
 	path = outputpath
 	output_preifx = path+name
-	if not os.path.exists(  path  ):
-		os.makedirs( path )
+	# if not os.path.exists(  path  ):
+		# os.makedirs( path )
 	sorted_file = sorted(  file_list,key = lambda x:  int( re.search( 'pair(\d+)'   ,x ) .group(1)    )  )
 	
 
