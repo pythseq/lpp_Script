@@ -74,4 +74,5 @@ for key in output_hash:
 	input_list.append(  output_hash[key] )
 print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
-pool.map(BWA_MAPPING,input_list)
+print(input_list)
+# pool.map(BWA_MAPPING,input_list)
