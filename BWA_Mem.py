@@ -71,7 +71,7 @@ for a,b,c in os.walk(  inputpath ):
 			output_hash[  name ] [  a+'/'+each_f ] = ''
 input_list = []
 for key in output_hash:
-	input_list.append(  output_hash[key] )
+	input_list.append(  list(output_hash[key] )
 print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
 print(input_list)
