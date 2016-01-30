@@ -41,7 +41,7 @@ thread = options.thread
 outputpath = os.path.abspath( options.outputpath)+'/'
 inputpath = os.path.abspath(  options.inputpath )+'/'
 # build index
-# os.system( 'bwa index -a is %s 2>&1 >/dev/null'%(  ref  )  )
+os.system( 'bwa index -a is %s 2>&1 >/dev/null'%(  ref  )  )
 def BWA_MAPPING( file_list  ):
 
 	def get_outputname( each_f ):
@@ -61,6 +61,10 @@ def BWA_MAPPING( file_list  ):
 	os.system("bwa mem  -M  -t 64  %s  %s  %s  1> %s.sam  2>/dev/null"%(ref ,read1_file,read2_file,output_preifx ))
 	os.system("samtools view  -bS %s.sam -o %s.bam 2>/dev/null"%( output_preifx, output_preifx ))
 	os.system("samtools sort   %s.bam  %s.sort 2>/dev/null"%( output_preifx, output_preifx ))
+	os.remove( output_preifx+".bam")
+	os.remove( output_preifx+".sam")
+	shutil.move( output_preifx+'.sort.bam', output_preifx+'.bam')
+	os.system( "samtools index   %s.bam ")
 	
 
 output_hash = Ddict()
@@ -75,5 +79,5 @@ for key in output_hash:
 print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
 
-map(BWA_MAPPING,input_list)
-# pool.map(BWA_MAPPING,input_list)
+# map(BWA_MAPPING,input_list)
+pool.map(BWA_MAPPING,input_list)
