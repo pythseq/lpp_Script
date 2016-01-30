@@ -41,7 +41,7 @@ thread = options.thread
 outputpath = os.path.abspath( options.outputpath)+'/'
 inputpath = os.path.abspath(  options.inputpath )+'/'
 # build index
-os.system( 'bwa index -a is %s 2>&1 >/dev/null'%(  ref  )  )
+# os.system( 'bwa index -a is %s 2>&1 >/dev/null'%(  ref  )  )
 def BWA_MAPPING( file_list  ):
 
 	def get_outputname( each_f ):
