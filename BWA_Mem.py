@@ -22,10 +22,7 @@ parser.add_option("-t", "--thread", action="store",
                   type='int',
                   help="thread number of each BWA")
 
-parser.add_option("-p", "--process", action="store", 
-                  dest="process",
-                  type='int',
-                  help="process number of total BWA")
+
 
 parser.add_option("-o", "--output", action="store", 
                   dest="outputpath",
