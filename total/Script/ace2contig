@@ -1,5 +1,5 @@
-#!/usr/local/bin/perl
-use lib "/home/lipp/SOFTWARE/amos/lib";
+#!/usr/bin/perl
+use lib "/pub/SOFTWARE/Scaffolding/amos/lib";
 
 
 # $Id: ace2contig.pl,v 1.7 2010/02/04 09:38:21 floflooo Exp $
