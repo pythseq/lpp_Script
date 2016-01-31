@@ -53,6 +53,8 @@ def BWA_MAPPING( file_list  ):
 	name = os.path.basename(  file_list[0]   ) .split('.')[0]
 	path = outputpath
 	output_preifx = path+name
+	if os.path.exists(output_preifx+".bam.bai"):
+		return ""
 	# if not os.path.exists(  path  ):
 		# os.makedirs( path )
 	sorted_file = sorted(  file_list,key = lambda x:  int( re.search( 'pair(\d+)'   ,x ) .group(1)    )  )
