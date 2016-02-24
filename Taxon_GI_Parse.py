@@ -83,11 +83,11 @@ if __name__ == '__main__':
     NAME = open(options.Name,'rU')
     for line in NAME:
         if "scientific name" in line:
-            line_l = line.split()
+            line_l = line.split("\t")
             NAME_CACHE.write( line_l[0]+'\t'+line_l[2]+'\n')
     NAME_CACHE.close()
     load_des_script = """-e 'load data local infile   "%s" into table TaxonName (taxon, name);'"""%(NAME_CACHE.name)
-    
+    os.remove( NAME_CACHE.name )
     load_des_script = """-e 'load data local infile   "%s" into table GI_Taxon (g_i, taxon);'"""%(options.gi_taxon)
     os.system( mysql_connection+load_des_script   )    
     
