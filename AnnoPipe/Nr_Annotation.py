@@ -60,7 +60,10 @@ r"""
 
 		sys.exit()
 	os.rename(output_prefix+'_NrAlignment.tsv',output_prefix+'_NrAlignment.xls')
-	
+	nr_data = pd.read_tableopen(output_prefix+'_NrAlignment.xls','rU')
+	for i in xrange(0,len(nr_data)):
+		nr_data.loc[i,"KEGG_Hit"]
+		
 	
 
 
