@@ -86,6 +86,7 @@ if __name__ == '__main__':
             line_l = line.split("\t|\t")
             NAME_CACHE.write( line_l[0]+'\t'+line_l[1]+'\n')
     NAME_CACHE.close()
+    sys.exit()
     load_des_script = """-e 'load data local infile   "%s" into table TaxonName (taxon, name);'"""%(NAME_CACHE.name)
     os.system( mysql_connection+load_des_script   )  
     os.remove( NAME_CACHE.name )
