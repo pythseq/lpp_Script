@@ -87,6 +87,7 @@ if __name__ == '__main__':
             NAME_CACHE.write( line_l[0]+'\t'+line_l[2]+'\n')
     NAME_CACHE.close()
     load_des_script = """-e 'load data local infile   "%s" into table TaxonName (taxon, name);'"""%(NAME_CACHE.name)
+    os.system( mysql_connection+load_des_script   )  
     os.remove( NAME_CACHE.name )
     load_des_script = """-e 'load data local infile   "%s" into table GI_Taxon (g_i, taxon);'"""%(options.gi_taxon)
     os.system( mysql_connection+load_des_script   )    
