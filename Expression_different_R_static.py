@@ -164,6 +164,7 @@ dev.off()
 
 resSig <- res[res$%(para)s < %(threshold)s, ]
 resSig <- resSig[!is.na(resSig$id), ]
+resSig <- resSig[abs(resSig$log2FoldChange)>1, ]
 upSig<- resSig[resSig$foldChange>1,]
 downSig<- resSig[resSig$foldChange<1,]
 write.table(resSig,row.names=FALSE,file='%(out_prefix)s.end',quote=FALSE,sep='\t')
