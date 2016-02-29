@@ -70,7 +70,7 @@ r"""
 		gi = re.search("gi\|(\d+)",nr_data.loc[i,"Nr_Hit"])
 		if gi:
 			gi = gi.group(1)
-			taxon_gi_sql = Taxon_GI.select(Taxon_GI.q.GI==gi)   
+			taxon_gi_sql = Taxon_GI.select(Taxon_GI.q.GI==int(gi) )   
 			if taxon_gi_sql.count():
 				taxon_gi_sql = taxon_gi_sql[0]
 				taxon_id = taxon_gi_sql.Taxon
