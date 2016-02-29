@@ -20,10 +20,10 @@ parser.add_option("-a", "--append", action="store",
                   default = 'matrix',
                   help="Matrix of Reads number")
 
-parser.add_option("-s", "--STATIC", action="store", 
-                  dest="static_path", 
+parser.add_option("-d", "--DATA", action="store", 
+                  dest="data_path", 
 
-                  help="static_path of QC")
+                  help="fastq_path of Data")
 
 parser.add_option("-i", "--INPUT", action="store", 
                   dest="input_path", 
@@ -52,12 +52,12 @@ if para not in ["padj","pval"]:
     raise IOError
 
 
-static_path   = os.path.abspath( options.static_path )+os.sep
+data_path   = os.path.abspath( options.data_path )+os.sep
 
 input_path   = options.input_path
 
 append = options.append
-static_path = options.static_path
+data_path = options.data_path
 
 if not os.path.exists(  outputpath ):
     os.makedirs( outputpath )
@@ -86,12 +86,12 @@ input_path = os.path.abspath(  input_path )+os.sep
 # To store the total depth of Sequencing 
 size_factor = {}
 
-for each_f in glob.glob(static_path +'*.total.stats'):
-    STATIC = open ( each_f ,'rU' )
-    STATIC.next()
+for each_f in glob.glob(static_path +'*.pair1'):
+    line_num = int(os.popen("wc -l %s"%(each_f)).read().split()[0])/2
+
     sample_name = sampleNameTrans( os.path.split(each_f)[-1].split('.')[0] )
 
-    size_factor[ sample_name ] = STATIC.next().split('\t')[2]
+    size_factor[ sample_name ] = str( line_num )
 
 for each_matrix in glob.glob(  input_path+'*.'+append  ):
     stats_name = os.path.split(each_matrix)[-1].split('.')[0]
