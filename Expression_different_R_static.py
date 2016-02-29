@@ -69,7 +69,7 @@ def sampleNameTrans( sample_name ):
         sample_name = 'X'+sample_name
     return sample_name
 
-if not os.path.exists( static_path  ):
+if not os.path.exists( data_path  ):
     print( 'ERROR!!! THE Static PATH doesn\'t exits!!!!!'  )
     sys.exit()
 
@@ -86,7 +86,7 @@ input_path = os.path.abspath(  input_path )+os.sep
 # To store the total depth of Sequencing 
 size_factor = {}
 
-for each_f in glob.glob(static_path +'*.pair1'):
+for each_f in glob.glob(data_path +'*.pair1'):
     line_num = int(os.popen("wc -l %s"%(each_f)).read().split()[0])/2
 
     sample_name = sampleNameTrans( os.path.split(each_f)[-1].split('.')[0] )
