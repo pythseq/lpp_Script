@@ -80,7 +80,7 @@ r"""
 				
 				GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
 
-				taxon_stat_hash[ nr_data.loc[i,"Name"] ][taxon_name]=""
+				taxon_stat_hash[taxon_name][ nr_data.loc[i,"Name"] ]=""
 	for key in sorted( taxon_stat_hash,key= lambda x: len( taxon_stat_hash[x]  )   )[::-1]:
 		
 		GENE_STATS.write(   key+'\t%s'%(  len( taxon_stat_hash[key]  )  ) +'\n'  )
