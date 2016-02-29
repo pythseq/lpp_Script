@@ -58,4 +58,4 @@ def RunDiamond( fasta,evalue,blasttype,dbname,output  ):
 	command_list = command.split()
 	diamond_process = subprocess.Popen( command_list,stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = diamond_process.communicate()
-	return stderr
+	#return stderr
