@@ -72,11 +72,11 @@ r"""
 			gi = gi.group(1)
 			taxon_gi_sql = Taxon_GI.select(Taxon_GI.q.GI==gi)   
 			if taxon_gi_sql.count():
-				taxon_gi_sql = taxon_gi_sql.limit(1)
+				taxon_gi_sql = taxon_gi_sql[0]
 				taxon_id = taxon_gi_sql.Taxon
 				taxon_name_sql = TaxonName.select(TaxonName.q.Taxon==taxon_id)   
 				
-				taxon_name = taxon_name_sql.limit(1).Name
+				taxon_name = taxon_name_sql[0].Name
 				
 				GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
 
