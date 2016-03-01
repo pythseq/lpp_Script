@@ -36,7 +36,10 @@ if __name__=="__main__":
 
 
     (options, args) = parser.parse_args() 
-    FASTA = fasta_check(  open(options.PEP,'rU')  )
+    proteinseq = options.PEP
+    if not proteinseq:
+        proteinseq = options.NUL    
+    FASTA = fasta_check(  open(proteinseq,'rU')  )
     sequence = FASTA.next()[-1]
     blast_type = Nul_or_Protein(sequence)
     output_prefix = os.path.abspath(  options.output_prefix )
@@ -69,9 +72,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     
     )        
     diamond_result = output_prefix+'_AlignKEGG.tsv'
-    proteinseq = options.PEP
-    if not proteinseq:
-        proteinseq = options.NUL
+    
         
     if options.KO:
         error = RunDiamond(proteinseq,options.evalue, blast_type,"ko",diamond_result)
