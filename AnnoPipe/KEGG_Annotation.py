@@ -74,18 +74,18 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     diamond_result = output_prefix+'_AlignKEGG.tsv'
     
         
-    #if options.KO:
-        #error = RunDiamond(proteinseq,options.evalue, blast_type,"ko",diamond_result)
-    #else:
+    if options.KO:
+        error = RunDiamond(proteinseq,options.evalue, blast_type,"ko",diamond_result)
+    else:
         
-        #error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
+        error = RunDiamond(proteinseq,options.evalue, blast_type,"kegg",diamond_result)
     #error=""
-    #if error:
-        #print( colored("%s 's KEGG process in Diamond of kegg is error!!","red") )
-        #print(colored( error,"blue"  ))
-        #print(  "##############################################"   )
+    if error:
+        print( colored("%s 's KEGG process in Diamond of kegg is error!!","red") )
+        print(colored( error,"blue"  ))
+        print(  "##############################################"   )
 
-        #sys.exit()
+        sys.exit()
 
  
     blast_mapping_command = config_hash["Utils"]["gapmap"]+'/blast_sql.py -f %(diamond)s   -r  %(diamond)s   -1 forward -2 forward  -n Forward -N Reverse -p %(pep)s -d %(dna)s -x %(tag)s -q'%(
@@ -96,7 +96,6 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
             "tag":tag
         }
     )
-    print(blast_mapping_command)
     blast_mapping_process = subprocess.Popen( blast_mapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     blast_mapping_process.communicate()
 
