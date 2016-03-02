@@ -36,7 +36,7 @@ length = options.genelength
 go = options.Go
 GO = open( go,'rU' )
 GO_Cache = open("%s.cache"%(os.getpid()),'w'   )
-GO_Cache.write(data.next())
+GO_Cache.write(GO.next())
 for line in GO:
     line_l = line.strip().split("\t")
     for key in line_l[1:]:
