@@ -43,6 +43,8 @@ for line in GO:
         GO_Cache.write(line_l[0]+'\t'+key+'\n')
 GO_Cache.close()
 end = options.Out
+path = os.path.dirname(end)
+check_path(path)
 r_script="""
 library("goseq")
 DEG<-read.table("%(inp)s", header = TRUE,sep="\\t")
