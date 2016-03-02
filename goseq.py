@@ -71,8 +71,8 @@ pvals$gene_num<-rep(length(ALL),nrow(pvals))
 pvals<-pvals[c("category","numDEInCat","numInCat","over_represented_pvalue","padj","qvalue","gene_num","term","ontology")]
 colnames(pvals)[4]<-"pvalue"
 pvals<-pvals[order(pvals$numDEInCat/pvals$numInCat,decreasing=T),]
-pvals<-pvals[pvals$numDEInCat/pvals$numInCat>=0.1,]
-pvals<-pvals[pvals$numInCat>=50,]
+#pvals<-pvals[pvals$numDEInCat/pvals$numInCat>=0.1,]
+#pvals<-pvals[pvals$numInCat>=50,]
 enriched_go<-pvals[pvals$qvalue<.05  ,]
 
 write.table(enriched_go,"%(out)s.go_enrich.tsv",sep="\t",row.names=FALSE,quote=FALSE)
