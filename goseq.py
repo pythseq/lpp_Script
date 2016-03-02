@@ -34,6 +34,14 @@ parser.add_option("-o", "--Out", action="store",
 data = options.data
 length = options.genelength
 go = options.Go
+GO = open( go,'rU' )
+GO_Cache = open("%s.cache"%(os.getpid()),'w'   )
+GO_Cache.write(data.next())
+for line in GO:
+    line_l = line.strip().split("\t")
+    for key in line_l[1:]:
+        GO_Cache.write(line_l[0]+'\t'+key+'\n')
+GO_Cache.close()
 end = options.Out
 r_script="""
 library("goseq")
@@ -68,12 +76,12 @@ pvals<-pvals[pvals$numInCat>=50,]
 enriched_go<-pvals[pvals$qvalue<.05  ,]
 
 write.table(enriched_go,"%(out)s.go_enrich.tsv",sep="\t",row.names=FALSE,quote=FALSE)
-""".replace("%(go)s",go).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
+""".replace("%(go)s",GO_Cache.name).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
 
 END = open("%s.goseq.R"%(end),'w')
 END.write(r_script)
 END.close()
 
 os.system("R --no-save <  %s"%(END.name))
-
+os.remove(GO_Cache.name)
 	
