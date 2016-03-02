@@ -43,8 +43,8 @@ for line in GO:
         GO_Cache.write(line_l[0]+'\t'+key+'\n')
 GO_Cache.close()
 end = options.Out
-path = os.path.dirname(end)
-check_path(path)
+
+check_path(end)
 r_script="""
 library("goseq")
 DEG<-read.table("%(inp)s", header = TRUE,sep="\\t")
@@ -77,7 +77,7 @@ pvals<-pvals[order(pvals$numDEInCat/pvals$numInCat,decreasing=T),]
 #pvals<-pvals[pvals$numInCat>=50,]
 enriched_go<-pvals[pvals$qvalue<.05  ,]
 
-write.table(enriched_go,"%(out)s.go_enrich.tsv",sep="\t",row.names=FALSE,quote=FALSE)
+write.table(enriched_go,"%(out)s/go_enrich.tsv",sep="\t",row.names=FALSE,quote=FALSE)
 """.replace("%(go)s",GO_Cache.name).replace("%(inp)s",data).replace("%(length)s",length).replace("%(out)s",end)
 
 END = open("%s.goseq.R"%(end),'w')
