@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	RAW  = open(options.ALLGO)
 	CACHE.write(RAW.next())
 	for line in RAW:
-		line_l =line.strip.split("\t")
+		line_l =line.strip().split("\t")
 		for key in line_l[1:]:
 			CACHE.write(line_l[0]+'\t'+key+'\n')
 	CACHE.close()
