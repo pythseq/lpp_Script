@@ -8,28 +8,20 @@
 
 from lpp import *
 END = open("cache.matrix",'w')
-END.write("Sample\tGO\tGeneRatio\tQ_value\n")
+END.write("Sample\tTerm\tOntology\tGeneRatio\tQ_value\n")
+
 Outputhash_name = Ddict()
 sample_list = {}
 for f in sys.argv[1:]:
-	RAW = open(f,'rU')
-	RAW.next()
-	for line in RAW:
-		sample = os.path.split(f)[-1].split(".")[0].replace("enrichment","")
-		sample_list[sample] = ""
-		line_l = line.strip().split("\t")
-
-		diff,all_data = line_l[2].split('/')
-		
-		if float(line_l[6])<0.051:
-			END.write("%s\t%s\t%s\t%s\n"%( 
-			    sample,
-			    line_l[1],
-			    float(diff)/float(all_data  ),
-			    line_l[6]
-			)
-			        )
-
+    RAW = pd.read_table(f)
+    RAW["GeneRatio"] = float(RAW["numInCat"])/RAW["numDEInCat"]
+    new_table = pd.DataFrame(RAW,columns=["term","ontology","GeneRatio","qvalue"])
+    sample_name = os.path.basename(f).rsplit("/",1)[-1]
+    for i in xrange( 0, len( new_table )  ):
+        data = new_table.iloc[i]
+        END.write(sample_name+'\t'+"\t".join(  [ data["term"],data["ontology"] ,data["GeneRatio"],data["qvalue"] ] )+'\n'   )
+    
+ 
 R_CACHE = open("Draw.R",'w')
 output="GO_enrichment_all.pdf"
 R_CACHE.write("""
@@ -39,7 +31,7 @@ pathway_size = length(levels(factor(countsTable$GO)))
 Sample_size = length(levels(factor(countsTable$Sample)))
 dev.new()
 pdf("%(out)s")
-qplot(data = countsTable,x=Sample,y=GO,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))
+qplot(data = countsTable,x=Sample,y=GO,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))+facet_grid(.~Ontology,scales="free_y",space="free")
 dev.off()
 
 
