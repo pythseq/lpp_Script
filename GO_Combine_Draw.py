@@ -21,7 +21,7 @@ for f in sys.argv[1:]:
     sample_name = os.path.basename(f).rsplit("/",1)[-1]
     for i in xrange( 0, len( new_table )  ):
         data = new_table.iloc[i]
-        END.write(sample_name+'\t'+"\t".join(  [ data["term"],data["ontology"] ,data["GeneRatio"],data["qvalue"] ] )+'\n'   )
+        END.write(sample_name+'\t'+"\t".join(  [ data["term"],data["ontology"] ,str(data["GeneRatio"]),str(data["qvalue"] ]) )+'\n'   )
     
  
 R_CACHE = open("Draw.R",'w')
