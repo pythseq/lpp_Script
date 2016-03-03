@@ -33,7 +33,7 @@ pathway_size = length(levels(factor(countsTable$Term)))
 Sample_size = length(levels(factor(countsTable$Sample)))
 dev.new()
 pdf("%(out)s")
-qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))+facet_grid(.~Ontology,scales="free_y",space="free")
+qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))
 dev.off()
 
 
