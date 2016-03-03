@@ -28,12 +28,13 @@ R_CACHE = open("Draw.R",'w')
 output="GO_enrichment_all.pdf"
 R_CACHE.write("""
 library(ggplot2)
+require(ggthemes)
 countsTable <- read.delim( "%(inp)s", header=TRUE, stringsAsFactors=TRUE ) 
 pathway_size = length(levels(factor(countsTable$Term)))
 Sample_size = length(levels(factor(countsTable$Sample)))
 
 pdf("%(out)s",width=6*Sample_size,height = 0.2*pathway_size)
-qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))+facet_grid(Ontology~.,scales="free_y",space="free")
+qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()
 dev.off()
 
 
