@@ -15,7 +15,7 @@ sample_list = {}
 for f in sys.argv[1:]:
     RAW = pd.read_table(f)
     print(RAW["numInCat"])
-    RAW["GeneRatio"] = float(RAW["numInCat"])/RAW["numDEInCat"]
+    RAW["GeneRatio"] = RAW["numDEInCat"]/float(RAW["numInCat"])
     new_table = pd.DataFrame(RAW,columns=["term","ontology","GeneRatio","qvalue"])
     sample_name = os.path.basename(f).rsplit("/",1)[-1]
     for i in xrange( 0, len( new_table )  ):
