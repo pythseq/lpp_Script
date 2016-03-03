@@ -14,6 +14,7 @@ Outputhash_name = Ddict()
 sample_list = {}
 for f in sys.argv[1:]:
     RAW = pd.read_table(f)
+    print(RAW["numInCat"])
     RAW["GeneRatio"] = float(RAW["numInCat"])/RAW["numDEInCat"]
     new_table = pd.DataFrame(RAW,columns=["term","ontology","GeneRatio","qvalue"])
     sample_name = os.path.basename(f).rsplit("/",1)[-1]
