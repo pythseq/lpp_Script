@@ -49,7 +49,7 @@ if __name__ == '__main__':
 		for key in line_l[1:]:
 			CACHE.write(line_l[0]+'\t'+key+'\n')
 	CACHE.close()
-	all_go = pd.read_table( options.ALLGO )
+	all_go = pd.read_table( CACHE.name )
 	all_enrichgo = pd.read_table( options.Enrich )
 	all_enrichgo_gene = all_go[ all_go["GOTerm"].isin( all_enrichgo["category"]  )  ]
 	
