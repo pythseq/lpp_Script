@@ -31,9 +31,9 @@ library(ggplot2)
 countsTable <- read.delim( "%(inp)s", header=TRUE, stringsAsFactors=TRUE ) 
 pathway_size = length(levels(factor(countsTable$Term)))
 Sample_size = length(levels(factor(countsTable$Sample)))
-dev.new()
-pdf("%(out)s",width=3*Sample_size,height = 0.2*pathway_size)
-qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))+facet_grid(.~Ontology,scales="free_y",space="free")
+
+pdf("%(out)s",width=6*Sample_size,height = 0.2*pathway_size)
+qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+theme(axis.text.x=element_text(angle=45))+facet_grid(Ontology~.,scales="free_y",space="free")
 dev.off()
 
 
