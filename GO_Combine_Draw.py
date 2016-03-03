@@ -8,7 +8,7 @@
 
 from lpp import *
 END = open("cache.matrix",'w')
-END.write("Sample\tTerm\tOntology\tGeneRatio\tQ_value\n")
+END.write("Situation\tTerm\tOntology\tGeneRatio\tQ_value\n")
 
 Outputhash_name = Ddict()
 sample_list = {}
@@ -31,10 +31,10 @@ library(ggplot2)
 require(ggthemes)
 countsTable <- read.delim( "%(inp)s", header=TRUE, stringsAsFactors=TRUE ) 
 pathway_size = length(levels(factor(countsTable$Term)))
-Sample_size = length(levels(factor(countsTable$Sample)))
+Sample_size = length(levels(factor(countsTable$Situation)))
 
 pdf("%(out)s",width=6*Sample_size,height = 0.2*pathway_size)
-qplot(data = countsTable,x=Sample,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()
+qplot(data = countsTable,x=Situation,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()
 dev.off()
 
 
