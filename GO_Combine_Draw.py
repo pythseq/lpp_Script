@@ -24,15 +24,13 @@ if __name__=='__main__':
                       help="Output")  
     (options, args) = parser.parse_args()
     output = options.output
-    print(args)
-    sys.exit()
 
     END = open("%s.matrix"%(os.getpid()),'w')
     END.write("Situation\tTerm\tOntology\tGeneRatio\tQ_value\n")
     
     Outputhash_name = Ddict()
     sample_list = {}
-    for f in sys.argv[1:]:
+    for f in args:
         RAW = pd.read_table(f)
     
         RAW["GeneRatio"] = RAW["numDEInCat"]/RAW["numInCat"]
