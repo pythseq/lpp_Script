@@ -41,7 +41,14 @@ if __name__ == '__main__':
 	all_diff_gene = pd.read_table(options.Diff)
 	all_Annotaion = pd.read_table( options.Anno )
 	all_diff_anno = all_Annotaion[ all_Annotaion["Name"].isin( all_diff_gene["id"]  )  ]
-	
+	CACHE = open("%s.cache"%(os.getpid()) ,'w')
+	RAW  = open(options.ALLGO)
+	CACHE.write(RAW.next())
+	for line in RAW:
+		line_l =line.strip.split("\t")
+		for key in line_l[1:]:
+			CACHE.write(line_l[0]+'\t'+key+'\n')
+	CACHE.close()
 	all_go = pd.read_table( options.ALLGO )
 	all_enrichgo = pd.read_table( options.Enrich )
 	all_enrichgo_gene = all_go[ all_go["GOTerm"].isin( all_enrichgo["category"]  )  ]
@@ -57,5 +64,5 @@ if __name__ == '__main__':
 	)
 	del  enrich_go_annotation["Name"]
 	enrich_go_annotation.to_csv(options.OutputPrefix+'.Annotation.tsv',sep = "\t",index = False)
-	
+	os.remove(CACHE.name)
 	
