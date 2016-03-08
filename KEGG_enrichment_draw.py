@@ -10,9 +10,9 @@ from lpp import *
 ALL_Data = open(sys.argv[1],'rU')
 UP = open( sys.argv[2],'rU')
 DOWN = open(sys.argv[3],'rU')
-TMP = open("keggtmp",'w')
+TMP = open("%s.tmp"%(os.getpid()),'w')
 TMP.write(ALL_Data.next()[:-1]+'\tSituation\n')
-print(  )
+
 sample_name = os.path.dirname(sys.argv[1]).split('/')[-1]
 for line in ALL_Data:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
@@ -59,4 +59,4 @@ dev.off()
 R.write(r_script)
 os.system("Rscript %s"%(R.name))
 os.remove(R.name)
-
+os.remove(TMP.name)
