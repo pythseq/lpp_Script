@@ -91,34 +91,16 @@ pData<-read.delim( "%s", header=TRUE, stringsAsFactors=TRUE )
     return p_adj,q_qval
 
 
-RAW = open( sys.argv[1],'rU' )
-all_pathway = Ddict()
-diff_gene_pathway = Ddict()
-all_diff_gene = File_dict(open(sys.argv[2],'rU')).read(1,1)
-all_diff_geneinpathway = {}
-all_geneinpathway = {}
 
-for line in RAW:
-    line_l = line[:-1].split("\t")
-    if not line_l[-2]:
-        continue
-    pathway_list  = line_l[-2].split("||")
-    if line_l[0] in all_diff_gene:
-        for each_pathway in pathway_list:
-            
-            diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
-            all_diff_geneinpathway[ line_l[0] ] = ""
-    all_geneinpathway[ line_l[0] ] = ""
-    for each_pathway in pathway_list:    
-        all_pathway[ each_pathway ][ line_l[0] ] = ""
-    
+
+
 
 def Pathway_Enrichment(output):
 
 
     enrich_result = []
     p_value_list = []
-    
+
     for each_pathway in all_pathway:
         if not len( diff_gene_pathway[ each_pathway  ] ):
             continue
@@ -128,16 +110,16 @@ def Pathway_Enrichment(output):
                 len( all_geneinpathway ),
                 len( all_pathway[ each_pathway  ]  ),  
                 len( diff_gene_pathway[ each_pathway  ] ),
-                 
-                
+
+
             )
             p_value_list.append(p_value)
             pathway_id,pathway_name = each_pathway.rsplit(": ",1)
             enrich_result.append(
                 pathway_id+'\t'+pathway_name+'\t%s\t%s\t%s'%( 
-                len(all_pathway[ each_pathway  ]),
-                len(diff_gene_pathway[ each_pathway  ]),p_value 
-                
+                    len(all_pathway[ each_pathway  ]),
+                    len(diff_gene_pathway[ each_pathway  ]),p_value 
+
                 )
             )
     p_adjust ,q_adjust = fdr(p_value_list)
@@ -149,7 +131,51 @@ def Pathway_Enrichment(output):
         qval = float(fdr_iter.next())
         padj = float(padj_iter.next())
         if qval>0.05:
-        	continue
+            continue
         END.write(data +'\t%s\t%s\n'%(padj,qval))        
+
+
+if __name__ == "__main__":
+    usage = '''usage: python2.7 %prog [options]
+			        '''
+    parser = OptionParser(usage =usage )  
+    parser.add_option("-t", "--Table", action="store",
+                      dest="Table",
+                      help="KEGG Annotation TSV")		
+    parser.add_option("-i", "--Input", action="store",
+                      dest="Input",
+                      help="Database Name")
+    parser.add_option("-o", "--OUTPUT", action="store",
+                      dest="output",
+                      help="output File Name")  
+    parser.add_option("-a", "--Anno", action="store",
+                      dest="Annotation",
+                      help="Annotation Result")  	
+    (options, args) = parser.parse_args()
+
+    RAW = open( options.Table,'rU' )
+    all_pathway = Ddict()
+    diff_gene_pathway = Ddict()
+    all_diff_gene = File_dict(open(options.Input,'rU')).read(1,1)
+    all_diff_geneinpathway = {}
+    all_geneinpathway = {}
+    check_path( os.path.pardir( options.output) )
+    ANNO = open( options.output,'w' )
+    ANNO.write(RAW.next())
+    for line in RAW:
+        line_l = line[:-1].split("\t")
+        if not line_l[-2]:
+            continue
+        pathway_list  = line_l[-2].split("||")
+        if line_l[0] in all_diff_gene:
+            ANNO.write(line)
+            for each_pathway in pathway_list:
+    
+                diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
+                all_diff_geneinpathway[ line_l[0] ] = ""
+            all_geneinpathway[ line_l[0] ] = ""
             
-Pathway_Enrichment("Stats.tsv")
+        for each_pathway in pathway_list:    
+            all_pathway[ each_pathway ][ line_l[0] ] = ""
+    
+    Pathway_Enrichment(options.output)
