@@ -135,7 +135,8 @@ def Pathway_Enrichment(output):
             enrich_result.append(
                 pathway_id+'\t'+pathway_name+'\t%s\t%s\t%s'%( 
                 len(all_pathway[ each_pathway  ]),
-                len(diff_gene_pathway[ each_pathway  ],p_value )
+                len(diff_gene_pathway[ each_pathway  ]),p_value 
+                
                 )
             )
     
