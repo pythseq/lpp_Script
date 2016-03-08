@@ -182,5 +182,5 @@ if __name__ == "__main__":
             
         for each_pathway in pathway_list:    
             all_pathway[ each_pathway ][ line_l[0] ] = ""
-    
+    print(  len( all_diff_geneinpathway) , print(all_pathway) )
     Pathway_Enrichment(options.output)
