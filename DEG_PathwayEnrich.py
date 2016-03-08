@@ -159,7 +159,7 @@ if __name__ == "__main__":
     all_diff_gene = File_dict(open(options.Input,'rU')).read(1,1)
     all_diff_geneinpathway = {}
     all_geneinpathway = {}
-    check_path( os.path.pardir( options.output) )
+    check_path( os.path.dirname( options.output) )
     ANNO = open( options.output,'w' )
     ANNO.write(RAW.next())
     for line in RAW:
