@@ -161,7 +161,7 @@ if __name__ == "__main__":
     all_diff_geneinpathway = {}
     all_geneinpathway = {}
     check_path( os.path.dirname( options.output) )
-    ANNO = open( options.output,'w' )
+    ANNO = open( options.Annotation,'w' )
     ANNO.write(RAW.next())
     for line in RAW:
         line_l = line[:-1].split("\t")
