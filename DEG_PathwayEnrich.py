@@ -109,14 +109,16 @@ for line in RAW:
         
     all_pathway[ line_l[-2] ][ line_l[0] ] = ""
     
-print( all_pathway )
 
 def Pathway_Enrichment(output):
 
 
     enrich_result = []
     p_value_list = []
+    
     for each_pathway in all_pathway:
+        if not len( diff_gene_pathway[ each_pathway  ] ):
+            continue
         print( len( diff_gene_pathway[ each_pathway  ] ),len( all_pathway[ each_pathway  ]  ))
         if each_pathway in diff_gene_pathway:
             p_value = enrichment_analysis(
