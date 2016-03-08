@@ -22,7 +22,7 @@ for i in xrange(0,len(nr_data)):
             taxon_gi_sql = taxon_gi_sql[0]
             taxon_id = taxon_gi_sql.Taxon
             taxon_name_sql = TaxonName.select(TaxonName.q.Taxon==taxon_id)   
-
+            print(taxon_id)
             taxon_name = taxon_name_sql[0].Name
 
             GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
