@@ -108,7 +108,7 @@ for line in RAW:
         
     all_pathway[ line_l[-2] ][ line_l[0] ] = ""
     
-def Pathway_Enrichment(output,session):
+def Pathway_Enrichment(output):
 
 
     enrich_result = []
@@ -141,3 +141,5 @@ def Pathway_Enrichment(output,session):
             #if qval>0.05:
             #	continue
             END.write(data +'\t%s\t%s\n'%(padj,qval))        
+            
+Pathway_Enrichment("Stats.tsv")
