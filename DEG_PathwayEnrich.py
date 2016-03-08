@@ -128,14 +128,16 @@ def Pathway_Enrichment(output):
     fdr_iter  = iter(q_adjust)
     END = open(output,'w')
     END.write("ID\tName\tAll\tDiff\tP_value\tP_adjust\tQ_value\n")
+    all_enrich = Ddict()
     for data in enrich_result:
         qval = float(fdr_iter.next())
         padj = float(padj_iter.next())
         if qval>0.05:
             continue
-        END.write(data +'\t%s\t%s\n'%(padj,qval))        
-
-
+        END.write(data +'\t%s\t%s\n'%(padj,qval))    
+        for each_diff in diff_gene_pathway[ ": ".join(  data.split("\t")[:2]  ) ]:
+            all_enrich[ "\t".join(  data.split("\t")[:2]  ) ][each_diff ] = ""
+    return all_enrich
 if __name__ == "__main__":
     usage = '''usage: python2.7 %prog [options]
 			        '''
@@ -161,15 +163,18 @@ if __name__ == "__main__":
     all_diff_geneinpathway = {}
     all_geneinpathway = {}
     check_path( os.path.dirname( options.output) )
+    all_annotation  = {}
     ANNO = open( options.Annotation,'w' )
-    ANNO.write(RAW.next())
+    ANNO.write("Unigene\tEnrichedPathwayID\tEnrichedPathwayName\t"+"\t".join( RAW.next().split("\t")[1:]) )
+
     for line in RAW:
         line_l = line[:-1].split("\t")
         if not line_l[-2]:
             continue
         pathway_list  = line_l[-2].split("||")
         if line_l[0] in all_diff_gene:
-            ANNO.write(line)
+            all_annotation[line_l[0]] = "\t".join(  line[1:]  )
+
             for each_pathway in pathway_list:
     
                 diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
@@ -179,4 +184,7 @@ if __name__ == "__main__":
         for each_pathway in pathway_list:    
             all_pathway[ each_pathway ][ line_l[0] ] = ""
 
-    Pathway_Enrichment(options.output)
+    all_enrich = Pathway_Enrichment(options.output)
+    for pathway in all_enrich:
+        for geneId in all_enrich[ pathway ]:
+            ANNO.write(  geneId+'\t'+pathway+'\t'+all_annotation[geneId]  )
