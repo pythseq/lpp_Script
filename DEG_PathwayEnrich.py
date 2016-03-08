@@ -97,6 +97,7 @@ diff_gene_pathway = Ddict()
 all_diff_gene = File_dict(open(sys.argv[2],'rU')).read(1,1)
 all_diff_geneinpathway = {}
 all_geneinpathway = {}
+
 for line in RAW:
     line_l = line[:-1].split("\t")
     if not line_l[-2]:
@@ -108,6 +109,8 @@ for line in RAW:
         
     all_pathway[ line_l[-2] ][ line_l[0] ] = ""
     
+print( all_diff_gene )
+
 def Pathway_Enrichment(output):
 
 
