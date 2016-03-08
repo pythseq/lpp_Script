@@ -139,7 +139,7 @@ def Pathway_Enrichment(output):
                 
                 )
             )
-    
+        print(p_value_list)
         p_adjust ,q_adjust = fdr(p_value_list)
         padj_iter = iter(p_adjust)	
         fdr_iter  = iter(q_adjust)
