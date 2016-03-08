@@ -148,8 +148,8 @@ def Pathway_Enrichment(output):
     for data in enrich_result:
         qval = float(fdr_iter.next())
         padj = float(padj_iter.next())
-        #if qval>0.05:
-        #	continue
+        if qval>0.05:
+        	continue
         END.write(data +'\t%s\t%s\n'%(padj,qval))        
             
 Pathway_Enrichment("Stats.tsv")
