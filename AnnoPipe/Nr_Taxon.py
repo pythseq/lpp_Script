@@ -22,12 +22,14 @@ for i in xrange(0,len(nr_data)):
             taxon_gi_sql = taxon_gi_sql[0]
             taxon_id = taxon_gi_sql.Taxon
             taxon_name_sql = TaxonName.select(TaxonName.q.Taxon==taxon_id)   
-            print(taxon_id)
-            taxon_name = taxon_name_sql[0].Name
+            try:
+                taxon_name = taxon_name_sql[0].Name
+    
+                GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
 
-            GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
-
-            taxon_stat_hash[taxon_name][ nr_data.loc[i,"Name"] ]=""
+                taxon_stat_hash[taxon_name][ nr_data.loc[i,"Name"] ]=""
+            except:
+                pass
 for key in sorted( taxon_stat_hash,key= lambda x: len( taxon_stat_hash[x]  )   )[::-1]:
 
     GENE_STATS.write(   key+'\t%s'%(  len( taxon_stat_hash[key]  )  ) +'\n'  )
