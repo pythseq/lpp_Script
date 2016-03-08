@@ -70,7 +70,7 @@ print OUT "ID\tSSR nr.\tSSR type\tSSR\tsize\tstart\tend\n";
 
 # Reading arguments #
 
-open (SPECS,"misa.ini") || die ("\nError: Specifications file doesn't exist !\n\n");
+open (SPECS,"/pub/SOFTWARE/Other/Script/misa.ini") || die ("\nError: Specifications file doesn't exist !\n\n");
 my %typrep;
 my $amb = 0;
 while (<SPECS>)
