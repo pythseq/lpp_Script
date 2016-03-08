@@ -187,4 +187,4 @@ if __name__ == "__main__":
     all_enrich = Pathway_Enrichment(options.output)
     for pathway in all_enrich:
         for geneId in all_enrich[ pathway ]:
-            ANNO.write(  geneId+'\t'+pathway+'\t'+all_annotation[geneId]  )
+            ANNO.write(  geneId+'\t'+pathway+'\t'+all_annotation[geneId] +'\n' )
