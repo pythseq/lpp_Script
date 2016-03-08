@@ -109,7 +109,7 @@ for line in RAW:
         
     all_pathway[ line_l[-2] ][ line_l[0] ] = ""
     
-print( all_diff_gene )
+print( len(all_diff_gene ) )
 
 def Pathway_Enrichment(output):
 
