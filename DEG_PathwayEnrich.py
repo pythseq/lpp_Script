@@ -121,6 +121,7 @@ def Pathway_Enrichment(output):
                 len( all_geneinpathway ), 
                 len( all_geneinpathway) 
             )
+            print( p_value )
             p_value_list.append(p_value)
             pathway_id,pathway_name = each_pathway.rsplit(": ",1)
             enrich_result.append(
