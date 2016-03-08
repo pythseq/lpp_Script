@@ -139,17 +139,17 @@ def Pathway_Enrichment(output):
                 
                 )
             )
-        print(p_value_list)
-        p_adjust ,q_adjust = fdr(p_value_list)
-        padj_iter = iter(p_adjust)	
-        fdr_iter  = iter(q_adjust)
-        END = open(output,'w')
-        END.write("ID\tName\tAll\tDiff\tP_value\tP_adjust\tQ_value\n")
-        for data in enrich_result:
-            qval = float(fdr_iter.next())
-            padj = float(padj_iter.next())
-            #if qval>0.05:
-            #	continue
-            END.write(data +'\t%s\t%s\n'%(padj,qval))        
+    print(p_value_list)
+    p_adjust ,q_adjust = fdr(p_value_list)
+    padj_iter = iter(p_adjust)	
+    fdr_iter  = iter(q_adjust)
+    END = open(output,'w')
+    END.write("ID\tName\tAll\tDiff\tP_value\tP_adjust\tQ_value\n")
+    for data in enrich_result:
+        qval = float(fdr_iter.next())
+        padj = float(padj_iter.next())
+        #if qval>0.05:
+        #	continue
+        END.write(data +'\t%s\t%s\n'%(padj,qval))        
             
 Pathway_Enrichment("Stats.tsv")
