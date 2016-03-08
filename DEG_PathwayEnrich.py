@@ -122,10 +122,12 @@ def Pathway_Enrichment(output):
         print( len( all_geneinpathway ),len( all_diff_geneinpathway  ))
         if each_pathway in diff_gene_pathway:
             p_value = enrichment_analysis(
-                len( diff_gene_pathway[ each_pathway  ] ),
+                len( all_diff_geneinpathway) ,
+                len( all_geneinpathway ),
                 len( all_pathway[ each_pathway  ]  ),  
-                len( all_geneinpathway ), 
-                len( all_diff_geneinpathway) 
+                len( diff_gene_pathway[ each_pathway  ] ),
+                 
+                
             )
             print( p_value )
             p_value_list.append(p_value)
