@@ -173,7 +173,7 @@ if __name__ == "__main__":
             continue
         pathway_list  = line_l[-2].split("||")
         if line_l[0] in all_diff_gene:
-            all_annotation[line_l[0]] = "\t".join(  line[1:]  )
+            all_annotation[line_l[0]] = "\t".join(  line_l[1:]  )
 
             for each_pathway in pathway_list:
     
