@@ -178,7 +178,7 @@ if __name__ == "__main__":
     
                 diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
                 all_diff_geneinpathway[ line_l[0] ] = ""
-            all_geneinpathway[ line_l[0] ] = ""
+        all_geneinpathway[ line_l[0] ] = ""
             
         for each_pathway in pathway_list:    
             all_pathway[ each_pathway ][ line_l[0] ] = ""
