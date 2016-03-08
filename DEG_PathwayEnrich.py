@@ -102,12 +102,15 @@ for line in RAW:
     line_l = line[:-1].split("\t")
     if not line_l[-2]:
         continue
+    pathway_list  = line_l[-2].split("||")
     if line_l[0] in all_diff_gene:
-        diff_gene_pathway[ line_l[-2] ][ line_l[0] ] = ""
-        all_diff_geneinpathway[ line_l[0] ] = ""
+        for each_pathway in pathway_list:
+            
+            diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
+            all_diff_geneinpathway[ line_l[0] ] = ""
     all_geneinpathway[ line_l[0] ] = ""
-        
-    all_pathway[ line_l[-2] ][ line_l[0] ] = ""
+    for each_pathway in pathway_list:    
+        all_pathway[ each_pathway ][ line_l[0] ] = ""
     
 
 def Pathway_Enrichment(output):
@@ -119,7 +122,6 @@ def Pathway_Enrichment(output):
     for each_pathway in all_pathway:
         if not len( diff_gene_pathway[ each_pathway  ] ):
             continue
-        print( len( all_geneinpathway ),len( all_diff_geneinpathway  ))
         if each_pathway in diff_gene_pathway:
             p_value = enrichment_analysis(
                 len( all_diff_geneinpathway) ,
@@ -129,7 +131,6 @@ def Pathway_Enrichment(output):
                  
                 
             )
-            print( p_value )
             p_value_list.append(p_value)
             pathway_id,pathway_name = each_pathway.rsplit(": ",1)
             enrich_result.append(
@@ -139,7 +140,6 @@ def Pathway_Enrichment(output):
                 
                 )
             )
-    print(p_value_list)
     p_adjust ,q_adjust = fdr(p_value_list)
     padj_iter = iter(p_adjust)	
     fdr_iter  = iter(q_adjust)
