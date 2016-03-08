@@ -125,7 +125,7 @@ def Pathway_Enrichment(output):
                 len( diff_gene_pathway[ each_pathway  ] ),
                 len( all_pathway[ each_pathway  ]  ),  
                 len( all_geneinpathway ), 
-                len( all_geneinpathway) 
+                len( all_diff_geneinpathway) 
             )
             print( p_value )
             p_value_list.append(p_value)
