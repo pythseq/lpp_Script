@@ -117,7 +117,9 @@ if __name__ == '__main__':
             for eachblast_block in blastblock.split('>'):
                 alignment_list = eachblast_block.split( " Score = " )
                 startdata = alignment_list[ 0 ].strip()
+                print(startdata)
                 subject_name = startdata.split()[0]
+                
                 subject_length = re.search(  "Length=(\d+)", startdata).group(1)
                 for each_blastdetail in alignment_list[1:]:
                     blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
