@@ -95,7 +95,8 @@ if __name__ == '__main__':
             data = BeautifulSoup(e_b,"html5lib")
 
             data = data.get_text() 
-
+            print("#########")
+            print(data)
             block_list = data.split("\n\n",2)
             source_name,alignmentblock,blastblock = block_list
             source_name = source_name.split()[0]
@@ -116,11 +117,10 @@ if __name__ == '__main__':
             is_finalResult = {}
             is_statsis = {}
             for eachblast_block in blastblock.split('>'):
-                print("#########")
-                print( eachblast_block )
+                
+                
                 alignment_list = eachblast_block.split( " Score = " )
                 startdata = alignment_list[ 0 ].strip()
-                print( startdata )
                 subject_name = startdata.split()[0]
                 
                 subject_length = re.search(  "Length=(\d+)", startdata).group(1)
