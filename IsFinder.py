@@ -59,30 +59,15 @@ if __name__ == '__main__':
     
     url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
     values = {
-        "Programe":"blastn",
-        "reponse":"0",
+	"title":"",
+        "prog":"blastn",
+	"blast":"ok",
+	"wordsize":11,
+	"database":"ISfindernt",
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
-        "matrice":"BLOSUM62",
-        "alignement":"8"	,
-        "gapouv":	"-1",
-        "gapext":	"-1",
-        "dropoff":	"0",
         "expect": "1e-5"	,
-        "mot":	"0",
-        "old":"1"	,
-        "nas":"1"	,
-        "thrsld":"0"	,
-        "filtre":"T",
-        "qgc":"1"	,
-        "dbgc":	"1",
-        "bhtk":	"1",
-        "elss":"0"	,
-        "bqd":	"F",
-        "pga":"T"	,
-        "match":"1"	,
-        "msmatch": "-1"	,
-        "qssad":	"3"
+	"gapcosts":"5 2"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
 
@@ -97,8 +82,9 @@ if __name__ == '__main__':
     response = urllib2.urlopen(req)
     try:
         uploadend = response.read()
-
-        out_url = re.search("""(https[^']+)""", uploadend).group(1)
+        print(uploadend)
+	href="resultat.php?id=phpspYgmq&title=&prog=blastn"
+        out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
         result = None
         while not  result:
