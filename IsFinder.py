@@ -107,7 +107,7 @@ if __name__ == '__main__':
         
                 data = data.get_text() 
                 block_list = data.split("\n\n",2)
-                print(data_list[0])
+                print(block_list[0])
 
             has = {}
             for line in result.split("\n")[:-1]:
