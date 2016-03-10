@@ -143,18 +143,18 @@ if __name__ == '__main__':
                         Strand = "+"
                     query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
                     query_end = re.findall("(\d+)\n+", blast_detail)[-2]
-                is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
-                is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
-                is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
-                is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
-                is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
-                is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
-                is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
-                is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
-                is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
-                is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
-                is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
-                is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
+                    is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
+                    is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
+                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
+                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
+                    is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
             i=0
             for each_loc in sorted(is_finalResult):
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
