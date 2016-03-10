@@ -67,7 +67,7 @@ if __name__ == '__main__':
 	"database":"ISfindernt",
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
-        "expect": "0"	,
+        "expect": "1e-500"	,
 	"gapcosts":"5 2"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
@@ -84,7 +84,6 @@ if __name__ == '__main__':
     try:
         uploadend = response.read()
 
-        print(uploadend)
         out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
         result = None
