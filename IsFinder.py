@@ -92,7 +92,7 @@ if __name__ == '__main__':
             time.sleep(5)
             end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
             if "Query=" in end_output:
-                end_output = end_output.split("</article>")[0]
+                data = end_output.split("</article>")[0]
                 data_list  = data.split("<b>Query=")[1:] 
                 for e_b in data_list:
                     e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
