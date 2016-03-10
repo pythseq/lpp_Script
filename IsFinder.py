@@ -124,7 +124,7 @@ if __name__ == '__main__':
                 startdata = alignment_list[ 0 ].strip()
                 subject_name = startdata.split()[0]
                 
-                subject_length = re.search(  "Length=(\d+)", startdata).group(1)
+                SubjLength = re.search(  "Length=(\d+)", startdata).group(1)
                 for each_blastdetail in alignment_list[1:]:
                     blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
                     bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
@@ -136,7 +136,7 @@ if __name__ == '__main__':
 
                     Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\n",blast_stats).group(1)
                     strand_detail  = re.search( "\s+Strand\=(\S+)",blast_stats).group(1)
-                    SubjLength = re.search("Length\=(\d+)",  blast_stats  ).group(1)
+                   
                     if "Minus" in strand_detail:
                         Strand = '-'
                     else:
