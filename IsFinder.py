@@ -116,7 +116,8 @@ if __name__ == '__main__':
             is_finalResult = {}
             is_statsis = {}
             for eachblast_block in blastblock.split('>'):
-
+                print("#########")
+                print( eachblast_block )
                 alignment_list = eachblast_block.split( " Score = " )
                 startdata = alignment_list[ 0 ].strip()
                 print( startdata )
