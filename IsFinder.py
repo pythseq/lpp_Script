@@ -67,7 +67,7 @@ if __name__ == '__main__':
 	"database":"ISfindernt",
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
-        "expect": 0.01	,
+        "expect": "1e-100"	,
 	"gapcosts":"5 2"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
