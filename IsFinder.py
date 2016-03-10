@@ -83,13 +83,13 @@ if __name__ == '__main__':
     try:
         uploadend = response.read()
         print(uploadend)
-	href="resultat.php?id=phpspYgmq&title=&prog=blastn"
-        out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
+        out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
+        print(out_url)
         result = None
         while not  result:
             time.sleep(5)
-            end_output = urllib.urlopen(out_url).read()
+            end_output = urllib.urlopen("https://www-is.biotoul.fr/"+out_url).read()
 
             result = re.search("Normal view</a></font><br>(.*)</form>",end_output,re.DOTALL)
         result = result.group(1)
