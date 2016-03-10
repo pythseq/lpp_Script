@@ -131,7 +131,7 @@ if __name__ == '__main__':
                     blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
                     bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
                     e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
-                    if float(e_value)>1e-5 and int(bitcore)>500:
+                    if float(e_value)>1e-5 or int(bitcore)<500:
                         continue
 
                     Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
