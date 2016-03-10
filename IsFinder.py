@@ -91,6 +91,7 @@ if __name__ == '__main__':
         while not  result:
             time.sleep(5)
             end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
+            print(  end_output  )
             if "Query=" in end_output:
                 data = end_output.split("</article>")[0]
                 data_list  = data.split("<b>Query=")[1:] 
