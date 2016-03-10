@@ -14,6 +14,7 @@ from optparse import OptionParser
 import poster,time,urllib2,urllib
 from poster.encode import multipart_encode  
 from poster.streaminghttp import register_openers 
+from copy import copy
 register_openers() 
 usage = "python2.7 %prog [options]"
 parser = OptionParser(usage =usage )
@@ -143,7 +144,7 @@ if __name__ == '__main__':
                         Strand = "+"
                     query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
                     query_end = re.findall("(\d+)\n+", blast_detail)[-2]
-                    is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
+                    is_finalResult[int(query_start)][ subject_name ] = copy(is_detail[ subject_name ])
                     is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
                     is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
                     is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
