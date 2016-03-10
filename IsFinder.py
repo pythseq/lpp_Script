@@ -58,7 +58,7 @@ if __name__ == '__main__':
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
         "expect": "1e-100"	,
-        "gapcosts":"5 2"
+        "gapcosts":"1 1"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
 
