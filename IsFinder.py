@@ -107,8 +107,13 @@ if __name__ == '__main__':
         
                 data = data.get_text() 
                 block_list = data.split("\n\n",2)
-                print(  block_list  )
-                print(block_list[0])
+                source_name,alignmentblock,blastblock = block_list
+                source_name = source_name.split()[0]
+                is_detail = {}
+                print(alignmentblock)
+                for each_isline in alignmentblock.split("\n")[1:]:
+                    isline_l = each_isline.split('\t')
+                    
 
             has = {}
             for line in result.split("\n")[:-1]:
