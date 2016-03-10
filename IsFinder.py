@@ -8,6 +8,7 @@
 from lpp import *
 from bs4 import BeautifulSoup
 import tempfile
+from numpy import average
 import pandas as pd
 from optparse import OptionParser
 import poster,time,urllib2,urllib
@@ -25,19 +26,7 @@ parser.add_option("-o", "--out", action="store",
 
                   help="oututprefix")
 
-# parser.add_option("-a", "--Alignment", action="store",
-            # dest="Alignment",
 
-            # help="IS alignment")
-
-# parser.add_option("-s", "--nul", action="store",
-            # dest="Nul",
-
-            # help="Nul Seq for IS")
-# parser.add_option("-t", "--stat", action="store",
-            # dest="STAT",
-
-            # help="IS Staistics infomation")
 
 
 if __name__ == '__main__':
@@ -97,7 +86,7 @@ if __name__ == '__main__':
             ALN = open( outputprefix+".xls",'w'  )
             STAT.write("IS_name\tNumber\tAverage.Length\n")
 
-            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue"])+'\n' )
+            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength","IS_Frame"])+'\n' )
             i=0
             data_list  = result.split("<b>Query=")[1:]
 
@@ -114,7 +103,7 @@ if __name__ == '__main__':
                     isline_l = each_isline.split('\t')
                     is_detail[ isline_l[0] ] = {    
                         "Kind":"IS_Element",
-                        "IS_Origin":isline_l[2],
+                        "IS_Group":isline_l[2],
                         "IS_Family":isline_l[1],
                         "IS_Origin":isline_l[-3],
                         "Function":isline_l[0],
@@ -123,46 +112,81 @@ if __name__ == '__main__':
                     
                     
                     }
-                print(blastblock)
-                for line in blastblock.split('>'):
-                    pass
-
-            has = {}
-            for line in result.split("\n")[:-1]:
-                if line in has:
-                    continue
-                has[line] = ""
-            for line in  sorted( has,key = lambda x: int(x.split("\t")[6])   ):
-                i+=1
-                line_l = line.split("\t")
-                chro_name = re.sub("_+$","",line_l[0].split("|")[-1])
-                out_data = []
-                isname= chro_name+"_IS%s"%(i)
-
-                q_start,q_end = int(line_l[6]),int(line_l[7])
-                if q_start <q_end:
-                    frame='+'
-                else:
-                    frame='-'
-                    q_start,q_end  = q_end,q_start
-                is_seq = sequence[q_start:q_end]
-                NUL.write('>'+isname+' '+line_l[1]+'\n'+is_seq+'\n')
-                is_stat[ line_l[1] ][ isname ]=is_seq
-
-                is_length = len(is_seq)
-                out_data.extend([isname,chro_name,"IS_Element",line_l[1],line_l[6],line_l[7],frame,str(is_length),is_seq])
-                out_data.extend(line_l[2:])
-                ALN.write("\t".join(out_data)+'\n')
-        else:
-            STAT.write(  "Not Find IS!!"  )			
-    except Exception,error:
-        print(error)
-    for key in is_stat:
-        STAT.write(   key+'\t%s'%( len(is_stat[key]  )   )   )
-        all_length = 0
-        for key2,seq2 in is_stat[ key ].items():
-            all_length+= len(seq2)
-
-        ave_length = all_length/len(is_stat[key] )
-        STAT.write( '\t%s\n'%(  ave_length  ) )
+                is_finalResult = {}
+                is_statsis = {}
+                for eachblast_block in blastblock.split('>'):
+                    alignment_list = eachblast_block.split( " Score = " )
+                    startdata = alignment_list[ 0 ].strip()
+                    subject_name = startdata.split()[0]
+                    subject_length = re.search(  "Length=(\d+)", startdata).group(1)
+                    for each_blastdetail in alignment_list[1:]:
+                        blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
+                        bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
+                        e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
+                        if float(e_value)>1e-5:
+                            continue
+                        Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
+                        Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\,",blast_stats).group(1)
+                        strand_detail  = re.search( "\s+Strand\=(\S+)\,",blast_stats).group(1)
+                        SubjLength = re.search("Length\=(\d+)",  blast_stats  ).group(1)
+                        if "Minus" in strand_detail:
+                            Strand = '-'
+                        else:
+                            Strand = "+"
+                        query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
+                        query_end = re.findall("(\d+)\n+", blast_detail)[-2]
+                    is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
+                    is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
+                    is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
+                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
+                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
+                    is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
+                    is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
+                i=0
+                for each_loc in sorted(is_finalResult):
+                    for each_result in sorted(is_finalResult[ each_loc  ] ):
+                        i+=1
+                        is_name = source_name+"_IS%s"%(i)
+                        '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength"])
+                        result_list = [
+                            is_name,
+                            is_finalResult[each_loc][each_result]["Ref_Source"],
+                            is_finalResult[each_loc][each_result]["Kind"],
+                            is_finalResult[each_loc][each_result]["Function"],
+                            is_finalResult[each_loc][each_result]["Ref_Start"],
+                            is_finalResult[each_loc][each_result]["Ref_Stop"],
+                            is_finalResult[each_loc][each_result]["Ref_Frame"],
+                            is_finalResult[each_loc][each_result]["Seq_Nucl_Length"],
+                            is_finalResult[each_loc][each_result]["Seq_Nucleotide"],
+                            is_finalResult[each_loc][each_result]["IS_Family"],
+                            is_finalResult[each_loc][each_result]["IS_Group"],
+                            is_finalResult[each_loc][each_result]["IS_Origin"],
+                            is_finalResult[each_loc][each_result]["IS_Bitscore"],
+                            is_finalResult[each_loc][each_result]["IS_Evalue"],
+                            is_finalResult[each_loc][each_result]["IS_Identities"],
+                            is_finalResult[each_loc][each_result]["IS_Gaps"],
+                            is_finalResult[each_loc][each_result]["IS_SubjectLength"],
+                            
+                    
+                    
+                    ]
+                        ALN.write( "\t".join( result_list  )+'\n'  )
+                        NUL.write('>'+is_name+'\n'+is_finalResult[each_loc][each_result]["Seq_Nucleotide"]+'\n')
+                        
+                for key in is_statsis:
+                    length_all = []
+                    for each_element in is_statsis[key]:
+                        length_all.append(is_statsis[ key ][ each_element ])
+                    STAT.write( 
+                        "%s\t%s\t%s\n"% (  
+                            key,len( is_statsis[key] ) , average( length_all ) 
+                        )  
+                    )
+                if not is_statsis:
+                    STAT.write( '\t%s\n'%(  ave_length  ) )
 
