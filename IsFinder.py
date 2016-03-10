@@ -97,7 +97,7 @@ if __name__ == '__main__':
             ALN = open( outputprefix+".xls",'w'  )
             STAT.write("IS_name\tNumber\tAverage.Length\n")
 
-            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Name","IS_Family","IS_Group","IS_GapLength","IS_Origin","IS_Bitscore","IS_Evalue"])+'\n' )
+            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue"])+'\n' )
             i=0
             data_list  = result.split("<b>Query=")[1:]
 
@@ -110,10 +110,22 @@ if __name__ == '__main__':
                 source_name,alignmentblock,blastblock = block_list
                 source_name = source_name.split()[0]
                 is_detail = {}
-                print(alignmentblock)
-                for each_isline in alignmentblock.split("\n")[1:]:
+                for each_isline in alignmentblock.split("\n")[2:]:
                     isline_l = each_isline.split('\t')
+                    is_detail[ isline_l[0] ] = {    
+                        "Kind":"IS_Element",
+                        "IS_Origin":line_l[2],
+                        "IS_Family":line_l[1],
+                        "IS_Origin":line_l[-3],
+                        "Function":line_l[0],
+                        "Ref_Source":source_name
+                        
                     
+                    
+                    }
+                print(blastblock)
+                for line in blastblock.split('>'):
+                    pass
 
             has = {}
             for line in result.split("\n")[:-1]:
