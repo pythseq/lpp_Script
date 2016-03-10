@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
 
                 }
-            is_finalResult = {}
+            is_finalResult = Ddict()
             is_statsis = {}
 
             for eachblast_block in blastblock.split('>')[1:]:
