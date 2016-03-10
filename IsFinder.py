@@ -121,6 +121,7 @@ if __name__ == '__main__':
                 
                 alignment_list = eachblast_block.split( " Score = " )
                 print(alignment_list)
+                print(blastblock)
                 startdata = alignment_list[ 0 ].strip()
                 subject_name = startdata.split()[0]
                 
