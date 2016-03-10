@@ -132,6 +132,7 @@ if __name__ == '__main__':
                     if float(e_value)>1e-5:
                         continue
                     Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
+                    print(blast_stats)
                     Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\,",blast_stats).group(1)
                     strand_detail  = re.search( "\s+Strand\=(\S+)\,",blast_stats).group(1)
                     SubjLength = re.search("Length\=(\d+)",  blast_stats  ).group(1)
