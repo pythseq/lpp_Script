@@ -188,5 +188,7 @@ if __name__ == '__main__':
                         )  
                     )
                 if not is_statsis:
-                    STAT.write( '\t%s\n'%(  ave_length  ) )
+                    STAT.write(  "Not Find IS!!\n"  )	
+    except Exception,error:
+        print(error)
 
