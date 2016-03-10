@@ -103,6 +103,7 @@ if __name__ == '__main__':
             is_detail = {}
             for each_isline in alignmentblock.split("\n")[2:]:
                 isline_l = each_isline.split('\t')
+                print(isline_l)
                 is_detail[ isline_l[0] ] = {    
                     "Kind":"IS_Element",
                     "IS_Group":isline_l[2],
@@ -130,7 +131,7 @@ if __name__ == '__main__':
                     blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
                     bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
                     e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
-                    if float(e_value)>1e-5:
+                    if float(e_value)>1e-5 and int(bitcore)>500:
                         continue
 
                     Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
@@ -159,7 +160,6 @@ if __name__ == '__main__':
             i=0
 
             for each_loc in sorted(is_finalResult):
-                print(  each_loc )
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
                     print(each_result)
                     i+=1
