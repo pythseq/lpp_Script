@@ -106,7 +106,7 @@ if __name__ == '__main__':
                 data = BeautifulSoup(e_b,"html5lib")
         
                 data = data.get_text() 
-                data_list = data.split("\n\n",2)
+                block_list = data.split("\n\n",2)
                 print(data_list[0])
 
             has = {}
