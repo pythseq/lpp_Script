@@ -43,21 +43,21 @@ if __name__ == '__main__':
 *.xls IS预测结果的表格
 *.stat IS预测结果的统计结果，用excel打开！！
 
-    
-    
+
+
     """)
-    
+
     url = "https://www-is.biotoul.fr/blast/ncbiIS.php"
     values = {
-	"title":"",
+        "title":"",
         "prog":"blastn",
-	"blast":"ok",
-	"wordsize":11,
-	"database":"ISfindernt",
+        "blast":"ok",
+        "wordsize":11,
+        "database":"ISfindernt",
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
         "expect": "1e-100"	,
-	"gapcosts":"5 2"
+        "gapcosts":"5 2"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     response = urllib2.urlopen(req)
     try:
         uploadend = response.read()
-        
+
         out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
         result = None
@@ -81,7 +81,7 @@ if __name__ == '__main__':
             end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
             if "Query=" in end_output:
                 result = end_output.split("</article>")[0]
-                           
+
         if result:
             ALN = open( outputprefix+".xls",'w'  )
             STAT.write("IS_name\tNumber\tAverage.Length\n")
@@ -93,7 +93,7 @@ if __name__ == '__main__':
             for e_b in data_list:
                 e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
                 data = BeautifulSoup(e_b,"html5lib")
-        
+
                 data = data.get_text() 
                 block_list = data.split("\n\n",2)
                 source_name,alignmentblock,blastblock = block_list
@@ -108,9 +108,9 @@ if __name__ == '__main__':
                         "IS_Origin":isline_l[-3],
                         "Function":isline_l[0],
                         "Ref_Source":source_name
-                        
-                    
-                    
+
+
+
                     }
                 is_finalResult = {}
                 is_statsis = {}
@@ -171,13 +171,13 @@ if __name__ == '__main__':
                             is_finalResult[each_loc][each_result]["IS_Identities"],
                             is_finalResult[each_loc][each_result]["IS_Gaps"],
                             is_finalResult[each_loc][each_result]["IS_SubjectLength"],
-                            
-                    
-                    
-                    ]
+
+
+
+                        ]
                         ALN.write( "\t".join( result_list  )+'\n'  )
                         NUL.write('>'+is_name+'\n'+is_finalResult[each_loc][each_result]["Seq_Nucleotide"]+'\n')
-                        
+
                 for key in is_statsis:
                     length_all = []
                     for each_element in is_statsis[key]:
