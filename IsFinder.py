@@ -95,8 +95,7 @@ if __name__ == '__main__':
             data = BeautifulSoup(e_b,"html5lib")
 
             data = data.get_text() 
-            print("#########")
-            print(data)
+
             block_list = data.split("\n\n",2)
             source_name,alignmentblock,blastblock = block_list
             source_name = source_name.split()[0]
@@ -116,6 +115,8 @@ if __name__ == '__main__':
                 }
             is_finalResult = {}
             is_statsis = {}
+            print("##########")
+            print(blastblock)
             for eachblast_block in blastblock.split('>'):
                 
                 
