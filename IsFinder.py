@@ -156,12 +156,13 @@ if __name__ == '__main__':
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
             i=0
+            print(is_finalResult)
             for each_loc in sorted(is_finalResult):
-                print(each_loc)
+
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
                     i+=1
                     is_name = source_name+"_IS%s"%(i)
-                    '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength"])
+
                     result_list = [
                         is_name,
                         is_finalResult[each_loc][each_result]["Ref_Source"],
