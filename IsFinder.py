@@ -70,125 +70,125 @@ if __name__ == '__main__':
     #data = urllib.urlencode(values)
     req = urllib2.Request(url,datagen, headers)
     response = urllib2.urlopen(req)
-    try:
-        uploadend = response.read()
+    #try:
+    uploadend = response.read()
 
-        out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
+    out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
-        result = None
-        while not  result:
-            time.sleep(5)
-            end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
-            if "Query=" in end_output:
-                result = end_output.split("</article>")[0]
+    result = None
+    while not  result:
+        time.sleep(5)
+        end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
+        if "Query=" in end_output:
+            result = end_output.split("</article>")[0]
 
-        if result:
-            ALN = open( outputprefix+".xls",'w'  )
-            STAT.write("IS_name\tNumber\tAverage.Length\n")
+    if result:
+        ALN = open( outputprefix+".xls",'w'  )
+        STAT.write("IS_name\tNumber\tAverage.Length\n")
 
-            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength","IS_Frame"])+'\n' )
+        ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength","IS_Frame"])+'\n' )
+        i=0
+        data_list  = result.split("<b>Query=")[1:]
+
+        for e_b in data_list:
+            e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
+            data = BeautifulSoup(e_b,"html5lib")
+
+            data = data.get_text() 
+            block_list = data.split("\n\n",2)
+            source_name,alignmentblock,blastblock = block_list
+            source_name = source_name.split()[0]
+            is_detail = {}
+            for each_isline in alignmentblock.split("\n")[2:]:
+                isline_l = each_isline.split('\t')
+                is_detail[ isline_l[0] ] = {    
+                    "Kind":"IS_Element",
+                    "IS_Group":isline_l[2],
+                    "IS_Family":isline_l[1],
+                    "IS_Origin":isline_l[-3],
+                    "Function":isline_l[0],
+                    "Ref_Source":source_name
+
+
+
+                }
+            is_finalResult = {}
+            is_statsis = {}
+            for eachblast_block in blastblock.split('>'):
+                alignment_list = eachblast_block.split( " Score = " )
+                startdata = alignment_list[ 0 ].strip()
+                subject_name = startdata.split()[0]
+                subject_length = re.search(  "Length=(\d+)", startdata).group(1)
+                for each_blastdetail in alignment_list[1:]:
+                    blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
+                    bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
+                    e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
+                    if float(e_value)>1e-5:
+                        continue
+                    Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
+                    Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\,",blast_stats).group(1)
+                    strand_detail  = re.search( "\s+Strand\=(\S+)\,",blast_stats).group(1)
+                    SubjLength = re.search("Length\=(\d+)",  blast_stats  ).group(1)
+                    if "Minus" in strand_detail:
+                        Strand = '-'
+                    else:
+                        Strand = "+"
+                    query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
+                    query_end = re.findall("(\d+)\n+", blast_detail)[-2]
+                is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
+                is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
+                is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
+                is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
+                is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
+                is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
+                is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
+                is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
+                is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
+                is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
+                is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
+                is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
             i=0
-            data_list  = result.split("<b>Query=")[1:]
-
-            for e_b in data_list:
-                e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
-                data = BeautifulSoup(e_b,"html5lib")
-
-                data = data.get_text() 
-                block_list = data.split("\n\n",2)
-                source_name,alignmentblock,blastblock = block_list
-                source_name = source_name.split()[0]
-                is_detail = {}
-                for each_isline in alignmentblock.split("\n")[2:]:
-                    isline_l = each_isline.split('\t')
-                    is_detail[ isline_l[0] ] = {    
-                        "Kind":"IS_Element",
-                        "IS_Group":isline_l[2],
-                        "IS_Family":isline_l[1],
-                        "IS_Origin":isline_l[-3],
-                        "Function":isline_l[0],
-                        "Ref_Source":source_name
-
-
-
-                    }
-                is_finalResult = {}
-                is_statsis = {}
-                for eachblast_block in blastblock.split('>'):
-                    alignment_list = eachblast_block.split( " Score = " )
-                    startdata = alignment_list[ 0 ].strip()
-                    subject_name = startdata.split()[0]
-                    subject_length = re.search(  "Length=(\d+)", startdata).group(1)
-                    for each_blastdetail in alignment_list[1:]:
-                        blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
-                        bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
-                        e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
-                        if float(e_value)>1e-5:
-                            continue
-                        Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
-                        Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\,",blast_stats).group(1)
-                        strand_detail  = re.search( "\s+Strand\=(\S+)\,",blast_stats).group(1)
-                        SubjLength = re.search("Length\=(\d+)",  blast_stats  ).group(1)
-                        if "Minus" in strand_detail:
-                            Strand = '-'
-                        else:
-                            Strand = "+"
-                        query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
-                        query_end = re.findall("(\d+)\n+", blast_detail)[-2]
-                    is_finalResult[int(query_start)][ subject_name ] = is_detail[ subject_name ]
-                    is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
-                    is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
-                    is_finalResult[int(query_start)][ subject_name ]["IS_Evalue"] = e_value
-                    is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
-                    is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
-                    is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
-                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
-                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
-                    is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
-                    is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
-                    is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
-                i=0
-                for each_loc in sorted(is_finalResult):
-                    for each_result in sorted(is_finalResult[ each_loc  ] ):
-                        i+=1
-                        is_name = source_name+"_IS%s"%(i)
-                        '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength"])
-                        result_list = [
-                            is_name,
-                            is_finalResult[each_loc][each_result]["Ref_Source"],
-                            is_finalResult[each_loc][each_result]["Kind"],
-                            is_finalResult[each_loc][each_result]["Function"],
-                            is_finalResult[each_loc][each_result]["Ref_Start"],
-                            is_finalResult[each_loc][each_result]["Ref_Stop"],
-                            is_finalResult[each_loc][each_result]["Ref_Frame"],
-                            is_finalResult[each_loc][each_result]["Seq_Nucl_Length"],
-                            is_finalResult[each_loc][each_result]["Seq_Nucleotide"],
-                            is_finalResult[each_loc][each_result]["IS_Family"],
-                            is_finalResult[each_loc][each_result]["IS_Group"],
-                            is_finalResult[each_loc][each_result]["IS_Origin"],
-                            is_finalResult[each_loc][each_result]["IS_Bitscore"],
-                            is_finalResult[each_loc][each_result]["IS_Evalue"],
-                            is_finalResult[each_loc][each_result]["IS_Identities"],
-                            is_finalResult[each_loc][each_result]["IS_Gaps"],
-                            is_finalResult[each_loc][each_result]["IS_SubjectLength"],
+            for each_loc in sorted(is_finalResult):
+                for each_result in sorted(is_finalResult[ each_loc  ] ):
+                    i+=1
+                    is_name = source_name+"_IS%s"%(i)
+                    '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Family","IS_Group","IS_Origin","IS_Bitscore","IS_Evalue","IS_Identities","IS_Gaps","IS_SubjectLength"])
+                    result_list = [
+                        is_name,
+                        is_finalResult[each_loc][each_result]["Ref_Source"],
+                        is_finalResult[each_loc][each_result]["Kind"],
+                        is_finalResult[each_loc][each_result]["Function"],
+                        is_finalResult[each_loc][each_result]["Ref_Start"],
+                        is_finalResult[each_loc][each_result]["Ref_Stop"],
+                        is_finalResult[each_loc][each_result]["Ref_Frame"],
+                        is_finalResult[each_loc][each_result]["Seq_Nucl_Length"],
+                        is_finalResult[each_loc][each_result]["Seq_Nucleotide"],
+                        is_finalResult[each_loc][each_result]["IS_Family"],
+                        is_finalResult[each_loc][each_result]["IS_Group"],
+                        is_finalResult[each_loc][each_result]["IS_Origin"],
+                        is_finalResult[each_loc][each_result]["IS_Bitscore"],
+                        is_finalResult[each_loc][each_result]["IS_Evalue"],
+                        is_finalResult[each_loc][each_result]["IS_Identities"],
+                        is_finalResult[each_loc][each_result]["IS_Gaps"],
+                        is_finalResult[each_loc][each_result]["IS_SubjectLength"],
 
 
 
-                        ]
-                        ALN.write( "\t".join( result_list  )+'\n'  )
-                        NUL.write('>'+is_name+'\n'+is_finalResult[each_loc][each_result]["Seq_Nucleotide"]+'\n')
+                    ]
+                    ALN.write( "\t".join( result_list  )+'\n'  )
+                    NUL.write('>'+is_name+'\n'+is_finalResult[each_loc][each_result]["Seq_Nucleotide"]+'\n')
 
-                for key in is_statsis:
-                    length_all = []
-                    for each_element in is_statsis[key]:
-                        length_all.append(is_statsis[ key ][ each_element ])
-                    STAT.write( 
-                        "%s\t%s\t%s\n"% (  
-                            key,len( is_statsis[key] ) , average( length_all ) 
-                        )  
-                    )
-                if not is_statsis:
-                    STAT.write(  "Not Find IS!!\n"  )	
-    except Exception,error:
-        print(error)
+            for key in is_statsis:
+                length_all = []
+                for each_element in is_statsis[key]:
+                    length_all.append(is_statsis[ key ][ each_element ])
+                STAT.write( 
+                    "%s\t%s\t%s\n"% (  
+                        key,len( is_statsis[key] ) , average( length_all ) 
+                    )  
+                )
+            if not is_statsis:
+                STAT.write(  "Not Find IS!!\n"  )	
+    #except Exception,error:
+        #print(error)
 
