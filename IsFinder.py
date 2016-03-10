@@ -108,7 +108,7 @@ if __name__ == '__main__':
                     "Kind":"IS_Element",
                     "IS_Group":isline_l[2],
                     "IS_Family":isline_l[1],
-                    "IS_Origin":isline_l[-3],
+                    "IS_Origin":isline_l[3],
                     "Function":isline_l[0],
                     "Ref_Source":source_name
 
@@ -161,7 +161,7 @@ if __name__ == '__main__':
 
             for each_loc in sorted(is_finalResult):
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
-                    print(each_result)
+                    
                     i+=1
                     is_name = source_name+"_IS%s"%(i)
 
