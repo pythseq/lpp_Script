@@ -114,10 +114,10 @@ if __name__ == '__main__':
                     isline_l = each_isline.split('\t')
                     is_detail[ isline_l[0] ] = {    
                         "Kind":"IS_Element",
-                        "IS_Origin":line_l[2],
-                        "IS_Family":line_l[1],
-                        "IS_Origin":line_l[-3],
-                        "Function":line_l[0],
+                        "IS_Origin":isline_l[2],
+                        "IS_Family":isline_l[1],
+                        "IS_Origin":isline_l[-3],
+                        "Function":isline_l[0],
                         "Ref_Source":source_name
                         
                     
