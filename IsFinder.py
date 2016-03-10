@@ -83,6 +83,7 @@ if __name__ == '__main__':
     response = urllib2.urlopen(req)
     try:
         uploadend = response.read()
+        print(  uploadend )
 
         out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
