@@ -82,14 +82,14 @@ if __name__ == '__main__':
     response = urllib2.urlopen(req)
     try:
         uploadend = response.read()
-        print(uploadend)
+
 
         out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
-        print(out_url)
+
         result = None
         while not  result:
             time.sleep(5)
-            end_output = urllib.urlopen("https://www-is.biotoul.fr/"+out_url).read()
+            end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
 
             result = re.search("Normal view</a></font><br>(.*)</form>",end_output,re.DOTALL)
         result = result.group(1)
