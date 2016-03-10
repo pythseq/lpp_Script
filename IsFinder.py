@@ -83,7 +83,7 @@ if __name__ == '__main__':
     response = urllib2.urlopen(req)
     try:
         uploadend = response.read()
-        print( uploadend  )
+        
         out_url = re.search("""(resultat.php\S+\"\>)""", uploadend).group(1)
 
         result = None
@@ -97,14 +97,16 @@ if __name__ == '__main__':
             ALN = open( outputprefix+".xls",'w'  )
             STAT.write("IS_name\tNumber\tAverage.Length\n")
 
-            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_SeqenceIdentity","IS_AlignmentLength","IS_Mismatch","IS_GapLength","IS_QueryStart","IS_QueryEND","IS_RefStart","IS_RefEnd","IS_Evalue","IS_Bitscore"])+'\n' )
+            ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Name","IS_Family","IS_Group","IS_GapLength","IS_Origin","IS_Bitscore","IS_Evalue"])+'\n' )
             i=0
             data_list  = result.split("<b>Query=")[1:] 
             for e_b in data_list:
                 e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
                 data = BeautifulSoup(e_b,"html5lib")
         
-                print( data.get_text() )                 
+                data = data.get_text() 
+                data_list = data.split("\n\n",2)
+                print(data_list[0])
 
             has = {}
             for line in result.split("\n")[:-1]:
