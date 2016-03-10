@@ -6,6 +6,7 @@
   Created: 2015/12/4
 """
 from lpp import *
+from bs4 import BeautifulSoup
 import tempfile
 import pandas as pd
 from optparse import OptionParser
@@ -66,7 +67,7 @@ if __name__ == '__main__':
 	"database":"ISfindernt",
         "seqfile":open(options.Sequence,'rb'),
         "seq":"",
-        "expect": "1e-5"	,
+        "expect": "0"	,
 	"gapcosts":"5 2"
     }	
     datagen, headers = poster.encode.multipart_encode(values) 
@@ -91,8 +92,13 @@ if __name__ == '__main__':
             time.sleep(5)
             end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
             if "Query=" in end_output:
-                
-                print(end_output)
+                end_output = end_output.split("</article>")[0]
+                data_list  = data.split("<b>Query=")[1:] 
+                for e_b in data_list:
+                    e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
+                    data = BeautifulSoup(e_b,"html5lib")
+                    
+                    print( data.get_text() )                
                 sys.exit()
             result = re.search("Normal view</a></font><br>(.*)</form>",end_output,re.DOTALL)
         result = result.group(1)
