@@ -78,7 +78,7 @@ if __name__ == '__main__':
     STAT = open( outputprefix+".stat",'w'  )
 
     is_stat = Ddict()
-    data = urllib.urlencode(values)
+    #data = urllib.urlencode(values)
     req = urllib2.Request(url,datagen, headers)
     response = urllib2.urlopen(req)
     try:
