@@ -131,6 +131,7 @@ if __name__ == '__main__':
                     e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
                     if float(e_value)>1e-5:
                         continue
+                    print( blast_stats )
                     Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
 
                     Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\n",blast_stats).group(1)
