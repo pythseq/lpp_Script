@@ -120,8 +120,8 @@ if __name__ == '__main__':
                 
                 
                 alignment_list = eachblast_block.split( " Score = " )
-                print(blastblock)
-                print(eachblast_block)
+                print(blastblock.split('>'))
+                #print(eachblast_block)
                 startdata = alignment_list[ 0 ].strip()
                 subject_name = startdata.split()[0]
                 
