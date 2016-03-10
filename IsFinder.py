@@ -115,12 +115,12 @@ if __name__ == '__main__':
                 }
             is_finalResult = {}
             is_statsis = {}
-            print("##########")
-            print(blastblock)
+
             for eachblast_block in blastblock.split('>'):
                 
                 
                 alignment_list = eachblast_block.split( " Score = " )
+                print(alignment_list)
                 startdata = alignment_list[ 0 ].strip()
                 subject_name = startdata.split()[0]
                 
