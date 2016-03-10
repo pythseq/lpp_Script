@@ -156,7 +156,7 @@ if __name__ == '__main__':
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Stop"] = query_end
             i=0
-            print(is_finalResult)
+            print( len(is_finalResult) )
             for each_loc in sorted(is_finalResult):
 
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
