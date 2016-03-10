@@ -100,7 +100,7 @@ if __name__ == '__main__':
             ALN.write( '\t'.join(["Name","Ref_Source","Kind","Function","Ref_Start","Ref_Stop","Ref_Frame","Seq_Nucl_Length","Seq_Nucleotide","IS_Name","IS_Family","IS_Group","IS_GapLength","IS_Origin","IS_Bitscore","IS_Evalue"])+'\n' )
             i=0
             data_list  = result.split("<b>Query=")[1:]
-            print( data_list[-1] )
+
             for e_b in data_list:
                 e_b = e_b.replace("</td>","\t</td>").replace("</th></tr>","\n").replace("</th>","\t</th>")
                 data = BeautifulSoup(e_b,"html5lib")
