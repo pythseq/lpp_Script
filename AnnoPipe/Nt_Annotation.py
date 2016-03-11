@@ -39,8 +39,9 @@ if __name__=="__main__":
 	if not os.path.exists(base_path):
 		os.makedirs(base_path)
 	end_list  = glob.glob(base_path+'/*.xls')
-	if end_list:
-		sys.exit()
+	for e_f in  end_list:
+		if "_" not in e_f:
+			sys.exit()
 	tmp = base_path+temp_name
 	os.system(""" blastn -db %s -query %s  -num_threads 64 -max_target_seqs 1 -evalue %s  -outfmt  5    >> %s"""% ( Database,options.input,options.evalue,tmp+'.xml'  )   )
 	os.system( "blast_parse.py %s"%(tmp+'.xml') )
