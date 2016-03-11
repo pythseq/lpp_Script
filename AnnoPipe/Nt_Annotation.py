@@ -40,7 +40,7 @@ if __name__=="__main__":
 		os.makedirs(base_path)
 	end_list  = glob.glob(base_path+'/*.xls')
 	for e_f in  end_list:
-		print(e_f)
+
 		if "_" not in e_f:
 			sys.exit()
 	tmp = base_path+temp_name
