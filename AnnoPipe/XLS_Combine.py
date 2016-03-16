@@ -173,6 +173,7 @@ dev.off()
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
     
         result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
+
         result_frame =result_frame.sort(["from",'id'],axis=0)
         result_frame = result_frame.drop(["from",'id'],axis=1)        
         result_frame.to_excel( chrosome_Excel,chrosome,index=False    )
