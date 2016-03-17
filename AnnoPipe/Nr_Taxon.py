@@ -9,9 +9,27 @@ from Dependcy import *
 from optparse import OptionParser
 from Taxon_GI_Parse import *
 import re
-nr_data = pd.read_table(sys.argv[1])
-GENE_TAXON =  open( "Taxon_Taxon.txt",'w' )
-GENE_STATS =  open( "Taxon__TaxonStats.txt",'w' )
+usage = '''usage: python2.7 %prog'''
+parser = OptionParser(usage =usage ) 
+parser.add_option("-i", "--Input", action="store", 
+                  dest="Nr", 
+                  default = "",
+                  help="Nr XLS file")
+parser.add_option("-o", "--Out", action="store", 
+                  dest="OUT", 
+                  default = "",
+                  help="Output prefix")
+(options, args) = parser.parse_args() 
+
+
+nr_data = pd.read_table(options.Nr)
+output_prefix = os.path.abspath( options.OUT  )
+path = os.path.dirname(output_prefix)
+if not os.path.exists(path):
+    os.makedirs(path)
+GENE_TAXON =  open( "%s_Taxon.txt"%(output_prefix),'w' )
+GENE_STATS =  open( "%s__TaxonStats.txt"%(output_prefix),'w' )
+GENE_STATS.write(  "Taxon\tNumber\tPercentage\n"  )
 taxon_stat_hash = Ddict()
 for i in xrange(0,len(nr_data)):
     gi = re.search("gi\|(\d+)",nr_data.loc[i,"Nr_Hit"])
