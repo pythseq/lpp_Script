@@ -35,7 +35,7 @@ ref = options.ref
 thread = options.thread
 
 inputpath = os.path.abspath(  options.inputpath )+'/'
-
++
 # build index
 index_name = ref.rsplit(".",1)[0]
 
@@ -77,4 +77,5 @@ print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
 
 # map(BWA_MAPPING,input_list)
-pool.map(Mapping,input_list)
+#pool.map(Mapping,input_list)
+map(Mapping,input_list)
