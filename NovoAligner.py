@@ -56,7 +56,7 @@ def Mapping( file_list  ):
 
     [read1_file,read2_file ]= sorted_file
     outprefix =   read1_file.rsplit(".",1)[0]
-    os.system(" novoalign -­f %s %s ­-d%s  "%( read1_file, read2_file,  index_name  )  )
+    os.system(" novoalign -f %s %s -d %s  "%( read1_file, read2_file,  index_name  )  )
 
     os.system("samtools view  -@ 20  -bS %s.sam -o %s.bam 2>/dev/null"%( output_preifx, output_preifx ))
     #os.system("samtools sort  -@ 20  -m 10G  %s.bam    %s.sort 2>/dev/null"%( output_preifx, output_preifx ))
