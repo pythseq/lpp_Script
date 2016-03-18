@@ -35,7 +35,7 @@ ref = options.ref
 thread = options.thread
 
 inputpath = os.path.abspath(  options.inputpath )+'/'
-+
+
 # build index
 index_name = ref.rsplit(".",1)[0]
 
@@ -47,7 +47,7 @@ def Mapping( file_list  ):
     name = os.path.basename(  file_list[0]   ) .split('.')[0]
 
 
-    output_preifx = path+name
+    output_preifx = name
     if os.path.exists(output_preifx+".bam.bai"):
         return ""
 
