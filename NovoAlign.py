@@ -84,8 +84,9 @@ def BWA_MAPPING( file_list  ):
 			split_file2 = data_cache_path+'%i/%i.pair2'%( index,index)
 			check_path(  os.path.dirname( split_file2  ))
 			out_hash[i] = open(split_file2,'w')
-			out_hash[i].write(a+b+c+d)	
-	NovoAligner.py  -r ../reference.ndx  -t 64 -i ./	
+			out_hash[i].write(a+b+c+d)
+			
+	os.system("NovoAligner_Single.py  -r ../%s.ndx  -t 32 -i %s -o "%( index_name,data_cache_path,outputpath+"/"+name    )	
 	
 	#os.system("bwa mem  -M  -t 64  %s  %s  %s  1> %s.sam  2>/dev/null"%(ref ,read1_file,read2_file,output_preifx ))
 	#os.system("samtools view  -@ 20  -bS %s.sam -o %s.bam 2>/dev/null"%( output_preifx, output_preifx ))
