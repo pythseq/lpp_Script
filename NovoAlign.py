@@ -88,7 +88,7 @@ def MAPPING( file_list  ):
 		out_hash[index].write(a+b+c+d)
 			
 	os.system("NovoAligner_Single.py  -r %s.ndx  -t 32 -i %s -o %s "%( index_name,data_cache_path,outputpath+"/"+name    ) )	
-	#shutil.rmtree(  data_cache_path  )
+	shutil.rmtree(  data_cache_path  )
 	
 
 output_hash = Ddict()
@@ -103,6 +103,7 @@ for key in output_hash:
 print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
 
-# map(BWA_MAPPING,input_list)
-#pool.map(MAPPING,input_list)
-map(MAPPING,input_list)
+
+pool.map(MAPPING,input_list)
+#map(MAPPING,input_list)
+shutil.rmtree(cache_path)
