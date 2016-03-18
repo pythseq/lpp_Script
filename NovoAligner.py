@@ -44,7 +44,7 @@ index_name = ref
 
 def Mapping( file_list  ):
 
-    name = os.path.basename(  file_list[0]   ) .split('.')[0]
+    name =   file_list[0].rsplit('.',1)[0]
 
 
     output_preifx = name
@@ -59,8 +59,9 @@ def Mapping( file_list  ):
     os.system(" novoalign -f %s %s -d %s  -o SAM >%s.sam "%( read1_file, read2_file,  index_name,output_preifx  )  )
 
     os.system("samtools view  -@ 20  -bS %s.sam -o %s.bam 2>/dev/null"%( output_preifx, output_preifx ))
-    #os.system("samtools sort  -@ 20  -m 10G  %s.bam    %s.sort 2>/dev/null"%( output_preifx, output_preifx ))
+
     os.remove( output_preifx+".sam")
+    
 
 
 
@@ -76,6 +77,6 @@ for key in output_hash:
 print( colored(output_hash,'red' ) )
 pool = multiprocessing.Pool(thread)
 
-# map(BWA_MAPPING,input_list)
-#pool.map(Mapping,input_list)
-map(Mapping,input_list)
+
+pool.map(Mapping,input_list)
+
