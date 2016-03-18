@@ -39,6 +39,8 @@ parser.add_option("-o", "--out", action="store",
 ref = options.ref
 thread = options.thread
 output = options.out
+output_path = os.path.dirname(output)
+check(output_path)
 inputpath = os.path.abspath(  options.inputpath )+'/'
 
 # build index
@@ -84,7 +86,7 @@ pool = multiprocessing.Pool(thread)
 
 
 pool.map(Mapping,input_list)
-os.system(  "samtools merge  %s.bam1 `find %s/ -name *.bam` "%( output,inputpath ))
+os.system(  "samtools merge -f   %s.bam1 `find %s/ -name *.bam` "%( output,inputpath ))
 os.system( "samtools sort  -@ 64 %s.bam1  %s"%(output, output))
 
 
