@@ -30,10 +30,15 @@ parser.add_option("-i", "--input", action="store",
                   type='string',
                   help="input path")
 
+parser.add_option("-o", "--out", action="store", 
+                  dest="out",
+                  type='string',
+                  help="output")
+
 (options, args) = parser.parse_args() 
 ref = options.ref
 thread = options.thread
-
+output = options.out
 inputpath = os.path.abspath(  options.inputpath )+'/'
 
 # build index
@@ -79,4 +84,6 @@ pool = multiprocessing.Pool(thread)
 
 
 pool.map(Mapping,input_list)
+os.system(  "samtools merge  %s.bam1 `find %s/ -name *.bam` "%( output,inputpath ))
+
 
