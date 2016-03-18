@@ -74,8 +74,8 @@ def MAPPING( file_list  ):
 		if index not in out_hash:
 			split_file1 = data_cache_path+'/%i/%i.pair1'%( index,index)
 			check_path(  os.path.dirname( split_file1  ))
-			out_hash[i] = open(split_file1,'w')
-			out_hash[i].write(a+b+c+d)
+			out_hash[index] = open(split_file1,'w')
+		out_hash[index].write(a+b+c+d)
 	out_hash = {}
 	i=0
 	for a,b,c,d in fastq_check(open(read2_file) ):
@@ -84,8 +84,8 @@ def MAPPING( file_list  ):
 		if index not in out_hash:
 			split_file2 = data_cache_path+'/%i/%i.pair2'%( index,index)
 			check_path(  os.path.dirname( split_file2  ))
-			out_hash[i] = open(split_file2,'w')
-			out_hash[i].write(a+b+c+d)
+			out_hash[index] = open(split_file2,'w')
+		out_hash[index].write(a+b+c+d)
 			
 	os.system("NovoAligner_Single.py  -r ../%s.ndx  -t 32 -i %s -o %s "%( index_name,data_cache_path,outputpath+"/"+name    ) )	
 	shutil.rmtree(  data_cache_path  )
