@@ -60,8 +60,9 @@ def MAPPING( file_list  ):
 	output_preifx = path+name
 	if os.path.exists(output_preifx+".bam.bai"):
 		return ""
-
+	print(file_list)
 	sorted_file = sorted(  file_list,key = lambda x:  int( re.search( 'pair(\d+)'   ,x ) .group(1)    )  )
+	
 	
 
 	[read1_file,read2_file ]= sorted_file
