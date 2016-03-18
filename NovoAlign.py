@@ -104,3 +104,4 @@ pool = multiprocessing.Pool(thread)
 
 # map(BWA_MAPPING,input_list)
 pool.map(MAPPING,input_list)
+map(MAPPING,input_list)
