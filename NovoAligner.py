@@ -35,8 +35,7 @@ ref = options.ref
 thread = options.thread
 
 inputpath = os.path.abspath(  options.inputpath )+'/'
-if not os.path.exists(  outputpath  ):
-    os.makedirs( outputpath )
+
 # build index
 index_name = ref.rsplit(".",1)[0]
 
