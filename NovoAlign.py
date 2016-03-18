@@ -35,7 +35,7 @@ parser.add_option("-i", "--input", action="store",
                   help="input path")
 
 (options, args) = parser.parse_args() 
-ref = options.ref
+ref = os.path.abspath(options.ref)
 thread = options.thread
 
 outputpath = os.path.abspath( options.outputpath)+'/'
@@ -87,7 +87,7 @@ def MAPPING( file_list  ):
 			out_hash[index] = open(split_file2,'w')
 		out_hash[index].write(a+b+c+d)
 			
-	os.system("NovoAligner_Single.py  -r ../%s.ndx  -t 32 -i %s -o %s "%( index_name,data_cache_path,outputpath+"/"+name    ) )	
+	os.system("NovoAligner_Single.py  -r %s.ndx  -t 32 -i %s -o %s "%( index_name,data_cache_path,outputpath+"/"+name    ) )	
 	#shutil.rmtree(  data_cache_path  )
 	
 
