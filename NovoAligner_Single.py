@@ -40,7 +40,7 @@ ref = options.ref
 thread = options.thread
 output = options.out
 output_path = os.path.dirname(output)
-check(output_path)
+check_path(output_path)
 inputpath = os.path.abspath(  options.inputpath )+'/'
 
 # build index
