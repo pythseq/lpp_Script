@@ -88,7 +88,7 @@ def MAPPING( file_list  ):
 		out_hash[index].write(a+b+c+d)
 			
 	os.system("NovoAligner_Single.py  -r ../%s.ndx  -t 32 -i %s -o %s "%( index_name,data_cache_path,outputpath+"/"+name    ) )	
-	shutil.rmtree(  data_cache_path  )
+	#shutil.rmtree(  data_cache_path  )
 	
 
 output_hash = Ddict()
