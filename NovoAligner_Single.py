@@ -88,5 +88,6 @@ pool = multiprocessing.Pool(thread)
 pool.map(Mapping,input_list)
 os.system(  "samtools merge -f   %s.bam1 `find %s/ -name *.bam` "%( output,inputpath ))
 os.system( "samtools sort  -@ 64 %s.bam1  %s"%(output, output))
+os.system( "rm %s.bam1"%(output))
 
 
