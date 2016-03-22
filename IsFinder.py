@@ -117,7 +117,7 @@ if __name__ == '__main__':
                 }
             is_finalResult = Ddict()
             is_statsis = Ddict()
-
+            all_lignblock = Ddict()
             for eachblast_block in blastblock.split('>')[1:]:
                 
                 
@@ -128,10 +128,11 @@ if __name__ == '__main__':
                 
                 SubjLength = re.search(  "Length=(\d+)", startdata).group(1)
                 for each_blastdetail in alignment_list[1:]:
+                    tag = 0
                     blast_stats , blast_detail = each_blastdetail.split("\n\n",1 )
                     bitcore = re.search( "\s+bits\s+\((\d+)\)", blast_stats).group(1)
                     e_value  = re.search( "\s+Expect\s+\=\s+(\S+)", blast_stats).group(1)
-                    if float(e_value)>1e-5 or int(bitcore)<500:
+                    if float(e_value)>1e-5 :
                         continue
 
                     Identities = re.search( "\s+Identities\s+\=\s+([^\,]+)\,",blast_stats).group(1)
@@ -145,6 +146,19 @@ if __name__ == '__main__':
                         Strand = "+"
                     query_start = re.search("Query\s+(\d+)\s+", blast_detail).group(1)
                     query_end = re.findall("(\d+)\n+", blast_detail)[-2]
+                    if not len(all_lignblock):
+                        all_lignblock[int(query_start)][ int( query_end )]=""
+                    else:
+                        for start in all_lignblock:
+                            if int(query_start )>=start:
+                                for end in all_lignblock[query_start]:
+                                    if end >= int( query_end ):
+                                        tag = 1
+                    if tag ==0:
+                        all_lignblock[int(query_start)][ int( query_end )]=""
+                    else:
+                        print( subject_name,query_start, query_end)
+                        continue
                     is_finalResult[int(query_start)][ subject_name ] = copy(is_detail[ subject_name ])
                     is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
                     is_finalResult[int(query_start)][ subject_name ]["IS_Identities"] = Identities
