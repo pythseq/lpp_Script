@@ -106,7 +106,7 @@ if __name__ == '__main__':
             is_detail = {}
             for each_isline in alignmentblock.split("\n")[2:]:
                 isline_l = each_isline.split('\t')
-                print(isline_l)
+
                 is_detail[ isline_l[0] ] = {    
                     "Kind":"IS_Element",
                     "IS_Group":isline_l[2],
