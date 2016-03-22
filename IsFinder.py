@@ -66,6 +66,7 @@ if __name__ == '__main__':
     sequence = re.sub('\s+','',DATA.next()[-1])
     NUL = open( outputprefix+".fa",'w'  )
     STAT = open( outputprefix+".stat",'w'  )
+    HTML = open(outputprefix+".html",'w')
 
     is_stat = Ddict()
     #data = urllib.urlencode(values)
@@ -82,8 +83,10 @@ if __name__ == '__main__':
         end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
         if "Query=" in end_output:
             result = end_output.split("</article>")[0]
+            HTML.write(end_output)
 
     if result:
+        
         ALN = open( outputprefix+".xls",'w'  )
         STAT.write("IS_name\tNumber\tAverage.Length\n")
 
@@ -158,7 +161,7 @@ if __name__ == '__main__':
                     if tag ==0:
                         all_lignblock[int(query_start)][ int( query_end )]=""
                     else:
-                        print( subject_name,query_start, query_end)
+                        
                         continue
                     is_finalResult[int(query_start)][ subject_name ] = copy(is_detail[ subject_name ])
                     is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
