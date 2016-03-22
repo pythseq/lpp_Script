@@ -149,10 +149,10 @@ if __name__ == '__main__':
                     if not len(all_lignblock):
                         all_lignblock[int(query_start)][ int( query_end )]=""
                     else:
-                        print(all_lignblock)
+
                         for start in all_lignblock:
                             if int(query_start )>=start:
-                                for end in all_lignblock[query_start]:
+                                for end in all_lignblock[start]:
                                     if end >= int( query_end ):
                                         tag = 1
                     if tag ==0:
