@@ -49,7 +49,7 @@ if __name__=="__main__":
     tag = "%s"%( os.getpid() )
     if not os.path.exists( out_put_path ):
         os.makedirs( out_put_path )
-    end_list = glob.glob(out_put_path+'/*.tar.gz')
+    end_list = glob.glob(out_put_path+'/*.zip')
     if end_list:
         sys.exit()
     README = open(out_put_path+"/Readme.txt",'w')
@@ -60,7 +60,7 @@ if __name__=="__main__":
 *_AlignKEGG.tsv\t基因序列与KEGG数据库比对结果，用excel打开
 *_PathwayCategory_Stats.stat\tKEGG每一个功能模块的Pathway映射到的基因个数统计,用excel打开
 stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
-*.tar.gz\tPathway分析结果的可视化结果，请解压，有两个文件夹，其中doctree文件夹位搜索索引，无需打开。Pathway文件夹下是一个网站，请点击index.html观看，每一个Pathway如果有基因被比对上，后面会出现all字样。
+*.gz\tPathway分析结果的可视化结果，请解压，有两个文件夹，其中doctree文件夹位搜索索引，无需打开。Pathway文件夹下是一个网站，请点击index.html观看，每一个Pathway如果有基因被比对上，后面会出现all字样。
 *.R\t可视化画图脚本，用R语言运行，您可以根据需要自行调整。
 
 
@@ -154,7 +154,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     
     
     
-    make_commandline = config_hash["Tools"]["sphinx"] +" -Q -b html -d %(out)s/doctrees %(location)s %(out)s/pathway && tar -zcf %(out)s.tar.gz %(out)s && rm %(out)s -rf &&rm %(location)s -rf"%(
+    make_commandline = config_hash["Tools"]["sphinx"] +" -Q -b html -d %(out)s/doctrees %(location)s %(out)s/pathway && zip  %(out)s.zip %(out)s -rq && rm %(out)s -rf &&rm %(location)s -rf"%(
         {
             "out":out_put_path+"Pathway",
             "location":source_location
