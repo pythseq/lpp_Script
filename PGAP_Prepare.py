@@ -51,7 +51,7 @@ if __name__ == '__main__':
                     END.write(s)  
             
             END = open( output_path+"/"+name+'.function','a' )        
-            if e_f.endswith(".ptt"):
+            if e_f.endswith(".ptt") or e_f.endswith(".rnt"):
                 RAW = open(a+'/'+e_f,'rU')
                 RAW.next()
                 RAW.next()
