@@ -24,6 +24,7 @@ if __name__ == '__main__':
                       help="output Path")
     
     (options, args) = parser.parse_args()
+    all_has = {}
     input_path = options.Input_path
     output_path = options.output_path
     check_path( output_path )
@@ -33,20 +34,19 @@ if __name__ == '__main__':
                 RAW = open(a+'/'+e_f)
                 name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
     if os.path.exists( output_path+"/"+name+'.function' ):
-        os.remove( output_path+"/"+name+'.function' )                
+        os.remove( output_path+"/"+name+'.function' )      
+        
+         
     for a,b,c in os.walk(input_path):
-        for e_f in c:
-            if e_f=="Total.ffn":
-                RAW = fasta_check( open(a+'/'+e_f) )
-                END = open(output_path+'/'+name+'.nuc','w')
-                for t,s in RAW:
-                    END.write('>'+name+'_'+t[1:])
-                    END.write(s)
+        
+
             
             if e_f=="Total.faa":
                 RAW = fasta_check( open(a+'/'+e_f) )
                 END = open(output_path+'/'+name+'.pep','w')
+                
                 for t,s in RAW:
+                    all_has[t[1:].split()[0]] = ""
                     END.write('>'+name+'_'+t[1:])
                     END.write(s)  
             
@@ -61,5 +61,14 @@ if __name__ == '__main__':
                     if not line_l[-2]:
                         line_l[-2]='-'
                     END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
-    END.close()
+    for a,b,c in os.walk( input_path):
+        for e_f in c:
+            if e_f=="Total.ffn":
+                RAW = fasta_check( open(a+'/'+e_f) )
+                END = open(output_path+'/'+name+'.nuc','w')
+                for t,s in RAW:
+                    if t[1:].split()[0] in all_has:
+                        END.write('>'+name+'_'+t[1:])
+                        END.write(s)           
+    
 
