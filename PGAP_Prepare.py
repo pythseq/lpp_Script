@@ -50,7 +50,7 @@ if __name__ == '__main__':
                     END.write(s)  
             if os.path.exists( output_path+"/"+name+'.function' ):
                 os.remove( output_path+"/"+name+'.function' )
-                END = open( output_path+"/"+name+'.function','a' )        
+            END = open( output_path+"/"+name+'.function','a' )        
             if e_f.endswith(".ptt"):
                 RAW = open(a+'/'+e_f,'rU')
                 RAW.next()
