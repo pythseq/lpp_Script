@@ -52,7 +52,7 @@ if __name__ == '__main__':
                 os.remove( output_path+"/"+name+'.function' )
                 END = open( output_path+"/"+name+'.function','a' )        
             if e_f.endswith(".ptt"):
-                RAW = open(a+e_f,'rU')
+                RAW = open(a+'/'+e_f,'rU')
                 RAW.next()
                 RAW.next()
                 RAW.next()
