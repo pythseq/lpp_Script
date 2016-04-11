@@ -41,26 +41,26 @@ if __name__ == '__main__':
         
 
             
-            if e_f=="Total.faa":
-                RAW = fasta_check( open(a+'/'+e_f) )
-                END = open(output_path+'/'+name+'.pep','w')
-                
-                for t,s in RAW:
-                    all_has[t[1:].split()[0]] = ""
-                    END.write('>'+name+'_'+t[1:])
-                    END.write(s)  
+        if e_f=="Total.faa":
+            RAW = fasta_check( open(a+'/'+e_f) )
+            END = open(output_path+'/'+name+'.pep','w')
             
-            END = open( output_path+"/"+name+'.function','a' )        
-            if e_f.endswith(".ptt") or e_f.endswith(".rnt"):
-                RAW = open(a+'/'+e_f,'rU')
-                RAW.next()
-                RAW.next()
-                RAW.next()
-                for line in RAW:
-                    line_l = line.strip().split("\t")
-                    if not line_l[-2]:
-                        line_l[-2]='-'
-                    END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
+            for t,s in RAW:
+                all_has[t[1:].split()[0]] = ""
+                END.write('>'+name+'_'+t[1:])
+                END.write(s)  
+        
+        END = open( output_path+"/"+name+'.function','a' )        
+        if e_f.endswith(".ptt") :
+            RAW = open(a+'/'+e_f,'rU')
+            RAW.next()
+            RAW.next()
+            RAW.next()
+            for line in RAW:
+                line_l = line.strip().split("\t")
+                if not line_l[-2]:
+                    line_l[-2]='-'
+                END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
     for a,b,c in os.walk( input_path):
         for e_f in c:
             if e_f=="Total.ffn":
