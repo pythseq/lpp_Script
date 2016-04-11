@@ -31,7 +31,7 @@ if __name__ == '__main__':
         for e_f in c:
             if e_f=="Genome1.gbk":
                 RAW = open(a+'/'+e_f)
-                name = re.search( "DEFINITION.+(\S+)\.", RAW.read()).group(1)
+                name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
                 
     for a,b,c in os.walk(input_path):
         for e_f in c:
@@ -60,5 +60,6 @@ if __name__ == '__main__':
                     line_l = line.strip().split("\t")
                     if not line_l[-2]:
                         line_l[-2]='-'
-                    END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n')    
+                    END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
+    END.close()
 
