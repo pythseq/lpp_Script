@@ -32,7 +32,8 @@ if __name__ == '__main__':
             if e_f=="Genome1.gbk":
                 RAW = open(a+'/'+e_f)
                 name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
-                
+    if os.path.exists( output_path+"/"+name+'.function' ):
+        os.remove( output_path+"/"+name+'.function' )                
     for a,b,c in os.walk(input_path):
         for e_f in c:
             if e_f=="Total.ffn":
@@ -48,8 +49,7 @@ if __name__ == '__main__':
                 for t,s in RAW:
                     END.write('>'+name+'_'+t[1:])
                     END.write(s)  
-            if os.path.exists( output_path+"/"+name+'.function' ):
-                os.remove( output_path+"/"+name+'.function' )
+            
             END = open( output_path+"/"+name+'.function','a' )        
             if e_f.endswith(".ptt"):
                 RAW = open(a+'/'+e_f,'rU')
