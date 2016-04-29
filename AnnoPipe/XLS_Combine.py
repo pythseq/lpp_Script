@@ -100,9 +100,9 @@ GeneFeature+Annotation.xlsx	注释的基因信息和基因序列等信息的总�
         stat_result[category] = [category,len(result_frame["Name"])  ]
         # STAT.write(category+'\t%s\t%.2f\n'%(len(result_frame["Name"] ) ,100.0* len(result_frame["Name"] )  /   ) )
         
-        result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
+        result_frame["from"] = result_frame["Name"].str.rsplit('_',1).str.get(0)
         
-        result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
+        result_frame["id"] = result_frame["Name"].str.rsplit('_',1).str.get(1)
         result_frame =result_frame.sort(["from",'id'],axis=0)
         result_frame = result_frame.drop(["from",'id'],axis=1)
         

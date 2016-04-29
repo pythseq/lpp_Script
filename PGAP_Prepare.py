@@ -30,7 +30,7 @@ if __name__ == '__main__':
     check_path( output_path )
     for a,b,c in os.walk(input_path):
         for e_f in c:
-            if e_f=="Genome1.gbk":
+            if e_f.endswith("Genome1.gbk"):
                 RAW = open(a+'/'+e_f)
                 name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
     if os.path.exists( output_path+"/"+name+'.function' ):
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         
 
         for e_f in c:    
-            if e_f=="Total.faa":
+            if e_f.endswith(".faa"):
                 RAW = fasta_check( open(a+'/'+e_f) )
                 END = open(output_path+'/'+name+'.pep','w')
                 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
                     END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
     for a,b,c in os.walk( input_path):
         for e_f in c:
-            if e_f=="Total.ffn":
+            if e_f.endswith(".ffn"):
                 RAW = fasta_check( open(a+'/'+e_f) )
                 END = open(output_path+'/'+name+'.nuc','w')
                 for t,s in RAW:

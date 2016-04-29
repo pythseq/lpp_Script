@@ -123,7 +123,7 @@ export PATH=$PATH:/pub/SOFTWARE/Assembly/trinityrnaseq_r20140717/Analysis/Differ
 export PATH=$PATH:/pub/SOFTWARE/Assembly/iAssembler-v1.3.2.x64
 export TimeOut=0
 ##################################Prokka###########################
-export PATH=$PATH:/pub/SOFTWARE/Other/prokka-1.9/bin:/pub/SOFTWARE/Other/prokka-1.9/binaries/linux
+export PATH=$PATH:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/prokka-1.11/binaries/linux
 ########################Rnammer#################################################
 
 export PATH=$PATH:/pub/SOFTWARE/Other/Rnammer
@@ -194,7 +194,8 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/
 export CLASSPATH=$JAVA_HOME/bin
 export PERl5LIB=$PERl5LIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/
 export PERLLIB=$PERLLIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/:/pub/SOFTWARE/Other/PhageFinder/lib:/pub/SOFTWARE/Other/PGAP-1.12
-export PATH=$PATH:/pub/SOFTWARE/Other/Script/total/Script/:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin:/usr/bin/:/pub/SOFTWARE/Other/PhageFinder_2.1/phage_finder_v2.1/bin/:/pub/SOFTWARE/Scaffolding/amos/bin/:/pub/SOFTWARE/Other/PGAP-1.12:/pub/SOFTWARE/Other/NovoAligner/novocraft
+export PATH=$PATH:/pub/SOFTWARE/Other/Script/total/Script/:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin:/usr/bin/:/pub/SOFTWARE/Other/PhageFinder_2.1/phage_finder_v2.1/bin/:/pub/SOFTWARE/Scaffolding/amos/bin/:/pub/SOFTWARE/Other/PGAP-1.12:/pub/SOFTWARE/Other/NovoAligner/novocraft:/pub/SOFTWARE/Other/gview/:/pub/SOFTWARE/Assembly/SPAdes-3.7.1-Linux/bin:/pub/SOFTWARE/Other/SSPACE-STANDARD-3.0_linux-x86_64
 export DISPLAY=:0
 ulimit -SHn 40960
+CLASSPATH=$CLASSPATH:/pub/SOFTWARE/Other/gview/gview.jar
 #source activate LPP
