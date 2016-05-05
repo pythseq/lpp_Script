@@ -7,7 +7,7 @@
 """
 
 from lpp import *
-
+from optparse import  OptionParser
 class Seq_All(object):
     def __init__(self,name,nul_seq,pep_seq):
         self.name = name
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args() 
     
     
-    input_path = sys.argv[1]
+    input_path = options.input_path
     all_function ={}
     all_sample = {}
     for e_f in glob.glob(options.input_path+"/*.function"):
