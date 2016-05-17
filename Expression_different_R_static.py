@@ -149,7 +149,7 @@ rownames( countsTable ) <- countsTable$gene
 countsTable <- countsTable[ , -1 ]
 conds <- c( "T", "N" ) 
 cds <- newCountDataSet( countsTable, conds ) 
-libsizes <- c(%(x_name)s=%(x_coverage)s, %(x_name)s=%(y_coverage)s)
+libsizes <- c(%(x_name)s=%(x_coverage)s, %(y_name)s=%(y_coverage)s)
 sizeFactors(cds) <- libsizes  
 cds <- estimateSizeFactors( cds ) 
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   

@@ -12,7 +12,7 @@ for files_1 in list_cand:
 	for files_2 in list_cand[  list_cand.index( files_1 )  :]:
 		if files_1!=files_2:
 			name_1 = files_1.split( '.' )[0]; name_2=files_2.split( '.' )[0]
-			END = open( name_1+'_'+ name_2+'.matrix','w'  )
+			END = open( name_1+'___'+ name_2+'.matrix','w'  )
 			data1 = re.sub( '\t(\S+)',lambda x: '\t'+ x.group(1)      ,open( files_1  ).read()  )
 			data2 = re.sub( '\t(\S+)',lambda x: '\t'+ x.group(1)      ,open( files_2  ).read()  )
 			d1_hash = dict(re.findall(  '(\S+)\t(\S+)',data1 ))

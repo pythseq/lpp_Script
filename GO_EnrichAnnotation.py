@@ -41,6 +41,7 @@ if __name__ == '__main__':
 	all_diff_gene = pd.read_table(options.Diff)
 	all_Annotaion = pd.read_table( options.Anno )
 	all_diff_anno = all_Annotaion[ all_Annotaion["Name"].isin( all_diff_gene["id"]  )  ]
+	print( all_diff_gene["id"] )
 	CACHE = open("%s.cache"%(os.getpid()) ,'w')
 	RAW  = open(options.ALLGO)
 	CACHE.write(RAW.next())

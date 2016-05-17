@@ -50,7 +50,7 @@ library("goseq")
 DEG<-read.table("%(inp)s", header = TRUE,sep="\\t")
 DEG <-levels(DEG[,1])
 DEG.vector <- t(DEG)
-ALL<-levels(read.table("%(go)s", header = TRUE,sep="\\t")[,1])
+ALL<-levels(read.table("%(length)s", header = TRUE,sep="\\t")[,1])
 go <-read.table("%(go)s", header = TRUE,sep="\\t")
 
 ALL.vector<-c(t(ALL))
@@ -85,5 +85,5 @@ END.write(r_script)
 END.close()
 
 os.system("R --no-save <  %s"%(END.name))
-os.remove(GO_Cache.name)
+#os.remove(GO_Cache.name)
 	
