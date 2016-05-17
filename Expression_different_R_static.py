@@ -91,7 +91,7 @@ for a,b,c in os.walk(data_path):
         if e_f.endswith(".pair1"):
             line_num = int(os.popen("wc -l %s"%(a+'/'+e_f)).read().split()[0])/2
         
-            sample_name = sampleNameTrans( os.path.split(each_f)[-1].split('.')[0] )
+            sample_name = sampleNameTrans( os.path.split(e_f)[-1].split('.')[0] )
         
             size_factor[ sample_name ] = str( line_num )
 
