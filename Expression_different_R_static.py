@@ -96,7 +96,7 @@ for each_f in glob.glob(data_path +'*.pair1'):
 for each_matrix in glob.glob(  input_path+'*.'+append  ):
     stats_name = os.path.split(each_matrix)[-1].split('.')[0]
 
-    sample_list = [x  for x in stats_name.split('__')]
+    sample_list = [x  for x in stats_name.split('___')]
 
 
     end_path = outputpath+stats_name
