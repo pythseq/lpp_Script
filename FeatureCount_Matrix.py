@@ -11,6 +11,6 @@ RAW = pd.read_table(sys.argv[1])
 all_counts_name  = RAW.columns[6:]
 for key in all_counts_name:
     new_data = pd.DataFrame( RAW,columns=[ "Geneid",key ]  )
-    RAW.to_csv(key+'.count',header=False,index=False,sep="\t")
+    new_data.to_csv(key+'.count',header=False,index=False,sep="\t")
     
     
