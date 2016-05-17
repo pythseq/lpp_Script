@@ -86,12 +86,14 @@ input_path = os.path.abspath(  input_path )+os.sep
 # To store the total depth of Sequencing 
 size_factor = {}
 
-for each_f in glob.glob(data_path +'*.pair1'):
-    line_num = int(os.popen("wc -l %s"%(each_f)).read().split()[0])/2
-
-    sample_name = sampleNameTrans( os.path.split(each_f)[-1].split('.')[0] )
-
-    size_factor[ sample_name ] = str( line_num )
+for a,b,c in os.walk(data_path):
+    for e_f in c:
+        if e_f.endswith(".pair1"):
+            line_num = int(os.popen("wc -l %s"%(each_f)).read().split()[0])/2
+        
+            sample_name = sampleNameTrans( os.path.split(each_f)[-1].split('.')[0] )
+        
+            size_factor[ sample_name ] = str( line_num )
 
 for each_matrix in glob.glob(  input_path+'*.'+append  ):
     stats_name = os.path.split(each_matrix)[-1].split('.')[0]
