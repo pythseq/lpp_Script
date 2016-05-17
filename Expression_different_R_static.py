@@ -94,7 +94,7 @@ for a,b,c in os.walk(data_path):
             sample_name = sampleNameTrans( os.path.split(e_f)[-1].split('.')[0] )
         
             size_factor[ sample_name ] = str( line_num )
-
+print( size_factor )
 for each_matrix in glob.glob(  input_path+'*.'+append  ):
     stats_name = os.path.split(each_matrix)[-1].split('.')[0]
 
