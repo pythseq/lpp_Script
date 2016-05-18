@@ -6,6 +6,7 @@
   Created: 2015/3/16
 """
 from lpp import *
+from GO_obo_parse import *
 usage = "python2.7 %prog [options]"
 parser = OptionParser(usage =usage )
 parser.add_option("-o", "--Output", action="store",
@@ -41,14 +42,16 @@ if __name__ == '__main__':
 	all_diff_gene = pd.read_table(options.Diff)
 	all_Annotaion = pd.read_table( options.Anno )
 	all_diff_anno = all_Annotaion[ all_Annotaion["Name"].isin( all_diff_gene["id"]  )  ]
-	print( all_diff_gene["id"] )
+
 	CACHE = open("%s.cache"%(os.getpid()) ,'w')
 	RAW  = open(options.ALLGO)
-	CACHE.write(RAW.next())
+	CACHE.write(RAW.next()[:-1]+'\tGODefination\n')
+	
 	for line in RAW:
 		line_l =line.strip().split("\t")
 		for key in line_l[1:]:
-			CACHE.write(line_l[0]+'\t'+key+'\n')
+			define = GO_DEF.select( GO_DEF.q.Go== key )[0].Def
+			CACHE.write(line_l[0]+'\t'+key+'\t'+define+'\n')
 	CACHE.close()
 	all_go = pd.read_table( CACHE.name )
 	all_enrichgo = pd.read_table( options.Enrich )
