@@ -7,9 +7,7 @@
 """
 import os
 from lpp import *
-ALL_Data = open(sys.argv[1],'rU')
-UP = open( sys.argv[2],'rU')
-DOWN = open(sys.argv[3],'rU')
+
 TMP = open("%s.tmp"%(os.getpid()),'w')
 TMP.write(ALL_Data.next()[:-1]+'\tSituation\n')
 
@@ -17,21 +15,17 @@ sample_name = os.path.dirname(sys.argv[1]).split('/')[-1]
 for line in ALL_Data:
     TMP.write(line[:-1]+'\t'+sample_name+'\n')
     
+for e_f in sys.argv[1:-1]:
 
+    sample_name = os.path.dirname(e_f).split('/')[-1]
+    RAW = open(e_f,'rU')
+    RAW.next()
+    for line in RAW:
+        TMP.write(line[:-1]+'\t'+sample_name+'\n')
+    
+    
+    
 
-sample_name = os.path.dirname(sys.argv[2]).split('/')[-1]
-UP.next()
-for line in UP:
-    TMP.write(line[:-1]+'\t'+sample_name+'\n')
-    
-    
-    
-sample_name = os.path.dirname(sys.argv[3]).split('/')[-1]
-DOWN.next()
-path = sys.argv[-1]
-for line in DOWN:
-    TMP.write(line[:-1]+'\t'+sample_name+'\n')
-    
 R = open("%s.R"%(os.getpid()),'w')
 r_script = """
 library(ggplot2)
