@@ -169,14 +169,14 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 ######################lastz######################################
 export PATH=$PATH:/pub/SOFTWARE/Other/lastz-distrib-1.03.46/src:/pub/SOFTWARE/Other/HaploMerger_20120810/chainNet_jksrc20100603_ubuntu64bit:/pub/SOFTWARE/Other/HaploMerger_20120810/bin:/pub/SOFTWARE/Other/PhageFinder/bin
-export AUGUSTUS_CONFIG_PATH=/pub/SOFTWARE/Other/augustus.2.5.5/config/
+export AUGUSTUS_CONFIG_PATH=/pub/SOFTWARE/Other/augustus-3.2.2/config/
 ###########################RepeatModler########
-export PATH=$PATH:/pub/SOFTWARE/Other/RepeatModeler:/pub/SOFTWARE/Other/PASA_r20140417:/pub/SOFTWARE/Other/PASA_r20140417/seqclean/seqclean:/pub/SOFTWARE/Other/PASA/scripts/:/pub/SOFTWARE/Other/kobas2.0-20150126/scripts:/pub/SOFTWARE/Other/augustus-3.1/scripts/:/pub/SOFTWARE/Other/augustus-3.1/bin/:/pub/SOFTWARE/Other/bamtools/bin
+export PATH=$PATH:/pub/SOFTWARE/Other/RepeatModeler:/pub/SOFTWARE/Other/PASA_r20140417:/pub/SOFTWARE/Other/PASA_r20140417/seqclean/seqclean:/pub/SOFTWARE/Other/PASA/scripts/:/pub/SOFTWARE/Other/kobas2.0-20150126/scripts:/pub/SOFTWARE/Other/augustus-3.2.2/scripts/:/pub/SOFTWARE/Other/augustus-3.2.2/bin/:/pub/SOFTWARE/Other/bamtools/bin
 export BAMTOOLS_PATH=/pub/SOFTWARE/Other/bamtools/bin
 export PASAHOME=/pub/SOFTWARE/Other/PASA_r20140417
 ####################Augustus#########
 
-export PATH=$PATH:/pub/SOFTWARE/Other/augustus.2.5.5/scripts:/pub/SOFTWARE/Assembly/kakitone-finishingTool-c6fc560:/pub/SOFTWARE/Other/PASA_r20140417/bin/:/pub/SOFTWARE/Other/sratoolkit.2.5.0-1-ubuntu64/bin:/pub/SOFTWARE/Other/RepeatModeler/:/pub/SOFTWARE/Other/proovread/bin:/pub/SOFTWARE/Other/samtools-1.2:/pub/SOFTWARE/Pacbio/DALIGNER/:/pub/SOFTWARE/Pacbio/DAZZ_DB/:/pub/SOFTWARE/Other/BRAKER:/pub/SOFTWARE/Other/STAR/STAR-STAR_2.4.2a/bin/Linux_x86_64:/pub/SOFTWARE/Other/ghostz-1.0.0
+export PATH=$PATH:/pub/SOFTWARE/Other/augustus-3.2.2/scripts:/pub/SOFTWARE/Assembly/kakitone-finishingTool-c6fc560:/pub/SOFTWARE/Other/PASA_r20140417/bin/:/pub/SOFTWARE/Other/sratoolkit.2.5.0-1-ubuntu64/bin:/pub/SOFTWARE/Other/RepeatModeler/:/pub/SOFTWARE/Other/proovread/bin:/pub/SOFTWARE/Other/samtools-1.2:/pub/SOFTWARE/Pacbio/DALIGNER/:/pub/SOFTWARE/Pacbio/DAZZ_DB/:/pub/SOFTWARE/Other/BRAKER:/pub/SOFTWARE/Other/STAR/STAR-STAR_2.4.2a/bin/Linux_x86_64:/pub/SOFTWARE/Other/ghostz-1.0.0
 
 export kobas_home=/pub/SOFTWARE/Other/kobas2.0-20150126/
 export PYTHONPATH=PYTHONPATH:/pub/SOFTWARE/Other/kobas2.0-20150126/src
@@ -185,7 +185,7 @@ export ICORN2_THREADS=64
 export ICORN2_HOME=/pub/SOFTWARE/Other/ICORN2/
 #####################EVM#######################
 export  EVM_HOME=/pub/SOFTWARE/Other/EVM_r2012-06-25/
-export AUGUSTUS_CONFIG_PATH=/pub/SOFTWARE/Other/augustus-3.1/config
+export AUGUSTUS_CONFIG_PATH=/pub/SOFTWARE/Other/augustus-3.2.2/config
 export GENEMARK_PATH=/pub/SOFTWARE/Other/Genmarks/gm_et_linux_64/gmes_petap/
 export SEYMOUR_HOME=/pub/SOFTWARE/Pacbio/smrtanalysis/install/smrtanalysis_2.3.0.140936/
 export LD_LIBRARY_PATH=/pub/SOFTWARE/Other/boost$LD_LIBRARY_PATH
@@ -194,7 +194,7 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/
 export CLASSPATH=$JAVA_HOME/bin
 export PERl5LIB=$PERl5LIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/
 export PERLLIB=$PERLLIB:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1/:/pub/SOFTWARE/Other/PhageFinder/lib:/pub/SOFTWARE/Other/PGAP-1.12
-export PATH=$PATH:/pub/SOFTWARE/Other/PGAP-1.2.1:/pub/SOFTWARE/Other/Script/total/Script/:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin:/usr/bin/:/pub/SOFTWARE/Other/PhageFinder_2.1/phage_finder_v2.1/bin/:/pub/SOFTWARE/Scaffolding/amos/bin/:/pub/SOFTWARE/Other/PGAP-1.12:/pub/SOFTWARE/Other/NovoAligner/novocraft:/pub/SOFTWARE/Other/gview/:/pub/SOFTWARE/Assembly/SPAdes-3.7.1-Linux/bin:/pub/SOFTWARE/Other/SSPACE-STANDARD-3.0_linux-x86_64:/pub/SOFTWARE/Transcriptome_Assembly/stringtie-1.2.2.Linux_x86_64:/pub/SOFTWARE/Other/bedops/applications/bed/conversion/bin:/pub/SOFTWARE/Other/bedops/applications/bed/conversion/src/wrappers:/pub/SOFTWARE/Other/bedops/bin:/pub/SOFTWARE/Other/subread-1.5.0-p2-Linux-x86_64/bin
+export PATH=$PATH:/pub/SOFTWARE/Other/PGAP-1.2.1:/pub/SOFTWARE/Other/Script/total/Script/:/pub/SOFTWARE/Other/HaploMerger_20120810/bin/:/pub/SOFTWARE/Other/tRNAscan-SE-1.3.1:/pub/SOFTWARE/Other/barrnap-0.4.2/bin:/pub/SOFTWARE/Other/pilercr:/pub/SOFTWARE/Other/Script/AnnoPipe:/pub/SOFTWARE/Other/Rnammer:/pub/SOFTWARE/Other/diamond/bin:/pub/SOFTWARE/Other/blastall/blast-2.2.17/bin:/pub/SOFTWARE/Other/prokka-1.11/bin:/pub/SOFTWARE/Other/GIHunter:/usr/share/samtools/:/pub/SOFTWARE/Assembly/EdenaV3.131028/bin:/usr/bin/:/pub/SOFTWARE/Other/PhageFinder_2.1/phage_finder_v2.1/bin/:/pub/SOFTWARE/Scaffolding/amos/bin/:/pub/SOFTWARE/Other/PGAP-1.12:/pub/SOFTWARE/Other/NovoAligner/novocraft:/pub/SOFTWARE/Other/gview/:/pub/SOFTWARE/Assembly/SPAdes-3.7.1-Linux/bin:/pub/SOFTWARE/Other/SSPACE-STANDARD-3.0_linux-x86_64:/pub/SOFTWARE/Transcriptome_Assembly/stringtie-1.2.2.Linux_x86_64:/pub/SOFTWARE/Other/bedops/applications/bed/conversion/bin:/pub/SOFTWARE/Other/bedops/applications/bed/conversion/src/wrappers:/pub/SOFTWARE/Other/bedops/bin:/pub/SOFTWARE/Other/subread-1.5.0-p2-Linux-x86_64/bin:/pub/SOFTWARE/Other/PASA_r20140417/misc_utilities:/pub/SOFTWARE/Other/Genmarks/gm_et_linux_64/gmes_petap
 export DISPLAY=:0
 ulimit -SHn 40960
 CLASSPATH=$CLASSPATH:/pub/SOFTWARE/Other/gview/gview.jar

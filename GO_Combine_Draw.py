@@ -49,9 +49,9 @@ if __name__=='__main__':
     countsTable <- read.delim( "%(inp)s", header=TRUE, stringsAsFactors=TRUE ) 
     pathway_size = length(levels(factor(countsTable$Term)))
     Sample_size = length(levels(factor(countsTable$Situation)))
-    
-    pdf("%(out)s",width=6*Sample_size,height = 0.2*pathway_size)
-    qplot(data = countsTable,x=Situation,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()
+    if (pathway_size<10) pathway_size<-10
+    pdf("%(out)s",width=4*Sample_size,height = 1*pathway_size)
+    qplot(data = countsTable,x=Situation,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()+theme(axis.text.y = element_text(angle = 350, vjust = .8))
     dev.off()
     
     
@@ -69,5 +69,5 @@ if __name__=='__main__':
        )
     os.system("Rscript %s"%(R_CACHE.name))
         
-    os.remove(R_CACHE.name)
-    os.remove(END.name)
+    #os.remove(R_CACHE.name)
+    #os.remove(END.name)

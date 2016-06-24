@@ -36,21 +36,23 @@ if __name__ == '__main__':
     if os.path.exists( output_path+"/"+name+'.function' ):
         os.remove( output_path+"/"+name+'.function' )      
         
-         
+    PEP = open(output_path+'/'+name+'.pep','w')
+    NUC = open(output_path+'/'+name+'.nuc','w')
+    FUNC = open( output_path+"/"+name+'.function','w' )
     for a,b,c in os.walk(input_path):
         
 
         for e_f in c:    
             if e_f.endswith(".faa"):
                 RAW = fasta_check( open(a+'/'+e_f) )
-                END = open(output_path+'/'+name+'.pep','w')
+		if "03." not in a:
+			continue	
                 
                 for t,s in RAW:
                     all_has[t[1:].split()[0]] = ""
-                    END.write('>'+name+'_'+t[1:])
-                    END.write(s)  
+                    PEP.write('>'+name+'_'+t[1:])
+                    PEP.write(s)  
             
-            END = open( output_path+"/"+name+'.function','a' )        
             if e_f.endswith(".ptt") :
                 RAW = open(a+'/'+e_f,'rU')
                 RAW.next()
@@ -60,15 +62,17 @@ if __name__ == '__main__':
                     line_l = line.strip().split("\t")
                     if not line_l[-2]:
                         line_l[-2]='-'
-                    END.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
+                    FUNC.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
+    END = open(output_path+'/'+name+'.nuc','w')
     for a,b,c in os.walk( input_path):
         for e_f in c:
             if e_f.endswith(".ffn"):
+		if "03." not in a:
+			continue
                 RAW = fasta_check( open(a+'/'+e_f) )
-                END = open(output_path+'/'+name+'.nuc','w')
                 for t,s in RAW:
                     if t[1:].split()[0] in all_has:
-                        END.write('>'+name+'_'+t[1:])
-                        END.write(s)           
+                        NUC.write('>'+name+'_'+t[1:])
+                        NUC.write(s)           
     
 

@@ -7,13 +7,11 @@
 """
 import os
 from lpp import *
-
+ALL_Data = open(sys.argv[1])
 TMP = open("%s.tmp"%(os.getpid()),'w')
 TMP.write(ALL_Data.next()[:-1]+'\tSituation\n')
 
-sample_name = os.path.dirname(sys.argv[1]).split('/')[-1]
-for line in ALL_Data:
-    TMP.write(line[:-1]+'\t'+sample_name+'\n')
+path = sys.argv[-1]
     
 for e_f in sys.argv[1:-1]:
 
@@ -33,6 +31,7 @@ require(ggthemes)
 
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
 height = length( levels( go_data$Name  )  )/2
+if (height<10) height<-10
 go_data$EnrichFactor <- go_data$Diff / go_data$All
 pdf("%(path)s/KEGGEnrich.pdf",width=15,height= height)
 
