@@ -38,7 +38,7 @@ for line in data:
             
             all_need[q_name].append( data_set )
 
-align = os.stdin
+align = sys.stdin
 for  line in align:
     line_l = line[:-1].split("\t")
     q_name = line_l[-2]
