@@ -42,6 +42,7 @@ align = sys.stdin
 for  line in align:
     line_l = re.split("\s+\|*\s+",line[:-1])
     q_name = line_l[-2]
+    print(q_name)
     q_start,q_end = sorted( [ int(line_l[2]), int(line_l[3])  ] )   
     if q_name not in all_need:
         print(line),
