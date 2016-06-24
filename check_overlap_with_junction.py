@@ -54,7 +54,7 @@ for  line in align:
         tag=0
         for each_set in all_need[ q_name ]:
             
-            if data_set in each_set and  data_set!=each_set:
+            if each_set in data_set and  data_set!=each_set:
                 new_data = sorted(list(data_set))
                 
                 #print( q_start,q_end  )
