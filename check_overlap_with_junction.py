@@ -45,7 +45,8 @@ for  line in align:
     
     q_start,q_end = sorted( [ int(line_l[2]), int(line_l[3])  ] )   
     if q_name not in all_need:
-        print(line),
+        #print(line),
+        pass
     else:
         print("q_name is "+q_name)
         
