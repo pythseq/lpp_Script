@@ -40,8 +40,14 @@ for line in data:
 
 align = sys.stdin
 for  line in align:
-    line_l = re.split("\s+\|*\s*",line[:-1].lstrip())
-    q_name = line_l[-2]
+    if "[CONTAIN" in line:
+        print(line),
+        continue
+    line_l = re.split("\s+\|*\s*",line[:-1].strip())
+    if "[" in line_l[-1]:
+        q_name = line_l[-2]
+    else:
+        q_name = line_l[-1]
     
     q_start,q_end = sorted( [ int(line_l[2]), int(line_l[3])  ] )   
     if q_name not in all_need:
