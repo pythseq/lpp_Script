@@ -48,10 +48,16 @@ for  line in align:
         print(line),
     else:
         print("q_name is "+q_name)
+        
         data_set = set( xrange(q_start,q_end+1   ) )
         tag=0
         for each_set in all_need[ q_name ]:
-            if each_set&data_set == each_set :
+            
+            if data_set in each_set and  data_set!=each_set:
+                new_data = sorted(list(data_set))
+                
+                #print( q_start,q_end  )
+                #print( "nucmer is %s %s"%(data_set[0],data_set[-1]))
                 tag =1
         if tag==1:
             print(line),
