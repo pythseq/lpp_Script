@@ -40,21 +40,24 @@ for line in data:
 
 align = sys.stdin
 for  line in align:
-    if "[CONTAIN" in line:
+    if "[CONTAIN" in line or "[IDE" in line:
         print(line),
         continue
     line_l = re.split("\s+\|*\s*",line[:-1].strip())
     if "[" in line_l[-1]:
         q_name = line_l[-2]
+        r_name = line_l[-3]
     else:
         q_name = line_l[-1]
+        r_name = line_l[-2]
     
     q_start,q_end = sorted( [ int(line_l[2]), int(line_l[3])  ] )   
-    if q_name not in all_need:
-        #print(line),
+    r_start,r_end = sorted( [ int(line_l[0]), int(line_l[1])  ] )  
+    if q_name not in all_need or r_name not in all_need:
+        print(line),
         pass
     else:
-        print("q_name is "+q_name)
+
         
         data_set = set( xrange(q_start,q_end+1   ) )
         tag=0
@@ -62,9 +65,7 @@ for  line in align:
             
             if each_set & data_set==each_set and  data_set!=each_set:
                 new_data = sorted(list(each_set))
-                
-                print( q_start,q_end  )
-                print( "nucmer is %s %s"%(new_data[0],new_data[-1]))
+
                 tag =1
         if tag==1:
             print(line),
