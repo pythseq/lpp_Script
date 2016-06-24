@@ -58,7 +58,7 @@ for  line in align:
                 new_data = sorted(list(data_set))
                 
                 print( q_start,q_end  )
-                print( "nucmer is %s %s"%(data_set[0],data_set[-1]))
+                print( "nucmer is %s %s"%(new_data[0],new_data[-1]))
                 tag =1
         if tag==1:
             print(line),
