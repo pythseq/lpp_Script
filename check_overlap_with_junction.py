@@ -40,7 +40,7 @@ for line in data:
 
 align = sys.stdin
 for  line in align:
-    line_l = re.split("\s+\|*\s+",line[:-1])
+    line_l = re.split("\s+\|*\s*",line[:-1])
     q_name = line_l[-2]
     print(q_name)
     q_start,q_end = sorted( [ int(line_l[2]), int(line_l[3])  ] )   
