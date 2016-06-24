@@ -55,10 +55,10 @@ for  line in align:
         for each_set in all_need[ q_name ]:
             
             if each_set & data_set==each_set and  data_set!=each_set:
-                new_data = sorted(list(data_set))
+                new_data = sorted(list(each_set))
                 
                 print( q_start,q_end  )
-                print( "nucmer is %s %s"%(each_set[0],each_set[-1]))
+                print( "nucmer is %s %s"%(new_data[0],new_data[-1]))
                 tag =1
         if tag==1:
             print(line),
