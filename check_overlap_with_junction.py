@@ -51,7 +51,7 @@ for  line in align:
         data_set = set( xrange(q_start,q_end+1   ) )
         tag=0
         for each_set in all_need[ q_name ]:
-            if each_set&data_set == data_set :
+            if each_set&data_set == each_set :
                 tag =1
         if tag==1:
             print(line),
