@@ -57,8 +57,8 @@ for  line in align:
             if each_set & data_set==each_set and  data_set!=each_set:
                 new_data = sorted(list(data_set))
                 
-                #print( q_start,q_end  )
-                #print( "nucmer is %s %s"%(data_set[0],data_set[-1]))
+                print( q_start,q_end  )
+                print( "nucmer is %s %s"%(data_set[0],data_set[-1]))
                 tag =1
         if tag==1:
             print(line),
