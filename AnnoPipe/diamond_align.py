@@ -173,6 +173,7 @@ if __name__=="__main__":
             end_list.append( q_length    )
             end_list.append( "(%.0f/%s) %.2f"%( q_alignlength,q_length,  q_coverage   ) )
             end_list.extend( line_l[6:]  )
+            end_list = [x.replace("\t"," ") for x in end_list    ]
             END.write('\t'.join(end_list)+'\n')
     else:
         
@@ -219,6 +220,7 @@ if __name__=="__main__":
             
             end_list.append( subj_coverage )
             end_list.extend( line_l[8:]  )
+            end_list = [x.replace("\t"," ") for x in end_list    ]
             END.write('\t'.join(end_list)+'\n')
             
             
