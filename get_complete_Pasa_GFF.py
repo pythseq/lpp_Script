@@ -12,7 +12,7 @@ all_complete = {}
 
 ALL_CDS= fasta_check(open(sys.argv[2],'rU'))
 for t,s in ALL_CDS:
-    name = t.split()[0].split("\|")[0][1:]
+    name = t.split()[0].split("|")[0][1:]
     all_complete[ name ] = ""
 END = open(sys.argv[3],'w')
 for line in RAW:
@@ -21,5 +21,6 @@ for line in RAW:
         asid = re.findall( "ID\=([^;\|]+)",line)
 
     asid = asid[0]
+
     if asid in all_complete:
         END.write(line)
