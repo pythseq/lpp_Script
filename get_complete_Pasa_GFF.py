@@ -8,11 +8,18 @@
 
 from lpp import *
 RAW = open(sys.argv[1])
-all_complete = File_dict(open(sys.argv[2],'rU')).read(1,1)
+all_complete = {}
+
+ALL_CDS= fasta_check(open(sys.argv[2],'rU'))
+for t,s in ALL_CDS:
+    name = t.split()[0][1:]
+    all_complete[ name ] = ""
 END = open(sys.argv[3],'w')
 for line in RAW:
-    asid = re.findall( "Target\=(\S+)",line)
-    if asid:
-        asid = asid[0]
-        if asid in all_complete:
-            END.write(line)
+    asid = re.findall( "Parent\=([^;\s]+)",line)
+    if not asid:
+        asid = re.findall( "ID\=([^;\s]+)",line)
+
+    asid = asid[0]
+    if asid in all_complete:
+        END.write(line)
