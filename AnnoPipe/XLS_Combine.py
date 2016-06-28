@@ -212,9 +212,10 @@ dev.off()
             total_resultframe = pd.DataFrame.merge(all_gff_frame, all_resultframe, left_on='Name', right_on='Name', how='outer')
             total_number = len( total_resultframe["Name"]   )
             for i in xrange(0,len(total_resultframe)):
-                
-                if not  pd.isnull(total_resultframe.loc[i,"KEGG_Hit"]):
-                    total_resultframe.loc[i,"Function"] = str(total_resultframe.loc[i,"KEGG_Hit"]).split(' ',1)[1]
+                if "KEGG_Hit" in total_resultframe:
+                    
+                    if not  pd.isnull(total_resultframe.loc[i,"KEGG_Hit"]):
+                        total_resultframe.loc[i,"Function"] = str(total_resultframe.loc[i,"KEGG_Hit"]).split(' ',1)[1]
                     
             total_resultframe.to_csv(out_put_path+"GeneFeature+Annotation.xlsx",index=False,sep="\t"   )
         for key in stat_result: 
