@@ -176,6 +176,8 @@ dev.off()
                 all_excel.append(  category_hash[category][chrosome]  )
         
         result_frame = combine_xls(all_excel)
+        if type(result_frame) == str:
+            continue
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
     
         result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
