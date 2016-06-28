@@ -8,10 +8,10 @@
 
 from lpp import *
 RAW = open(sys.argv[1])
-all_complete = File_dict(open(sys.argv[2],'rU'))
+all_complete = File_dict(open(sys.argv[2],'rU')).read(1,1)
 END = open(sys.argv[3],'w')
 for line in RAW:
-    asid = re.findall( "Target\=(\s+)",line)
+    asid = re.findall( "Target\=(\S+)",line)
     if asid:
         asid = asid[0]
         if asid in all_complete:
