@@ -169,7 +169,8 @@ dev.off()
     for chrosome in chrosome_hash:
         all_excel = []
         for category in chrosome_hash[chrosome]:
-            all_excel.append(  category_hash[category][chrosome]  )
+            if os.path.getsize(category_hash[category][chrosome] ):
+                all_excel.append(  category_hash[category][chrosome]  )
         
         result_frame = combine_xls(all_excel)
         result_frame["from"] = result_frame["Name"].str.split('_',1).str.get(0)
