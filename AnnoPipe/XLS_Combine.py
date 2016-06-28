@@ -10,7 +10,7 @@ from optparse import OptionParser
 import os,string
 def combine_xls( data_list   ):
     if not data_list:
-        return None
+        return ""
     out_frame = pd.read_table(data_list[0]).drop_duplicates()
     out_frame = out_frame.where((pd.notnull(out_frame)), None)
     for each_data in data_list[1:]:
@@ -100,7 +100,7 @@ GeneFeature+Annotation.xlsx	注释的基因信息和基因序列等信息的总�
             all_excel.append(  category_hash[category][chrosome]  )
         total_excel.extend(all_excel)
         result_frame = combine_xls(all_excel)
-        if result_frame ==None:
+        if result_frame =="":
             continue
         stat_result[category] = [category,len(result_frame["Name"])  ]
         # STAT.write(category+'\t%s\t%.2f\n'%(len(result_frame["Name"] ) ,100.0* len(result_frame["Name"] )  /   ) )
