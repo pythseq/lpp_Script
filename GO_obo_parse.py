@@ -42,7 +42,7 @@ class GO_DEF(SQLObject):
 class UNIPROT_GO(SQLObject):
     class sqlmeta:
         table="UNIPROT_GO"    
-    Uniprot = StringCol (length=50)
+    UniID = IntCol()
     Go = StringCol (length=50)
     go_index= DatabaseIndex(Go)
     uniprot_index = DatabaseIndex(Uniprot)
@@ -58,8 +58,9 @@ class UNIPROT_GI(SQLObject):
     class sqlmeta:
         table="UNIPROT_GI" 
     
-    GI = IntCol()
+    
     UniID = IntCol()
+    GI = IntCol()
     uniprot_index = DatabaseIndex(UniID)
     gi_index = DatabaseIndex(  GI  )
     
