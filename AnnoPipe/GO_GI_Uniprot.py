@@ -16,7 +16,7 @@ unip = {}
 for line in UNI_GO:
     line_l = line.strip().split("\t")
     if line_l[0] not in unip:
-        i+1
+        i+=1
         unip[ line_l[0] ]=i
         uniId = i
     else:
