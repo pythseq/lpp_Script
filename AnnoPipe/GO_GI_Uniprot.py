@@ -27,7 +27,7 @@ for line in UNI_GI:
     line_l = line.strip().split("\t")
     gi_list = line_l[-1].split("; ")
     if line_l[0] not in unip:
-        i+1
+        i=i+1
         unip[ line_l[0] ]=i
         uniId = i
     else:

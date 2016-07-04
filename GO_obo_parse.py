@@ -202,9 +202,16 @@ if __name__ == '__main__':
     
     
     os.system(mysql_connection+load_des_script)
-    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GO (uniprot, go);'"""%(UNIDATA.name)
-    
-    os.system(mysql_connection+load_des_script)    
 
+    
+        
+    os.system("GO_GI_Uniprot.py Unirpto_GO.txt Uniprot_GI.txt Uniprot_ID")
+    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GO (uni_id, go);'"""%(UNIDATA.name)
+    os.system(mysql_connection+load_des_script)
+    
+    
+    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GI (uni_id, g_i);'"""%(UNIDATA.name)
+    os.system(mysql_connection+load_des_script)
+    
 #for key3 in leaf_3:
     #ALL_FAT.write( key3+'\t3\n'  )	
