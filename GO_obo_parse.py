@@ -198,6 +198,9 @@ if __name__ == '__main__':
     
     load_des_script = """-e 'load data local infile   "%s" into table GO_COMP (go, compent);'"""%(COMPONENT.name)
     
+    os.system(  """cut -f1,5 %s >Uniprot_GI.txt"""%( options.Mapping )   )
+    
+    
     os.system(mysql_connection+load_des_script)
     load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GO (uniprot, go);'"""%(UNIDATA.name)
     
