@@ -45,7 +45,7 @@ class UNIPROT_GO(SQLObject):
     UniID = IntCol()
     Go = StringCol (length=50)
     go_index= DatabaseIndex(Go)
-    uniprot_index = DatabaseIndex(Uniprot)
+    uniprot_index = DatabaseIndex(UniID)
 class UNIPROT(SQLObject):
     class sqlmeta:
         table="UNIPROT" 
