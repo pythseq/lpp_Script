@@ -8,9 +8,9 @@ from sqlobject import *
 from optparse import OptionParser
 user = "root"
 password = "gass_1985"
-mysql_connection = "mysql -h 192.168.0.21 -u%s -p%s  --local-infile=1 GO "%(user,password)
-mysql_build = "mysql -h 192.168.0.21 -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@192.168.0.21/GO'%(user,password)    
+mysql_connection = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 GO "%(user,password)
+mysql_build = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 "%(user,password)
+connection_string = 'mysql://%s:%s@192.168.0.10/GO'%(user,password)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 
@@ -46,6 +46,22 @@ class UNIPROT_GO(SQLObject):
     Go = StringCol (length=50)
     go_index= DatabaseIndex(Go)
     uniprot_index = DatabaseIndex(Uniprot)
+class UNIPROT(SQLObject):
+    class sqlmeta:
+        table="UNIPROT" 
+    
+    Uniprot = StringCol (length=50)
+    UniID = IntCol()
+    uniprot_index = DatabaseIndex(Uniprot)
+    
+class UNIPROT_GI(SQLObject):
+    class sqlmeta:
+        table="UNIPROT_GI" 
+    
+    GI = IntCol()
+    UniID = IntCol()
+    uniprot_index = DatabaseIndex(UniID)
+    gi_index = DatabaseIndex(  GI  )
     
 class GO_SON(SQLObject):
     class sqlmeta:
@@ -72,9 +88,13 @@ if __name__ == '__main__':
     parser.add_option("-I", "--OBO", action="store",
                       dest="Input",
                       help="obo file")
+    
     parser.add_option("-U", "--UNIPROT", action="store",
                       dest="uniprot",
-                      help="uniprot file")    
+                      help="uniprot file")   
+    parser.add_option("-M", "--Mapping", action="store",
+                      dest="Mapping",
+                      help="mapping file")     
 
     (options, args) = parser.parse_args()
 
@@ -152,6 +172,8 @@ if __name__ == '__main__':
     GO_ROOT.createTable(ifNotExists=True)
     GO_ALTER.createTable(ifNotExists=True)
     GO_DEF.createTable(ifNotExists=True)
+    UNIPROT.createTable(ifNotExists=True)
+    UNIPROT_GI.createTable(ifNotExists=True)
     UNIPROT_GO.createTable(ifNotExists=True)
     GO_SON.createTable(ifNotExists=True)
     GO_COMPONENT.createTable(ifNotExists=True)
