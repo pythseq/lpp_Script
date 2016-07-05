@@ -54,9 +54,24 @@ if __name__ == '__main__':
 	
 		line_l = line.split('\t')
 		name = line_l[0].split()[0]
-		gi = re.search( '(?:sp|tr)\|(\w+)' ,line_l[1] ).group(1)
-		
-		all_mapped_go = UNIPROT_GO.select(UNIPROT_GO.q.Uniprot==gi)
+		gi = re.search( '(?:sp|tr)\|(\w+)' ,line_l[1] )
+		uniprot_id = ""
+		if not gi:
+			
+			gi = re.search("gi\|(\d+)",line_l[1])
+			gi = gi.group(1)
+			all_giuniprot = UNIPROT_GI.select( UNIPROT_GO.q.GI==gi  )
+			if all_giuniprot.count():
+				all_giuniprot = all_giuniprot[0]
+				uniprot_id = all_giuniprot.UniID
+		else:
+			all_uniprotdatabase = UNIPROT.select( UNIPROT.q.Uniprot==gi  )
+			if all_uniprotdatabase.count():
+				all_uniprotdatabase = all_uniprotdatabase[0]
+				uniprot_id = all_uniprotdatabase.UniID
+			all_uniprot = UNIPROT.select(UNIPROT_GO.q.Uniprot == gi)
+			
+			all_mapped_go = UNIPROT_GO.select(UNIPROT_GO.q.Uniprot==gi)
 		for each_go in all_mapped_go:
 			go_term = each_go.Go
 	
