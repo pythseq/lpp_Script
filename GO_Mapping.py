@@ -59,35 +59,38 @@ if __name__ == '__main__':
 		if not gi:
 			
 			gi = re.search("gi\|(\d+)",line_l[1])
-			gi = gi.group(1)
+			if not gi:
+				continue
+			gi = int(gi.group(1))
 			all_giuniprot = UNIPROT_GI.select( UNIPROT_GO.q.GI==gi  )
 			if all_giuniprot.count():
 				all_giuniprot = all_giuniprot[0]
 				uniprot_id = all_giuniprot.UniID
 		else:
+			gi = gi.group(1)
 			all_uniprotdatabase = UNIPROT.select( UNIPROT.q.Uniprot==gi  )
 			if all_uniprotdatabase.count():
 				all_uniprotdatabase = all_uniprotdatabase[0]
 				uniprot_id = all_uniprotdatabase.UniID
-			all_uniprot = UNIPROT.select(UNIPROT_GO.q.Uniprot == gi)
+		if uniprot_id:
 			
-			all_mapped_go = UNIPROT_GO.select(UNIPROT_GO.q.Uniprot==gi)
-		for each_go in all_mapped_go:
-			go_term = each_go.Go
-	
-			all_changed_go = GO_ALTER.select(GO_ALTER.q.Go_raw==go_term)
-			if all_changed_go.count():
-				for each_changed_go in all_changed_go:
-					each_altered = each_changed_go.Change_to
-					defination  = GO_DEF.select( GO_DEF.q.Go== each_altered )[0].Def
-					
-					go_id[ each_altered][ name ] ='-\t-\t->\t'+name+'\t'+gi+'\t'+each_altered+'\t'+defination
-					id_go[ name ][ each_altered ] = ''	
-			else:
-				defination  = GO_DEF.select( GO_DEF.q.Go== go_term )[0].Def
-				go_id[ go_term ][ name ] = '-\t-\t->\t'+name+'\t'+gi+'\t'+go_term+'\t'+defination
-				id_go[ name ][ go_term ] = ''			
-	
+			all_mapped_go = UNIPROT_GO.select( UNIPROT_GO.q.UniID  ==  uniprot_id  )
+			for each_go in all_mapped_go:
+				go_term = each_go.Go
+		
+				all_changed_go = GO_ALTER.select( GO_ALTER.q.Go_raw==go_term  )
+				if all_changed_go.count():
+					for each_changed_go in all_changed_go:
+						each_altered = each_changed_go.Change_to
+						defination  = GO_DEF.select( GO_DEF.q.Go== each_altered )[0].Def
+						
+						go_id[ each_altered][ name ] ='-\t-\t->\t'+name+'\t'+gi+'\t'+each_altered+'\t'+defination
+						id_go[ name ][ each_altered ] = ''	
+				else:
+					defination  = GO_DEF.select( GO_DEF.q.Go== go_term )[0].Def
+					go_id[ go_term ][ name ] = '-\t-\t->\t'+name+'\t'+gi+'\t'+go_term+'\t'+defination
+					id_go[ name ][ go_term ] = ''			
+		
 	root_static = Ddict()
 	
 	for each_go in go_id:
