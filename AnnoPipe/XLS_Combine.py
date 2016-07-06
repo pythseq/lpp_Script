@@ -77,6 +77,8 @@ GeneFeature+Annotation.xlsx	注释的基因信息和基因序列等信息的总�
         for e_f in file_list:
             if e_f.endswith(".xls"):
                 chrosmome,category=  base_path.rsplit('/',2)[-2:]
+                if "GO" == category:
+                    continue
                 category_hash[category][chrosmome] = base_path+'/'+e_f
                 chrosome_hash[chrosmome][category] = base_path+'/'+e_f
                 

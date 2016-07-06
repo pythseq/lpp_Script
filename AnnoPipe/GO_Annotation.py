@@ -93,6 +93,7 @@ Draw.R\tGO分析可视化画图脚本，用R运行。
 	)
 	cogdraw_process = subprocess.Popen(  godraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogdraw_process.communicate()	
+	os.remove( diamond_result )
 	
 	
 
