@@ -40,7 +40,7 @@ def Nul_or_Protein( seq ):
 	return blast_type
 
 def RunDiamond( fasta,evalue,blasttype,dbname,output  ):
-	if not output.endswith(".tsv"):
+	if not output.endswith(".tsv") and not output.endswith(".xls"):
 		output=output+".tsv"
 	command = "diamond_align.py  -i %(fasta)s   -o %(output)s  -a  %(dbname)s   -e %(evalue)s -n %(dbname)s  -t %(blasttype)s"%(
 	    {
