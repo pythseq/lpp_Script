@@ -62,7 +62,7 @@ if __name__ == '__main__':
 			if not gi:
 				continue
 			gi = int(gi.group(1))
-			all_giuniprot = UNIPROT_GI.select( UNIPROT_GO.q.GI==gi  )
+			all_giuniprot = UNIPROT_GI.select( UNIPROT_GI.q.GI==gi  )
 			if all_giuniprot.count():
 				all_giuniprot = all_giuniprot[0]
 				uniprot_id = all_giuniprot.UniID
@@ -84,11 +84,11 @@ if __name__ == '__main__':
 						each_altered = each_changed_go.Change_to
 						defination  = GO_DEF.select( GO_DEF.q.Go== each_altered )[0].Def
 						
-						go_id[ each_altered][ name ] ='-\t-\t->\t'+name+'\t'+gi+'\t'+each_altered+'\t'+defination
+						go_id[ each_altered][ name ] ='-\t-\t->\t'+name+'\t'+str(gi)+'\t'+each_altered+'\t'+defination
 						id_go[ name ][ each_altered ] = ''	
 				else:
 					defination  = GO_DEF.select( GO_DEF.q.Go== go_term )[0].Def
-					go_id[ go_term ][ name ] = '-\t-\t->\t'+name+'\t'+gi+'\t'+go_term+'\t'+defination
+					go_id[ go_term ][ name ] = '-\t-\t->\t'+name+'\t'+str(gi)+'\t'+go_term+'\t'+defination
 					id_go[ name ][ go_term ] = ''			
 		
 	root_static = Ddict()
