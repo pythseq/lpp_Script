@@ -54,7 +54,7 @@ r"""
 	
 	    )
 	diamond_result = output_prefix+'_SwissAlignment.xls'
-	error = RunDiamond(options.input,options.evalue, blast_type,"Swiss",diamond_result)
+	error = RunDiamond(options.input,options.evalue, blast_type,"swissprot",diamond_result)
 	if error:
 		print( colored("%s 's Swiss process in Diamond of Nr is error!!","red") )
 		print(colored( error,"blue"  ))
