@@ -57,15 +57,15 @@ Draw.R\tGO分析可视化画图脚本，用R运行。
 	
 	
 	    )
-	diamond_result = output_prefix+'_Alignment.tsv'
-	error = RunDiamond(options.input,options.evalue, blast_type,"uniprot",diamond_result)
+	diamond_result = output_prefix+'_SwissAlignment.tsv'
+	error = RunDiamond(options.input,options.evalue, blast_type,"swissprot",diamond_result)
 	if error:
-		print( colored("%s 's Uniprot process in Diamond of eggnog is error!!","red") )
+		print( colored("%s 's Swissprot process in Diamond of eggnog is error!!","red") )
 		print(colored( error,"blue"  ))
 		print(  "##############################################"   )
 
 		sys.exit()
-	uniprot_anno_frame = pd.read_table(  diamond_result  )	
+	swiss_anno_frame = pd.read_table(  diamond_result  )	
 	
 	
 	

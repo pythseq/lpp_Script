@@ -60,7 +60,8 @@ db_table = {
     "nr":Nr,
     "eggnog":eggNOG,
     "swissprot":SwissProt,
-	"ko":KEGG
+	"ko":KEGG,
+    "uniprot":UNIPROT
 
 
 }

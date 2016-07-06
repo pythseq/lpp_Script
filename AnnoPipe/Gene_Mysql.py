@@ -47,7 +47,13 @@ class KEGG( SQLObject  ):
     Length = IntCol()
     Name_index = DatabaseIndex(Name)
     
-
+class UNIPROT( SQLObject  ):
+    class sqlmeta:
+        table="Uniprot"
+    Name = StringCol(length=400,unique=True)
+    Annotation = StringCol()
+    Length = IntCol()
+    Name_index = DatabaseIndex(Name)
 
 
 
