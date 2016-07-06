@@ -44,7 +44,7 @@ if __name__=="__main__":
 	README = open(out_put_path+"Readme.txt",'w')
 	README.write(
 r"""
-将所有的基因序列比对到Nr数据库,结果说明如下：
+将所有的基因序列比对到Swwiss数据库,结果说明如下：
 
 *.xls  详细的比对结果，用Excel打开。
 
@@ -53,37 +53,15 @@ r"""
 	
 	
 	    )
-	diamond_result = output_prefix+'_SwissAlignment.tsv'
+	diamond_result = output_prefix+'_SwissAlignment.xls'
 	error = RunDiamond(options.input,options.evalue, blast_type,"Swiss",diamond_result)
 	if error:
-		print( colored("%s 's Nr process in Diamond of Nr is error!!","red") )
+		print( colored("%s 's Swiss process in Diamond of Nr is error!!","red") )
 		print(colored( error,"blue"  ))
 		print(  "##############################################"   )
 
 		sys.exit()
-	os.rename(output_prefix+'_NrAlignment.tsv',output_prefix+'_NrAlignment.xls')
-	nr_data = pd.read_table(output_prefix+'_NrAlignment.xls')
-	GENE_TAXON =  open( output_prefix+"_Taxon.txt",'w' )
-	GENE_STATS =  open( output_prefix+"_TaxonStats.txt",'w' )
-	taxon_stat_hash = Ddict()
-	for i in xrange(0,len(nr_data)):
-		gi = re.search("gi\|(\d+)",nr_data.loc[i,"Nr_Hit"])
-		if gi:
-			gi = gi.group(1)
-			taxon_gi_sql = Taxon_GI.select(Taxon_GI.q.GI==int(gi) )   
-			if taxon_gi_sql.count():
-				taxon_gi_sql = taxon_gi_sql[0]
-				taxon_id = taxon_gi_sql.Taxon
-				taxon_name_sql = TaxonName.select(TaxonName.q.Taxon==taxon_id)   
-				
-				taxon_name = taxon_name_sql[0].Name
-				
-				GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
-
-				taxon_stat_hash[taxon_name][ nr_data.loc[i,"Name"] ]=""
-	for key in sorted( taxon_stat_hash,key= lambda x: len( taxon_stat_hash[x]  )   )[::-1]:
-		
-		GENE_STATS.write(   key+'\t%s'%(  len( taxon_stat_hash[key]  )  ) +'\n'  )
+	
 
 
 
