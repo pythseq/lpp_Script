@@ -49,7 +49,8 @@ if __name__ == '__main__':
 		    "KEGG":proteinseq,
 		    "Nr":proteinseq,
 		    "COG":proteinseq,
-		    "GO":proteinseq
+		    "GO":proteinseq,
+		    "Swiss":proteinseq,
 		}
 		
 	if nuclseq:
@@ -59,6 +60,7 @@ if __name__ == '__main__':
 			"COG":nuclseq,
 			"GO":nuclseq,
 		    "Nt":nuclseq,
+		    "Swiss":nuclseq
 		}	
 	data_hash2.update(data_hash1)
 	data_hash = data_hash2	
@@ -96,7 +98,7 @@ Table文件夹是所有注释分析的结果明细统计表，按照数据库分
 			
 			)
 		elif each_db == "GO":
-			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)s/Swiss/%(name)s -e %(e-val)s"%( 
+			commandline = "GO_Annotation.py -i %(protein)s  -o %(output_prefix)s/GO/%(name)s -e %(e-val)s"%( 
 				{
 			        "name":name,
 					"protein":proteinseq,
@@ -140,6 +142,18 @@ Table文件夹是所有注释分析的结果明细统计表，按照数据库分
 		        }   
 		
 		    )		
+		elif each_db =="Swiss":
+			commandline = " Swiss_Annotation.py -i %(pros)s  -o %(output_prefix)s/Swiss/%(name)s.xls -e %(e-val)s"%( 
+				{
+					"name":name,
+					"pros":proteinseq,
+					"output_prefix":output_prefix,
+					"e-val":e_val
+		
+				}   
+		
+			)		
+
 			
 		commandlist.append(commandline)
 		
