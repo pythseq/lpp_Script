@@ -35,10 +35,10 @@ for line in RAW:
         old_data[2] = "gene"
         END.write("\t".join(old_data))
         attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
-        END.write('\t'+attribute+'\n')
+        END.write('\t'+attribute)
         old_data[2] = "mRNA"
         attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
-        END.write("\t".join(old_data)+'\t'+attribute+'\n')
+        END.write("\t".join(old_data)+'\t'+attribute)
         i+=1
         END.write(  "".join(cache) )
         
@@ -71,19 +71,22 @@ for line in RAW:
         
         
         
-#else:
-    #line_l =old_data
-    #line_l[3]=start
-    #line_l[4] = end
+else:
+    old_data = cache[0].split("\t")[:-1]
+    attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
+    end = cache[-1].split("\t")[4]
+    old_data[4]=end
 
-    #line_l[2] = "gene"
-    #END.write("\t".join(line_l))
-    #attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
-    #END.write('\t'+attribute+'\n')
-    #line_l[2] = "mRNA"
-    #attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
-    #END.write("\t".join(line_l)+'\t'+attribute+'\n')
 
-    #END.write(  "".join(cache) )
-        
+    old_data[2] = "gene"
+    END.write("\t".join(old_data))
+    attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
+    END.write('\t'+attribute)
+    old_data[2] = "mRNA"
+    attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
+    END.write("\t".join(old_data)+'\t'+attribute)
+    i+=1
+    END.write(  "".join(cache) )
+
+    
         
