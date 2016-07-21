@@ -37,17 +37,17 @@ for line in RAW:
     if ID != OLD_ID and OLD_ID!='':
         OLD_ID=ID
         
-        line_l =old_data
-        line_l[3]=start
-        line_l[4] = end
+        
+        old_data[3]=start
+        old_data[4] = end
 
-        line_l[2] = "gene"
-        END.write("\t".join(line_l))
+        old_data[2] = "gene"
+        END.write("\t".join(old_data))
         attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
         END.write('\t'+attribute+'\n')
-        line_l[2] = "mRNA"
+        old_data[2] = "mRNA"
         attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
-        END.write("\t".join(line_l)+'\t'+attribute+'\n')
+        END.write("\t".join(old_data)+'\t'+attribute+'\n')
         i+=1
         END.write(  "".join(cache) )
         start = line_l[3]
