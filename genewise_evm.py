@@ -26,13 +26,13 @@ for line in RAW:
     attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
     line_l[2]="exon"
     
-    cache.append(   '\t'.join(line_l[-1])+'\t'+attribute  )
+    cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
     attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
     line_l[2]="cds"   
-    cache.append(   '\t'.join(line_l[-1])+'\t'+attribute  )
+    cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
     
     old_data = line_l
-    print(ID ,OLD_ID )
+
     
     if ID != OLD_ID and OLD_ID!='':
         OLD_ID=ID
