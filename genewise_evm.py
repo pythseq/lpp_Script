@@ -25,7 +25,7 @@ for line in RAW:
        
         
     if ID != OLD_ID :
-
+        cache = sorted(  cache,key = lambda x: int(x.split("\t")[3]  )  )
         old_data = cache[0].split("\t")[:-1]
         attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
         end = cache[-1].split("\t")[4]
@@ -72,6 +72,7 @@ for line in RAW:
         
         
 else:
+    cache = sorted(  cache,key = lambda x: int(x.split("\t")[3]  )  )
     old_data = cache[0].split("\t")[:-1]
     attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
     end = cache[-1].split("\t")[4]
