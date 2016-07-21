@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 if not line:
                     continue
                 gff_list = line.split("\t")
-                if gff_list[2] !="match":
+                if gff_list[2] !="cds":
                     continue
                 seq_name = gff_list[0]
                
