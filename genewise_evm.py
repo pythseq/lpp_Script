@@ -17,30 +17,17 @@ for line in RAW:
     ID = re.search("ID=([^\;]+)",line).group(1)
     
     line_l = line.strip().split("\t")
-    end = line_l[4]
     
     if not OLD_ID:
         OLD_ID= ID 
-        start = line_l[3]
-        i+=1
-    attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
-    line_l[2]="exon"
-    
-    cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
-    attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
-    line_l[2]="cds"   
-    cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
-    
-    old_data = line_l[:-1]
+        
+    if ID != OLD_ID :
+        old_data = cache[0].split("\t")[:-1]
+        attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
+        end = cache[-1].split("\t")[4]
+        old_data[4]=end
 
     
-    if ID != OLD_ID and OLD_ID!='':
-        OLD_ID=ID
-        
-        
-        old_data[3]=start
-        old_data[4] = end
-
         old_data[2] = "gene"
         END.write("\t".join(old_data))
         attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
@@ -50,25 +37,48 @@ for line in RAW:
         END.write("\t".join(old_data)+'\t'+attribute+'\n')
         i+=1
         END.write(  "".join(cache) )
-        start = line_l[3]
+        
+        OLD_ID=ID
+        
+        
+        cache = []
+        attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
+        line_l[2]="exon"
+        cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
+        attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
+        line_l[2]="cds"
+        cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
+    else:
+        attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
+        line_l[2]="exon"
+        
+        cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
+        attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
+        line_l[2]="cds"   
+        cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
+    
+
+
+    
+    
         
         
         
         
         cache = []
-else:
-    line_l =old_data
-    line_l[3]=start
-    line_l[4] = end
+#else:
+    #line_l =old_data
+    #line_l[3]=start
+    #line_l[4] = end
 
-    line_l[2] = "gene"
-    END.write("\t".join(line_l))
-    attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
-    END.write('\t'+attribute+'\n')
-    line_l[2] = "mRNA"
-    attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
-    END.write("\t".join(line_l)+'\t'+attribute+'\n')
+    #line_l[2] = "gene"
+    #END.write("\t".join(line_l))
+    #attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
+    #END.write('\t'+attribute+'\n')
+    #line_l[2] = "mRNA"
+    #attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
+    #END.write("\t".join(line_l)+'\t'+attribute+'\n')
 
-    END.write(  "".join(cache) )
+    #END.write(  "".join(cache) )
         
         
