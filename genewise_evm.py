@@ -19,10 +19,11 @@ for line in RAW:
     line_l = line.strip().split("\t")
     
     if not OLD_ID:
-        print(ID)
+        
         OLD_ID= ID 
         
     if ID != OLD_ID :
+        print(ID,OLD_ID)
         old_data = cache[0].split("\t")[:-1]
         attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
         end = cache[-1].split("\t")[4]
