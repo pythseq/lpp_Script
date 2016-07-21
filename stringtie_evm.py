@@ -10,21 +10,27 @@ RAW = open(sys.argv[1],'rU')
 END = open(sys.argv[2],'w')
 data_hash = {}
 for line in RAW:
-    if "\ttranscript\t" in line:
-        continue
     line_l = line.split("\t")
-    line_l[2] = "EST_match"
-    name =re.search("Parent\=(\S+)",line_l[-1]).group(1)
-    loc = int(line_l[4]) - int(line_l[3])
-    append = loc - loc%3-1
-    if name not in data_hash:
-        data_hash[name] =""
-        start = 1
-        end = start+append
+    line_l[0] = line_l[0].split("|")[0]
+    new_data = line_l[:2]    
+    if "\ttranscript\t" in line:
+        new_data.append("gene")
+        new_data.extend([line_l[3],line_l[4],'.',line_l[6],'.'])
+        gene_id = re.search("gene_id \"(\S+)\"\;",line).group(1)
+        transcript_id=re.search("transcript_id \"(\S+)\"\;",line).group(1)
+        attribute = "ID=%s;Name=%s"%( gene_id,gene_id )
+        END.write('\t'.join(new_data)+'\t'+attribute+'\n')
+        new_data[2] = "mRNA"
+        transcript_id=re.search("transcript_id \"(\S+)\"\;",line).group(1)
+        attribute = "ID=%s;Parent=%s"%( transcript_id,gene_id )
+        END.write('\t'.join(new_data)+'\t'+attribute+'\n')
     else:
-        start = end+1
-        end = start +append
+        new_data.append("exon")
+        new_data.extend([line_l[3],line_l[4],'.',line_l[6],'.'])
+        exon_number= re.search("exon_number \"(\d+)\"",line).group(1)
+        attribute = "ID=%s.exon%s;Parent=%s"%( transcript_id,exon_number,transcript_id )
+        END.write('\t'.join(new_data)+'\t'+attribute+'\n')
+        new_data[2] = "CDS"
+        attribute = "ID=cds.%s;Parent=%s"%( transcript_id,transcript_id )
         
-    END.write("\t".join(line_l[:-1]))
-    END.write( "\tID=%s;Target=%s %s %s\n"%(name,name+"_est",start,end)    )
-    
+        
