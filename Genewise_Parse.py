@@ -92,7 +92,11 @@ if __name__ == '__main__':
                 start=start+protein_length+1
                 gff_list[-2]="."
                 gff_list[2] = "nucleotide_to_protein_match"
-                gff_list[5]="%.2f"%(100.0*protein_length/proteinlength)
+                score = 100.0*protein_length/proteinlength
+                if score >100:
+                    score =100
+                gff_list[5]="%.2f"%(score)
+                if 
                 END.write("\t".join(gff_list)+'\n')
                 
         
