@@ -13,6 +13,7 @@ data_all = RAW.read()
 data_block = re.split(".+\ttranscript\t.+\n",data_all)
 i=0
 for each_block  in data_block[1:]:
+    i+=1
     total_length = 0
     each_block = each_block.strip()
     if not each_block:
@@ -29,7 +30,7 @@ for each_block  in data_block[1:]:
     start =1    
     
     for line in each_block.split("\n"):
-        i+=1
+        
         line_l = line.split("\t")
         line_l[0] = line_l[0].split("|")[0]
         line_l[2] = "EST_match"
