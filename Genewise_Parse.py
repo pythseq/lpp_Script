@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 if not line:
                     continue
                 gff_list = line.split("\t")
-                if gff_list[2] !="cds":
+                if gff_list[2] !="match":
                     continue
                 seq_name = gff_list[0]
                
@@ -92,6 +92,7 @@ if __name__ == '__main__':
                 gff_list[-1] = "ID="+alnpro+'.%s'%(j)+';'+"Target=%s"%(alnpro+'.%s'%(j))+' %s %s'%(start,start+proteinlength)
                 start=start+proteinlength+1
                 gff_list[-2]="."
+                gff_list[2] = "nucleotide_to_protein_match"
 
                 END.write("\t".join(gff_list)+'\n')
                 
