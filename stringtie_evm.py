@@ -11,7 +11,7 @@ END = open(sys.argv[2],'w')
 data_hash = {}
 data_all = RAW.read()
 data_block = re.split(".+\ttranscript\t.+\n",data_all)
-for each_block  in data_block:
+for each_block  in data_block[1:]:
     total_length = 0
     print( each_block )
     for line in each_block.split("\n"):
