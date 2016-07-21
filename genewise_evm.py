@@ -44,7 +44,7 @@ for line in RAW:
         line_l[2] = "gene"
         END.write("\t".join(line_l))
         attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
-        END.write(+'\t'+attribute+'\n')
+        END.write('\t'+attribute+'\n')
         line_l[2] = "mRNA"
         attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
         END.write("\t".join(line_l)+'\t'+attribute+'\n')
