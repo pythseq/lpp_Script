@@ -34,8 +34,8 @@ for each_block  in data_block[1:]:
         align_length = int(line_l[4]) -int(line_l[3])
         line_l[5] = "%.2f"%(100.0*align_length/total_length)
         line_l = line_l[:-2]
-        if line_l==".":
-            line_l='+'
+        if line_l[-1]==".":
+            line_l[-1]='+'
         line_l.append ("ID=%s;Target=%s %s %s"%(transcript_id,transcript_id,start,start+align_length) )
         start = start+align_length+1
         END.write('\t'.join(line_l)+'\n')
