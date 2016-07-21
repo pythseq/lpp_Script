@@ -21,7 +21,7 @@ for line in RAW:
     if not OLD_ID:
         
         OLD_ID= ID 
-    print(ID,OLD_ID)    
+       
         
     if ID != OLD_ID :
 
@@ -52,6 +52,7 @@ for line in RAW:
         line_l[2]="cds"
         cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
     else:
+        print(ID,OLD_ID) 
         attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
         line_l[2]="exon"
         
