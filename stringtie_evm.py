@@ -25,7 +25,7 @@ for each_block  in data_block[1:]:
         total_length+=length
         gene_id = re.search("gene_id \"(\S+)\"\;",line).group(1)
         transcript_id=re.search("transcript_id \"(\S+)\"\;",line).group(1)
-    align_start =1    
+    start =1    
     for line in each_block.split("\n"):
         line_l = line.split("\t")
         line_l[0] = line_l[0].split("|")[0]
