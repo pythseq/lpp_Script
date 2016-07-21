@@ -20,7 +20,7 @@ for line in RAW:
     end = line_l[4]
     
     if not OLD_ID:
-        ID = OLD_ID
+        OLD_ID= ID 
         start = line_l[3]
         i+=1
     attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
