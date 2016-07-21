@@ -13,6 +13,7 @@ OLD_ID = ""
 i=0
 cache = []
 for line in RAW:
+    print(cache)
     
     ID = re.search("ID=([^\;]+)",line).group(1)
     
