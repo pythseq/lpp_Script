@@ -19,6 +19,7 @@ for line in RAW:
     line_l = line.strip().split("\t")
     
     if not OLD_ID:
+        print(ID)
         OLD_ID= ID 
         
     if ID != OLD_ID :
