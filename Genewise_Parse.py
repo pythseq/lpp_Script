@@ -88,12 +88,11 @@ if __name__ == '__main__':
                 gff_list[3] = str(gff_list[3])
                 gff_list[4] = str(gff_list[4])
                 
-                prot_length = int(gff_list[3])
                 gff_list[-1] = "ID="+alnpro+'.%s'%(j)+';'+"Target=%s"%(alnpro+'.%s'%(j))+' %s %s'%(start,start+protein_length)
                 start=start+protein_length+1
                 gff_list[-2]="."
                 gff_list[2] = "nucleotide_to_protein_match"
-                gff_list[5]="%.2f"%(100.0*prot_length/proteinlength)
+                gff_list[5]="%.2f"%(100.0*protein_length/proteinlength)
                 END.write("\t".join(gff_list)+'\n')
                 
         
