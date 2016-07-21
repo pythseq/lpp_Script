@@ -26,7 +26,9 @@ for each_block  in data_block[1:]:
         gene_id = re.search("gene_id \"(\S+)\"\;",line).group(1)
         transcript_id=re.search("transcript_id \"(\S+)\"\;",line).group(1)
     start =1    
+    i=0
     for line in each_block.split("\n"):
+        i+=1
         line_l = line.split("\t")
         line_l[0] = line_l[0].split("|")[0]
         line_l[2] = "EST_match"
@@ -35,6 +37,6 @@ for each_block  in data_block[1:]:
         line_l[5] = "%.2f"%(100.0*align_length/total_length)
         line_l = line_l[:-1]
 
-        line_l.append ("ID=%s;Target=%s %s %s"%(transcript_id,transcript_id,start,start+align_length) )
+        line_l.append ("ID=Align_%s;Target=EST_%s %s %s"%(i,i,start,start+align_length) )
         start = start+align_length+1
         END.write('\t'.join(line_l)+'\n')
