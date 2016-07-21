@@ -32,7 +32,7 @@ for each_block  in data_block[1:]:
         line_l[2] = "EST_match"
         line_l[4] = str(int(line_l[4])+1)
         align_length = int(line_l[4]) -int(line_l[3])
-        line_l[5] = 100.0*align_length /total_length
+        line_l[5] = ".2f"%(100.0*align_length /total_length)
         line_l[-1] = "ID=%s;Target=%s %s %s"%(transcript_id,transcript_id,start,start+align_length)
         start = start+align_length+1
         END.write('\t'.join(line_l)+'\n')
