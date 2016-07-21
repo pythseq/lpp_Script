@@ -31,7 +31,7 @@ for line in RAW:
     line_l[2]="cds"   
     cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
     
-    old_data = line_l
+    old_data = line_l[:-1]
 
     
     if ID != OLD_ID and OLD_ID!='':
@@ -56,4 +56,19 @@ for line in RAW:
         
         
         cache = []
+else:
+    line_l =old_data
+    line_l[3]=start
+    line_l[4] = end
+
+    line_l[2] = "gene"
+    END.write("\t".join(line_l))
+    attribute = "ID=gene%s;Name=gene%s\n"%(i,i)
+    END.write('\t'+attribute+'\n')
+    line_l[2] = "mRNA"
+    attribute = "ID=Protein%s;Parent=gene%s\n"%(i,i)
+    END.write("\t".join(line_l)+'\t'+attribute+'\n')
+
+    END.write(  "".join(cache) )
+        
         
