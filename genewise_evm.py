@@ -13,7 +13,7 @@ OLD_ID = ""
 i=0
 cache = []
 for line in RAW:
-
+    print(cache)
     
     ID = re.search("ID=([^\;]+)",line).group(1)
     
@@ -53,7 +53,7 @@ for line in RAW:
         line_l[2]="cds"
         cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
     else:
-        print(ID,OLD_ID) 
+        
         attribute = "ID=exons.gene%s;Parent=Protein%s\n"%(i,i)
         line_l[2]="exon"
         
@@ -61,7 +61,7 @@ for line in RAW:
         attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
         line_l[2]="cds"   
         cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
-        print(cache)
+        
        
     
 
