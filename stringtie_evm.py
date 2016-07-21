@@ -32,5 +32,6 @@ for line in RAW:
         END.write('\t'.join(new_data)+'\t'+attribute+'\n')
         new_data[2] = "CDS"
         attribute = "ID=cds.%s;Parent=%s"%( transcript_id,transcript_id )
+        END.write('\t'.join(new_data)+'\t'+attribute+'\n')
         
         
