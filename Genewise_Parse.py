@@ -54,7 +54,7 @@ if __name__ == '__main__':
         
         data_b = e_b.split("\n//\n")
         score_b = data_b[0]
-
+        
         aln_detail = score_b.split("\n")[1]
 
         aln_list = aln_detail.split()
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         alnlength = end-start
         proteinlength = len(proteinseqHash[alnpro])
         
-        if alnlength*1.0/proteinlength>=coverage or float(score)>score:
+        if alnlength*1.0/proteinlength>=coverage:
             j+=1
             gff_b = data_b[1]
             for line in gff_b.split("\n"):
