@@ -11,6 +11,7 @@ END = open(sys.argv[2],'w')
 data_hash = {}
 data_all = RAW.read()
 data_block = re.split(".+\ttranscript\t.+\n",data_all)
+i=0
 for each_block  in data_block[1:]:
     total_length = 0
     each_block = each_block.strip()
@@ -26,7 +27,7 @@ for each_block  in data_block[1:]:
         gene_id = re.search("gene_id \"(\S+)\"\;",line).group(1)
         transcript_id=re.search("transcript_id \"(\S+)\"\;",line).group(1)
     start =1    
-    i=0
+    
     for line in each_block.split("\n"):
         i+=1
         line_l = line.split("\t")
