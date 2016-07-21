@@ -61,9 +61,7 @@ for line in RAW:
         attribute = "ID=cds.gene%s;Parent=Protein%s\n"%(i,i)
         line_l[2]="cds"   
         cache.append(   '\t'.join(line_l[:-1])+'\t'+attribute  )
-    print(cache)
-    print(line)    
-        
+
        
     
 
@@ -73,8 +71,6 @@ for line in RAW:
         
         
         
-        
-        cache = []
 #else:
     #line_l =old_data
     #line_l[3]=start
