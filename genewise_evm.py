@@ -32,7 +32,7 @@ for line in RAW:
     cache.append(   '\t'.join(line_l[-1])+'\t'+attribute  )
     
     old_data = line_l
-    
+    print(ID ,OLD_ID )
     
     if ID != OLD_ID and OLD_ID!='':
         OLD_ID=ID
