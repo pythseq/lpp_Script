@@ -65,7 +65,7 @@ if __name__ == '__main__':
         alnlength = end-start
         proteinlength = len(proteinseqHash[alnpro])
         
-        if alnlength*1.0/proteinlength>=coverage and float(score)>score:
+        if alnlength*1.0/proteinlength>=coverage or float(score)>score:
             j+=1
             gff_b = data_b[1]
             for line in gff_b.split("\n"):
