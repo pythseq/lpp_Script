@@ -13,7 +13,9 @@ data_all = RAW.read()
 data_block = re.split(".+\ttranscript\t.+\n",data_all)
 for each_block  in data_block[1:]:
     total_length = 0
-    print( each_block )
+    each_block = each_block.strip()
+    if not each_block:
+        continue
     for line in each_block.split("\n"):
         line_l = line.split("\t")
         line_l[0] = line_l[0].split("|")[0]
