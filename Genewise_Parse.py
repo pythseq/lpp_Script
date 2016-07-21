@@ -96,7 +96,7 @@ if __name__ == '__main__':
                 if score >100:
                     score =100
                 gff_list[5]="%.2f"%(score)
-                if 
+
                 END.write("\t".join(gff_list)+'\n')
                 
         
