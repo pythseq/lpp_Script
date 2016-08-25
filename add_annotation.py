@@ -9,7 +9,8 @@ from lpp import *
 RAW = fasta_check(open(sys.argv[1],'rU') )
 anno_hash = {}
 for t,s in RAW:
-	i_d,name= t[5:].split(' ',1)
+	t = t[1:-1]
+	i_d,name= t.split(' ',1)
 	anno_hash[i_d] = name
 #print(anno_hash)
 	

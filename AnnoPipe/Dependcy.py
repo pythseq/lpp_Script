@@ -42,7 +42,7 @@ def Nul_or_Protein( seq ):
 def RunDiamond( fasta,evalue,blasttype,dbname,output  ):
 	if not output.endswith(".tsv") and not output.endswith(".xls"):
 		output=output+".tsv"
-	command = "diamond_align.py  -i %(fasta)s   -o %(output)s  -a  %(dbname)s   -e %(evalue)s -n %(dbname)s  -t %(blasttype)s"%(
+	command = "diamond_align.py  -i %(fasta)s  -n %(dbname)s -o %(output)s  -a  %(dbname)s   -e %(evalue)s  -t %(blasttype)s"%(
 	    {
 	        "fasta":fasta,
 	        "output":output,
@@ -55,6 +55,7 @@ def RunDiamond( fasta,evalue,blasttype,dbname,output  ):
 	    }
 	    
 	)
+        print(command)
 	command_list = command.split()
 	diamond_process = subprocess.Popen( command_list,stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = diamond_process.communicate()
