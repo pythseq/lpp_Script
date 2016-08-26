@@ -28,11 +28,12 @@ if __name__ == '__main__':
     input_path = options.Input_path
     output_path = options.output_path
     check_path( output_path )
-    for a,b,c in os.walk(input_path):
+    for a,b,c in os.walk(  input_path ):
         for e_f in c:
             if e_f.endswith("Genome1.gbk"):
                 RAW = open(a+'/'+e_f)
                 name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
+    
     if os.path.exists( output_path+"/"+name+'.function' ):
         os.remove( output_path+"/"+name+'.function' )      
         
@@ -50,7 +51,7 @@ if __name__ == '__main__':
                 
                 for t,s in RAW:
                     all_has[t[1:].split()[0]] = ""
-                    PEP.write('>'+name+'_'+t[1:])
+                    PEP.write('>'+t[1:])
                     PEP.write(s)  
             
             if e_f.endswith(".ptt") :
@@ -62,7 +63,7 @@ if __name__ == '__main__':
                     line_l = line.strip().split("\t")
                     if not line_l[-2]:
                         line_l[-2]='-'
-                    FUNC.write(name+'_'+line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
+                    FUNC.write(line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
     END = open(output_path+'/'+name+'.nuc','w')
     for a,b,c in os.walk( input_path):
         for e_f in c:
@@ -72,7 +73,7 @@ if __name__ == '__main__':
                 RAW = fasta_check( open(a+'/'+e_f) )
                 for t,s in RAW:
                     if t[1:].split()[0] in all_has:
-                        NUC.write('>'+name+'_'+t[1:])
+                        NUC.write('>'+t[1:])
                         NUC.write(s)           
     
 
