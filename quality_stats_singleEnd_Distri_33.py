@@ -42,7 +42,7 @@ class fastq_quality_class(  fastq_check    ):
 	def __init__( self,**kword  ):
 		self.phred_64_quality_hash={}
 		entroy = kword['entroy']
-		print( entroy )
+
 		for x in xrange(0,64):
 			self.phred_64_quality_hash[ chr( x+entroy  ) ] = x		
 		self.subdevide =1048576
@@ -303,7 +303,7 @@ class fastq_quality_class(  fastq_check    ):
 			
 			
 			def get_name( charc ):
-				return re.sub( '\s+\S+','',charc  )
+				return re.sub( '(?:/\d+|\s+\S+)','',charc  )
 			if  'Filter' in each_hash:
 				filter_cache[ get_name( each_hash[ 'Filter' ] [0 ] ) ] =  each_hash[ 'Filter' ]  
 				filter_read_count+=1
