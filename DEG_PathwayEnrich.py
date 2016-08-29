@@ -39,7 +39,7 @@ def enrichment_analysis(diff_gene,total_anno_gene,sample_size,sampled_diff):
     os.system("Rscript %s"%(r_script.name))
     output = open(output,'rU')
     p_value = float(output.read().split("\n")[1])
-	print(r_script.name)
+    print(r_script.name)
 #    os.remove(r_script.name)
 #    os.remove(output.name)
     return p_value
