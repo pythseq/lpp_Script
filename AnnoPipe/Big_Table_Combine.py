@@ -1,4 +1,12 @@
+#!/usr/bin/env python
+#coding:utf-8
+"""
+  Author:   --<>
+  Purpose: 
+  Created: 2015/12/6
+"""
 from Dependcy import *
+
 from optparse import OptionParser
 import os,string
 def Rawcombine_xls( data_list   ):
