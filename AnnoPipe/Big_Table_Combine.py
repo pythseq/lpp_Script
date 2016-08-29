@@ -13,7 +13,7 @@ def Rawcombine_xls( data_list   ):
     out_frame = pd.read_table(data_list[0]).drop_duplicates()
 
     for new_data in data_list[1:]:
-        new_data =  pd.read_table(new_data).drop_duplicates()
+        out_frame =  pd.read_table(new_data).drop_duplicates()
         on_need = list(out_frame.columns  & new_frame.columns)
 
         out_frame = pd.DataFrame.merge(out_frame, new_frame, on=on_need, how='outer')
