@@ -34,7 +34,7 @@ R = open("GO_EnrichmentDraw.R",'w')
 r_script = """
 library(ggplot2)
 require(ggthemes)
-
+library(stringr)
 
 
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
@@ -42,6 +42,7 @@ go_data$EnrichFactor = go_data$numDEInCat/go_data$numInCat
 height = length(levels(go_data$category))
 width = 5 *length(levels(go_data$Situation))
 pdf("GOEnrich.pdf",width=width,height=0.2*height )
+countsTable$Term <- str_wrap(countsTable$Term, width = 40)
 p <- qplot(Situation, term, data=go_data, size=EnrichFactor,color=qvalue)
 p + scale_size("EnrichFactor")+scale_color_gradient(low="red", high="blue")+theme_few()+facet_grid(.~ontology,scales="free_x",space="free")+theme(axis.text.x=element_text(angle=75,hjust=1.0),strip.text.x = element_text(size=14,color="darkred",face="bold"))
 

@@ -39,19 +39,23 @@ if __name__=='__main__':
         sample_name = os.path.dirname(f).rsplit("/",1)[-1]
         for i in xrange( 0, len( new_table )  ):
             data = new_table.iloc[i]
-            END.write(sample_name+'\t'+"\t".join(  [ data["term"],data["ontology"] ,str(data["GeneRatio"]),str(data["qvalue"] )] )+'\n'   )
-        
+            try:
+            	END.write(sample_name+'\t'+"\t".join(  [ data["term"],data["ontology"] ,str(data["GeneRatio"]),str(data["qvalue"] )] )+'\n'   )
+            except:
+		print( data['term'],f  )
      
     R_CACHE = open("%s.R"%(os.getpid()),'w')
     R_CACHE.write("""
     library(ggplot2)
+    library(stringr)
     require(ggthemes)
     countsTable <- read.delim( "%(inp)s", header=TRUE, stringsAsFactors=TRUE ) 
     pathway_size = length(levels(factor(countsTable$Term)))
     Sample_size = length(levels(factor(countsTable$Situation)))
     if (pathway_size<10) pathway_size<-10
+    countsTable$Term <-  str_wrap(countsTable$Term, width = 30)
     pdf("%(out)s",width=4*Sample_size,height = 1*pathway_size)
-    qplot(data = countsTable,x=Situation,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()+theme(axis.text.y = element_text(angle = 350, vjust = .8))
+    qplot(data = countsTable,x=Situation,y=Term,size=GeneRatio,color=Q_value)+scale_colour_gradient(low="red", high="blue")+facet_grid(Ontology~.,scales="free_y",space="free")+theme_few()+theme(axis.text.y = element_text(angle = 350, vjust = .8), axis.text.x = element_text(angle = 270)  )
     dev.off()
     
     

@@ -143,7 +143,7 @@ Table文件夹是所有注释分析的结果明细统计表，按照数据库分
 		
 		    )		
 		elif each_db =="Swiss":
-			commandline = " Swiss_Annotation.py -i %(pros)s  -o %(output_prefix)s/Swiss/%(name)s.xls -e %(e-val)s"%( 
+			commandline = " Swiss_Annotation.py -i %(pros)s  -o %(output_prefix)s/Swiss/%(name)s -e %(e-val)s"%( 
 				{
 					"name":name,
 					"pros":proteinseq,

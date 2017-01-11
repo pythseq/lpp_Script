@@ -4,6 +4,9 @@
 # Purpose: 
 # Created: 2011/6/3
 from lpp import *
+import itertools
+import os
+import pandas as pd
 #usage python2.7 expression_matrix_build.py     [ count.py's end__1_append_file_name  ]  [   matrix_end   ]
 import glob,re,sys
 from optparse import OptionParser 
@@ -15,18 +18,15 @@ parser.add_option("-o", "--OUTPUTPATH", action="store",
                   default = 'Static_output', 
                   help="OUTPUTPATH")
 
-parser.add_option("-a", "--append", action="store", 
-                  dest="append", 
-                  default = 'matrix',
-                  help="Matrix of Reads number")
 
-parser.add_option("-d", "--DATA", action="store", 
-                  dest="data_path", 
-
-                  help="fastq_path of Data")
 
 parser.add_option("-i", "--INPUT", action="store", 
-                  dest="input_path", 
+                  dest="input", 
+
+                  help="total count matrix")
+
+parser.add_option("-c", "--CONDITION", action="store", 
+                  dest="condition", 
 
                   help="input path of expression")
 
@@ -52,12 +52,12 @@ if para not in ["padj","pval"]:
     raise IOError
 
 
-data_path   = os.path.abspath( options.data_path )+os.sep
+condition   = options.condition
 
-input_path   = options.input_path
 
-append = options.append
-data_path = options.data_path
+
+input_data = os.path.abspath( options.input )
+
 
 if not os.path.exists(  outputpath ):
     os.makedirs( outputpath )
@@ -69,89 +69,70 @@ def sampleNameTrans( sample_name ):
         sample_name = 'X'+sample_name
     return sample_name
 
-if not os.path.exists( data_path  ):
-    print( 'ERROR!!! THE Static PATH doesn\'t exits!!!!!'  )
-    sys.exit()
-
-if not os.path.exists( input_path  ):
-    print( 'ERROR!!! THE Input expression PATH doesn\'t exits!!!!!'  )
+if not os.path.exists( input_data  ):
+    print( 'ERROR!!! THE Reads Count Matrix doesn\'t exits!!!!!'  )
     sys.exit()
 
 
+all_ReadsCountMatrix = pd.read_table( input_data )
+
+all_sample = list(all_ReadsCountMatrix.columns)[1:]
 
 
+if not condition:
+    for sample_list in itertools.combinations( all_sample,2 ):
+    
+    
+        end_path = outputpath+"/"+"___".join(sample_list)+'/'
+        stats_name = "___".join(sample_list)
+        if not os.path.exists(  end_path ):
+            os.makedirs( end_path )
+        end_path = os.path.abspath(  end_path )+os.sep
 
-input_path = os.path.abspath(  input_path )+os.sep
-
-# To store the total depth of Sequencing 
-size_factor = {}
-
-for a,b,c in os.walk(data_path):
-    for e_f in c:
-        if e_f.endswith(".pair1"):
-            line_num = int(os.popen("wc -l %s"%(a+'/'+e_f)).read().split()[0])/2
+        CONDITION = open( end_path+'/condiion.tsv','w')
+        CONDITION.write( "Sample\tCondition\n")
+        CONDITION.write(sample_list[0]+'\tControl\n')
+        CONDITION.write(sample_list[1]+'\tTreated\n')
+        CONDITION.close()
         
-            sample_name = sampleNameTrans( os.path.split(e_f)[-1].split('.')[0] )
-        
-            size_factor[ sample_name ] = str( line_num )
-print( size_factor )
-for each_matrix in glob.glob(  input_path+'*.'+append  ):
-    stats_name = os.path.split(each_matrix)[-1].split('.')[0]
-
-    sample_list = [x  for x in stats_name.split('___')]
+        x_name = sample_list[0] 
+    
+        y_name =  sample_list[1] 
 
 
-    end_path = outputpath+stats_name
-
-    if not os.path.exists(  end_path ):
-        os.makedirs( end_path )
-    end_path = os.path.abspath(  end_path )+os.sep
-
-    matrix_output_path   = outputpath + os.path.split(  each_matrix  )[-1]+os.sep+ each_matrix+os.sep
-    MATRIX = open( each_matrix,'rU'  )
-    name_list = MATRIX.next()[:-1].split('\t')
-    x_name = sampleNameTrans( name_list[1] )
-
-    y_name = sampleNameTrans( name_list[2] )
-
-
-    x_coverage = size_factor[ x_name ]
-
-    y_coverage = size_factor[ y_name  ]
-
-    matrix_abspath = each_matrix
-
-    end_prefix = end_path + stats_name
-
-
-
-    r_script = '''#!/usr/bin/Rscript
+    
+        end_prefix = end_path + stats_name
+    
+    
+    
+        r_script = '''#!/usr/bin/Rscript
 # functions
 require(ggplot2)
 require(ggthemes)
 require(grid)
 
 library( DESeq )
+condFile = "%(condition)s"
+colTable <- read.delim( condFile, header=TRUE, row.names="Sample",stringsAsFactors=TRUE )
+
 exampleFile = "%(matrix_abspath)s"
-countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE ) 
+countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE, row.names=1  ) 
+countsTable<- countsTable[,rownames(colTable)]
 
 pdf(file="%(out_prefix)s_dis.pdf",width = 20)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 2)))
 
-p<- ggplot(countsTable,aes(%(x_name)s,%(y_name)s))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
+p<- ggplot(countsTable,aes(\"%(x_name)s\",\"%(y_name)s\"))+geom_point()+xlab("%(x_name)s ReadCount")+theme_few()+ylab("%(y_name)s ReadCount")+ggtitle("%(x_name)s vs %(y_name)s")
 
 vplayout <- function(x,y){
   viewport(layout.pos.row = x, layout.pos.col = y)
 }
 
 print(p, vp = vplayout(1,1))
-
-rownames( countsTable ) <- countsTable$gene  
-countsTable <- countsTable[ , -1 ]
 conds <- c( "T", "N" ) 
 cds <- newCountDataSet( countsTable, conds ) 
-libsizes <- c(%(x_name)s=sum(countsTable%(x_name)s), %(y_name)s=%countsTable%(y_name)s )
+libsizes <- c(%(x_name)s=sum(countsTable$%(x_name)s), %(y_name)s= sum( countsTable$%(y_name)s ) )
 sizeFactors(cds) <- libsizes  
 cds <- estimateSizeFactors( cds ) 
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   
@@ -173,32 +154,30 @@ write.table(resSig,row.names=FALSE,file='%(out_prefix)s.end',quote=FALSE,sep='\t
 write.table(upSig,row.names=FALSE,file='%(out_prefix)s_up.end',quote=FALSE,sep='\t')
 write.table(downSig,row.names=FALSE,file='%(out_prefix)s_down.end',quote=FALSE,sep='\t')
 
-dev.new()
 pdf(file="%(out_prefix)s_RPKM.pdf")
 
 p3<- ggplot(res,aes(log10(baseMeanA),log10(baseMeanB),col=Condition))+geom_point()+ylab("%(y_name)s baseMean")+theme_few()+xlab("%(x_name)s baseMean")+scale_colour_manual(values=c("green", "blue", "red"))+ guides(colour = guide_legend(title = "FDR<0.05 and |log2Foldchange|>=1"))+theme(legend.position=c(.2, .9))+xlim(-2,max(log10(res$baseMean))+1)
 ggplot_build(p3)
 dev.off()
-
-'''%(
-       {
-           "matrix_abspath":matrix_abspath,
-           "out_prefix":end_prefix,
-           "x_name":x_name,
-           "y_name":y_name,
-           "x_coverage":x_coverage,
-           "y_coverage":y_coverage,
-           "para":para,
-           "threshold":threshold
-
-       }
-
-
-   )
-    RSCRIPT = open( end_path+'Deseq.R'   ,'w' )
-    RSCRIPT.write( r_script )
-    RSCRIPT.close()
-    os.system(  'Rscript ' +RSCRIPT.name +'&')
+    
+    '''%(
+           {
+               "matrix_abspath":input_data,
+               "out_prefix":end_prefix,
+               "x_name":x_name,
+               "y_name":y_name,
+               "condition":CONDITION.name,
+               "para":para,
+               "threshold":threshold
+    
+           }
+    
+    
+       )
+        RSCRIPT = open( end_path+'Deseq.R'   ,'w' )
+        RSCRIPT.write( r_script )
+        RSCRIPT.close()
+        #os.system(  'Rscript ' +RSCRIPT.name +'&')
 
 
 

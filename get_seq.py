@@ -38,6 +38,7 @@ for line in open( options.list,'rU'   ) :
 	all_name[  line.split()[0]    ] = ""
 # all_name = File_Ddict(  open( options.list,'rU'   )   ).read( options.number , options.number   )
 all_have = {}
+print(all_name)
 END = open( options.output ,'w' )
 for t,s in FASTA:
 	title = t[1:-1].split()[0]

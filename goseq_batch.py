@@ -32,4 +32,4 @@ go = options.Go
 doc_list = glob.glob(data+"/*/")
 for each_doc in doc_list:
     each_path = os.path.abspath(each_doc)+'/'
-    os.system("for i in "+each_doc+"/*.end; do goseq.py  -i $i  -o ${i%.*} -g "+go+" -l "+ length+"  & done ")
+    os.system("for i in "+each_doc+"*.end; do goseq.py  -i $i  -o ${i%.end} -g "+go+" -l "+ length+"  & done ")

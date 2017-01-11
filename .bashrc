@@ -200,4 +200,4 @@ ulimit -SHn 40960
 CLASSPATH=$CLASSPATH:/pub/SOFTWARE/Other/gview/gview.jar
 #source activate LPP
 MicroPipe=`python -c "from MicroPipe.Scripts import __path__ as path; print(path[0])"`
-export PATH=$PATH:$MicroPipe
+export PATH=$PATH:$MicroPipe:/pub/SOFTWARE/Assembly/MaSuRCA-3.2.1_08102016/bin

@@ -39,7 +39,6 @@ def enrichment_analysis(diff_gene,total_anno_gene,sample_size,sampled_diff):
     os.system("Rscript %s"%(r_script.name))
     output = open(output,'rU')
     p_value = float(output.read().split("\n")[1])
-    print(r_script.name)
 #    os.remove(r_script.name)
 #    os.remove(output.name)
     return p_value
@@ -123,7 +122,6 @@ def Pathway_Enrichment(output):
 
                 )
             )
-	print(p_value_list)
     p_adjust ,q_adjust = fdr(p_value_list)
     padj_iter = iter(p_adjust)	
     fdr_iter  = iter(q_adjust)

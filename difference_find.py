@@ -35,7 +35,6 @@ print( 'read all' )
 data_blocks = re.split( '\n\n+', all_data)[1:]
 print(  'split all'  )
 name_block = data_blocks[0]
-print(name_block)
 align_data = name_block.split('\n')
 
 i=1
@@ -59,7 +58,6 @@ for each_block in align_data:
 		aln_b = each_block[name_end:]
 		detail[ 'align'  ] = aln_b
 	i+=1
-print( detail.keys()  )
 def aln_add( data_string  ):
 	
 	i=1
@@ -67,7 +65,7 @@ def aln_add( data_string  ):
 	
 	align_data = data_string.split('\n')
 	for each_block in align_data:
-		name_tag = re.search('^(\w+\s+)', each_block)
+		name_tag = re.search('^(\S+\s+)', each_block)
 		if name_tag:
 			name = name_tag.group(1).strip()
 			aln_b = each_block[name_end:]
