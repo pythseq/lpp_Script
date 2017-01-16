@@ -23,7 +23,7 @@ path = options.path
 #appendix = re.escape(  options.appendix )
 def quality_plot( FILE_HANDLE    ):
 
-    os.system(  '''(fastx_quality_stats -i %s > %s.qualstats&&'''%(  FILE_HANDLE.name,FILE_HANDLE.name  ) + '''fastx_quality_boxplot.R %s.qualstats %s.qualstats.png&&'''%(  FILE_HANDLE.name,FILE_HANDLE.name   ) + '''fastx_nucleotide_distributionPer.R  %s.qualstats %s.nucdistr.png)&'''%(  FILE_HANDLE.name,FILE_HANDLE.name    ) )
+    os.system(  '''(fastx_quality_stats -Q 33 -i %s > %s.qualstats&&'''%(  FILE_HANDLE.name,FILE_HANDLE.name  ) + '''fastx_quality_boxplot.R %s.qualstats %s.qualstats.png&&'''%(  FILE_HANDLE.name,FILE_HANDLE.name   ) + '''fastx_nucleotide_distributionPer.R  %s.qualstats %s.nucdistr.png)&'''%(  FILE_HANDLE.name,FILE_HANDLE.name    ) )
     #os.system(  '''fastx_quality_boxplot.R %s.qualstats %s.qualstats.png'''%(  FILE_HANDLE.name,FILE_HANDLE.name   )   )
     #os.system('''fastx_nucleotide_distributionPer.R  %s.qualstats %s.nucdistr.png'''%(  FILE_HANDLE.name,FILE_HANDLE.name    ))
 
