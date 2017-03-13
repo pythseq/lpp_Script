@@ -127,11 +127,11 @@ class fastq_quality_pair(  object    ):
 
 
 
-		self.log.write(  output_hash1[ 'pairname'   ]  )
+		#self.log.write(  output_hash1[ 'pairname'   ]  )
 
-		if output_hash1[ 'pairname'   ] != output_hash2[ 'pairname'   ]:
-			message = '%s in read1, %s in read2 of line %s seems not to be a pair of reads,please check!!!!!'%( output_hash1[ 'pairname'   ] ,  output_hash2[ 'pairname'   ],  self.read1.linenumber-3)
-			raise ValueError,message
+		#if output_hash1[ 'pairname'   ] != output_hash2[ 'pairname'   ]:
+			#message = '%s in read1, %s in read2 of line %s seems not to be a pair of reads,please check!!!!!'%( output_hash1[ 'pairname'   ] ,  output_hash2[ 'pairname'   ],  self.read1.linenumber-3)
+			#raise ValueError,message
 		status1 = check(  output_hash1  )
 
 		status2 = check(  output_hash2  )
@@ -155,7 +155,7 @@ class fastq_quality_pair(  object    ):
 				if status_transfer1 in File_hash:
 					File_hash[ status_transfer1  ][0].write( output_hash1[  status_transfer1 ]   )
 					File_hash[ status_transfer1  ][-1].write( output_hash2[  status_transfer2 ]   )
-		self.log.write( '\t'+status1+'\t'+status2+'\n'   )
+		#self.log.write( '\t'+status1+'\t'+status2+'\n'   )
 
 def PairEndRun(  ):
 

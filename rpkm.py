@@ -7,7 +7,7 @@ Created: 2014/11/3
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import re
 from lpp import *
 import glob
@@ -87,28 +87,28 @@ for line in MATRIX:
 		rpkm_cache.append("%s"%(rpkm))
 	END.write(gene_name+"\t"+"\t".join(rpkm_cache)+'\n')
 		
-data = [ data_hash[i]  for i in sorted(data_hash)]
-fig, ax1 = plt.subplots(figsize=(10,6),dpi=100)
-fig.canvas.set_window_title('Expression Level')
-plt.subplots_adjust(left=0.075, right=0.95, top=0.9, bottom=0.25)
+#data = [ data_hash[i]  for i in sorted(data_hash)]
+#fig, ax1 = plt.subplots(figsize=(10,6),dpi=100)
+#fig.canvas.set_window_title('Expression Level')
+#plt.subplots_adjust(left=0.075, right=0.95, top=0.9, bottom=0.25)
 
-bp = plt.boxplot(data, notch=0, sym='+', vert=1, whis=1.5)
-plt.setp(bp['boxes'], color='black')
-plt.setp(bp['whiskers'], color='black')
-plt.setp(bp['fliers'], color='red', marker='+')
+#bp = plt.boxplot(data, notch=0, sym='+', vert=1, whis=1.5)
+#plt.setp(bp['boxes'], color='black')
+#plt.setp(bp['whiskers'], color='black')
+#plt.setp(bp['fliers'], color='red', marker='+')
 
 ## Add a horizontal grid to the plot, but make it very light in color
 ## so we can use it for reading data values but not be distracting
-ax1.yaxis.grid(True, linestyle='-', which='major', color='lightgrey',
-               alpha=0.5)
-ax1.set_yscale("log")
+#ax1.yaxis.grid(True, linestyle='-', which='major', color='lightgrey',
+#               alpha=0.5)
+#ax1.set_yscale("log")
 # Hide these grid behind plot objects
-ax1.set_axisbelow(True)
-ax1.set_title('Different Sample\'s Expression Value')
-ax1.set_xlabel('Distribution')
-ax1.set_ylabel('RPKM')
-xtickNames = plt.setp(ax1, xticklabels=[ "sample %s"%(i) for i in  sorted(data_hash) ])
-ax1.set_ylim(  (0.000001,max(all_data))  )  
+#ax1.set_axisbelow(True)
+#ax1.set_title('Different Sample\'s Expression Value')
+#ax1.set_xlabel('Distribution')
+#ax1.set_ylabel('RPKM')
+#xtickNames = plt.setp(ax1, xticklabels=[ "sample %s"%(i) for i in  sorted(data_hash) ])
+#ax1.set_ylim(  (0.000001,max(all_data))  )  
 
-plt.savefig("%s_RPKM.png"%(options.graph))
-plt.show()
+#plt.savefig("%s_RPKM.png"%(options.graph))
+#plt.show()

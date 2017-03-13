@@ -84,12 +84,12 @@ dev.off()
 	changname_hash = dict(zip(old_name,new_name))
 	rpkm_filter.rename( columns= changname_hash, inplace=True  )
 	
-	all_filteredGene = list(rpkm_filter["gene"])
+	all_filteredGene = list(rpkm_filter["Gene"])
 
 	fil_geneHash =  dict(zip(all_filteredGene,[""]*len(all_filteredGene)))
 
 	count_data = pd.read_table( options.Count )
-	count_has_data = count_data[  count_data["gene"].isin(fil_geneHash) ]	
+	count_has_data = count_data[  count_data["Gene"].isin(fil_geneHash) ]	
 
 	count_has_data.to_csv( options.OutputPrefix+'.count',sep="\t",index=False  )
 	old_name = count_has_data.columns[1:]
@@ -98,7 +98,7 @@ dev.off()
 	count_has_data.rename(columns= changname_hash, inplace=True  )	
 	
 	TMP = open("%s.tmp"%os.getpid(),'w')
-	TMP.write("gene\tSequence\n")
+	TMP.write("Gene\tSequence\n")
 	SEQ = open(   options.OutputPrefix+'.fasta','w'    )
 	BED = open(   options.OutputPrefix+'.bed','w'    )
 	LENGTH = open(   options.OutputPrefix+'.length','w'    )
@@ -139,8 +139,8 @@ dev.off()
 			)
 	TMP.close()
 	seq_data = pd.read_table( TMP.name  )
-	tsv_data = pd.DataFrame.merge( seq_data,rpkm_filter,on="gene",how="left"   )
-	tsv_data = pd.DataFrame.merge( tsv_data,count_has_data,on="gene",how="left"   )
+	tsv_data = pd.DataFrame.merge( seq_data,rpkm_filter,on="Gene",how="left"   )
+	tsv_data = pd.DataFrame.merge( tsv_data,count_has_data,on="Gene",how="left"   )
 	tsv_data.rename(columns={tsv_data.columns[0]:"Name"},inplace = True)
 	tsv_data.to_csv( options.OutputPrefix+'.xls',sep='\t',index=False)
 	os.remove(TMP.name)

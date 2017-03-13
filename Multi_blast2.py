@@ -141,7 +141,7 @@ if __name__=='__main__':
 		output_hash[ j ] .write( t+s )
 		i+=1
 	#worker_pool是一个工厂函数，用于做固定个数的多进程程序完成任务
-	worker_pool = Pool( processes=64 )
+	worker_pool = Pool( processes=processing )
 	worker_pool.map( Blast_Run,  run_processing    )
 
 	#如果出现错误

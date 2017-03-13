@@ -151,7 +151,7 @@ rownames( countsTable ) <- countsTable$gene
 countsTable <- countsTable[ , -1 ]
 conds <- c( "T", "N" ) 
 cds <- newCountDataSet( countsTable, conds ) 
-libsizes <- c(%(x_name)s=sum(countsTable%(x_name)s), %(y_name)s=%countsTable%(y_name)s )
+libsizes <- c(%(x_name)s=sum(countsTable$%(x_name)s), %(y_name)s=sum(countsTable$%(y_name)s )
 sizeFactors(cds) <- libsizes  
 cds <- estimateSizeFactors( cds ) 
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   

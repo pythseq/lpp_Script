@@ -63,8 +63,8 @@ class fastq_quality_class(  fastq_check    ):
 
 		## the quality hash to represent the quality in each site,which can make searching more fast
 		self.phred_64_quality_hash={}
-		for x in xrange(1,41):
-			self.phred_64_quality_hash[ chr( x+64  ) ] = x
+		for x in xrange(1,44):
+			self.phred_64_quality_hash[ chr( x+33  ) ] = x
 		## self.attribute record the variant input,quality ->quality threshold, threshold -> to threshold you
 		##want, length -> reads_length after trim to recieve, fail_file -> low quality reads, trim-> True: to
 		##trim, False: Not trim, succ_trim -> trim successfuly file to record, fail_trim -> trim failed reads to
@@ -290,13 +290,13 @@ class fastq_quality_class(  fastq_check    ):
 		if self.threshold_check(  quality   ):
 			self.filter_read_count += 1
 			self.filter_data_count += len( re.sub( '\s+','',  seq ) )
-			self.OUTPUT.write(  raw_cont  )
+			#self.OUTPUT.write(  raw_cont  )
 			status = 'Filter'
 			output_hash[ status ] = raw_cont
 		else:
 			status = 'failFilter'
 			output_hash[ status ] = raw_cont
-			self.FAIL_FILE.write(  raw_cont   )
+			#self.FAIL_FILE.write(  raw_cont   )
 
 		return output_hash
 

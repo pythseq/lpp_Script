@@ -45,7 +45,7 @@ class fastq_quality_class(  fastq_check    ):
 		print( entroy )
 		for x in xrange(0,64):
 			self.phred_64_quality_hash[ chr( x+entroy  ) ] = x		
-		self.subdevide =1048576
+		self.subdevide =1000000
 		self.Queue = multiprocessing.Queue()
 		self.RAWHANDLE  = open( os.path.abspath( kword['input_data'] ), 'rU' )
 
