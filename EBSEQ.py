@@ -148,10 +148,10 @@ Res<-cbind(Res, GeneFC)
 Res<-Res[!is.na(Res$FDR), ]
 Res$BaseMean<- (Res$BaseMeanA+Res$BaseMeanB)/2 
 Res$Condition = cbind(rep("Not DEGs",nrow(Res)))
-
+upRes<-Res[Res$Log2FC>=1 & Res$FDR < %(threshold)s  ,  ]
 Res$Condition[Res$Log2FC>=1 & Res$FDR < %(threshold)s    ]<-paste("Up regulated gene :",dim(upRes)[1])
 
-
+downRes<-Res[Res$Log2FC<=-1 & Res$FDR < %(threshold)s  ,  ]
 Res$Condition[Res$Log2FC<=-1 & Res$FDR < %(threshold)s   ]<-paste("Down regulated gene :",dim(downRes)[1])
 
 upRes<-Res[Res$Log2FC>=1 & Res$FDR < %(threshold)s  ,  ]
