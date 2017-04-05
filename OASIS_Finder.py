@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	RESULT_GFF = open( outputprefix+'.gff','w' )
 	RESULT_XLS = open( outputprefix+'.xls','w' )
 	RESULT_SEQ = open( outputprefix+'.fasta','w' )	
-	RESULT_XLS.write("ID\tStart\tEnd\tKind\tFunction\tRef_Frame\tSeq_Nucl_Length\tSeq_Nucleotide\tIS_Family\tIS_Group\tIS_Origin\tIS_Bitscore\tIS_Evalue\tIS_Identities\tIS_Gaps\tIS_SubjectLength\tIRL\tIRR\tLocus_Tag\n")
+	RESULT_XLS.write("ID\tRef_Source\tRef_Start\tRef_End\tKind\tFunction\tRef_Frame\tSeq_Nucl_Length\tSeq_Nucleotide\tIS_Family\tIS_Group\tIS_Origin\tIS_Bitscore\tIS_Evalue\tIS_Identities\tIS_Gaps\tIS_SubjectLength\tIRL\tIRR\tLocus_Tag\n")
 	for line in GFF:
 		line_l= line.split("\t")
 		start,end = line_l[3],line_l[4]
@@ -74,17 +74,17 @@ if __name__ == '__main__':
 			line_l = line.strip().split("\t")
 			line_l[0] = source
 			gff_detail_l = line_l[-1].split("; ")
-			is_id = "%s"%( name+"_IS"+str(number) ) 
+			is_id = "%s"%( source+"_IS"+str(number) ) 
 			gff_detail_l.insert( 0,"ID \"%s\""%("ID "+is_id ) ) 
 			gff_detail_l[2] = """family \"%s\""""%(  family  )
 			gff_detail_l[3] = """group \"%s\""""%(  group  )
 			line_l[-1] = '; '.join(   gff_detail_l )
 			RESULT_GFF.write(  '\t'.join(  line_l ) +'\n')
-			RESULT_XLS.write( is_id+'\t'+start+'\t'+end+'\t'+all_data [:-1] +'\t'+irl+'\t'+irr+'\t'+locus_tag+'\n')
+			RESULT_XLS.write( is_id+'\t'+source+'\t'+start+'\t'+end+'\t'+all_data [:-1] +'\t'+irl+'\t'+irr+'\t'+locus_tag+'\n')
 			RESULT_SEQ.write(    '>'  +  is_id  +  '\n'  +    all_te_seq[   "_".join([start,end])  ]   )
 			
 			
 			
 	
 	
-	
+	os.system(  "IS_Stat.py -i %s -o %s"%(  RESULT_XLS.name,  outputprefix+'.stat') ) 
