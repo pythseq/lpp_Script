@@ -74,7 +74,7 @@ def BWA_MAPPING( file_list  ):
 output_hash = Ddict()
 for a,b,c in os.walk(  inputpath ):
 	for each_f in c:
-		if re.search('.pair\d+',each_f   ):
+		if re.search('.pair\d+$',each_f   ):
 			name = each_f.split('.')[0]
 			output_hash[  name ] [  a+'/'+each_f ] = ''
 input_list = []
