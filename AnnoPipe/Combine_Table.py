@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from XLS_Combine import combine_xls
 from lpp import *
 data_list = sys.argv[1:]

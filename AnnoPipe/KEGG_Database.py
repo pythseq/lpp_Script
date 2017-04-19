@@ -59,7 +59,7 @@ if __name__ == '__main__':
 	
 	PATHWAY_DETAIL = open( options.PATH,'rU')
 	pathway_detail_frame = pd.read_table( options.PATH )
-	pathway_detail_frame = pd.DataFrame(pathway_detail_frame, columns=pathway_detail_frame.columns[:-1])
+#	pathway_detail_frame = pd.DataFrame(pathway_detail_frame, columns=pathway_detail_frame.columns[:-1])
 	pathway_detail_frame = pathway_detail_frame.drop_duplicates()
 	# pathway_detail_frame.rename(  columns={'Gene_ID':'Name'}, inplace=True)
 	new_name = [ "KEGG_"+name for name in pathway_detail_frame.columns[1:]]
