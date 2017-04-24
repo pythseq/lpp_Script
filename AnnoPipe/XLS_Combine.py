@@ -170,7 +170,7 @@ dev.off()
        
        )
     VENN_R.close()
-    os.system("Rscript %s "%( VENN_R.name  ))
+    os.system("Rscript %s &"%( VENN_R.name  ))
     
     
     chrosome_Excel = pd.ExcelWriter(chrosome_dir+'ChorosomeAnnotation.xlsx', engine='xlsxwriter')

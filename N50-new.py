@@ -8,10 +8,10 @@ import glob
 def N50(fasta):
 	pool = []
 	scope_hash = Ddict()
-	scope = xrange(0,3100,200)
+	scope = xrange(0,10000,500)
 	for each_scp in scope:
 		scope_hash[ each_scp ] = 0
-	scope_hash[ '>3000' ] = 0
+	scope_hash[ '10500' ] = 0
 
 	RAW = fasta_check( open( fasta,'rU' ) )
 	
@@ -23,7 +23,7 @@ def N50(fasta):
 		pool+=[length]
 		distribution[ length ][ t ] = ''
 		if length> scope[-1] :
-			scope_hash[ '>3000' ]+=1
+			scope_hash[ '10500' ]+=1
 		else:
 			for each_scope in scope:
 				if length<= each_scope:
