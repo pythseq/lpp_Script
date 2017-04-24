@@ -11,7 +11,7 @@ def N50(fasta):
 	scope = xrange(0,10000,500)
 	for each_scp in scope:
 		scope_hash[ each_scp ] = 0
-	scope_hash[ '10500' ] = 0
+	scope_hash[ '10000' ] = 0
 
 	RAW = fasta_check( open( fasta,'rU' ) )
 	
@@ -23,7 +23,7 @@ def N50(fasta):
 		pool+=[length]
 		distribution[ length ][ t ] = ''
 		if length> scope[-1] :
-			scope_hash[ '10500' ]+=1
+			scope_hash[ '10000' ]+=1
 		else:
 			for each_scope in scope:
 				if length<= each_scope:
@@ -61,7 +61,7 @@ def N50(fasta):
 	SCOPE.write(  'Range\tNO\n'  )
 	for each_scope in scope:
 		SCOPE.write( '%s\t%s\n'%( each_scope, scope_hash[ each_scope ]  )  )
-	SCOPE.write( '%s\t%s\n'%( '>3000', scope_hash[ '>3000' ]  )  )
+	SCOPE.write( '%s\t%s\n'%( '10000', scope_hash[ '10000' ]  )  )
 	
 	
 	for i in sorted( distribution ):
