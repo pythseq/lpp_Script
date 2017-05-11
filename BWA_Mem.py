@@ -66,7 +66,7 @@ def BWA_MAPPING( file_list  ):
 	os.system("samtools view  -@ 20  -bS %s.sam -o %s.bam 2>/dev/null"%( output_preifx, output_preifx ))
 	os.system("samtools sort  -m 10G   %s.bam    -o %s.sort.bam 2>/dev/null"%( output_preifx, output_preifx ))
 	os.remove( output_preifx+".bam")
-	os.remove( output_preifx+".sam")
+	#os.remove( output_preifx+".sam")
 	shutil.move( output_preifx+'.sort.bam', output_preifx+'.bam')
 	os.system( "samtools index   %s.bam "%(output_preifx))
 	
