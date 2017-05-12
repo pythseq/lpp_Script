@@ -110,7 +110,7 @@ GeneFeature+Annotation.xlsx	注释的基因信息和基因序列等信息的总�
         result_frame["from"] = result_frame["Name"].str.rsplit('_',1).str.get(0)
         
         result_frame["id"] = result_frame["Name"].str.rsplit('_',1).str.get(1)
-        result_frame =result_frame.sort(["from",'id'],axis=0)
+        result_frame =result_frame.sort_values(by=["from",'id'],inplace=True)
         result_frame = result_frame.drop(["from",'id'],axis=1)
         
         result_frame.to_excel( category_Excel,category ,index=False   )
@@ -160,9 +160,13 @@ temp = venn.diagram(
 	) 
 pdf("%s")
 grid.draw(temp)    
-dev.off()    
+dev.off()  
+tiff( "%s"  )  
+grid.draw(temp) 
+dev.off()
     """%(
-           category_dir+'/stat.pdf'
+           category_dir+'/stat.pdf',
+	   category_dir+'/stat.tiff'
            
        
        )
@@ -188,7 +192,7 @@ dev.off()
     
         result_frame["id"] = result_frame["Name"].str.split('_',1).str.get(1)
 
-        result_frame =result_frame.sort(["from",'id'],axis=0)
+        result_frame =result_frame.sort_values(by=["from",'id'],axis=0,inplace=True)
         result_frame = result_frame.drop(["from",'id'],axis=1)        
         result_frame.to_excel( chrosome_Excel,chrosome,index=False    )
         all_result.append(result_frame)
@@ -199,7 +203,7 @@ dev.off()
     
     all_resultframe["from"] = all_resultframe["Name"].str.split('_',1).str.get(0)
     all_resultframe["id"] = all_resultframe["Name"].str.split('_',1).str.get(1)
-    all_resultframe =all_resultframe.sort(["from",'id'],axis=0)
+    all_resultframe =all_resultframe.sort_values(by=["from",'id'],axis=0,inplace = True)
     all_resultframe = all_resultframe.drop(["from",'id'],axis=1)
     all_resultframe = all_resultframe.drop_duplicates()
     all_resultframe.to_csv( out_put_path+"All_HasAnnotation.xlsx" ,index=False ,sep='\t'  )

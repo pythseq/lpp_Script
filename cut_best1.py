@@ -29,7 +29,7 @@ if __name__=="__main__":
 	title = RAW.next()
 	Filter = options.Filter
 	if Filter:
-		title_list = title.split("\t")
+		title_list = title.rstrip().split("\t")
 		title_list =title_list[2:-3]
 		title_list =[ "Nt_"+x.split('_',1)[-1] for x in title_list  ]
 		title_list[0]="Name"
@@ -39,7 +39,7 @@ if __name__=="__main__":
 	already = Ddict()
 	END.write(title)
 	for line in RAW:
-		line_l = line.split('\t')
+		line_l = line.rstrip().split('\t')
 
 		line_l_new = line_l[2:-3]
 		if line_l_new[-4]=='1':
