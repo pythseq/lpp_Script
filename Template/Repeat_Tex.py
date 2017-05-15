@@ -52,7 +52,7 @@ if __name__ == '__main__':
 	DATA = open(  result_dir+'/result.ps','w' )
 	
 	DATA.write( data )
-	os.system( "ps2png %s/result.ps %s/result.png"%( result_dir,result_dir )   )
+	os.system( "ps2pdf %s/result.ps "%( result_dir,result_dir )   )
 
 	END.write(
 	    template.render(
