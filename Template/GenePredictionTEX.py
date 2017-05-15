@@ -42,8 +42,8 @@ if __name__ == '__main__':
 
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
-	template = env.get_template('GenePrediction.py')
-	END = open( InputPath+"GenePrediction.py" ,'w' )
+	template = env.get_template('GenePrediction.tex')
+	END = open( InputPath+"GenePrediction.tex" ,'w' )
 
 	result_dir = InputPath+"10.CircleGraph/"
 	all_graph = []
