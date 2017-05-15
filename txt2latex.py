@@ -59,11 +59,11 @@ if __name__ == "__main__":
 				
 	if len(format_tag)>5:
 		OUTPUT.write("""\\begin{sidewaystable}\n
-		\\centering
+		\\begin{center}
 	\\small
 	\\setlength\\tabcolsep{1pt}\n""")
 	else:
-		OUTPUT.write("""\\begin{table}[H]\n\\centering\n""")
+		OUTPUT.write("""\\begin{table}[H]\n\\\begin{center}\n""")
 	format_tag="{"+"".join(format_tag)+'}'
 	
 	OUTPUT.write("""
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 	for line in RAW:
 		line = trans(line)
 		OUTPUT.write(line+'\n')
-	OUTPUT.write("\\hline\n\\end{tabularx}\n")
+	OUTPUT.write("\\hline\n\\end{tabularx}\n\\end{center}\n")
 	if len(format_tag)>8:
 		OUTPUT.write("\\end{sidewaystable}\n")
 	else:
