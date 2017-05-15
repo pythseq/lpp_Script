@@ -48,6 +48,7 @@ if __name__ == '__main__':
 	result_dir = (InputPath+"/02.RepeatMask/")
 	os.system( "enscript -p %s/result.ps %s/*.tbl"%( result_dir,result_dir )   )
 	os.system( "ps2pdf -p %s/result.ps %s/result.pdf"%( result_dir,result_dir )   )
+	print(result_dir)
 	END.write(
 	    template.render(
 	        {
