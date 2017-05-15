@@ -53,7 +53,7 @@ if __name__ == '__main__':
 		commandline = """Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
 		    each_f,each_f.replace("png","tex"),name
 		) 
-		print(commandline)
+
 		os.system( commandline )
 
 		all_graph.append(  tex )
@@ -63,7 +63,9 @@ if __name__ == '__main__':
 	os.system(  "cd %s && lengthN50.R %s"%(  total_dir, "Total.scope  result.pdf result.tiff" )    )	
 	lengh_graph = "%s/result.pdf "%(  total_dir )                                  
 	anno_path = InputPath+" 03.Annotation/"
-	os.system( """txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )    )    
+	commandline =  """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )  
+	print(commandline)
+	os.system( """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )    )    
 	table = "%s/stats.tex"%( anno_path  )
 	
 	
