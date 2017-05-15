@@ -52,7 +52,7 @@ if __name__ == '__main__':
 	END.write(
 	    template.render(
 	        {
-	            "Graph":result_dir+"result.pdf",
+	            "Graph":result_dir,
 	          
 	        }
 	    )
