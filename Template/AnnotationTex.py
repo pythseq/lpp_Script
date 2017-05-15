@@ -65,7 +65,7 @@ if __name__ == '__main__':
 			all_kegg_tex.append(result)			
 			os.system( commandline )
 
-		all_graph.append(  tex )
+
 	all_kegg_tex = sorted( all_kegg_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
 	all_cog_tex = sorted( all_cog_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
 	table_dir = result_dir+"Detail/Database"
