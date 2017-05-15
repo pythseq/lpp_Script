@@ -42,8 +42,8 @@ if __name__ == '__main__':
 
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
-	template = env.get_template('Annotation.tex')
-	END = open( InputPath+"Annotation.tex" ,'w' )
+	template = env.get_template('IS.tex')
+	END = open( InputPath+"IS.tex" ,'w' )
 
 	result_dir = InputPath+"05.InsertionSequence"
 	all_IS = []
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 		for f in c:
 			if f.endswith("stat"):
 				result = a+"/stats.tex"
-				commandline = """txt2tex.py  -i %s  -o %s -c %s 样品 IS单元分类统计表  """%(    
+				commandline = """txt2latex.py  -i %s  -o %s -c %s 样品 IS单元分类统计表  """%(    
 				    a+f,result,name
 				) 
 
