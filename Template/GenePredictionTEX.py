@@ -8,7 +8,7 @@
 
 
 from lpp import *
-import os
+import os,subprocess
 from  jinja2 import FileSystemLoader,Environment
 from Dependcy import Config_Parse
 from optparse import OptionParser
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 	for each_f in glob.glob(result_dir+'/*.png'):
 		name = os.path.basename( each_f).split(".")[0].split("_")[-1]
 		tex = each_f.replace("png","tex")
-		os.system( """' Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
+		subprocess.call( """' Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
 		    each_f,each_f.replace("png","tex"),name
 		) 
 		           
