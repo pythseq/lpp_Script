@@ -55,6 +55,7 @@ if __name__ == '__main__':
 			commandline = """Graph2tex.py  -i %s  -o %s -c %sCOG分布统计柱状视图  """%(    
 			a+"/stats.pdf",result,name
 		) 
+			print(line)
 			os.system( commandline  )
 			all_cog_tex.append(result)
 		if a.endswith("KEGG"):
