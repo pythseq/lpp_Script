@@ -52,12 +52,12 @@ if __name__ == '__main__':
 	DATA = open(  result_dir+'/result.ps','w' )
 	
 	DATA.write( data )
-	os.system( "ps2pdf -p %s/result.ps %s/result.pdf"%( result_dir,result_dir )   )
+	os.system( "ps2png %s/result.ps %s/result.png"%( result_dir,result_dir )   )
 
 	END.write(
 	    template.render(
 	        {
-	            "Graph":result_dir+'/result.pdf'
+	            "Graph":result_dir+'/result.png'
 	
 	        }
 	            ).encode('utf-8')
