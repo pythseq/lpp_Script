@@ -59,6 +59,7 @@ if __name__ == '__main__':
 	Graph = os.path.abspath(options.Graph)
 	Table = os.path.abspath(options.Table)
 	config_hash = Config_Parse()
+	print(config_hash)
 	template_root = config_hash["Location"][  "Root" ]+"/Template"
 	
 
