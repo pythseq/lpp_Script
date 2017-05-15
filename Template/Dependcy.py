@@ -12,7 +12,7 @@ from ConfigParser import ConfigParser
 general_config = ConfigParser()
 path =os.path.split(__file__)[0]
 general_config.read(
-    path+"/general.ini"
+    path+"/config.ini"
 )
 
 def Config_Parse():
