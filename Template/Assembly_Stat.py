@@ -47,11 +47,11 @@ if __name__ == '__main__':
 	
 	result_dir = (InputPath+"/01-3.Assembly_END/")
 	total = len( glob.glob(  result_dir +"/*.fasta" ) )-1
-	plasmid =len( glob.glob(  graph_dir +"/*Plasmid*" ) ) 
+	plasmid =len( glob.glob(  result_dir +"/*Plasmid*" ) ) 
 	chrom = total-plasmid
 	linear = 0
 	cir = 0
-	for each_file in  glob.glob(  graph_dir +"/*.fasta" ):
+	for each_file in  glob.glob(  result_dir +"/*.fasta" ):
 		RAW = fasta_check(  open(each_file)   )
 		for t,s in RAW:
 			if "Circle" in t:
