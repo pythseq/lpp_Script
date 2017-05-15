@@ -75,7 +75,7 @@ if __name__ == '__main__':
 	            "length_png":lengh_graph,
 	         
 	        }
-	    )
+	    ).encode('utf-8')
 	)	
 	END.close()	
 	
