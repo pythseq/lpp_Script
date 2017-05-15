@@ -62,6 +62,6 @@ if __name__ == '__main__':
 	            "Graph":"123"
 	
 	        }
-	            )..encode('utf-8')
+	            ).encode('utf-8')
 	)		
 	END.close()	
