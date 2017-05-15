@@ -65,6 +65,8 @@ if __name__ == '__main__':
 	commandline = """Graph2tex.py  -i %s/result.pdf  -o %s/result.tex -c 基因长度分布统计图 """%(    
 		    total_dir,total_dir
 		) 	
+	os.system( commandline )
+	
 	
 	lengh_graph = "%s/result.tex"%(  total_dir )                                  
 	anno_path = InputPath+"03.Annotation/"
