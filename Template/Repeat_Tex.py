@@ -56,12 +56,12 @@ if __name__ == '__main__':
 	            )
 	)
 	
-	#END.write(
-	    #template.render(
-	        #{
-	            #"12":"123"
+	END.write(
+	    template.render(
+	        {
+	            "Graph":"123"
 	
-	        #}
-	            #)
-	#)		
-	#END.close()	
+	        }
+	            )
+	)		
+	END.close()	
