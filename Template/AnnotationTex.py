@@ -79,6 +79,7 @@ if __name__ == '__main__':
 	table = "%s/stat.tex"%( table_dir  )
 	commandline =  """Graph2tex.py -i %s/stat.pdf -o %s/stat_graph.tex   -c  "注释结果数据库来源分布图" """%(  table_dir,table_dir  )  
 	graph = "%s/stat_graph.tex"%( table_dir  )
+	os.system( commandline)  
 	
 	END.write(
 	    template.render(
