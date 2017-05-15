@@ -46,10 +46,10 @@ if __name__=="__main__":
 	tmp = base_path+temp_name
 	os.system(""" blastn -db %s -query %s  -num_threads 64 -max_target_seqs 1 -evalue %s  -outfmt  5    >> %s"""% ( Database,options.input,options.evalue,tmp+'.xml'  )   )
 	os.system( "blast_parse.py %s"%(tmp+'.xml') )
-	#os.remove(tmp+'.xml')
+	os.remove(tmp+'.xml')
 	if os.path.getsize(tmp+".Bparse"):
 		os.system(  "cut_best1.py  -i %s.Bparse -o %s.top1 -f "%( tmp,tmp  )  )
-		#os.remove( "%s.Bparse"%(tmp)  )
+		os.remove( "%s.Bparse"%(tmp)  )
 		
 		dataframe = pd.read_table(  tmp+'.top1'  )
 		dataframe = dataframe.drop("Nt_num",1  )
@@ -68,7 +68,7 @@ if __name__=="__main__":
 		dataframe["Nt_identity"]  = 100*dataframe["Nt_identity"]/dataframe["Nt_query-len"]
 		dataframe2 = pd.DataFrame(dataframe,columns=['Name',u'Nt_Hit',"Nt_identity", 'Nt_query-len',u'Nt_Query_Coverage', u'Nt_query-from',u'Nt_query-to', u'Nt_Hit_len','Nt_Hit_Coverage',u'Nt_hit-frame',  u'Nt_hit-from',u'Nt_hit-to', u'Nt_evalue' , u'Nt_bit-score' ])
 		dataframe2.to_csv(options.output,sep="\t",index=False)
-		#os.remove( "%s.top1"%(tmp)  )
+		os.remove( "%s.top1"%(tmp)  )
 
 
 	else:

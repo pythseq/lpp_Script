@@ -33,11 +33,12 @@ if __name__=="__main__":
 		title_list =title_list[2:-3]
 		title_list =[ "Nt_"+x.split('_',1)[-1] for x in title_list  ]
 		title_list[0]="Name"
-		END.write( "\t".join(title_list)  )
-		
+		END.write( "\t".join(title_list)+'\n'  )
+	else:
+		END.write(title)
 	
 	already = Ddict()
-	END.write(title)
+	#END.write(title)
 	for line in RAW:
 		line_l = line.rstrip().split('\t')
 
