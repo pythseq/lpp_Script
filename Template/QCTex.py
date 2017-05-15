@@ -72,7 +72,7 @@ if __name__ == '__main__':
 	END.write(
 	    template.render(
 	        {
-	            "Sample":Name,
+	            "Sample":Sample,
 	            "Cell":Cell,
 	            "Graph":Graph,
 	            "Table":Table
