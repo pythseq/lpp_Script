@@ -56,7 +56,7 @@ if __name__ == '__main__':
 		name = os.path.basename( each_f).split(".")[0].split("_")[-1]
 		tex = each_f.replace("png","tex")
 		commandline = """Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
-		    each_f,each_f.replace("png","tex"),name
+		    each_f,each_f.replace("png.thu.png","tex"),name
 		) 
 
 		os.system( commandline )
