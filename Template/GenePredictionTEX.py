@@ -54,7 +54,7 @@ if __name__ == '__main__':
 		    each_f,each_f.replace("png","tex"),name
 		) 
 		
-		subprocess.call( commandline.split() )
+		subprocess.call( commandline )
 		print(   """' Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
 		    each_f,each_f.replace("png","tex"),name
 		)   
