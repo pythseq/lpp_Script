@@ -24,8 +24,8 @@ if __name__ == "__main__":
 	                  dest="Caption",
 	                  help=" Caption")			
 	(options, args) = parser.parse_args()
-	inputData = options.inputData
-	Output = options.Output
+	inputData = os.path.abspath( options.inputData )
+	Output = os.path.abspath( options.Output )
 	Caption = options.Caption
 	OUTPUT = open(  Output,'w' )
 	
