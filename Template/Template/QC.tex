@@ -1,5 +1,5 @@
 \section{数据质量统计}
-使用Pacbio测序平台对A16R菌种进行测序。共得到4个smrtcells进行测序。
+使用Pacbio测序平台对{{Sample}}菌种进行测序。共得到{{Cell}}个smrtcells进行测序。
 \subsection{质量统计方法}
 Pacbio使用单分子测序技术实现高读长测序。但由于其数据信号捕捉困难，原始数据的质量较低，并且具有高随机性。因此，在数据分析前需要进行严格的数据质量过滤和前处理。
 处理方法如下：
@@ -22,7 +22,7 @@ Pacbio使用单分子测序技术实现高读长测序。但由于其数据信�
 \begin{figure}[H]
 
     \centering
-    \includegraphics[width=0.8\textwidth]{qc.png}
+    \includegraphics[width=0.8\textwidth]{ {{Graph}}   }
     \captionsetup{labelsep=period}
     \caption{QC分析结果}
 \end{figure}
@@ -41,29 +41,30 @@ Pacbio使用单分子测序技术实现高读长测序。但由于其数据信�
 
 
 \subsection{所有测序结果统计表}
-下表为测序结果的初步统计结果，其中，\textcolor{red}{红色数据}为经过数据质控后的可用数据的统计结果，后续分析全部使用这些质控后的数据进行分析。
-\begin{table}[h]
-    \caption{123}
-        \begin{center}
-            \begin{threeparttable}
-                \begin{tabularx}{\textwidth}{cc|X}
+下表为测序结果经过数据质控后的可用数据的统计结果，后续分析全部使用这些质控后的数据进行分析。
+\input{ "{{Table}}"  }
+%\begin{table}[h]
+%    \caption{123}
+%        \begin{center}
+%            \begin{threeparttable}
+                % \begin{tabularx}{\textwidth}{cc|X}
 
-                    \toprule
-                    11&22&33\\
-                    \midrule
-                    aa&bb&静静地 \tnote{1} 我将离开你，请将眼角的泪逝去。漫漫岁月里\\
+                    % \toprule
+                    % 11&22&33\\
+                    % \midrule
+                    % aa&bb&静静地 \tnote{1} 我将离开你，请将眼角的泪逝去。漫漫岁月里\\
 
-                    ee&ff&dd\\
-                    \bottomrule
+                    % ee&ff&dd\\
+                    % \bottomrule
 
-                \end{tabularx}
-                \begin{tablenotes}
+                % \end{tabularx}
+                % \begin{tablenotes}
 
-                    \footnotesize
-                    \item[1] 我的天啊啊哪！！！
-                \end{tablenotes}
-            \end{threeparttable}
-        \end{center}
-\end{table}
+                    % \footnotesize
+                    % \item[1] 我的天啊啊哪！！！
+                % \end{tablenotes}
+            % \end{threeparttable}
+        % \end{center}
+% \end{table}
 
 
