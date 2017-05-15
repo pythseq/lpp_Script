@@ -48,7 +48,7 @@ if __name__ == '__main__':
 	result_dir = InputPath+"/02.RepeatMask/"
 	os.system( "enscript -q -p %s/result.ps %s/*.tbl"%( result_dir,result_dir )   )
 	data = open(result_dir+'/result.ps').read()
-	data =re.sub("/((?:fname|fdir|ftail))\s+.+(\s+def)","\\1 ()\\2",data)
+	data =re.sub("(/(?:fname|fdir|ftail))\s+.+(\s+def)","\\1 ()\\2",data)
 	DATA = open(  result_dir+'/result.ps','w' )
 	
 	DATA.write( data )
