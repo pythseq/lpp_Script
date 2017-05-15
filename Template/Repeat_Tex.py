@@ -46,7 +46,12 @@ if __name__ == '__main__':
 	END = open( InputPath+"/RepeatMasker.tex" ,'w' )
 
 	result_dir = InputPath+"/02.RepeatMask/"
-	os.system( "enscript -p %s/result.ps %s/*.tbl"%( result_dir,result_dir )   )
+	os.system( "enscript -q -p %s/result.ps %s/*.tbl"%( result_dir,result_dir )   )
+	data = open(result_dir+'/result.ps').read()
+	data =re.sub("/(?:fname|fdir|ftail\s+.+def","",data)
+	DATA = open(  result_dir+'/result.ps','w' )
+	
+	DATA.write( data )
 	os.system( "ps2pdf -p %s/result.ps %s/result.pdf"%( result_dir,result_dir )   )
 
 	END.write(
