@@ -63,7 +63,7 @@ if __name__ == '__main__':
 	os.system(  "cd %s && lengthN50.R %s"%(  total_dir, "Total.scope  result.pdf result.tiff" )    )	
 	
 	commandline = """Graph2tex.py  -i %s/result.pdf  -o %s/result.tex"%( -c 基因长度分布统计图 """%(    
-		    total_dir,total_dir,name
+		    total_dir,total_dir
 		) 	
 	lengh_graph = "%s/result.tex"%(  total_dir )                                  
 	anno_path = InputPath+"03.Annotation/"
