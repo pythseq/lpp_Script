@@ -60,7 +60,7 @@ if __name__ == '__main__':
 	Table = os.path.abspath(options.Table)
 	config_hash = Config_Parse()
 	print(config_hash)
-	template_root = config_hash["Location"][  "Root" ]+"/Template"
+	template_root = config_hash["Location"][  "root" ]+"/Template"
 	
 
 
