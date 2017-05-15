@@ -37,7 +37,7 @@ if __name__ == '__main__':
 	                  help="Title Name")		
 	
 	(options, args) = parser.parse_args()
-
+	config_hash = Config_Parse()
 	OutputPath = os.path.abspath(options.OutputPath)+'/'
 	Title = options.Title
 	
