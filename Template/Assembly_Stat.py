@@ -50,7 +50,7 @@ if __name__ == '__main__':
 	plasmid =len( glob.glob(  graph_dir +"/*Plasmid*" ) ) 
 	chrom = total-plasmid
 	linear = 0
-	cir = -
+	cir = 0
 	for each_file in  glob.glob(  graph_dir +"/*.fasta" ):
 		RAW = fasta_check(  open(each_file)   )
 		for t,s in RAW:
