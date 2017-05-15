@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
 	template = env.get_template('Assembly_Stat.tex')
-	END = open( OutputPath+"/Assembly_Stat.tex" ,'w' )
+	END = open( InputPath+"/Assembly_Stat.tex" ,'w' )
 	
 	result_dir = InputPath("/01-3.Assembly_END/")
 	total = len( glob.glob(  graph_dir +"/*.fasta" ) )-1
