@@ -66,8 +66,8 @@ if __name__ == '__main__':
 			os.system( commandline )
 
 
-	all_kegg_tex = sorted( all_kegg_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
-	all_cog_tex = sorted( all_cog_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
+	#all_kegg_tex = sorted( all_kegg_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
+	#all_cog_tex = sorted( all_cog_tex,key = lambda x: os.path.dirname( x ).split("/")[-2]  )
 	table_dir = result_dir+"Detail/Database"
 	commandline =  """ txt2latex.py -i %s/stat.tsv -o %s/stat.tex   -c  "注释结果统计表" """%(  table_dir,table_dir  )  
 
