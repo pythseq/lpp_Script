@@ -64,9 +64,20 @@ if __name__ == '__main__':
 	lengh_graph = "%s/result.pdf "%(  total_dir )                                  
 	anno_path = InputPath+"03.Annotation/"
 	commandline =  """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )  
-	print(commandline)
+
 	os.system( """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )    )    
 	table = "%s/stats.tex"%( anno_path  )
+	END.write(
+	    template.render(
+	        {
+	            "CircularGraph":all_graph,
+	            "status_table":table,
+	            "length_png":lengh_graph,
+	         
+	        }
+	    )
+	)	
+	END.close()	
 	
 	
 	
