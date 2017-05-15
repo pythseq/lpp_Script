@@ -63,7 +63,7 @@ if __name__ == "__main__":
 	\\small
 	\\setlength\\tabcolsep{1pt}\n""")
 	else:
-		OUTPUT.write("""\\begin{table}[H]\n""")
+		OUTPUT.write("""\\begin{table}[H]\n\\centering\n""")
 	format_tag="{"+"".join(format_tag)+'}'
 	
 	OUTPUT.write("""
