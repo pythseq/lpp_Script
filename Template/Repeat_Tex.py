@@ -51,7 +51,7 @@ if __name__ == '__main__':
 	print(
 	    template.render(
 	        {
-	            "12":"123"
+	            "Graph":"123"
 	        }
 	            )
 	)
