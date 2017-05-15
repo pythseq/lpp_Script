@@ -50,19 +50,14 @@ if __name__ == '__main__':
 	env = Environment(loader = templeloader)
 	template = env.get_template('Title.tex')
 	END = open( OutputPath+"/Title.tex" ,'w' )
-	template.render(
+	
+	END.write(
+	    template.render(
 	        {
 	            "Title":Title,
 
 	        }
-	    )  
-	#END.write(
-	    #template.render(
-	        #{
-	            #"Title":Title,
-
-	        #}
-	    #)
-	#)	
+	    )
+	)	
 	END.close()
 	
