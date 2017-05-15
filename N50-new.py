@@ -8,7 +8,7 @@ import glob
 def N50(fasta):
 	pool = []
 	scope_hash = Ddict()
-	scope = xrange(0,10000,500)
+	scope = xrange(0,10000,200)
 	for each_scp in scope:
 		scope_hash[ each_scp ] = 0
 	scope_hash[ '10000' ] = 0

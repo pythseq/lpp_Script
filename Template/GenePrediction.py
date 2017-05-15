@@ -42,8 +42,21 @@ if __name__ == '__main__':
 
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
-	template = env.get_template('RepeatMasker.tex')
-	END = open( InputPath+"/RepeatMasker.tex" ,'w' )
+	template = env.get_template('GenePrediction.py')
+	END = open( InputPath+"GenePrediction.py" ,'w' )
 
-	result_dir = InputPath+"/02.RepeatMask/"
+	result_dir = InputPath+"10.CircleGraph/"
+	all_graph = []
+	for each_f in glob.glob(result_dir+'/*.png'):
+		name = os.path.basename( each_f).split(".")[0].split("_")[-1]
+		tex = each_f.replce("png","tex")
+		os.system( """' Graph2tex.py  -i %s  -o %s -c "%s基因组视图"  """%(    
+		    each_f,each_f.replce("png","tex"),name
+		) 
+		           
+		        )
+		all_graph.append(  tex )
+	
+	total_dir = InputPath+"09.AllResult/"
+	os.system(  "" )	
 	

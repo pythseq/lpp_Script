@@ -3,9 +3,9 @@
 
 根据基因组序列绘出其 GC 图，使用$（ G–C） /（ G+ C）$ 的计算方法来进行 GC skew 分析，同时根据 COG \cite{eggNOG}的注释结果和基因的位置信息绘出 COG注释的基因在基因组上的分布情况。
 结果如下所示：
-%{% for eachgraph in CircularGraph %}
-%\input{   "{{eachgraph}}"    }
-%{% endfor %}
+{% for eachgraph in CircularGraph %}
+\input{   "{{eachgraph}}"    }
+{% endfor %}
 
 
 
@@ -14,9 +14,9 @@
 
 
 基因预测统计信息如下表所示：
-%\input{ "{{status_table}}"  }
+\input{ "{{status_table}}"  }
 
-%\input{ "{{length_table}}"  }
+\input{ "{{length_table}}"  }
 
 
 
