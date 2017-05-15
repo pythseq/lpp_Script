@@ -50,11 +50,11 @@ if __name__ == '__main__':
 	os.system( "ps2pdf -p %s/result.ps %s/result.pdf"%( result_dir,result_dir )   )
 
 	END.write(
-                template.render(
-                    {
-	                    "12":"123",
-                  
-                }
-            )
-        )		
+	    template.render(
+	        {
+	            "12":"123"
+	
+	        }
+	            )
+	)		
 	END.close()	
