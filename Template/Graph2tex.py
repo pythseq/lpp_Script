@@ -5,7 +5,7 @@
   Purpose: 
   Created: 2017/5/9
 """
-import re
+import re,os
 from optparse import OptionParser
 
 	
