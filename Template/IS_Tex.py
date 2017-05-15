@@ -50,6 +50,7 @@ if __name__ == '__main__':
 	
 	for a,b,c in os.walk( result_dir):
 		name = a.split("/")[-1].split("_")[-1]
+		a = a+'/'
 		for f in c:
 			if f.endswith("stat"):
 				result = a+"/stats.tex"
