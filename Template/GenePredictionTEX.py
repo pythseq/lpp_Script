@@ -47,7 +47,12 @@ if __name__ == '__main__':
 
 	result_dir = InputPath+"10.CircleGraph/"
 	all_graph = []
-	for each_f in glob.glob(result_dir+'/*.png'):
+	all_png = glob.glob(result_dir+"/*.png")
+	for each_f in all_png:
+		if ".thu.png" not in each_f and  each_f+".thu.png" not in all_png:
+			os.system(  "thu.py %s"%(each_f)  )
+			
+	for each_f in glob.glob(result_dir+'/*.png.thu.png'):
 		name = os.path.basename( each_f).split(".")[0].split("_")[-1]
 		tex = each_f.replace("png","tex")
 		commandline = """Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
