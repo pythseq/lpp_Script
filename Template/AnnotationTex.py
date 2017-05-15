@@ -49,8 +49,9 @@ if __name__ == '__main__':
 	all_cog_tex = []
 	all_kegg_tex = []
 	for a,b,c in os.walk( result_dir+"Detail/" ):
+		name = a.split("/")[-2].split("_")[-1]
 		if a.endswith("eggNOG"):
-			name = a.split("/")[-2]
+			
 			result = a+"/stats.tex"
 			commandline = """Graph2tex.py  -i %s  -o %s -c %sCOG分布统计柱状视图  """%(    
 			a+"/stats.pdf",result,name
@@ -59,7 +60,7 @@ if __name__ == '__main__':
 			os.system( commandline  )
 			all_cog_tex.append(result)
 		if a.endswith("KEGG"):
-			name = a.split("/")[-2]
+			
 			result = a+"/stats.tex"
 			commandline = """Graph2tex.py  -i %s  -o %s -c %sKEGG通路统计柱状视图  """%(    
 					    a+"/stats.pdf",result,name
