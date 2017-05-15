@@ -62,7 +62,7 @@ if __name__ == '__main__':
 	os.system(  "cd %s && N50-new.py %s"%(  total_dir, "Total.ffn" )    )	
 	os.system(  "cd %s && lengthN50.R %s"%(  total_dir, "Total.scope  result.pdf result.tiff" )    )	
 	lengh_graph = "%s/result.pdf "%(  total_dir )                                  
-	anno_path = InputPath+" 03.Annotation/"
+	anno_path = InputPath+"03.Annotation/"
 	commandline =  """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )  
 	print(commandline)
 	os.system( """ txt2latex.py -i %s/stats.tsv -o %s/stats.tex   -c  "序列注释结果统计表" """%(  anno_path,anno_path  )    )    
