@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	template = env.get_template('Assembly_Stat.tex')
 	END = open( InputPath+"/Assembly_Stat.tex" ,'w' )
 	
-	result_dir = InputPath("/01-3.Assembly_END/")
+	result_dir = (InputPath+"/01-3.Assembly_END/")
 	total = len( glob.glob(  graph_dir +"/*.fasta" ) )-1
 	plasmid =len( glob.glob(  graph_dir +"/*Plasmid*" ) ) 
 	chrom = total-plasmid
