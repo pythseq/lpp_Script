@@ -55,10 +55,7 @@ if __name__ == '__main__':
 		) 
 		print(commandline)
 		os.system( commandline )
-		print(   """' Graph2tex.py  -i %s  -o %s -c %s基因组视图  """%(    
-		    each_f,each_f.replace("png","tex"),name
-		)   
-		         )
+
 		all_graph.append(  tex )
 	
 	total_dir = InputPath+"09.AllResult/"
