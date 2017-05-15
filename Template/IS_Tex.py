@@ -53,6 +53,10 @@ if __name__ == '__main__':
 		a = a+'/'
 		for f in c:
 			if f.endswith("stat"):
+				data	= open(  a+f,'rU').read()
+				if "Not Find IS" in data:
+					continue
+				
 				result = a+"/stats.tex"
 				commandline = """txt2latex.py  -i %s  -o %s -c %s 样品 IS单元分类统计表  """%(    
 				    a+f,result,name
