@@ -29,39 +29,44 @@ if __name__ == '__main__':
 
 	                  help="Input Path")
 
-
+	
 	(options, args) = parser.parse_args()
 	InputPath = os.path.abspath(options.InputPath)+'/'
 
 	config_hash = Config_Parse()
 
 	template_root = config_hash["Location"][  "root" ]+"/Template"
-
+	
 
 
 
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
-	template = env.get_template('RepeatMasker.tex')
-	END = open( InputPath+"/RepeatMasker.tex" ,'w' )
-
-	result_dir = InputPath+"/02.RepeatMask/"
-	os.system( "enscript -q  -p %s/result.ps %s/*.tbl"%( result_dir,result_dir )   )
-
-	data = open(result_dir+'/result.ps').read()
-	data =re.sub("(/(?:fname|fdir|ftail))\s+.+(\s+def)","\\1 ()\\2",data)
-	DATA = open(  result_dir+'/result.ps','w' )
+	template = env.get_template('Assembly_Stat.tex')
+	END = open( InputPath+"/Assembly_Stat.tex" ,'w' )
 	
-	DATA.write( data )
-	DATA.close()
-	os.system( " ps2eps  %s/result.ps "%( result_dir)   )
-
+	result_dir = (InputPath+"/01-3.Assembly_END/")
+	total = len( glob.glob(  result_dir +"/*.fasta" ) )
+	plasmid =len( glob.glob(  result_dir +"/*Plasmid*" ) ) 
+	chrom = total-plasmid
+	linear = 0
+	cir = 0
+	for each_file in  glob.glob(  result_dir +"/*.fasta" ):
+		RAW = fasta_check(  open(each_file)   )
+		for t,s in RAW:
+			if "Circle" in t:
+				cir +=1
+			else:
+				linear +=1
 	END.write(
 	    template.render(
 	        {
-	            "Graph":result_dir+'/result.eps'
-	
+	            "Cir":cir,
+	            "Linear":linear,
+	            "Chro":chrom,
+	            "Plsmid":plasmid
 	        }
-	            ).encode('utf-8')
-	)		
-	END.close()	
+	    ).encode('utf-8')
+	)	
+	END.close()
+	

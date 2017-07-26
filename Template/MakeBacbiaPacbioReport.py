@@ -8,7 +8,7 @@
 
 
 from lpp import *
-import os
+import os,subprocess
 from  jinja2 import FileSystemLoader,Environment
 from Dependcy import Config_Parse
 from optparse import OptionParser
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 	                  dest="Sample",
 
 	                  help="Sample Name")		
-	
+
 	parser.add_option("-t", "--Table", action="store",
 	                  dest="Table",
 
@@ -45,12 +45,16 @@ if __name__ == '__main__':
 	                  dest="Graph",
 
 	                  help="Qc Graph")			
-	
+
 	parser.add_option("-n", "--Number", action="store",
 	                  dest="Number",
 	                  type=int,
 	                  default=1,
 	                  help="Cell Number")	
+	
+
+
+
 	(options, args) = parser.parse_args()
 	InputPath = os.path.abspath(options.InputPath)+'/'
 	OutputPath = os.path.abspath(options.OutputPath)+'/'
@@ -58,26 +62,52 @@ if __name__ == '__main__':
 	Cell = options.Number
 	Graph = os.path.abspath(options.Graph)
 	Table = os.path.abspath(options.Table)
+
 	config_hash = Config_Parse()
 
-	template_root = config_hash["Location"][  "root" ]+"/Template"
-	
+	template_root = config_hash["Location"][  "root" ]+"/Template/"
+
 
 
 
 	templeloader = FileSystemLoader(template_root)
 	env = Environment(loader = templeloader)
-	template = env.get_template('QC.tex')
-	END = open( InputPath+"/QC.tex" ,'w' )
+	template = env.get_template('BacteriaPacbio.tex')
+
+
+	result_dir = InputPath
+	
+
+
+	END = open( InputPath+"Report.tex" ,'w' )
 	END.write(
 	    template.render(
 	        {
-	            "Sample":Sample,
-	            "Cell":Cell,
-	            "Graph":Graph,
-	            "Table":Table
+	            "RootPath":template_root,
+
 	        }
-	    ).encode('utf-8')
+	        ).encode('utf-8')
 	)	
-	END.close()
+	END.close()	
+
+	os.system( 
+	    "QCTex.py -i %s  -o %s  -s %s -t %s -g %s  -n %s" %( InputPath,OutputPath,Sample,Table ,Graph ,Cell  )
+	            
+	            
+	            )
+	
+	os.system(  "MakeTitleTex.py -o %s -s %s"%( InputPath, Sample  )   )
+	os.system(  "Assembly_StatTex.py  -i %s"%( InputPath )  )
+	os.system(  "GenePredictionTEX.py -i %s"%(InputPath) )
+	os.system(  "Genomic_IslandTex.py -i %s"%(InputPath) )
+	os.system(  "IS_Tex.py -i %s"%(InputPath) )
+	os.system(  "ProphageTex.py -i %s"%(InputPath) )
+	os.system(  "Repeat_Tex.py -i %s"%(InputPath) )
+	os.system(  "AnnotationTex.py -i %s"%(InputPath) )
+	os.system(  "Crispr_Tex.py -i %s"%(InputPath) )
+	os.system(  "xelatex %s"%( END.name  )   )
+
+	os.system(  "cd %s &&bibtex Report"%(   OutputPath   )   )
+	
+	os.system(  "xelatex %s"%( END.name  )   )
 	

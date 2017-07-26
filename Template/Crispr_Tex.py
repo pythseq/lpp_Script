@@ -52,13 +52,18 @@ if __name__ == '__main__':
 		name = a.split("/")[-1].split("_")[-1]
 		a = a+'/'
 		for f in c:
-			if f.endswith("tsv"):
+			if f.endswith("_CrisprElement.tsv"):
 
 				result = a+"/stats.tex"
 				data = pd.read_table(a+f)
-				data.drop("Seq_Nucleotide")
+				del data["DP_Consensus"]
+				del data["Seq_Nucleotide"]
+				del data["Name"]
+				del data["Distance"]
+				del data["Ref_Source"]
+				del data["Seq_Nucl_Length"]
 				data.to_csv(a+f+".table",index=False,sep="\t")
-				commandline = """txt2latex.py  -i %s  -o %s -c %s 样品 IS单元分类统计表  """%(    
+				commandline = """txt2latex.py  -i %s  -o %s -c "%s 样品 IS单元分类统计表"  """%(    
 				    a+f+".table",result,name
 				) 
 

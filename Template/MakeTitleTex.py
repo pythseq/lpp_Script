@@ -31,15 +31,15 @@ if __name__ == '__main__':
 	                  help="Output Path")	
 		
 	
-	parser.add_option("-t", "--Title", action="store",
-	                  dest="Title",
+	parser.add_option("-s", "--Title", action="store",
+	                  dest="Sample",
 
-	                  help="Title Name")		
+	                  help="Sample Name")		
 	
 	(options, args) = parser.parse_args()
 	config_hash = Config_Parse()
 	OutputPath = os.path.abspath(options.OutputPath)+'/'
-	Title = options.Title
+	Sample = options.Sample
 	
 	template_root = config_hash["Location"][  "root" ]+"/Template"
 	
@@ -54,10 +54,10 @@ if __name__ == '__main__':
 	END.write(
 	    template.render(
 	        {
-	            "Title":Title,
+	            "Sample":Sample,
 
 	        }
-	    )
+	    ).encode('utf-8')
 	)	
 	END.close()
 	
