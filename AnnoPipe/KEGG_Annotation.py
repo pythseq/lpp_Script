@@ -38,7 +38,9 @@ if __name__=="__main__":
     (options, args) = parser.parse_args() 
     proteinseq = options.PEP
     if not proteinseq:
-        proteinseq = options.NUL    
+        proteinseq = options.NUL
+    if not options.NUL:
+	options.NUL=proteinseq    
     FASTA = fasta_check(  open(proteinseq,'rU')  )
     sequence = FASTA.next()[-1]
     blast_type = Nul_or_Protein(sequence)
@@ -96,6 +98,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
             "tag":tag
         }
     )
+    print( blast_mapping_command  )
     blast_mapping_process = subprocess.Popen( blast_mapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     blast_mapping_process.communicate()
 
@@ -111,14 +114,14 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
             output_prefix,
             tag,
         )
-
+    print(source_command  )
     os.system(  source_command )
 
     pathway_detail_frame = pd.read_table( "%s_detail.tsv"%(  output_prefix  )   )
     pathway_detail_frame = pd.DataFrame(pathway_detail_frame,columns=pathway_detail_frame.columns[:-1])
     os.remove( "%s_detail.tsv"%(  output_prefix  ) )
     
-    pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery.tsv %(out)s_PathwayCategory_Stats.stat"%(
+    pathway_stats_command = config_hash["Utils"]["gapmap"]+"/Pathway_stats.py %(name)s %(out)s_PathwayCategoery2.tsv %(out)s_PathwayCategory_Stats.stat  %(out)s_PathwayCategoery.tsv"%(
                 {
                     "name":tag,
                     "out":output_prefix
@@ -126,11 +129,11 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
                 )
     pathway_stats_process = subprocess.Popen( pathway_stats_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     pathway_stats_process.communicate()
-    pathway_category_frame = pd.read_table("%s_PathwayCategoery.tsv"%(output_prefix) )
+    pathway_category_frame = pd.read_table("%s_PathwayCategoery2.tsv"%(output_prefix) )
     
     pathway_result_frame = pd.merge( pathway_detail_frame,pathway_category_frame,left_on='Name', right_on='Name', how='outer' )
     pathway_result_frame.to_csv( "%s_pathway.tsv"%(output_prefix),sep="\t",index=False  )
-    os.remove("%(out)s_PathwayCategoery.tsv"%(
+    os.remove("%(out)s_PathwayCategoery2.tsv"%(
     {
         "out":output_prefix
     }
@@ -146,7 +149,10 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     pathwaydraw_process = subprocess.Popen(  pathwaydraw_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
     stdout,stderr = pathwaydraw_process.communicate()	
 
-    
+    pathway_category_frame = pd.read_table("%s_PathwayCategoery.tsv"%(output_prefix) )
+
+    pathway_result_frame = pd.merge( pathway_detail_frame,pathway_category_frame,left_on='Name', right_on='Name', how='outer' )
+    pathway_result_frame.to_csv( "%s_pathway.tsv"%(output_prefix),sep="\t",index=False  )
     
     
     database_generate_commandline = " KEGG_Database.py  -a %s  -p %s  -d %s_KEGG.xls  "%(  diamond_result,"%s_pathway.tsv"%(output_prefix) ,output_prefix   )
