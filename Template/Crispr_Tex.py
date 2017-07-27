@@ -63,7 +63,7 @@ if __name__ == '__main__':
 				del data["Ref_Source"]
 				del data["Seq_Nucl_Length"]
 				data.to_csv(a+f+".table",index=False,sep="\t")
-				commandline = """txt2latex.py  -i %s  -o %s -c "%s 样品 IS单元分类统计表"  """%(    
+				commandline = """txt2latex.py  -i %s  -o %s -c "%s 样品 CRISPR单元分类统计表"  """%(    
 				    a+f+".table",result,name
 				) 
 

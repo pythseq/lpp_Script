@@ -57,7 +57,7 @@ if __name__ == "__main__":
 			if len(line_l[i])>200:
 				format_tag[i]="X"
 				
-	if len(format_tag)>5:
+	if len(format_tag)>8:
 		OUTPUT.write("""\\begin{sidewaystable}\n
 		\\begin{center}
 	\\small
