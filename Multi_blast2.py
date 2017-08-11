@@ -39,7 +39,7 @@ def Blast_Run( data   ):
 	queue_output = outputpath+'/%s.cache.xml'%(  number  )
 	command  = script.replace(  '$input',input_path     ).replace( '$output',queue_output    )
 	os.system( command )
-	#queue.put( queue_output )
+	queue.put( queue_output )
     #command_array = command.split()
 	#blast_subprocess = subprocess.Popen(
 	 #       command_array,
@@ -153,12 +153,19 @@ if __name__=='__main__':
 	#输出结果
 	end_list = []
 	if queue.qsize():
-		END = open( outputdata,'w' )
+		#END = open( outputdata,'w' )
 		
 		while queue.qsize():
 
 			end_list .append(queue.get() )
-	print('ready!!')		
+	print('ready!!')	
+	print( 'cat %s > %s'%( ' '.join( end_list ) ,
+                                   outputdata
+                                   )  
+	)
+	#RESULT =open( outputdata,'w' )
+	#for f in end_list:
+	#	RESULT.write( open(f,'rU').read() )	
 	os.system( 'cat %s > %s'%( ' '.join( end_list ) ,
 	                           outputdata
 	                           )   

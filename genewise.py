@@ -15,7 +15,7 @@ def check_path( path ):
     return os.path.abspath(path)+'/'
         
 def GBLASTA( protein,assemblyresult,output ):
-    os.system("""makeblastdb  -in %s -title Assem  -parse_seqids  -out Assem -dbtype nucl"""%(assemblyresult))
+    os.system("""makeblastdb  -in %s -title Assem    -out Assem -dbtype nucl"""%(assemblyresult))
     COMMAND = open("gblasta_run.bat",'w')
     
     COMMAND.write("""
