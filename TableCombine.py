@@ -36,12 +36,10 @@ if __name__=="__main__":
 
     data_list = args
     name_list = options.Name.split('; ')
-    print(options.Name)
-    print(name_list)
     out_frame = pd.read_table(data_list[0])
-    for i in xrange(1,len(name_list)):
+    for i in xrange(1,len(data_list)):
         print(data_list[i])
-        out_frame = combine_xls( out_frame,pd.read_table(data_list[i]) , name_list[0],name_list[i]   )
+        out_frame = combine_xls( out_frame,pd.read_table(data_list[i]) , name_list[0],name_list[0]   )
     out_frame.to_csv(options.out,sep="\t",index=False)
     
     
