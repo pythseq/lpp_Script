@@ -11,12 +11,13 @@ from lpp import *
 
 
 if __name__ == '__main__':
-	RAW = open（sys.argv[1], 'rU')
+	RAW = open(sys.argv[1], 'rU')
 	SNP = open(sys.argv[2], 'w')
 	FRAMESHIFT = open( sys.argv[3], 'w')
 	title =  RAW.next()
 	SNP.write(title)
 	FRAMESHIFT.write( title)
+	RAW = open(sys.argv[1], 'rU')
 	data = RAW.read()
 	data_l = re.split("\n(?=\S+)", data)
 	for data_b in data_l:
