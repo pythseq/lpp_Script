@@ -98,7 +98,7 @@ process Integrate{
 		file "Scaffolds.fa" from scaffold_raw
 		file "RepeatMasker.tbl" from repeatmaker_table
 	output:
-		file "merged.gff" into RepeatGFFResult
+		file "Repeat.gff3" into RepeatGFFResult
 		file "Scaffolds.Masked.fasta" into RepeatSeqResult
 		file "*.tsv" into ResultTable
 	
@@ -111,6 +111,7 @@ process Integrate{
 			 
 		RepeatMaskerSequenceFromGFF.py -i Scaffolds.fa  -g merged.gff  -o Scaffolds.Masked.fasta
 		cp RepeatMasker.tbl RepeatMasker.tsv
+		 awk '{print($1,"\t",$4,"\t",$9,"\t",$2,"\t",$3,"\t",".","\t","+","\t",".","\t","")}' merged.gff  > Repeat.gff3
 	"""
 }
  
