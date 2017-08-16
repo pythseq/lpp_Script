@@ -38,6 +38,7 @@ def Blast_Run( data   ):
 	number,input_path = data
 	queue_output = outputpath+'/%s.cache.xml'%(  number  )
 	command  = script.replace(  '$input',input_path     ).replace( '$output',queue_output    )
+	print(command)
 	os.system( command )
 	queue.put( queue_output )
     #command_array = command.split()
