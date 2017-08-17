@@ -11,7 +11,7 @@ import shutil, os
 def check_path( path ):
 	if os.path.exists(path):
 		shutil.rmtree(path)
-	os.makedirs( path )
+	os.mkdir( path )
 
 
 def run(x):
