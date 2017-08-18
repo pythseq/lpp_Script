@@ -12,7 +12,7 @@ outputpath = scaff.getParent()
 
  Channel
     .fromPath(params.query)
-    .into { scaffold_rep; scaffold_pro; scaffold_build ;scaffold_den;scaffold_raw }
+    .into { scaffold_rep; scaffold_pro; scaffold_build ;scaffold_den;scaffold_raw; scaffold_ltr }
  
 /*
  * Executes a BLAST job for each chunk emitted by the 'fasta' channel
@@ -33,6 +33,23 @@ process RepeatMasker {
     
     """
 }
+process LTR_FINDER {
+
+    input:
+
+		file 'scaff.fa' from scaffold_ltr
+ 
+    output:
+		file '*.gff3' into ltr_gff
+ 
+    """
+    ltr_finder -w 2 scaff.fa  > ltr_raw
+	LTR_PARSE.py -i  ltr_raw  -o  ltr.gff3
+    
+    """
+}
+
+
 
 process RepeatPro {
 
@@ -97,6 +114,7 @@ process Integrate{
 		file "Rep.gff3" from repeatmaker_out
 		file "Scaffolds.fa" from scaffold_raw
 		file "RepeatMasker.tbl" from repeatmaker_table
+		file "ltr.gff3" from ltr_gff 
 	output:
 		file "Repeat.gff3" into RepeatGFFResult
 		file "Scaffolds.Masked.fasta" into RepeatSeqResult
@@ -104,14 +122,14 @@ process Integrate{
 	
 	
 	"""
-		 cat Denovo.gff3  Protein.gff3  Rep.gff3 > combined.gff
+		 cat Denovo.gff3  Protein.gff3  Rep.gff3  ltr.gff3> combined.gff
 		 bedtools  sort  -i combined.gff  >All.gff
 		 bedtools  merge -c 2,3,6,7,8,9  -o distinct -i All.gff  | cut -f 1,4,5,2,3,6,7,8,9 >merged.gff
 		 
 			 
 		RepeatMaskerSequenceFromGFF.py -i Scaffolds.fa  -g merged.gff  -o Scaffolds.Masked.fasta
 		cp RepeatMasker.tbl RepeatMasker.tsv
-		 awk '{print($1,"\t",$4,"\t",$9,"\t",$2,"\t",$3,"\t",".","\t","+","\t",".","\t","")}' merged.gff  > Repeat.gff3
+		RepeatRename.sh merged.gff > Repeat.gff3 
 	"""
 }
  
