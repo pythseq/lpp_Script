@@ -30,7 +30,12 @@ if __name__ == '__main__':
         "-o", "--out", action="store",
         dest="output",
         type='string',
-        help="Msaked Seuqence")     
+        help="Msaked Seuqence")
+    parser.add_option(
+        "-s", "--seq", action="store",
+        dest="seq",
+        type='string',
+        help="Repeat Seuqence")     
     (options, args) = parser.parse_args()
     data_hash = Ddict()
     GFF = open( options.gff,'rU'  )
