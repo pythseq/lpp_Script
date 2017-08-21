@@ -41,7 +41,7 @@ if __name__ == '__main__':
 	SEQ_ID = Ddict()
 	i = 0
 	for line in GFF:
-		if "Simple_repeat" in line_l[-1] or "Low_complexity" in line_l[-1] or "LTR_Repeat" in line_l[-1]:
+		if "Simple_repeat" in line_l[2] or "Low_complexity" in line_l[2] or "LTR_Repeat" in line_l[2]:
 			continue
 		i += 1
 		seq_id = "Rep_%s" % (i )
