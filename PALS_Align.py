@@ -36,3 +36,7 @@ if __name__ == '__main__':
 		
 		END.write( open(e_f).read())
 		os.remove(e_f)
+
+	all_cache = glob.glob("*.cache")
+	for e_f in all_cache:
+		os.remove(e_f)
