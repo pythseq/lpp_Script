@@ -1,6 +1,6 @@
 #!/usr/bin/nextflow
 params.query = "$HOME/Scaffold.fa"
-
+params.repmask_lib = "/pub/SOFTWARE/Other/RepeatMasker/Libraries/RepeatMasker.lib"
  
 /*
  * Given the query parameter creates a channel emitting the query fasta file(s),
@@ -12,27 +12,42 @@ outputpath = scaff.getParent()
 
  Channel
     .fromPath(params.query)
-    .into { scaffold_rep; scaffold_pro; scaffold_build ;scaffold_den;scaffold_raw; scaffold_ltr }
+    .into { scaffold_pro; scaffold_build ;scaffold_den;scaffold_raw; scaffold_ltr; scaffold_piler }
  
 /*
  * Executes a BLAST job for each chunk emitted by the 'fasta' channel
  * and creates as output a channel named 'top_hits' emitting the resulting
  * BLAST matches 
  */
-process RepeatMasker {
+
+ process PILER_DP {
 
     input:
 
-		file 'scaff.fa' from scaffold_rep
+		file 'Scaffolds.fa' from scaffold_piler
  
     output:
-		file 'masked/*.gff' into repeatmaker_out
+		file 'Total_Piler.fa' into piler_lib
  
     """
-    mkdir masked; RepeatMasker -e ncbi -pa 8 -norna -dir masked -gff -html HTML scaff.fa
-    
+    PALS_Align.py Scaffolds.fa pals_hit.gff3
+	piler-64 -trs pals_hit.gff3 -out trs.gff
+	mkdir Repeat 
+	piler-64  -trs2fasta trs.gff -seq Scaffolds.fa  -path Repeat
+	mkdir Mafft
+
+	for i in Repeat/*.* ; do echo   "mafft  $i > `Mafft/basename $i.mafft`" >>mafft.sh; done
+	cat mafft.sh| parallel -j 64
+	mkdir Cons
+	for i in Mafft/*.mafft; do piler-64 -cons $i -out Cons/`basename ${i%.*}.cons` -label `basename ${i%.*}`;done
+    cat Cons/*.* >Total_Piler.fa
     """
 }
+
+ 
+ 
+ 
+ 
 process LTR_FINDER {
 
     input:
@@ -92,37 +107,57 @@ process RepeatDenovo_Modeler{
 	"""
 
 }
+
+process RepeatDb_IntegrateAnnotation{
+	input :
+		file "denovo.lib" from denovobase
+		file  "piler.lib " from piler_lib
+	output :
+		file "RepBase.fa" into replib
+	"""
+	cat_all_fasta.py  -i ./ -a lib  -o Rep -n Rep
+	cdhit-est -i Rep.fa -M 0 -c 0.8 -o Clustered
+
+	RepAnnotation.py  -i  Clustered -d  $params.repmask_lib  -o   RepBase.fa  						 
+	"""
+
+}
+
+
  
 process RepeatDenovo_Masker{
 	input:
-		file db from denovobase
+		file "lib" from replib
 		file 'scaff.fa' from scaffold_den
 	output:
 		file "Denovo/*.gff" into repeatmaker_deno
-		file "Denovo/*.tbl" into repeatmaker_table
+		file "Denovo/*.xls" into repeatmaker_table
 	"""
-		mkdir Denovo ; RepeatMasker -e ncbi  -pa 8 -lib $db -dir Denovo -gff -html scaff.fa
+		mkdir Denovo ; RepeatMasker -e ncbi  -pa 8 -lib lib -dir Denovo -gff scaff.fa
+		RepMaskerr_Stats.py  -s scaff.fa  -i *.tbl  -o Repeat.xls
 	
 	"""
 		}
+
+
+
 		
 process Integrate{
 	publishDir "$outputpath/RepeatMasked/", mode: 'copy', overwrite: true
 	input:
 		file "Denovo.gff3" from repeatmaker_deno
 		file "Protein.gff3" from repeatmaker_pro
-		file "Rep.gff3" from repeatmaker_out
 		file "Scaffolds.fa" from scaffold_raw
 		file "RepeatMasker.tbl" from repeatmaker_table
 		file "ltr.gff3" from ltr_gff 
 	output:
 		file "Repeat.gff3" into RepeatGFFResult
 		file "Scaffolds.Masked.fasta" into RepeatSeqResult
-		file "*.tsv" into ResultTable
+		file "*.xls" into ResultTable
 	
 	
 	"""
-		 cat Denovo.gff3  Protein.gff3  Rep.gff3  ltr.gff3> combined.gff
+		 cat Denovo.gff3  Protein.gff3    ltr.gff3> combined.gff
 		 bedtools  sort  -i combined.gff  >All.gff
 		 bedtools  merge -c 2,3,6,7,8,9  -o distinct -i All.gff  | cut -f 1,4,5,2,3,6,7,8,9 >merged.gff
 		 

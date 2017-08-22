@@ -49,7 +49,7 @@ if __name__ == '__main__':
 			annotation =  anno_hash[t ]
 		else:
 			annotation = "Unknown"
-		t = '>'t + '#' + annotation + '\n'
+		t = '>' + t + '#' + annotation + '\n'
 		END.write(t + s)
 		
 		
