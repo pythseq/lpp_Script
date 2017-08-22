@@ -35,3 +35,4 @@ if __name__ == '__main__':
 	for e_f in all_file:
 		
 		END.write( open(e_f).read())
+		os.remove(e_f)
