@@ -41,27 +41,25 @@ if __name__ == '__main__':
 	SEQ_ID = Ddict()
 	i = 0
 	for line in GFF:
+		line_l = line.split("\t")
 		if "Simple_repeat" in line_l[2] or "Low_complexity" in line_l[2] or "LTR_Repeat" in line_l[2]:
 			continue
 		i += 1
 		seq_id = "Rep_%s" % (i )
-		line_l = line.split("\t")
 
 		start = int(line_l[3])
 		end = int(line_l[4])
 		if start > end:
 			end,start = start,end
-		name = line_l[0]
-
+		name = line_l[0].strip()
 		SEQ_ID[name][seq_id] = [start, end]
-
 
 	RAW = fasta_check(   open( options.fasta,'rU') )
 	for t,s in RAW:
 		name = t.split()[0][1:]
 		s = re.sub("\s+","",s)
 		for each_id, cont in SEQ_ID[name].items():
-			REPSEQ.write(">%s%s\n" % (each_id, s[cont[0]:cont[1] ]) )
+			REPSEQ.write(">%s\n%s\n" % (each_id, s[cont[0]:cont[1] ]) )
 	REPSEQ.close()
 	#os.system(" cdhit-est -c 0.8 -i  %s -o Cluster -M 0  -T 64" % (REPSEQ.name))
 	
