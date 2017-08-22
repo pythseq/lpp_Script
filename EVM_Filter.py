@@ -14,4 +14,11 @@ if __name__ == '__main__':
 	for e_b in data.split("\n\n"):
 		if "GeneWise" in e_b or "assembler" in e_b:
 			END.write(e_b + '\n\n')
-		
+		else:
+			score = re.search("score\((\d+)", e_b)
+			if not score:
+				continue
+			
+			score = int(score.group(1))
+			if score > 5000:
+				END.write(e_b + '\n\n')
