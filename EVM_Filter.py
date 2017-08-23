@@ -15,10 +15,10 @@ if __name__ == '__main__':
 		if "GeneWise" in e_b or "assembler" in e_b:
 			END.write(e_b + '\n\n')
 		else:
-			score = re.search("score\((\d+)", e_b)
-			if not score:
-				continue
-			
-			score = int(score.group(1))
-			if score > 5000:
-				END.write(e_b + '\n\n')
+			score = re.search( "score\((\d+)", e_b ).group(1)
+			score = int(score)
+			if score > 10000:
+				if "AUGUSTUS" in e_b or "GeneMark" in e_b:
+					
+					END.write(e_b + '\n\n')
+				
