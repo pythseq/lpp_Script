@@ -107,7 +107,7 @@ process RepeatDb_IntegrateAnnotation{
 		file "RepBase.fa" into replib
 	"""
 	cat_all_fasta.py  -i ./ -a lib  -o Rep -n Rep
-	cdhit-est -i Rep.fa -M 0 -c 0.8 -o Clustered
+	cdhit-est -i Rep.fasta -M 0 -c 0.8 -o Clustered
 
 	RepAnnotation.py  -i  Clustered -d  $params.repmask_lib  -o   RepBase.fa  						 
 	"""
