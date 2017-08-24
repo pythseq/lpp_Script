@@ -40,5 +40,6 @@ if __name__ == '__main__':
 	av_number =  round( 1.0 * exon_num / gene_num)
 	av_intron =   round( 1.0 * intron_length / intron_num)
 	gen_av = round( 1.0 * exon_length / gene_num )
+	print(gene_num)
 	print( "GeneLength\tExon length\tExon Number\tAverage Intron"  )
 	print( "%s\t%s\t%s\t%s" % ( gen_av , length, av_number, av_intron) )
