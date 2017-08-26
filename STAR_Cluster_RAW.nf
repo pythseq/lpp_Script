@@ -2,7 +2,7 @@
 params.input ="./"
 params.db ="scaff.fa"
 Result_path = params.input+"/Result/"
-dbFile = file(params.db)
+dbFile = params.db
 
 Channel.fromFilePairs(params.input+'/*_R{1,2}.fq.gz').into { all_reads }
 
@@ -14,7 +14,7 @@ process mapping {
 
 
     input:
-		file dbFile 
+		val dbFile 
 		set val(sampleid),file(reads) from all_reads
 
     output:
