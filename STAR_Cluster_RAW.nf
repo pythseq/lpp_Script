@@ -1,6 +1,6 @@
 #!/usr/bin/nextflow
 params.input ="./"
-params.genome ="scaff.fa"
+params.db ="scaff.fa"
 Result_path = params.input+"/Result/"
 dbFile = file(params.db)
 
