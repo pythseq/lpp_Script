@@ -112,7 +112,7 @@ process BamHints{
 		
 	output:
 		file "hints.gtf" into hints
-		file "Align.stats" into stats
+		file "AlignStats.tsv" into stats
 		
 		
 	script:
