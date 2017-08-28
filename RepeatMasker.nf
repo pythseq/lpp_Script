@@ -122,10 +122,10 @@ process RepeatDenovo_Masker{
 		file 'scaff.fa' from scaffold_den
 	output:
 		file "Denovo/*.gff" into repeatmaker_deno
-		file "Denovo/*.xls" into repeatmaker_table
+		file " Repeat.xls" into repeatmaker_table
 	"""
 		mkdir Denovo ; RepeatMasker -e ncbi  -pa 8 -lib lib -dir Denovo -gff scaff.fa
-		RepMaskerr_Stats.py  -s scaff.fa  -i *.tbl  -o Repeat.xls
+		RepMaskerr_Stats.py  -s scaff.fa  -i Denovo/*.out  -o Repeat.xls
 	
 	"""
 		}
