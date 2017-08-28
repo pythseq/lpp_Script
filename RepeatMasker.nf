@@ -153,7 +153,7 @@ process Integrate{
 		 bedtools  merge -c 2,3,6,7,8,9  -o distinct -i All.gff  | cut -f 1,4,5,2,3,6,7,8,9 >merged.gff
 		 
 			 
-		cp RepeatMasker.tbl RepeatMasker.tsv
+		cp RepeatMasker.tbl RepeatMasker.xls
 		RepeatRename.sh merged.gff > Repeat.gff3 
 		RepeatMaskerSequenceFromGFF.py -i Scaffolds.fa  -g Repeat.gff3  -o Scaffolds.Masked.fasta
 	"""
