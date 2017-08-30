@@ -1,6 +1,5 @@
 #!/home/nfs/SOFTWARE/bin/nextflow
 params.command = "$HOME/sample.fa"
-
 params.out = "./result.txt"
 
 
@@ -11,7 +10,7 @@ params.out = "./result.txt"
  * Finally assign the result channel to the variable 'fasta'
  */
 Channel
-    .fromPath('*.sh')splitText(by: 10)
+    .fromPath(  params.command   )splitText(by: 10)
     .set { command }
  
 /*
