@@ -47,7 +47,11 @@ if __name__ == '__main__':
     proteinseqHash = {}
     END = open(output,'w')
     for t,s in fasta_check(open(protein,'rU')):
-        proteinseqHash[t.split()[0][1:]] = re.sub("\s+","",s) 
+	if "STRG" not in t:
+        	proteinseqHash[t.split()[0][1:]] = re.sub("\s+","",s) 
+	else:
+		name = re.search("(STRG\.\d+\.\d+)",t).group(1)
+		proteinseqHash[ name ] = re.sub("\s+","",s) 
     RAW = re.split("//\nBits",open(genewise,'rU').read())
     j=0
     for e_b in RAW:
