@@ -71,9 +71,9 @@ def get_or_create(model, **kwargs):
 
 user = "root"
 password = "gass_1985"
-mysql_connection = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 eggNOG "%(user,password)
-mysql_build = "mysql -h 192.168.0.10 -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@192.168.0.10/eggNOG'%(user,password)    
+mysql_connection = "mysql -h 192.168.31.71 -u%s -p%s  --local-infile=1 eggNOG "%(user,password)
+mysql_build = "mysql -h 192.168.31.71 -u%s -p%s  --local-infile=1 "%(user,password)
+connection_string = 'mysql://%s:%s@192.168.31.71/eggNOG'%(user,password)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
         os.path.join( path+"database.ini")
     ) 
     db_number = general_config.get("Redis", "eggnog")
-    r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
+    r = redis.Redis(host='192.168.31.71',port=6379,db=int(db_number))
     r.flushdb()      
 
     NOG_des.createTable(ifNotExists=True)

@@ -53,7 +53,7 @@ if __name__ == '__main__':
     
     path = os.path.split(os.path.abspath(__file__))[0]+'/'
     
-    r = redis.Redis(host='192.168.0.10',port=6379,db=int(db_number))
+    r = redis.Redis(host='192.168.31.71',port=6379,db=int(db_number))
     r.flushdb()
     DB_FILE = open( os.path.abspath(options.DB_FILE),'w')
 
