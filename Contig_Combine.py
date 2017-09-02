@@ -15,7 +15,7 @@ if __name__ == '__main__':
 	END = open(sys.argv[2], 'w')
 	seq = ""
 	for t, s in RAW:
-		seq += "N" * 400 + s
+		seq += "N" * 60 + s
 	seq = re.sub("\s+", "", seq)
 	seq = re.sub("(\w{60})", "\\1\n", seq)
 	END.write(">Scaffold\n%s\n" % (seq))
