@@ -161,9 +161,9 @@ temp = venn.diagram(
 pdf("%s")
 grid.draw(temp)    
 dev.off()  
-tiff( "%s"  )  
-grid.draw(temp) 
-dev.off()
+#tiff( "%s"  )  
+#grid.draw(temp) 
+#dev.off()
     """%(
            category_dir+'/stat.pdf',
 	   category_dir+'/stat.tiff'

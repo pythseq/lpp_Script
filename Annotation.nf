@@ -24,7 +24,7 @@ Channel
 	publishDir "$outputpath/Annotation/", mode: 'copy', overwrite: true
 	executor 'pbs'
         cpus 1
-        clusterOptions  "   -l nodes=1:ppn=16 -v PATH=$PATH;PERLLIB=$PERLLIB "
+        clusterOptions  "   -l nodes=1:ppn=32 -v PATH=$PATH;PERLLIB=$PERLLIB "
     input:
 
 		file Scaff from Prokka_input

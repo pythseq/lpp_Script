@@ -39,10 +39,10 @@ countsTable <- read.delim( exampleFile, header=TRUE, stringsAsFactors=TRUE )
 countsTable = countsTable[countsTable$COG_FunCat!='',]
 aa<-ggplot(countsTable)+geom_bar(aes(x=COG_Category.Annotation, fill=COG_Category.Annotation),show_guide =FALSE)+coord_flip()+ylab("Gene Number")+theme_few()
 pdf("%s.pdf",width=15  )
-ggplot_build(aa)
-
-tiff("%s.tiff", width=1024, height=512,type="cairo")
-ggplot_build(aa)
+#ggplot_build(aa)
+aa
+#tiff("%s.tiff", width=1024, height=512,type="cairo")
+#ggplot_build(aa)
 dev.off()
 
 
