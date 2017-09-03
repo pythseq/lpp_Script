@@ -9,14 +9,16 @@
 
 from lpp import *
 from collections import namedtuple
-
+from Dependcy import *
 from sqlobject import *
 from optparse import OptionParser
-user = "root"
-password = "gass_1985"
-mysql_connection = "mysql -u%s -p%s  --local-infile=1 Taxon "%(user,password)
-mysql_build = "mysql -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@localhost/Taxon'%(user,password)    
+config_hash= Config_Parse()
+user = config_hash["DB"]["user"]
+password = config_hash["DB"]["password"]
+ip = config_hash["DB"]["ip"]
+mysql_connection = "mysql -h %s -u%s -p%s  --local-infile=1 Taxon "%(ip,user,password)
+mysql_build = "mysql -h %s -u%s -p%s  --local-infile=1 "%(ip,user,password)
+connection_string = 'mysql://%s:%s@%s/Taxon'%(user,password,ip)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 class Taxon_GI(SQLObject):

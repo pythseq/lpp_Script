@@ -8,7 +8,7 @@
 from ConfigParser import ConfigParser
 import os,sys
 from lpp import *
-
+from Dependcy import *
 
 from sqlobject import *
 from optparse import OptionParser
@@ -68,12 +68,15 @@ def get_or_create(model, **kwargs):
         instance = model(**kwargs)
 
         return instance
+config_hash= Config_Parse()
+user = config_hash["DB"]["user"]
+password = config_hash["DB"]["password"]
+ip = config_hash["DB"]["ip"]
+mysql_connection = "mysql -h %s -u%s -p%s  --local-infile=1 Annotation "%(ip,user,password)
+mysql_build = "mysql -h %s -u%s -p%s  --local-infile=1 "%(ip,user,password)
+connection_string = 'mysql://%s:%s@%s/Annotation'%(user,password,ip)    
 
-user = "root"
-password = "gass_1985"
-mysql_connection = "mysql -h 192.168.31.71 -u%s -p%s  --local-infile=1 Annotation "%(user,password)
-# mysql_build = "mysql -h 192.168.0.21 -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@192.168.31.71/Annotation'%(user,password)    
+
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 
