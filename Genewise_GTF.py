@@ -6,7 +6,8 @@
   Created: 2017/9/5
 """
 
-from lpp import * 
+from lpp import *
+from copy import deepcopy
 
 
 
@@ -26,14 +27,14 @@ if __name__ == '__main__':
 				end_line = ""
 				trans_id = re.search("ID\=([^\;]+)", line).group(1)
 				gene_id = re.search("Parent\=(\S+)", line).group(1)
-				new_l =  line_l
+				new_l =  deepcopy(line_l)
 				if line_l[6] == '+':
 					new_l[2] = "start_codon"
 					new_l[4] = str(int(line_l[3]) + 2)
 					END.write("\t".join(new_l[:-1]) + '\tgene_id "%s"; transcript_id "%s";\n' % (gene_id, trans_id))
 					
 					new_l[2] = "stop_codon"
-					new_l[3] = str(int(line_l[4]) + -2)
+					new_l[3] = str(int(line_l[4])  -2)
 					new_l[4] = line_l[4]				
 					end_line = "\t".join(new_l[:-1]) + '\tgene_id "%s"; transcript_id "%s";\n' % (gene_id, trans_id)
 					
@@ -44,8 +45,10 @@ if __name__ == '__main__':
 					END.write("\t".join(new_l[:-1]) + '\tgene_id "%s"; transcript_id "%s";\n' % (gene_id, trans_id))
 				
 					new_l[2] = "start_codon"
-					new_l[3] = str(int(line_l[4]) + -2)
+					new_l[3] = str(int(line_l[4])-2)
 					new_l[4] = line_l[4]
+					print( line_l[3], line_l[4])
+					
 					end_line = "\t".join(new_l[:-1]) + '\tgene_id "%s"; transcript_id "%s";\n' % (gene_id, trans_id)
 			if line_l[2] in ["CDS", "exon"]:
 				line_l[-1] = '\tgene_id "%s"; transcript_id "%s";\n'% (gene_id, trans_id)
