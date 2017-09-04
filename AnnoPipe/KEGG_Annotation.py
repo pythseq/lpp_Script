@@ -160,7 +160,7 @@ stat.*\tPathway分析可视化结果，提供tiff和PDF两个版本
     
     
     
-    make_commandline = config_hash["Tools"]["sphinx"] +" -Q -b html -d %(out)s/doctrees %(location)s %(out)s/pathway && zip  %(out)s.zip %(out)s -rq && rm %(out)s -rf &&rm %(location)s -rf"%(
+    make_commandline = config_hash["Tools"]["sphinx"] +" -j 32 -Q -b html -d %(out)s/doctrees %(location)s %(out)s/pathway && zip  %(out)s.zip %(out)s -rq && rm %(out)s -rf &&rm %(location)s -rf"%(
         {
             "out":out_put_path+"Pathway",
             "location":source_location
