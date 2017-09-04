@@ -82,4 +82,4 @@ if __name__ == '__main__':
             END.write(key + '\t' + "ID=%s.Exon%s;Parent=%s\n" % (mrna_name, i, mrna_name))
             
             END.write(cds_data.next() + '\t' + "ID=%s.Exon%s;Parent=%s\n" % (mrna_name, i, mrna_name))
-        END.write("\n")
+        END.write("\n\n")
