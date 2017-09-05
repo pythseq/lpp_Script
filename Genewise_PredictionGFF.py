@@ -28,7 +28,7 @@ if __name__ == '__main__':
                       help="GFF for Braker_new Training!!")
 	parser.add_option("-p", "--protein", action="store",
 	                  dest="protein",
-	                  help="Protein sequence !")	
+	                  help="Protein sequence !!")	
 
 	(options, args) = parser.parse_args()
 	protein_length = {}
