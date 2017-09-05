@@ -17,6 +17,7 @@ if __name__ == '__main__':
 	exon_length = 0
 	intron = 0
 	for line in RAW:
+		line =line.lower()
 		if line.startswith("#"):
 			continue
 		line_l = line.split("\t")
@@ -30,7 +31,7 @@ if __name__ == '__main__':
 			exon_length += length
 	RAW.seek(0, 0)
 	t_length = 0
-	for e_b in RAW.read().split("\tgene\t")[1:]:
+	for e_b in RAW.read().lower().split("\tgene\t")[1:]:
 		number = e_b.count("\texon\t") - 1
 		intron += number
 		d_l =  e_b.split("\t")
