@@ -84,7 +84,7 @@ if __name__ == '__main__':
                 if gff_list[6]=="+":
                     gff_list[4] = str( int(gff_list[4]) + 3)
                 else:
-                    gff_list[3] = str( int(gff_list[3]) - 3)
+                    gff_list[3] = str( int(gff_list[3]) - 2)
                 gff_list[-1] = "ID=%s;Parent=%s" % (mrna_name,gene_name)
                 CACHE.write("\t".join(gff_list)+'\n')
             if gff_list[2] == "cds":
@@ -105,10 +105,12 @@ if __name__ == '__main__':
             
         else:
             new_list =   cds_data[0].split("\t")
-            new_list[4] = str( int(new_list[3]) - 3)
+            new_list[4] = str( int(new_list[3]) - 2)
+	    if int(new_list[4])<0:
+		continue
             cds_data[0] = "\t".join( new_list)
             new_list =   exon_data[0].split("\t")
-            new_list[4] = str( int(new_list[3]) - 3)
+            new_list[4] = str( int(new_list[3]) - 2)
             exon_data[0] = "\t".join( new_list)            
         cds_data = iter(cds_data )
         exon_data = iter(exon_data )
@@ -141,7 +143,6 @@ if __name__ == '__main__':
     for each_gene, gene_gff in all_gene_dict.items():
         all_loc = []
         for each_con in gene_gff:
-
             [ (start, end) ]= re.findall("mRNA\t(\d+)\t(\d+)", each_con)
             all_loc.append( int(start) )
             all_loc.append( int(end) )
