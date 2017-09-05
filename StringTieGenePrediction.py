@@ -96,7 +96,7 @@ if __name__=='__main__':
 			i += 1
 			proteinid = re.search("(STRG[^\:]+)", t).group(1)
 			PRO= open(cache_path+'%s.pep'%(i),'w')
-			PRO.write('>'+proteinid+'\n'+s+'*\n')            
+			PRO.write('>'+proteinid+'\n'+s+'\n')            
 			NUC = open(cache_path+'%s.nuc'%(i),'w')
 			est_info = est_hash[ proteinid]
 			scaf_name, scaffoldStart,scaffoldEND,direction =  est_info
