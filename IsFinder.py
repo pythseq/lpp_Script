@@ -71,7 +71,13 @@ if __name__ == '__main__':
     is_stat = Ddict()
     #data = urllib.urlencode(values)
     req = urllib2.Request(url,datagen, headers)
-    response = urllib2.urlopen(req)
+    aa=True
+    while aa:
+        try:
+            response = urllib2.urlopen(req)
+            aa = False
+        except:
+            pass
     #try:
     uploadend = response.read()
 
@@ -80,13 +86,19 @@ if __name__ == '__main__':
     result = None
     while not  result:
         time.sleep(5)
-        end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
+        while True:
+            try:
+                
+                end_output = urllib.urlopen("https://www-is.biotoul.fr/blast/"+out_url).read()
+                break
+            except:
+                pass
         if "Query=" in end_output:
             result = end_output.split("</article>")[0]
             HTML.write(end_output)
 
     if result:
-        
+
         ALN = open( outputprefix+".xls",'w'  )
         STAT.write("IS_name\tNumber\tAverage.Length\n")
 
@@ -122,13 +134,13 @@ if __name__ == '__main__':
             is_statsis = Ddict()
             all_lignblock = Ddict()
             for eachblast_block in blastblock.split('>')[1:]:
-                
-                
+
+
                 alignment_list = eachblast_block.split( " Score = " )
 
                 startdata = alignment_list[ 0 ].strip()
                 subject_name = startdata.split()[0]
-                
+
                 SubjLength = re.search(  "Length=(\d+)", startdata).group(1)
                 for each_blastdetail in alignment_list[1:]:
                     tag = 0
@@ -142,7 +154,7 @@ if __name__ == '__main__':
 
                     Gaps = re.search( "\s+Gaps\s+\=\s+([^\,]+)\n",blast_stats).group(1)
                     strand_detail  = re.search( "\s+Strand\=(\S+)",blast_stats).group(1)
-                   
+
                     if "Minus" in strand_detail:
                         Strand = '-'
                     else:
@@ -161,7 +173,10 @@ if __name__ == '__main__':
                     if tag ==0:
                         all_lignblock[int(query_start)][ int( query_end )]=""
                     else:
-                        
+
+                        continue
+                    q_length =  abs(int(query_end) - int( query_start ))
+                    if q_length > 6000:
                         continue
                     is_finalResult[int(query_start)][ subject_name ] = copy(is_detail[ subject_name ])
                     is_finalResult[int(query_start)][ subject_name ]["IS_Bitscore"] = bitcore
@@ -170,7 +185,7 @@ if __name__ == '__main__':
                     is_finalResult[int(query_start)][ subject_name ]["IS_SubjectLength"] = SubjLength
                     is_finalResult[int(query_start)][ subject_name ]["IS_Gaps"] = Gaps
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Frame"] = Strand
-                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( int(query_end) - int( query_start ) )
+                    is_finalResult[int(query_start)][ subject_name ]["Seq_Nucl_Length"] = str( abs(int(query_end) - int( query_start ) ) )
                     is_finalResult[int(query_start)][ subject_name ]["Seq_Nucleotide"] = sequence[ int( query_start ) :int(query_end) ]
                     is_statsis[ subject_name  ][int(query_start)] = int(query_end) - int( query_start )
                     is_finalResult[int(query_start)][ subject_name ]["Ref_Start"] = query_start
@@ -179,7 +194,7 @@ if __name__ == '__main__':
 
             for each_loc in sorted(is_finalResult):
                 for each_result in sorted(is_finalResult[ each_loc  ] ):
-                    
+
                     i+=1
                     is_name = source_name+"_IS%s"%(i)
 
