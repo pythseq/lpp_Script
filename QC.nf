@@ -127,11 +127,11 @@ process QC_Plot {
 		file filter_stats_fastx from filter_stat_graph
 		
 	output:
-		file "*.png" into qc_graph
+		file "*.pdf" into qc_graph
 
 		
 	"""
-		fastx_quality_boxplot.R ${filter_stats_fastx} ${filter_stats_fastx}.qualstats.png&&fastx_nucleotide_distributionPer.R ${filter_stats_fastx} ${filter_stats_fastx}.nucdistr.png
+		fastx_quality_boxplot.R ${filter_stats_fastx} ${filter_stats_fastx}.qualstats.pdf&&fastx_nucleotide_distributionPer.R ${filter_stats_fastx} ${filter_stats_fastx}.nucdistr.pdf
 		
 		
 	"""
