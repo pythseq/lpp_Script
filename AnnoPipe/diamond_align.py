@@ -141,6 +141,7 @@ if __name__=="__main__":
         E_value,
         tmp_file_name 
     )
+    print( commandline  )
     os.system(commandline)
     temp_align_result = tmp_file_name
     END = open(options.output,'w')
