@@ -5,6 +5,7 @@
   Purpose: 
   Created: 2014/6/20
 """
+from Dependcy import *
 from ConfigParser import ConfigParser
 import os,sys,redis
 sys.path.append(
@@ -68,12 +69,14 @@ def get_or_create(model, **kwargs):
         instance = model(**kwargs)
 
         return instance
-
-user = "root"
-password = "gass_1985"
-mysql_connection = "mysql -h 192.168.31.71 -u%s -p%s  --local-infile=1 eggNOG "%(user,password)
-mysql_build = "mysql -h 192.168.31.71 -u%s -p%s  --local-infile=1 "%(user,password)
-connection_string = 'mysql://%s:%s@192.168.31.71/eggNOG'%(user,password)    
+config_hash= Config_Parse()
+user = config_hash["DB"]["user"]
+password = config_hash["DB"]["password"]
+port =  config_hash["DB"]["port"]
+ip = config_hash["DB"]["ip"]
+mysql_connection = "mysql -h %s -u%s -p%s --port=%s  --local-infile=1 eggNOG "%(ip,user,password,port)
+mysql_build = "mysql -h %s -u%s -p%s --port=%s --local-infile=1 "%( ip, user, password, port )
+connection_string = 'mysql://%s:%s@%s:%s/eggNOG'%( user,password,ip,port )    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 

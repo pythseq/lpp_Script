@@ -2,7 +2,7 @@
 package main
 
 import (
-	//	"bufio"
+	"bufio"
 	"bytes"
 	"flag"
 	"fmt"
@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+
 	//	var length_Ddict map[int]map[string]string = make(map[int]map[string]string)
 
 	file := flag.String("i", "", "input Fasta!")
@@ -26,7 +27,8 @@ func main() {
 	fasta.Blocktag = "\n>"
 	fasta_handle, _ := fasta.Read()
 	reg := regexp.MustCompile(`\s+`)
-	RESULT, _ := os.Create(*output)
+	WRHANDLE, _ := os.Create(*output)
+	RESULT := bufio.NewWriterSize(WRHANDLE,1048576*1024)
 
 	for {
 		line, err := fasta_handle.Next()
@@ -55,5 +57,5 @@ func main() {
 		}
 
 	}
-
+	RESULT.Flush()
 }

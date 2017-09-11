@@ -16,9 +16,10 @@ config_hash= Config_Parse()
 user = config_hash["DB"]["user"]
 password = config_hash["DB"]["password"]
 ip = config_hash["DB"]["ip"]
-mysql_connection = "mysql -h %s -u%s -p%s  --local-infile=1 Taxon "%(ip,user,password)
-mysql_build = "mysql -h %s -u%s -p%s  --local-infile=1 "%(ip,user,password)
-connection_string = 'mysql://%s:%s@%s/Taxon'%(user,password,ip)    
+port =  config_hash["DB"]["port"]
+mysql_connection = "mysql -h %s -u%s -p%s --port=%s --local-infile=1 Taxon "%(ip,user,password,port)
+mysql_build = "mysql -h %s -u%s -p%s  --port=%s  --local-infile=0 "%(ip,user,password,port)
+connection_string = 'mysql://%s:%s@%s/Taxon:%s'%(user,password,ip,port)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 class Taxon_GI(SQLObject):
@@ -88,7 +89,6 @@ if __name__ == '__main__':
             line_l = line.split("\t|\t")
             NAME_CACHE.write( line_l[0]+'\t'+line_l[1]+'\n')
     NAME_CACHE.close()
-    sys.exit()
     load_des_script = """-e 'load data local infile   "%s" into table TaxonName (taxon, name);'"""%(NAME_CACHE.name)
     os.system( mysql_connection+load_des_script   )  
     os.remove( NAME_CACHE.name )

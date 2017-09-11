@@ -71,10 +71,11 @@ def get_or_create(model, **kwargs):
 config_hash= Config_Parse()
 user = config_hash["DB"]["user"]
 password = config_hash["DB"]["password"]
+port =  config_hash["DB"]["port"]
 ip = config_hash["DB"]["ip"]
-mysql_connection = "mysql -h %s -u%s -p%s  --local-infile=1 Annotation "%(ip,user,password)
-mysql_build = "mysql -h %s -u%s -p%s  --local-infile=1 "%(ip,user,password)
-connection_string = 'mysql://%s:%s@%s/Annotation'%(user,password,ip)    
+mysql_connection = "mysql -h %s -u%s -p%s --port=%s --local-infile=1 Annotation "%(ip,user,password,port)
+mysql_build = "mysql -h %s -u%s -p%s  --local-infile=1  --port=%s  "%(ip,user,password,port)
+connection_string = 'mysql://%s:%s@%s:%s/Annotation'%(user,password,ip,port)    
 
 
 connection = connectionForURI(connection_string)
@@ -90,7 +91,7 @@ if __name__ == '__main__':
     parser = OptionParser(usage =usage )    
     parser.add_option("-i", "--InputData", action="store",
                       dest="Input",
-                      help="NOG descripton")
+                      help="Input Seq_Database Result")
      
     parser.add_option("-k", "--Kind", action="store",
                       dest="Kind",
@@ -110,7 +111,8 @@ if __name__ == '__main__':
         "nr":Nr,
         "kegg":KEGG,
         "swissprot":SwissProt,
-        "eggnog":eggNOG
+        "eggnog":eggNOG,
+	"uniprot":UNIPROT,
     
     
     
@@ -120,13 +122,13 @@ if __name__ == '__main__':
         print(" -k must be one of %s"%(", ".join(data_has.keys())))
         sys.exit()
     table = data_has[kind]
-    TMP = open("%s.tmp"%(os.getpid()) ,'w')
-    for t,s in fasta_check(  open(options.Input,'rU')  ):
-        t = t[1:].strip()
-        length = str( len(  re.sub( "\s+","",s  )    )  )
-        annotaton =t 
-        name = t.split()[0]
-        TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
-    TMP.close()
-    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(TMP.name,table.sqlmeta.table )
+    #TMP = open("%s.tmp"%(os.getpid()) ,'w')
+    #for t,s in fasta_check(  open(options.Input,'rU')  ):
+    #    t = t[1:].strip()
+    #    length = str( len(  re.sub( "\s+","",s  )    )  )
+    #    annotaton =t 
+    #    name = t.split()[0]
+    #    TMP.write(name+'\t'+annotaton+'\t'+length+'\n')
+    #TMP.close()
+    load_rela_script = """-e 'load data local infile   "%s" into table %s (name,annotation,length);'"""%(options.Input,table.sqlmeta.table )
     os.system(mysql_connection+load_rela_script)
