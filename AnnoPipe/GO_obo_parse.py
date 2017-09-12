@@ -203,32 +203,28 @@ if __name__ == '__main__':
     load_des_script = """-e 'load data local infile   "%s" into table GO_COMP (go, compent);'"""%(COMPONENT.name)
     os.system(mysql_connection+load_des_script)
     tmp_GI = "/tmp/Uniprot_GI.txt"
-    os.system(  """cut -f1,5 %s >%s"""%( options.Mapping,tmp_GI )   )
-    tmp_UNI = "/tmp/UNIPROT"
+    os.system(  """GO_Uniprot_GI_Parse  -i %  -g Uniprot_GO.db -u Uniprot.db -k Uniprot_GI.db"""%( options.Mapping )   )
+   
     
     
 
     
         
-    os.system("GO_GI_Uniprot.py %s %s %s"%(UNIDATA.name,tmp_GI,tmp_UNI))
     
-    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GO (uni_id, go);'"""%(UNIDATA.name+'.result')
+    
+    load_des_script = """-e 'load data local infile   "Uniprot.db" into table UNIPROT_GO (uni_id, go);'"""
     os.system(mysql_connection+load_des_script)
     
     
-    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT_GI (uni_id, g_i);'"""%(tmp_GI.name+'.result')
+    load_des_script = """-e 'load data local infile   "Uniprot_GI.db" into table UNIPROT_GI (uni_id, g_i);'"""
     os.system(mysql_connection+load_des_script)
     
     
  
     
-    load_des_script = """-e 'load data local infile   "%s" into table UNIPROT (uniprot, uni_id);'&"""%(tmp_UNI)
+    load_des_script = """-e 'load data local infile   "Uniprot_GO.db" into table UNIPROT (uniprot, uni_id);'"""
     os.system(mysql_connection+load_des_script)
 
-    os.remove(tmp_GI)
-    os.remove(tmp_UNI)
-    os.remove(UNIDATA.name)
-    os.remove(UNIDATA.name+".result")
-    os.remove(tmp_GI+".result")
-#for key3 in leaf_3:
-    #ALL_FAT.write( key3+'\t3\n'  )	
+    os.remove("Uniprot_GI.db")
+    os.remove("Uniprot.db")
+    os.remove("Uniprot_GO.db")
