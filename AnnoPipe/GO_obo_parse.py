@@ -93,10 +93,7 @@ if __name__ == '__main__':
     parser.add_option("-I", "--OBO", action="store",
                       dest="Input",
                       help="obo file")
-    
-    parser.add_option("-U", "--UNIPROT", action="store",
-                      dest="uniprot",
-                      help="uniprot file")   
+   
     parser.add_option("-M", "--Mapping", action="store",
                       dest="Mapping",
                       help="mapping file")     
@@ -164,16 +161,8 @@ if __name__ == '__main__':
     for key2 in leaf_2:
         ROOT.write( key2+'\t2\n'  )
       
-    UNIPROT = open(options.uniprot,'rU')  
-    UNIDATA = open("Uniprot_mapping.list",'w')
-    has_data = {}
-    for line in UNIPROT:
-        line_l = line.split('\t')
-        if line_l[0] !='UniProtKB':
-            continue
-        if line_l[1]+'\t'+line_l[4] not in has_data:
-            UNIDATA.write(line_l[1]+'\t'+line_l[4]+'\n')
-            has_data[line_l[1]+'\t'+line_l[4]]=""
+ 
+
     GO_ROOT.createTable(ifNotExists=True)
     GO_ALTER.createTable(ifNotExists=True)
     GO_DEF.createTable(ifNotExists=True)
@@ -203,7 +192,7 @@ if __name__ == '__main__':
     load_des_script = """-e 'load data local infile   "%s" into table GO_COMP (go, compent);'"""%(COMPONENT.name)
     os.system(mysql_connection+load_des_script)
     tmp_GI = "/tmp/Uniprot_GI.txt"
-    os.system(  """GO_Uniprot_GI_Parse  -i %  -g Uniprot_GO.db -u Uniprot.db -k Uniprot_GI.db"""%( options.Mapping )   )
+    os.system(  """GO_Uniprot_GI_Parse  -i %s  -g Uniprot_GO.db -u Uniprot.db -k Uniprot_GI.db"""%( options.Mapping )   )
    
     
     
