@@ -201,7 +201,7 @@ if __name__ == '__main__':
         
     
     
-    load_des_script = """-e 'load data local infile   "Uniprot.db" into table UNIPROT_GO (uni_id, go);'"""
+    load_des_script = """-e 'load data local infile   "Uniprot_GO.db" into table UNIPROT_GO (uni_id, go);'"""
     os.system(mysql_connection+load_des_script)
     
     
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     
  
     
-    load_des_script = """-e 'load data local infile   "Uniprot_GO.db" into table UNIPROT (uniprot, uni_id);'"""
+    load_des_script = """-e 'load data local infile   "Uniprot.db" into table UNIPROT (uniprot, uni_id);'"""
     os.system(mysql_connection+load_des_script)
 
     os.remove("Uniprot_GI.db")
