@@ -7,6 +7,7 @@ from lpp import *
 from sqlobject import *
 from optparse import OptionParser
 from Dependcy import *
+config_hash= Config_Parse()
 user = config_hash["DB"]["user"]
 password = config_hash["DB"]["password"]
 port =  config_hash["DB"]["port"]
