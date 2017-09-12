@@ -19,7 +19,7 @@ ip = config_hash["DB"]["ip"]
 port =  config_hash["DB"]["port"]
 mysql_connection = "mysql -h %s -u%s -p%s --port=%s --local-infile=1 Taxon "%(ip,user,password,port)
 mysql_build = "mysql -h %s -u%s -p%s  --port=%s  --local-infile=0 "%(ip,user,password,port)
-connection_string = 'mysql://%s:%s@%s/Taxon:%s'%(user,password,ip,port)    
+connection_string = 'mysql://%s:%s@%s:%s/Taxon'%(user,password,ip,port)    
 connection = connectionForURI(connection_string)
 sqlhub.processConnection = connection
 class Taxon_GI(SQLObject):

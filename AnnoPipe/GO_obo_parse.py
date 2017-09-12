@@ -191,7 +191,6 @@ if __name__ == '__main__':
     
     load_des_script = """-e 'load data local infile   "%s" into table GO_COMP (go, compent);'"""%(COMPONENT.name)
     os.system(mysql_connection+load_des_script)
-    tmp_GI = "/tmp/Uniprot_GI.txt"
     os.system(  """GO_Uniprot_GI_Parse  -i %s  -g Uniprot_GO.db -u Uniprot.db -k Uniprot_GI.db"""%( options.Mapping )   )
    
     
