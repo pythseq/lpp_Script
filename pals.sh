@@ -1,4 +1,4 @@
-PALS_Align.py $1 pals_hit.gff3 >run.log 2>&1
+PALS_Align.py $1 ./pals_hit.gff3 >run.log 2>&1
 	piler-64 -trs pals_hit.gff3 -out trs.gff  >run.log 2>&1
 	mkdir Repeat 
 	piler-64  -trs2fasta trs.gff -seq $1  -path Repeat >run.log 2>&1

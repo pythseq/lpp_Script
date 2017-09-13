@@ -29,15 +29,12 @@ if __name__ == '__main__':
 	parser.add_option("-e", "--evalue", action="store", 
                       dest="evalue", 
                       help="evalue cutoff")	
-	parser.add_option("-c", "--COG", action="store", 
-		              dest="cog",
-	                  default="cog",
-		              help="cog kind,COG,NOG or KOG")
+
 	(options, args) = parser.parse_args()
 	pool = Pool(processes=64)
 	proteinseq = options.PEP
 	e_val = options.evalue
-	cog = options.cog
+
 	nuclseq = options.NUL
 	data_hash1 = {}
 	data_hash2 = {}
@@ -109,10 +106,10 @@ Table文件夹是所有注释分析的结果明细统计表，按照数据库分
 			
 			)		
 		elif each_db == 'COG':
-			commandline = "COG_Annotation.py -c %(cog)s -i %(protein)s  -o %(output_prefix)s/eggNOG/%(name)s -e %(e-val)s"%( 
+			commandline = "COG_Annotation.py  -i %(protein)s  -o %(output_prefix)s/eggNOG/%(name)s -e %(e-val)s"%( 
 				{
 			        "name":name,
-			        "cog":cog,
+
 					"protein":proteinseq,
 					"output_prefix":output_prefix,
 					"e-val":e_val

@@ -1,8 +1,9 @@
 #!/home/nfs/SOFTWARE/bin/nextflow
 params.command = "$HOME/sample.fa"
 params.out = "./result.txt"
-
-
+/*output_path= file(params.command).parent+"/"
+result = output_path+'/'+params.out 
+*/
  
 /*
  * Given the query parameter creates a channel emitting the query fasta file(s),
@@ -27,23 +28,14 @@ process PALS {
 		
  
     output:
-		 file "*.xml" into outputdata
+		 file "result.tsv" into top_hits
  
     """
 	bash run.sh
+	cat *.xml > result.tsv
     
     """
 }
  
- 
-/*
- * Each time a file emitted by the 'top_hits' channel an extract job is executed
- * producing a file containing the matching sequences
- */
-
-/*
- * Collects all the sequences files into a single file
- * and prints the resulting file content when complete
- */
-outputdata.collectFile(name: params.out)
+top_hits.collectFile(name: params.out) 
 
