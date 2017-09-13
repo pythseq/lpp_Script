@@ -10,7 +10,7 @@ params.out = "./result.txt"
  * Finally assign the result channel to the variable 'fasta'
  */
 Channel
-    .fromPath(  params.command   )splitText(by: 10)
+    .fromPath(  params.command   )splitText(by: 100)
     .set { command }
  
 /*

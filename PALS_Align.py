@@ -17,6 +17,9 @@ if __name__ == '__main__':
 	all_file = []
 	i = 0
 	for t, s in RAW:
+		s1 = re.sub("\s+","",s)
+		if len(s1)<100000:
+			continue
 		i += 1
 		END = open( os .path.abspath("%s.cache" % (i)), 'w')
 		END.write(t + s)

@@ -15,10 +15,6 @@ parser.add_option("-i", "--INPUT", action="store",
                   default = './', 
                   help="Input File")
 
-parser.add_option("-c", "--COG", action="store", 
-                  dest="cog",
-                  default = 'COG', 
-                  help="COG,NOG or KOG")
 
 parser.add_option("-o", "--end", action="store", 
                   dest="output", 
@@ -29,8 +25,7 @@ if __name__ == '__main__':
 	BLAST = open(options.input,'rU')
 	BLAST.next()
 	TMP = open("%s.tmp"%(os.getpid()),'w')
-	cog = options.cog.upper()
-	
+
 	
 	TMP.write("Name\tCOG\tCOG_Annotation\tCOG_FunCat\tCOG_Category Annotation\n")
 	for line in open(options.input,'rU'):
@@ -40,7 +35,7 @@ if __name__ == '__main__':
 		e_value = line_l[-2]
 		
 		query = line_l[0].split()[0]
-		gene_nog = NOG_GENE.select(AND(NOG_GENE.q.Gene==subj, NOG_GENE.q.NOG.startswith(cog))   )
+		gene_nog = NOG_GENE.select(NOG_GENE.q.Gene==subj   )
 		unique = {}
 
 		if gene_nog.count()>1:

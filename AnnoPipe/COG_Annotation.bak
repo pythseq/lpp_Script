@@ -22,7 +22,11 @@ if __name__=="__main__":
 	parser.add_option("-e", "--evalue", action="store", 
 		              dest="evalue", 
 		              help="evalue cutoff")
-
+	
+	parser.add_option("-c", "--COG", action="store", 
+		              dest="cog",
+		              default = 'COG', 
+		              help="COG,NOG or KOG")
 	
 	
 	
@@ -35,7 +39,7 @@ if __name__=="__main__":
 	end_list = glob.glob(out_put_path+'/stats.pdf')
 	if end_list:
 		sys.exit()
-
+	cog = options.cog
 	if not os.path.exists( out_put_path ):
 		os.makedirs( out_put_path )
 	README = open(out_put_path+'/Readme.txt','w')
@@ -63,7 +67,7 @@ if __name__=="__main__":
 		
 		sys.exit()
 	
-	cogmapping_command = "COG_mapping.py  -i %s  -o %s"%( diamond_result,output_prefix+"_COG")
+	cogmapping_command = "COG_mapping.py  -i %s  -c %s -o %s"%( diamond_result,cog,output_prefix+"_COG")
 	cogmapping_process = subprocess.Popen( cogmapping_command.split(),stderr= subprocess.PIPE,stdout=  subprocess.PIPE  )
 	stdout,stderr = cogmapping_process.communicate()	
 	
