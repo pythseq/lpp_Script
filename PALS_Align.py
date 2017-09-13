@@ -8,7 +8,7 @@
 
 from lpp import * 
 from itertools import combinations
-
+import os
 
 if __name__ == '__main__':
 	RAW = fasta_check( open(sys.argv[1], 'rU'))
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 	i = 0
 	for t, s in RAW:
 		i += 1
-		END = open( "%s.cache" % (i), 'w')
+		END = open( os .path.abspath("%s.cache" % (i)), 'w')
 		END.write(t + s)
 		END.close()
 		all_file.append(END.name)
@@ -29,14 +29,19 @@ if __name__ == '__main__':
 		COMMAND.write("pals -query %s -target %s -out %s_target.xml\n" % (comb[0], comb[1], i))
 		
 	COMMAND.close()
-	os.system("cat %s |parallel -j 60 " % (COMMAND.name ))
-	all_file = glob.glob("*.xml")
-	END = open(sys.argv[2], 'w')
-	for e_f in all_file:
+	qstat = os.popen("which qstat")
+	if not qstat:
 		
-		END.write( open(e_f).read())
-		os.remove(e_f)
-
-	all_cache = glob.glob("*.cache")
-	for e_f in all_cache:
-		os.remove(e_f)
+		os.system("cat %s |parallel -j 60 " % (COMMAND.name ))
+		all_file = glob.glob("*.xml")
+		END = open(sys.argv[2], 'w')
+		for e_f in all_file:
+			
+			END.write( open(e_f).read())
+			os.remove(e_f)
+	
+		all_cache = glob.glob("*.cache")
+		for e_f in all_cache:
+			os.remove(e_f)
+	else:
+		os.system("Pals.nf --command %s --out %s" % (COMMAND.name,sys.argv[2] ))
