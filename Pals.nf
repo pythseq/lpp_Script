@@ -18,10 +18,10 @@ Channel
  * and creates as output a channel named 'top_hits' emitting the resulting
  * BLAST matches 
  */
-process genewise {
+process PALS {
     executor 'pbs'
 
-    clusterOptions  " -d $PWD  -l nodes=1:ppn=1 -v PATH=$PATH"
+    clusterOptions  " -d $PWD  -l nodes=1:ppn=2 -v PATH=$PATH"
     input:
 		file "run.sh" from command
 		
