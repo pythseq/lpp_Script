@@ -76,8 +76,8 @@ process Combine{
 		file "Total.bam" into string_input
 	script:
 		"""
-			samtools merge -@ 32  Total.bam $all_bam
-			samtools sort  Total.bam  -o Total.sort.bam
+			samtools merge -@ 32  Total1.bam $all_bam
+			samtools sort  Total1.bam  -o Total.sort.bam
 			mv Total.sort.bam Total.bam
 		"""
 
