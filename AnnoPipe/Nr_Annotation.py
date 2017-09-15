@@ -62,6 +62,7 @@ r"""
 
 		sys.exit()
 	os.rename(output_prefix+'_NrAlignment.tsv',output_prefix+'_NrAlignment.xls')
+	os.system("Nr_Taxon.py -i %s -o %s"%( output_prefix+'_NrAlignment.xls', output_prefix  )  )
 	nr_data = pd.read_table(output_prefix+'_NrAlignment.xls')
 	GENE_TAXON =  open( output_prefix+"_Taxon.txt",'w' )
 	GENE_STATS =  open( output_prefix+"_TaxonStats.txt",'w' )
