@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/home/nfs/SOFTWARE/bin/Rscript 
 # functions
 colors <- c("blue", "red", "green", "yellow", "pink")
 nucDistrFromFastx <- function(df){

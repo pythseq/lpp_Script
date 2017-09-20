@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/home/nfs/SOFTWARE/bin/Rscript 
 library("ggplot2")
 require(ggthemes)
 argv <- commandArgs(TRUE)

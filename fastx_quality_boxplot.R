@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/home/nfs/SOFTWARE/bin/Rscript 
 # functions
 boxplotFromFastx <- function(df){
   xlim <- c(0, nrow(df))
