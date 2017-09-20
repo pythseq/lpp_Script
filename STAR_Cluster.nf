@@ -77,7 +77,7 @@ process Combine{
 	script:
 		"""
 			samtools merge -@ 32  Total1.bam $all_bam
-			samtools sort  Total1.bam  -o Total.sort.bam
+			samtools sort  Total1.bam  -@ 32 -f Total.sort.bam
 			mv Total.sort.bam Total.bam
 		"""
 
