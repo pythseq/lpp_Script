@@ -156,7 +156,7 @@ if __name__=="__main__":
             align_title_list[i] = dbname+'_'+align_title_list[i]
         END.write( "\t".join( align_title_list ) +'\n' )
         for line in align_result:
-            line_l = line.strip().split() 
+            line_l = line.strip().split('\t') 
             q_start = line_l[6]
             q_stop = line_l[7]
             if int(q_start) <  int(q_stop):

@@ -124,13 +124,13 @@ if __name__ == '__main__':
 				break
 		if gene_tag != "yes":
 			
-			ALL_GFF.write('\n'+e_gene)
+			ALL_GFF.write('\n\n'+e_gene)
 			if gene_id in psudo_dict:
 				e_gene = e_gene.replace("\tGene\t", "\tPsudo\t")
-				PSUDO_GFF.write('\n'+e_gene)
+				PSUDO_GFF.write('\n\n'+e_gene)
 			else:
 				m+=1
-				GENE_GFF.write('\n'+e_gene)
+				GENE_GFF.write('\n\n'+e_gene)
 				
 				
 	print(m)
