@@ -129,17 +129,21 @@ filter_stat_graph = raw_graph_stat.mix(qc_graph_stat).flatten()
 
 process QC_Plot {
 	
+  executor 'pbs'
+  cpus 1
+  clusterOptions  "   -l nodes=1:ppn=2 -v PATH=$PATH "
+	
 	publishDir "$stats_path", mode: 'move', overwrite: true
 
 	input:
 		file filter_stats_fastx from filter_stat_graph
 		
 	output:
-		file "*.png" into qc_graph
+		file "*.pdf" into qc_graph
 
 		
 	"""
-		fastx_quality_boxplot.R ${filter_stats_fastx} ${filter_stats_fastx}.qualstats.png&&fastx_nucleotide_distributionPer.R ${filter_stats_fastx} ${filter_stats_fastx}.nucdistr.png
+		fastx_quality_boxplot.R ${filter_stats_fastx} ${filter_stats_fastx}.qualstats.pdf&&fastx_nucleotide_distributionPer.R ${filter_stats_fastx} ${filter_stats_fastx}.nucdistr.pdf
 		
 		
 	"""
@@ -148,6 +152,10 @@ process QC_Plot {
 }
 total_stat = raw_stat.mix( qc_result_stat ).collect()
 process Qc_Report{
+	
+  executor 'pbs'
+  cpus 1
+  clusterOptions  "   -l nodes=1:ppn=2 -v PATH=$PATH "
 	publishDir "$stats_path", mode: 'move', overwrite: true
 	input:
 		file all_statfile from total_stat
