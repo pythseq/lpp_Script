@@ -33,6 +33,8 @@ GENE_STATS.write(  "Taxon\tNumber\tPercentage\n"  )
 taxon_stat_hash = Ddict()
 for i in xrange(0,len(nr_data)):
     taxon_name = re.findall("\[([^\]]+)\]",nr_data.loc[i,"Nr_Hit"])
+    if not taxon_name:
+	continue
     taxon_name = sorted( taxon_name ,key=lambda x: len(x)  )[-1]
     if taxon_name[0].upper()==taxon_name[0]:
 	taxon_name = taxon_name.split()[0]
@@ -46,7 +48,4 @@ for taxon in taxon_stat_hash:
     total+=len(taxon_stat_hash[taxon])
     
 for key in sorted( taxon_stat_hash,key= lambda x: len( taxon_stat_hash[x]  )   )[::-1]:
-
     GENE_STATS.write(   key+'\t%s'%(  len( taxon_stat_hash[key]  )  ) +'\t'+str(  1.0*len( taxon_stat_hash[key]  )/total   )+'\n'  )
-
-    

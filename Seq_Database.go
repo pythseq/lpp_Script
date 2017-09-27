@@ -37,12 +37,7 @@ func main() {
 		title := data[0]
 		cache := reg.Split(string(title), 2)
 		name := cache[0]
-		annotation := ""
-		if len(cache)==1{
-			annotation = cache[0]
-		}else{
-			annotation = cache[1]
-		}
+		annotation := string(title)
 		if name[0] == '>' {
 			name = name[1:]
 		}

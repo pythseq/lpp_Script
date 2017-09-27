@@ -37,7 +37,11 @@ if __name__ == '__main__':
 		all_go = id_go[key]
 		mapp_result = Ddict()
 		for each_go in all_go:
+			component = GO_COMPONENT.select(GO_COMPONENT.q.Go==each_go)
+			if not component.count():
+				continue
 			component = GO_COMPONENT.select(GO_COMPONENT.q.Go==each_go)[0].Compent
+			
 			mapp_result[ component ] [ each_go ]=""
 	
 		result = "\t".join([ '; '.join([ each_go+'//%s'%(  GO_DEF.select( GO_DEF.q.Go== each_go )[0].Def   )  for each_go in   mapp_result[x]  ] )     for x in end_order    ])
