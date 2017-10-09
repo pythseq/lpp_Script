@@ -5,6 +5,7 @@
   Purpose: 
   Created: 2015/12/4
 """
+import ssl
 from lpp import *
 from bs4 import BeautifulSoup
 import tempfile
@@ -67,7 +68,7 @@ if __name__ == '__main__':
     NUL = open( outputprefix+".fa",'w'  )
     STAT = open( outputprefix+".stat",'w'  )
     HTML = open(outputprefix+".html",'w')
-
+    ssl._create_default_https_context = ssl._create_unverified_context
     is_stat = Ddict()
     #data = urllib.urlencode(values)
     req = urllib2.Request(url,datagen, headers)
