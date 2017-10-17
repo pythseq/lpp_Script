@@ -43,7 +43,7 @@ inputpath = os.path.abspath(  options.inputpath )+'/'
 if not os.path.exists(  outputpath  ):
 	os.makedirs( outputpath )
 # build index
-os.system( 'bwa index  %s 2>&1 >/dev/null'%(  ref  )  )
+#os.system( 'bwa index  %s 2>&1 >/dev/null'%(  ref  )  )
 def BWA_MAPPING( file_list  ):
 
 	def get_outputname( each_f ):
