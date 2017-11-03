@@ -32,7 +32,7 @@ GENE_STATS =  open( "%s__TaxonStats.txt"%(output_prefix),'w' )
 GENE_STATS.write(  "Taxon\tNumber\tPercentage\n"  )
 taxon_stat_hash = Ddict()
 for i in xrange(0,len(nr_data)):
-    gi = re.search("gi\|(\d+)",nr_data.loc[i,"Nr_Hit"])
+    gi = re.search("gi\|(\d+)",nr_data.loc[i,"Nt_Hit"])
     if gi:
         gi = gi.group(1)
         taxon_gi_sql = Taxon_GI.select(Taxon_GI.q.GI==int(gi) )   
