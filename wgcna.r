@@ -1,8 +1,9 @@
-ALLOW_WGCNA_THREADS=64
+
 library(WGCNA);
 options(stringsAsFactors = FALSE)
 library("corrplot")
 enableWGCNAThreads()
+ALLOW_WGCNA_THREADS=64
 ###Data Prepare
 Args <- commandArgs()
 path <- getwd(  )
@@ -12,7 +13,7 @@ if (! file.exists("Module")){
 	dir.create("Module")
 	}
 datExpr = read.delim(Args[6],sep = "\t",header=T, row.names=1)
-datExpr = log2(datExpr+1)
+
 datExpr = as.data.frame(t(datExpr))
 gsg = goodSamplesGenes(datExpr, verbose = 3)
 if( !gsg$allOK ){
@@ -48,7 +49,7 @@ no.presentdatExp =as.vector(apply( data.frame(datExpr)==0 |is.na(data.frame(datE
 
 variancedatExpr= as.vector(apply(as.matrix(datExpr),2,var, na.rm=T))
 
-KeepGenes= variancedatExpr>0 & no.presentdatExp>4
+KeepGenes= variancedatExpr>1 & no.presentdatExp<1
 datExpr=datExpr[ ,KeepGenes]
 
 
@@ -61,9 +62,32 @@ barplot(
 	main ="Mean expression across samples",
 	 cex.names = 0.7)
 dev.off()
+#Choose threshold
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
+sft = pickSoftThreshold(datExpr, powerVector = powers, verbose = 5)
+pdf("Threshold.pdf")
+# Plot the results:
+par(mfrow = c(1,2));
+cex1 = 0.9;
+# Scale-free topology fit index as a function of the soft-thresholding power
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",
+     main = paste("Scale independence"));
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     labels=powers,cex=cex1,col="red");
+# this line corresponds to using an R^2 cut-off of h
+abline(h=0.90,col="red")
+# Mean connectivity as a function of the soft-thresholding power
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+     xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",
+     main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+
+dev.off()
+
 beta1 = 7
 Connectivity=softConnectivity(datExpr,power=beta1)
-ConnectivityCut = 4000
+ConnectivityCut = 5000
 ConnectivityRank = rank(-Connectivity)
 restConnectivity = ConnectivityRank <= ConnectivityCut
 datExpr<-datExpr[,restConnectivity]
@@ -123,10 +147,42 @@ hclustdatME=hclust(as.dist(dissimME), method="average" )
 plot(hclustdatME, main="Clustering tree based of the module eigengenes")
 dev.off()
 
+##Correlate with Clinic trait data
+datME=moduleEigengenes(datExpr,colorh1)$eigengenes
+nSamples = nrow(datExpr);
+MEs = orderMEs(datME)
+datTraits = read.delim(Args[7],sep = "\t",header=T, row.names=1)
+#datTraits = as.data.frame(datTraits$PANESS)
+moduleTraitCor = cor(MEs, datTraits, use = "p")
+moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples)
+
+coor_data  = as.data.frame( moduleTraitCor )
+write.table(coor_data, file="./Paness_Coor.tsv" ,sep="\t"  )
+pdf("Paness_Module.pdf",height=30)
+#SizeGrWindow(10,6)
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",signif(moduleTraitPvalue, 1), ")", sep = "");
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3));
+labeledHeatmap(Matrix = moduleTraitCor,
+	xLabels = names(datTraits),
+	yLabels = names(MEs),
+	ySymbols = names(MEs),
+	colorLabels = FALSE,
+	colors = greenWhiteRed(50),
+	textMatrix = textMatrix,
+	setStdMargins = FALSE,
+	cex.text = 0.5,
+	zlim = c(-1,1),
+	main = paste("Module-trait relationships"))
+	
+dev.off()
+
+
 
 # Draw each Module HeatMap
 TOM = TOMsimilarityFromExpr(datExpr, power = beta1)
 probes<- names(datExpr)
+save.image("Simulated-NetworkConstruction.RData")
 for (name in names(datME)){
 	
 	which.module= substr(name ,3 ,nchar(name))
@@ -154,7 +210,12 @@ for (name in names(datME)){
 									altNodeNames = modProbes,
 									);
 }
+save.image("WGCNA.rData")
+#save(datME,)
 
 # Read in the annotation file
-
+ADJ1=abs(cor(datExpr,use="p"))^24
+Alldegrees1=intramodularConnectivity(ADJ1, colorh1)
+AllNeed = Alldegrees1[ Alldegrees1$kWithin >Alldegrees1$kOut ,]
+write.table(AllNeed,row.names=FALSE,quote=FALSE,file='GeneConnectivity.tsv',sep="\t" )
 
