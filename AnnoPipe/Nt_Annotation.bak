@@ -46,7 +46,7 @@ if __name__=="__main__":
 	tmp = base_path+temp_name
 	os.system(""" blastn -db %s -query %s  -num_threads 64 -max_target_seqs 1000 -evalue %s  -outfmt  5    >> %s"""% ( Database,options.input,options.evalue,tmp+'.xml'  )   )
 	os.system( "blast_parse.py %s"%(tmp+'.xml') )
-	#os.remove(tmp+'.xml')
+	os.remove(tmp+'.xml')
 	if os.path.getsize(tmp+".Bparse"):
 		os.system(  "cut_best1.py  -i %s.Bparse -o %s.top1 -f "%( tmp,tmp  )  )
 		os.remove( "%s.Bparse"%(tmp)  )

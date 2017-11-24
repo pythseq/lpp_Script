@@ -23,9 +23,9 @@ def get_taxon_seed2( taxon_number ):
     creeper(taxon_number)
     return all_end
 
-END = open(sys.argv[3],'w')
+END = open(sys.argv[3],'a')
 data = sys.argv[2]
 all_need = get_taxon_seed2(data)
 
 for key in all_need:
-        END.write(key+'\n')
+        END.write(key+"\t"+data+'\n')

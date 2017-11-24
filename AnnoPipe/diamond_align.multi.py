@@ -164,8 +164,8 @@ if __name__=="__main__":
             else:
                 frame = '-'
             
-            if line_l[0] in has_hash:
-                continue
+            #if line_l[0] in has_hash:
+            #    continue
             has_hash[ line_l[0] ] = ""
             q_alignlength = abs( int( line_l[7]) - int( line_l[6]  )  )+1
             q_length = query_length[line_l[0]]
@@ -192,8 +192,8 @@ if __name__=="__main__":
                 frame = '+'
             else:
                 frame = '-'            
-            if line_l[0] in has_hash:
-                continue
+            #if line_l[0] in has_hash:
+            #    continue
             has_hash[ line_l[0] ] = ""            
             subj = line_l[1]
 

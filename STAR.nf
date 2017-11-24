@@ -6,6 +6,9 @@ genomeFile = file(params.genome)
 
 Channel.fromFilePairs(params.input+'/*_R{1,2}.fq.gz').into { all_reads }
 process index {
+    executor 'pbs'
+    cpus 32 
+    clusterOptions  " -d $PWD  -l nodes=1:ppn=16 -v PATH=$PATH"
     input:
 		file genomeFile
 
@@ -30,7 +33,9 @@ process index {
 
 
 process mapping {
-
+      executor 'pbs'
+  cpus 32
+  clusterOptions  " -d $PWD  -l nodes=1:ppn=16 -v PATH=$PATH"
 
     input:
 		file STARgenome from STARgenomeIndex.first()

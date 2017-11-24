@@ -51,6 +51,6 @@ if __name__ == '__main__':
 	av_number = round(1.0 *exon / gene)
 	length =round( 1.0 *exon_length / exon )
 	gene_length = round( 1.0*g_length/g_num  )
-	print( "Gene_number\tGeneLength\tExon length\tExon Number\tAverage Intron" )
-	print( "%s\t%s\t%s\t%s\t%s" % (gene,gene_length ,length, av_number, av_intron) )
+	print( "GeneNumber\tIsoform.av.no\tmRNA_number\tmRNA.av.Length\tExon.av.length\tExon.av.Number\tAverage Intron" )
+	print( "%s\t%s\t%s\t%s\t%s\t%s\t%s" % (g_num,float(gene)/g_num,gene,gene_length ,length, av_number, av_intron) )
 		

@@ -17,7 +17,7 @@ process Mafft {
 		
     """
 		mafft ${path}/seq.fa >${path}/mafft
-		trimal  -strict  -in  ${path}/mafft   -out ${path}/out   -nogaps
+		trimal  -strict  -in  ${path}/mafft   -out ${path}/out   
     
     """
 }

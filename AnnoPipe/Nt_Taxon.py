@@ -42,8 +42,9 @@ for i in xrange(0,len(nr_data)):
             taxon_name_sql = TaxonName.select(TaxonName.q.Taxon==taxon_id)   
             try:
                 taxon_name = taxon_name_sql[0].Name
+		SuperKingdom = Taxon_Classification.select(Taxon_Classification.q.Taxon==taxon_id )[0].Class
     
-                GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\n'  )
+                GENE_TAXON.write( nr_data.loc[i,"Name"] +'\t'+taxon_name+'\t'+SuperKingdom+'\n'  )
 
                 taxon_stat_hash[taxon_name][ nr_data.loc[i,"Name"] ]=""
             except:
