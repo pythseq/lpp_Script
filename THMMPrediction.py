@@ -44,9 +44,8 @@ if __name__ == '__main__':
 		if number != 0:
 			line_all = block.split("\n")
 			for line in line_all:
-				if line[0] != "#":
+				if line and  not line.startswith ("#"):
 					line_l = line.split("\t")
-					line_l = []
 					line_l.pop(1)
 					RESULT.write("\t".join(line_l) + '\n')
-			
+	os.system("rm TMHMM_*/  -rf ")
