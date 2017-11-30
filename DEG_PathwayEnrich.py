@@ -85,7 +85,7 @@ if __name__ == "__main__":
     all_annotation  = {}
     RAW = open( options.Table,'rU' )
     ANNO = open( options.Annotation,'w' )
-    ANNO.write("Unigene\tEnrichedPathwayID\tEnrichedPathwayName\t"+"\t".join( RAW.next().split("\t")[1:]) )
+    ANNO.write("Unigene\t"+"\t".join( RAW.next().split("\t")[1:]) )
     
     for line in RAW:
         line_l = line[:-1].split("\t")
