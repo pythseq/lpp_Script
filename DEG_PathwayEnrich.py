@@ -83,9 +83,10 @@ if __name__ == "__main__":
     all_geneinpathway = {}
     check_path( os.path.dirname( options.output) )
     all_annotation  = {}
+    RAW = open( options.Table,'rU' )
     ANNO = open( options.Annotation,'w' )
     ANNO.write("Unigene\tEnrichedPathwayID\tEnrichedPathwayName\t"+"\t".join( RAW.next().split("\t")[1:]) )
-    RAW = open( options.Table,'rU' )
+    
     for line in RAW:
         line_l = line[:-1].split("\t")
         if not line_l[-2]:
