@@ -15,38 +15,44 @@ def Pathway_Enrichment():
     enrich_result = []
     p_value_list = []
     R_DATA = open("/tmp/%s.dat" % (os.getpid()), 'w')
-    R_DATA.write("Pathway\tAllDif\tAllGene\tAll_In\tDiff_In\n")    
+    R_DATA.write("PathwayID\tName\tAllDiff\tAllGene\tAll_In\tDiff_In\n")    
     for each_pathway in all_pathway:
+
         if not len( diff_gene_pathway[ each_pathway  ] ):
             continue
        
         if each_pathway in diff_gene_pathway:        
             
-            R_DATA.write( "%s\t%s\t%s\t%s\t%s\n" % (each_pathway,len( all_diff_geneinpathway) , len( all_geneinpathway ),len( all_pathway[ each_pathway  ]  ) ,  len( diff_gene_pathway[ each_pathway  ] )) )
+            R_DATA.write( "%s\t%s\t%s\t%s\t%s\n" % ("\t".join( each_pathway.split(": ", 1) ),len( all_diff_geneinpathway) , len( all_geneinpathway ),len( all_pathway[ each_pathway  ]  ) ,  len( diff_gene_pathway[ each_pathway  ] )) )
     R_DATA.close()
     RSCRIPT = open("/tmp/Phyer.%s.R" % (os.getpid()), 'w')
 
     RSCRIPT.write( """library(qvalue)         
 Data<-read.delim( "%s", header=TRUE, stringsAsFactors=TRUE ) 
-Data$pval<- 1- phyper(Data$Diff-1, Data$AllDif, Data$AllGene-Data$Diff_In, Data$All_In)"""% (
+Data$pval<- 1- phyper(Data$Diff-1, Data$AllDiff, Data$AllGene-Data$Diff_In, Data$All_In)"""% (
                                            R_DATA.name,
                                            
                                        ) + """
 
 Data$padj<- p.adjust(Data$pval, method="BH")
-Data$qvalue<- qvalue(Data$pval,lambda=0)$qvalues
+Data$Q_value<- qvalue(Data$pval,lambda=0)$qvalues
 Data = Data[ Data$padj<0.05,  ]
 write.table(Data,row.names=F,file='%s',quote=FALSE,sep='\t')
 
         """% ( options.output) )
     RSCRIPT.close()
     os.system( "Rscript %s" % (RSCRIPT.name))
-
-
-    return RSCRIPT.name
+    RAW = open(options.output)
+    all_enrich = {}
+    for line in RAW:
+        line_l = line.split("\t")
+        all_enrich[ line_l[0]+': '+line_l[1] ] = ""
+        
+    return all_enrich
 if __name__ == "__main__":
-    usage = '''usage: python2.7 %prog [options]
-			        '''
+    usage = '''
+    usage: python2.7 %prog [options]
+    '''
     parser = OptionParser(usage =usage )  
     parser.add_option("-t", "--Table", action="store",
                       dest="Table",
@@ -90,7 +96,7 @@ if __name__ == "__main__":
 
             for each_pathway in pathway_list:
     
-                diff_gene_pathway[ each_pathway][ line_l[0] ] = ""
+                diff_gene_pathway[ each_pathway][ line_l[0] ] = line
                 all_diff_geneinpathway[ line_l[0] ] = ""
         all_geneinpathway[ line_l[0] ] = ""
             
@@ -98,6 +104,6 @@ if __name__ == "__main__":
             all_pathway[ each_pathway ][ line_l[0] ] = ""
 
     all_enrich = Pathway_Enrichment()
-    #for pathway in all_enrich:
-        #for geneId in all_enrich[ pathway ]:
-            #ANNO.write(  geneId+'\t'+pathway+'\t'+all_annotation[geneId] +'\n' )
+    for pathway in all_enrich:
+        for geneId in diff_gene_pathway[ pathway ]:
+            ANNO.write( diff_gene_pathway[ pathway ][ geneId ] )
