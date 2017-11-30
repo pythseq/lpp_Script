@@ -32,7 +32,7 @@ require(ggthemes)
 go_data <- read.delim( "%(input_data)s", header=TRUE, stringsAsFactors=TRUE ) 
 height = length( levels( go_data$Name  )  )/2
 if (height<10) height<-10
-go_data$EnrichFactor <- go_data$Diff / go_data$All
+go_data$EnrichFactor <- go_data$Diff_In / go_data$All_In
 pdf("%(path)s/KEGGEnrich.pdf",width=15,height= height)
 
 p <- qplot(Situation, Name, data=go_data, size=EnrichFactor,color=Q_value)

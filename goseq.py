@@ -35,7 +35,7 @@ data = os.path.abspath( options.data )
 length = os.path.abspath( options.genelength )
 go = os.path.abspath( options.Go)
 GO = open( go,'rU' )
-GO_Cache = open("%s.cache"%(os.getpid()),'w'   )
+GO_Cache = open(os.path.abspath( "%s.cache"%(os.getpid()) ),'w'   )
 GO_Cache.write(GO.next())
 for line in GO:
     line_l = line.strip().split("\t")
