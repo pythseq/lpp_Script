@@ -44,7 +44,7 @@ write.table(Data,row.names=F,file='%s',quote=FALSE,sep='\t')
 
         """% ( options.output) )
     RSCRIPT.close()
-
+    print(RSCRIPT.name)
     os.system( "Rscript %s" % (RSCRIPT.name))
     RAW = open(options.output)
     all_enrich = {}
