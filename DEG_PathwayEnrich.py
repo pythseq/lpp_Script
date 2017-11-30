@@ -36,15 +36,24 @@ Data$pval<- 1- phyper(Data$Diff-1, Data$AllDiff, Data$AllGene-Data$Diff_In, Data
                                            R_DATA.name,
                                            
                                        ) + """
+if (nrow(Data)>1){
+    Data$padj<- p.adjust(Data$pval, method="BH")
+    Data$Q_value<- qvalue(Data$pval,lambda=0)$qvalues
+    
+} else{
+    Data$padj<-Data$pval
+    Data$Q_value<-Data$pval
 
-Data$padj<- p.adjust(Data$pval, method="BH")
-Data$Q_value<- qvalue(Data$pval,lambda=0)$qvalues
+
+
+
+}
 Data = Data[ Data$padj<0.05,  ]
 write.table(Data,row.names=F,file='%s',quote=FALSE,sep='\t')
 
         """% ( options.output) )
     RSCRIPT.close()
-    print(RSCRIPT.name)
+
     os.system( "Rscript %s" % (RSCRIPT.name))
     RAW = open(options.output)
     all_enrich = {}
