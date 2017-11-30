@@ -133,7 +133,7 @@ if __name__=="__main__":
         query_length[name]=length
     temp_name = str(os.getpid())
     tmp_file_name = Path+temp_name
-    commandline = """     diamond %s -q %s -d %s  -e %s  --max-target-seqs 500000 -p 64 -a %s"""%( 
+    commandline = """     diamond %s -q %s -d %s  -e %s  --max-target-seqs 1 -p 64 -a %s"""%( 
         Type,
         Input,
 

@@ -31,9 +31,9 @@ parser.add_option("-o", "--Out", action="store",
                   help="OutputFile")
 
 (options, args) = parser.parse_args()
-data = options.data
-length = options.genelength
-go = options.Go
+data = os.path.abspath( options.data )
+length = os.path.abspath( options.genelength )
+go = os.path.abspath( options.Go)
 GO = open( go,'rU' )
 GO_Cache = open("%s.cache"%(os.getpid()),'w'   )
 GO_Cache.write(GO.next())
@@ -48,7 +48,7 @@ check_path(end)
 r_script="""
 library("goseq")
 DEG<-read.table("%(inp)s", header = TRUE,sep="\\t")
-DEG <-levels(DEG[,1])
+DEG <-levels(DEG$id)
 DEG.vector <- t(DEG)
 ALL<-levels(read.table("%(length)s", header = TRUE,sep="\\t")[,1])
 go <-read.table("%(go)s", header = TRUE,sep="\\t")

@@ -20,10 +20,10 @@ parser.add_option("-a", "--append", action="store",
                   default = 'matrix',
                   help="Matrix of Reads number")
 
-parser.add_option("-d", "--DATA", action="store", 
-                  dest="data_path", 
-
-                  help="fastq_path of Data")
+#parser.add_option("-d", "--DATA", action="store", 
+#                  dest="data_path", 
+#
+#                  help="fastq_path of Data")
 
 parser.add_option("-i", "--INPUT", action="store", 
                   dest="input_path", 
@@ -52,12 +52,12 @@ if para not in ["padj","pval"]:
     raise IOError
 
 
-data_path   = os.path.abspath( options.data_path )+os.sep
+#data_path   = os.path.abspath( options.data_path )+os.sep
 
 input_path   = options.input_path
 
 append = options.append
-data_path = options.data_path
+#data_path = options.data_path
 
 if not os.path.exists(  outputpath ):
     os.makedirs( outputpath )
@@ -69,9 +69,9 @@ def sampleNameTrans( sample_name ):
         sample_name = 'X'+sample_name
     return sample_name
 
-if not os.path.exists( data_path  ):
-    print( 'ERROR!!! THE Static PATH doesn\'t exits!!!!!'  )
-    sys.exit()
+#if not os.path.exists( data_path  ):
+#    print( 'ERROR!!! THE Static PATH doesn\'t exits!!!!!'  )
+#    sys.exit()
 
 if not os.path.exists( input_path  ):
     print( 'ERROR!!! THE Input expression PATH doesn\'t exits!!!!!'  )
@@ -84,17 +84,17 @@ if not os.path.exists( input_path  ):
 input_path = os.path.abspath(  input_path )+os.sep
 
 # To store the total depth of Sequencing 
-size_factor = {}
+#size_factor = {}
 
-for a,b,c in os.walk(data_path):
-    for e_f in c:
-        if e_f.endswith(".pair1"):
-            line_num = int(os.popen("wc -l %s"%(a+'/'+e_f)).read().split()[0])/2
-        
-            sample_name = sampleNameTrans( os.path.split(e_f)[-1].split('.')[0] )
-        
-            size_factor[ sample_name ] = str( line_num )
-print( size_factor )
+#for a,b,c in os.walk(data_path):
+#    for e_f in c:
+#        if e_f.endswith(".pair1"):
+#            line_num = int(os.popen("wc -l %s"%(a+'/'+e_f)).read().split()[0])/2
+#        
+#            sample_name = sampleNameTrans( os.path.split(e_f)[-1].split('.')[0] )
+#        
+#            size_factor[ sample_name ] = str( line_num )
+#print( size_factor )
 for each_matrix in glob.glob(  input_path+'*.'+append  ):
     stats_name = os.path.split(each_matrix)[-1].split('.')[0]
 
@@ -115,9 +115,9 @@ for each_matrix in glob.glob(  input_path+'*.'+append  ):
     y_name = sampleNameTrans( name_list[2] )
 
 
-    x_coverage = size_factor[ x_name ]
+    #x_coverage = size_factor[ x_name ]
 
-    y_coverage = size_factor[ y_name  ]
+    #y_coverage = size_factor[ y_name  ]
 
     matrix_abspath = each_matrix
 
@@ -151,7 +151,7 @@ rownames( countsTable ) <- countsTable$gene
 countsTable <- countsTable[ , -1 ]
 conds <- c( "T", "N" ) 
 cds <- newCountDataSet( countsTable, conds ) 
-libsizes <- c(%(x_name)s=sum(countsTable$%(x_name)s), %(y_name)s=sum(countsTable$%(y_name)s )
+libsizes <- c(%(x_name)s=sum(countsTable$%(x_name)s), %(y_name)s=sum(countsTable$%(y_name)s ) )
 sizeFactors(cds) <- libsizes  
 cds <- estimateSizeFactors( cds ) 
 cds <- estimateDispersions( cds,method='blind',sharingMode="fit-only" ,fitType="local" )   
@@ -186,8 +186,6 @@ dev.off()
            "out_prefix":end_prefix,
            "x_name":x_name,
            "y_name":y_name,
-           "x_coverage":x_coverage,
-           "y_coverage":y_coverage,
            "para":para,
            "threshold":threshold
 

@@ -16,10 +16,10 @@ usage='''usage: python %prog [options]
 It can automaticaly analysis RPKM and plot it'''
 
 parser = OptionParser(usage =usage )
-parser.add_option("-i", "--Input", action="store",
-                  dest="input",
-                  type='string',
-                  help="input fastq file")
+#parser.add_option("-i", "--Input", action="store",
+                  #dest="input",
+                  #type='string',
+                  #help="input fastq file")
 parser.add_option("-f", "--fasta_file", action="store",
                   dest="fasta",
                   type='string',
@@ -45,19 +45,30 @@ parser.add_option("-g", "--Graph", action="store",
 
 
 (options, args) = parser.parse_args()
-input_path = options.input
+#input_path = options.input
 
-all_fastq_file = glob.glob(input_path+"/*.pair1")
-data_file_group = {}
-for each_file in all_fastq_file:
-	name = os.path.split(each_file)[-1].split('.')[0].split("_")[0]
-	data_file_group[name] = each_file
+#all_fastq_file = glob.glob(input_path+"/*.pair1")
+#data_file_group = {}
+#for each_file in all_fastq_file:
+	#name = os.path.split(each_file)[-1].split('.')[0].split("_")[0]
+	#data_file_group[name] = each_file
    
-reads_count = {}    
+reads_count = {}
+MATRIX = open(options.matrix,'rU')
+title = MATRIX.next()
+title_l = title.strip().split("\t")
+for key in title_l[1:]:
+	reads_count[key] = 0
+for line in MATRIX:
+	line_l = line.split("\t")
+	for i in xrange(1, len(line_l)):
+		reads_count[title_l[i]] += int( line_l[i])
 
-for name, data  in data_file_group.items():
-	line_num = int(os.popen("wc -l %s"%(data)).read().split()[0])/2
-	reads_count[name] = line_num
+
+
+#for name, data  in data_file_group.items():
+	#line_num = int(os.popen("wc -l %s"%(data)).read().split()[0])/2
+	#reads_count[name] = line_num
 
 unigene_length = {}
 RAW = fasta_check(open(options.fasta))
@@ -65,6 +76,9 @@ for t,s in RAW:
 	unigene_length[t[1:].split()[0]] = len(re.sub("\s+", '', s))
 END = open(options.output,'w')
 MATRIX = open(options.matrix,'rU')
+
+
+
 title = MATRIX.next()
 title_l = title.strip().split("\t")[1:]
 data_hash = {}
