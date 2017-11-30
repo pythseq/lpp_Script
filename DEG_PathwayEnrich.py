@@ -15,16 +15,19 @@ def Pathway_Enrichment():
     enrich_result = []
     p_value_list = []
     R_DATA = open("/tmp/%s.dat" % (os.getpid()), 'w')
-    R_DATA.write("PathwayID\tName\tAllDiff\tAllGene\tAll_In\tDiff_In\n")    
+    R_DATA.write("PathwayID\tName\tAllDiff\tAllGene\tAll_In\tDiff_In\n")
+    i = 0
     for each_pathway in all_pathway:
 
         if not len( diff_gene_pathway[ each_pathway  ] ):
             continue
        
         if each_pathway in diff_gene_pathway:        
-            
+            i += 1
             R_DATA.write( "%s\t%s\t%s\t%s\t%s\n" % ("\t".join( each_pathway.split(": ", 1) ),len( all_diff_geneinpathway) , len( all_geneinpathway ),len( all_pathway[ each_pathway  ]  ) ,  len( diff_gene_pathway[ each_pathway  ] )) )
     R_DATA.close()
+    if i == 0:
+        sys.exit()
     RSCRIPT = open("/tmp/Phyer.%s.R" % (os.getpid()), 'w')
 
     RSCRIPT.write( """library(qvalue)         
@@ -41,7 +44,7 @@ write.table(Data,row.names=F,file='%s',quote=FALSE,sep='\t')
 
         """% ( options.output) )
     RSCRIPT.close()
-    print(RSCRIPT.name )
+
     os.system( "Rscript %s" % (RSCRIPT.name))
     RAW = open(options.output)
     all_enrich = {}
