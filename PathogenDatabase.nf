@@ -47,7 +47,7 @@ process VFDB{
 	input:
 		file protein from protein_VFDB
 	output:
-		file "*.VFDB.tsv" into VFDBResult
+		file "*.VFDB.Result" into VFDBResult
 	script:
 		out_name = protein.baseName
 	 """
