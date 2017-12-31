@@ -20,6 +20,7 @@ if __name__ == '__main__':
 		else:
 			data_group[sample].append(e_f)
 			
+	print(data_group)
 	END = open(sys.argv[-1], 'w')
 	END.write("Sample\tRawBase\tRawReadsNumber\tRaw_Q20%\tRaw_Q30%\tRAW_N%\tRaw_GC%\tFilteredBase\tFilteredReadsNumber\tFiltered_Q20%\tFiltered_Q30%\tRAW_N%\tFiltered_GC%\nQC_DataPerc%\tQC_ReadsPerc%\n")
 	for sample in data_group:
