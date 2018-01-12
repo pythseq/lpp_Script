@@ -3,77 +3,37 @@
 """
   Author:   --<>
   Purpose: 
-  Created: 2016/4/11
+  Created: 2018/1/5
 """
 
-from lpp import *
+from lpp import * 
 
-                
-                
 
 
 if __name__ == '__main__':
-    usage = '''usage: python2.7 %prog'''
-    parser = OptionParser(usage =usage ) 
-    parser.add_option("-i", "--Input", action="store", 
-                      dest="Input_path", 
-                      default = "",
-                      help="Input_path")
-    parser.add_option("-o", "--end", action="store", 
-                      dest="output_path", 
-                      help="output Path")
-    
-    (options, args) = parser.parse_args()
-    all_has = {}
-    input_path = options.Input_path
-    output_path = options.output_path
-    check_path( output_path )
-    for a,b,c in os.walk(  input_path ):
-        for e_f in c:
-            if e_f.endswith("Genome1.gbk"):
-                RAW = open(a+'/'+e_f)
-                name = re.search( "DEFINITION.+\s+(\S+)\.", RAW.read()).group(1)
-    
-    if os.path.exists( output_path+"/"+name+'.function' ):
-        os.remove( output_path+"/"+name+'.function' )      
-        
-    PEP = open(output_path+'/'+name+'.pep','w')
-    NUC = open(output_path+'/'+name+'.nuc','w')
-    FUNC = open( output_path+"/"+name+'.function','w' )
-    for a,b,c in os.walk(input_path):
-        
-
-        for e_f in c:    
-            if e_f.endswith(".faa"):
-                RAW = fasta_check( open(a+'/'+e_f) )
-		if "03." not in a:
-			continue	
-                
-                for t,s in RAW:
-                    all_has[t[1:].split()[0]] = ""
-                    PEP.write('>'+t[1:])
-                    PEP.write(s)  
-            
-            if e_f.endswith(".ptt") :
-                RAW = open(a+'/'+e_f,'rU')
-                RAW.next()
-                RAW.next()
-                RAW.next()
-                for line in RAW:
-                    line_l = line.strip().split("\t")
-                    if not line_l[-2]:
-                        line_l[-2]='-'
-                    FUNC.write(line_l[3]+'\t'+line_l[-2]+'\t'+line_l[-1]+'\n') 
-    END = open(output_path+'/'+name+'.nuc','w')
-    for a,b,c in os.walk( input_path):
-        for e_f in c:
-            if e_f.endswith(".ffn"):
-		if "03." not in a:
-			continue
-                RAW = fasta_check( open(a+'/'+e_f) )
-                for t,s in RAW:
-                    if t[1:].split()[0] in all_has:
-                        NUC.write('>'+t[1:])
-                        NUC.write(s)           
-    
-
+	all_path = sys.argv[1].split("/")[0]
+	
+	ALLFAA = fasta_check( open(all_path + '/' + all_path + ".faa"))
+	all_seq = {}
+	FAA = open(all_path + '.pep', 'w' )
+	for t, s in ALLFAA:
+		name = t.split()[0][1:]
+		all_seq[name] = ""
+		FAA.write(t.split()[0] + '\n' + s)
+		
+	ALLNUC = fasta_check( open(all_path + '/' + all_path + ".ffn"))
+	NUC = open(all_path + '.nuc', 'w' )
+	for t, s in ALLNUC:
+		name = t.split()[0][1:]
+		if name in all_seq:
+			
+			NUC.write(t.split()[0] + '\n' + s)
+	FUNCTION = open(all_path + ".function", 'w')
+	for line in open(all_path + '/Annotation/Table/GeneFeature+Annotation.xlsx'):
+		line_l = line.split("\t")
+		if line_l[0] in all_seq:
+			if "COG" in line_l[59]:
+				cog = line_l[59] + line_l[61]
+			else:
+				cog = "-"
+			FUNCTION.write(line_l[0] + '\t' + cog + '\t' + line_l[2] + '\n')

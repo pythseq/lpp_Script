@@ -15,24 +15,28 @@ func main() {
 	var all_length int = 0
 	//	var length_Ddict map[int]map[string]string = make(map[int]map[string]string)
 
-	file := flag.String("i", "", "input Fasta!")
+	file := flag.String("i", "", "input Fastq!")
 	output := flag.String("o", "", "Output!")
 	flag.Parse()
 	if *file == "" {
 		os.Exit(1)
 	}
-	fasta := new(Block_Reading)
-	fasta.File, _ = os.Open(*file)
-	fasta.Blocktag = "\n>"
-	fasta_handle := fasta.Read()
+	fastq := new(Block_Reading)
+	fastq.File, _ = os.Open(*file)
+	fastq.Blocktag = "\n"
+	fastq_handle := fastq.Read()
 	length_slice := []int{}
-
+	var l_num int = 0
 	for {
-		line, err := fasta_handle.Next()
+		l_num++
+		line, err := fastq_handle.Next()
+		if l_num%4 != 2 {
+			continue
+		}
 		data := bytes.SplitN(line, []byte("\n"), 2)
-		seq := data[1]
+		seq := data[0]
 		//		name := string(data[0])
-		seq = bytes.Replace(seq, []byte("\n"), []byte(""), -1)
+		//		seq = bytes.Replace(seq, []byte("\n"), []byte(""), -1)
 		seq_length := len(seq)
 
 		length_slice = append(length_slice, seq_length)
