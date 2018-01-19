@@ -64,13 +64,13 @@ func (file *File_Ddict) Read(key int, value int) map[string]map[string]string {
 		if len(line_l) > sort.IntSlice([]int{key, value})[0] {
 			key_string := string(line_l[key])
 			value_string := string(line_l[value])
-			_, ok := result_hash[key_string][value_string]
+			_, ok := result_hash[key_string]
 
 			if !ok {
 				result_hash[key_string] = make(map[string]string)
-				result_hash[key_string][value_string] = ""
 
 			}
+			result_hash[key_string][value_string] = ""
 		}
 
 	}
@@ -156,15 +156,12 @@ func (Reader IO) Next() ([]byte, error) {
 
 	for {
 		line, err := Reader.Io.ReadSlice(Reader.SplitTag)
-
+		status = err
+		out_tag = append(out_tag, line...)
 		if err == nil {
-			if len(out_tag) > 1 {
-				out_tag = append(out_tag, line...)
-			} else {
-				out_tag = line
-			}
 
 			if len(Reader.BlockTag) > 1 {
+
 				if len(out_tag) >= len(Reader.BlockTag) && bytes.Equal(out_tag[(len(out_tag)-len(Reader.BlockTag)):], Reader.BlockTag) {
 
 					break
@@ -174,14 +171,10 @@ func (Reader IO) Next() ([]byte, error) {
 				break
 			}
 
-		} else if err == bufio.ErrBufferFull || err == io.EOF {
-			if err == io.EOF {
-				status = err
-				out_tag = append(out_tag, line...)
-				break
-			}
-			out_tag = append(out_tag, line...)
-
+		} else if err == io.EOF {
+			break
+		} else if err != bufio.ErrBufferFull {
+			break
 		}
 
 	}
