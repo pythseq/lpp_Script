@@ -5,6 +5,7 @@ import marvel
 import marvel.config
 import marvel.queue
 import sys
+import os,re
 ### settings
 
 DB         = sys.argv[1]
@@ -12,7 +13,11 @@ COVERAGE   = sys.argv[2]
 PATH="{path}/"
 PATH_SCRIPTS="{path_scripts}"
 DB_FIX     = DB + "_FIX"
-PARALLEL   = multiprocessing.cpu_count()
+mem = os.popen( "grep \"MemTotal\" /proc/meminfo " )
+mem = int(re.search("(\d+)",mem.read()).group(1))
+mem = mem/10/1024/1024
+
+PARALLEL   = mem
 
 ### patch raw reads
 

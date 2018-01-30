@@ -103,7 +103,7 @@ FormatSequences($contigSequences);
 #Alignment of pacbio reads to contig sequences
 if($skip_alignment != 1){
   print getDate().": Aligning PacBio reads to contigs...\n";
-  system("$Bin/blasr $pacbio_reads $outputfolder/intermediate_files/contigs.fa -minMatch 5 -bestn 10 -noSplitSubreads -advanceExactMatches 1 -nCandidates 1 -maxAnchorsPerPosition 1 -sdpTupleSize 7 -nproc $threads -out $outputfolder/intermediate_files/BLASR_results.txt");
+  system("blasr $pacbio_reads $outputfolder/intermediate_files/contigs.fa -minMatch 5 -bestn 10 -noSplitSubreads -advanceExactMatches 1 -nCandidates 1 -maxAnchorsPerPosition 1 -sdpTupleSize 7 -nproc $threads -out $outputfolder/intermediate_files/BLASR_results.txt");
 }
 #set global hashes
 my ($hash,$pair, $multihash,$prevread,$fullhash,$pacbioreadhash);
